@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import { BookOpen, Award, CheckCircle, Trophy, Target, Compass, Sparkles, Building, Clock, Users, ShieldCheck } from 'lucide-react';
+import { BookOpen, Award, CheckCircle, Trophy, Target, Compass, Sparkles, Building, Clock, Users, ShieldCheck, HeartHandshake } from 'lucide-react';
 
 const About: React.FC = () => {
   const { settings, teachers, students } = useData();
@@ -34,12 +34,15 @@ const About: React.FC = () => {
                 {t.about.historyTitle}
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                {language === 'bn' ? settings.aboutUsText : `Sonar Bangla High School was established with a vision to impart quality and value-based education. Over the past decades, it has evolved into a premier secondary academic institution distinguished for academic rigor, modern amenities, and character development.`}
+                {language === 'bn' 
+                  ? 'এস ও এস চিলড্রেন্স ভিলেজ ইন্টারন্যাশনালের প্রতিষ্ঠাতা ড. হারম্যান মেইনারের নামানুসারে এ বিদ্যাপীঠের নামকরণ করা হয়েছে। ১৯৮৭ সালে এস ও এস চিলড্রেন্স ভিলেজ খুলনা ক্যাম্পাসে সুবিধাবঞ্চিত ও বাইরের সাধারণ শিক্ষার্থীদের মাঝে মানসম্মত শিক্ষা বিস্তারের লক্ষ্যে বিদ্যালয়টি প্রতিষ্ঠিত হয়।'
+                  : `The very name of the School bears the name of the founder father of SOS Children's Village International, Dr. Hermann Gmeiner. The School was established in 1987 with a view to imparting quality education to the Students of both inside and outside of the SOS Children's Village, Khulna.`
+                }
               </p>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 {language === 'bn'
-                  ? 'বিদ্যালয়টিতে বর্তমানে ষষ্ঠ থেকে দশম শ্রেণি পর্যন্ত সহশিক্ষা কার্যক্রম চালু রয়েছে। সুসজ্জিত বিজ্ঞানাগার, সমৃদ্ধ কম্পিউটার ল্যাব ও সুবিশাল খেলার মাঠ শিক্ষার্থীদের সামগ্রিক মেধা বিকাশে কার্যকর ভূমিকা পালন করছে।'
-                  : 'The school currently runs secondary co-educational programs from Class 6 to Class 10 with dedicated science laboratories, a rich computer lab, multimedia classrooms, and spacious athletic grounds.'
+                  ? 'বিদ্যালয়ের মূলনীতি হলো "সততাই শিক্ষা, শিক্ষাই শান্তি এবং শান্তিই প্রগতি" (Honesty is education, education is peace and peace is progress)। মেধা, শৃঙ্খলা ও সততাই এখানে ভর্তির মূল ভিত্তি। বিদ্যালয়টিতে প্রেপ-১ হতে দশম শ্রেণি পর্যন্ত বাংলা মাধ্যমে ইংরেজি পাঠে বিশেষ গুরুত্বসহ পাঠদান পরিচালিত হয়।'
+                  : 'The main criteria for entry is merit, discipline and Integrity. The motto of the school is "Honesty is education, education is peace and peace is progress." The institution follows the curriculum of NCTB and BISE Jessore with special emphasis on English language proficiency.'
                 }
               </p>
             </div>
@@ -58,25 +61,70 @@ const About: React.FC = () => {
                 <span className="text-xs font-bold text-slate-500 mt-1 uppercase">{t.home.passRate}</span>
               </div>
               <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 text-center">
-                <span className="text-3xl font-black text-purple-700 block">{toBanglaNum('30+')}</span>
-                <span className="text-xs font-bold text-slate-500 mt-1 uppercase">{language === 'bn' ? 'বছরের ঐতিহ্য' : 'Years Experience'}</span>
+                <span className="text-3xl font-black text-purple-700 block">{toBanglaNum('38+')}</span>
+                <span className="text-xs font-bold text-slate-500 mt-1 uppercase">{language === 'bn' ? 'বছরের ঐতিহ্য' : 'Years Heritage'}</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Mission & Vision Section */}
+        {/* Leadership Statements: Chairman & Principal */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+          {/* Chairman Block */}
+          <div className="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/90 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-4 mb-4 pb-3 border-b border-slate-100">
+                <img 
+                  src={settings.chairmanImage || "https://soshgskhulna.edu.bd/media/180/Picture_PP.jpg"} 
+                  alt="Chairman" 
+                  className="w-16 h-16 rounded-2xl object-cover border border-slate-200 shadow-sm"
+                />
+                <div>
+                  <h4 className="font-black text-slate-900 text-base">{settings.chairmanName || "মাকসুদা সুলতানা"}</h4>
+                  <p className="text-xs text-amber-700 font-bold">{language === 'bn' ? 'সভাপতি, গভর্নিং বডি' : 'Chairman, Governing Body'}</p>
+                  <p className="text-[10px] text-slate-400">{language === 'bn' ? 'প্রকল্প পরিচালক, এস ও এস চিলড্রেন্স ভিলেজ খুলনা' : "Project Director, SOS Children's Village Khulna"}</p>
+                </div>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed italic">
+                "{settings.chairmanMessage}"
+              </p>
+            </div>
+          </div>
+
+          {/* Principal Block */}
+          <div className="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/90 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-4 mb-4 pb-3 border-b border-slate-100">
+                <img 
+                  src={settings.headmasterImage} 
+                  alt="Principal" 
+                  className="w-16 h-16 rounded-2xl object-cover border border-slate-200 shadow-sm"
+                />
+                <div>
+                  <h4 className="font-black text-slate-900 text-base">{settings.headmasterName}</h4>
+                  <p className="text-xs text-emerald-800 font-bold">{t.adminPage.headmaster}</p>
+                  <p className="text-[10px] text-slate-400">{language === 'bn' ? settings.schoolName : 'SOS HERMANN GMEINER SCHOOL KHULNA'}</p>
+                </div>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed italic">
+                "{settings.headmasterMessage}"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Mission, Vision & Core Values */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           <div className="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-4">
                 <Target size={24} />
               </div>
-              <h3 className="text-xl font-extrabold text-slate-900 mb-3">{language === 'bn' ? 'আমাদের ভিশন (লক্ষ্য)' : 'Our Vision'}</h3>
+              <h3 className="text-xl font-extrabold text-slate-900 mb-3">{language === 'bn' ? 'আমাদের ভিশন (Vision)' : 'Our Vision'}</h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 {language === 'bn'
-                  ? 'একটি সুশিক্ষিত, প্রযুক্তিদক্ষ, আত্মবিশ্বাসী এবং নৈতিক মূল্যবোধসম্পন্ন ভবিষ্যৎ প্রজন্ম গড়ে তোলা, যারা জাতীয় ও আন্তর্জাতিক পর্যায়ে দেশের মুখ উজ্জ্বল করবে।'
-                  : 'To nurture educated, technologically skilled, confident, and morally grounded future generations who will contribute meaningfully to the nation and the world.'
+                  ? 'একটি সুশিক্ষিত, প্রযুক্তিদক্ষ, আত্মবিশ্বাসী এবং মানবিক মূল্যবোধসম্পন্ন ভবিষ্যৎ প্রজন্ম গড়ে তোলা, যারা সততা ও শৃঙ্খলা বজায় রেখে জাতীয় ও আন্তর্জাতিক অঙ্গনে নেতৃত্ব দিতে সক্ষম হবে।'
+                  : 'To nurture educated, technologically skilled, confident, and morally grounded future generations who will lead the nation with honesty and discipline.'
                 }
               </p>
             </div>
@@ -87,11 +135,11 @@ const About: React.FC = () => {
               <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center mb-4">
                 <Compass size={24} />
               </div>
-              <h3 className="text-xl font-extrabold text-slate-900 mb-3">{language === 'bn' ? 'আমাদের মিশন (উদ্দেশ্য)' : 'Our Mission'}</h3>
+              <h3 className="text-xl font-extrabold text-slate-900 mb-3">{language === 'bn' ? 'আমাদের মিশন ও মূলনীতি' : 'Mission & Core Motto'}</h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 {language === 'bn'
-                  ? 'আধুনিক পাঠ্যক্রম, সৃজনশীল পাঠদান পদ্ধতি, আধুনিক ল্যাব ও সাংস্কৃতিক কার্যক্রমের সমন্বয়ে প্রতিটি শিক্ষার্থীর অন্তর্নিহিত প্রতিভার সর্বোচ্চ বিকাশ সাধন করা।'
-                  : 'To unlock the full potential of every student through modern pedagogical approaches, multimedia classrooms, STEM laboratories, and vibrant co-curricular activities.'
+                  ? 'মানসম্মত পাঠ্যক্রম, সৃজনশীল পাঠদান, আধুনিক ল্যাব, বিজ্ঞানাগার ও বৈচিত্র্যময় সহশিক্ষা কার্যক্রমের মাধ্যমে প্রতিটি শিক্ষার্থীর বুদ্ধিবৃত্তিক ও নৈতিক মেধার পূর্ণ বিকাশ সাধন।'
+                  : 'Delivering holistic education through modern pedagogies, STEM laboratories, multimedia smart classrooms, and extensive co-curricular programs.'
                 }
               </p>
             </div>
@@ -107,9 +155,9 @@ const About: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { title: language === 'bn' ? 'ডিজিটাল কম্পিউটার ল্যাব' : 'Digital Computer Lab', desc: language === 'bn' ? 'হাই-স্পিড ইন্টারনেট ও ৩০+ কম্পিউটার' : 'High-speed Internet & 30+ PCs' },
-              { title: language === 'bn' ? 'বিজ্ঞানাগার' : 'Science Laboratory', desc: language === 'bn' ? 'পদার্থ, রসায়ন ও জীববিজ্ঞানের আধুনিক সরঞ্জাম' : 'Modern Physics, Chem & Biology kits' },
-              { title: language === 'bn' ? 'কেন্দ্রীয় লাইব্রেরি' : 'Central Library', desc: language === 'bn' ? '৫,০০০+ বই ও তথ্যসমৃদ্ধ পাঠাগার' : '5,000+ books & periodicals' },
-              { title: language === 'bn' ? 'খেলার মাঠ ও স্পোর্টস' : 'Spacious Play Ground', desc: language === 'bn' ? 'ক্রিকেট, ফুটবল ও বার্ষিক ক্রীড়া প্রতিযোগিতা' : 'Cricket, Football & Athletic track' },
+              { title: language === 'bn' ? 'বিজ্ঞানাগার (Science Lab)' : 'Modern Science Lab', desc: language === 'bn' ? 'পদার্থ, রসায়ন ও জীববিজ্ঞানের আধুনিক সরঞ্জাম' : 'Modern Physics, Chem & Biology kits' },
+              { title: language === 'bn' ? 'সমৃদ্ধ লাইব্রেরি' : 'School Library', desc: language === 'bn' ? 'তথ্যবহুল বই ও শিশুবান্ধব পড়ার পরিবেশ' : 'Vast collection of books & reading corner' },
+              { title: language === 'bn' ? 'সবুজ প্রাঙ্গণ ও খেলার মাঠ' : 'Green Athletic Grounds', desc: language === 'bn' ? 'ক্রীড়া প্রতিযোগিতা ও শারীরিক শিক্ষার সুযোগ' : 'Sports, athletics & co-curricular area' },
             ].map((facility, i) => (
               <div key={i} className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
                 <h4 className="font-bold text-slate-900 text-sm mb-1">{facility.title}</h4>

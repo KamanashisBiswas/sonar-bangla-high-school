@@ -95,9 +95,14 @@ export interface WebsiteSettings {
   establishedYear: string;
   contactEmail: string;
   contactPhone: string;
+  schoolLogo?: string;
   headmasterName: string;
   headmasterMessage: string;
   headmasterImage: string;
+  chairmanName?: string;
+  chairmanTitle?: string;
+  chairmanImage?: string;
+  chairmanMessage?: string;
   heroTitle: string;
   heroSubtitle: string;
   heroImage: string;

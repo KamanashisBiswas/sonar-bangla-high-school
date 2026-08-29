@@ -29,8 +29,8 @@ export const translations = {
     },
     // Home Page
     home: {
-      heroBadge: 'স্মার্ট শিক্ষাব্যবস্থা ও ঐতিহ্যের মেলবন্ধন',
-      heroSubtitle: 'জ্ঞান, শৃঙ্খলা ও নৈতিকতার সমন্বয়ে ভবিষ্যৎ প্রজন্মের দক্ষ ও আলোকিত মানবসম্পদ গড়ার অঙ্গীকার।',
+      heroBadge: 'মানসম্মত শিক্ষা ও শৃঙ্খলার মেলবন্ধন',
+      heroSubtitle: 'জ্ঞান, শৃঙ্খলা ও সততার সমন্বয়ে ভবিষ্যৎ প্রজন্মের দক্ষ ও আলোকিত মানবসম্পদ গড়ার অঙ্গীকার।',
       applyNow: 'অনলাইনে ভর্তি আবেদন',
       seeResults: 'ফলাফল অনুসন্ধান',
       studentsCount: 'মোট শিক্ষার্থী',
@@ -38,21 +38,21 @@ export const translations = {
       passRate: 'গড় পাসের হার',
       gpa5Count: 'জিপিএ-৫ অর্জন',
       
-      highlightsTitle1: 'সুদক্ষ শিক্ষকমণ্ডলী',
-      highlightsDesc1: 'অভিজ্ঞ ও প্রশিক্ষণপ্রাপ্ত শিক্ষক দ্বারা যত্নসহকারে পাঠদান।',
+      highlightsTitle1: 'সুদক্ষ ও প্রশিক্ষণপ্রাপ্ত শিক্ষক',
+      highlightsDesc1: 'অভিজ্ঞ ও নিবেদিতপ্রাণ শিক্ষক দ্বারা প্রমিত পাঠদান।',
       highlightsTitle2: 'ডিজিটাল মাল্টিমিডিয়া ক্লাস',
-      highlightsDesc2: 'আধুনিক স্মার্ট ক্লাসরুম ও প্রজেক্টরের মাধ্যমে শিক্ষা।',
+      highlightsDesc2: 'আধুনিক স্মার্ট ক্লাসরুম, ল্যাব ও প্রজেক্টরের মাধ্যমে শিক্ষা।',
       highlightsTitle3: 'শতভাগ পাসের ঐতিহ্য',
-      highlightsDesc3: 'বিগত বোর্ড ও বার্ষিক পরীক্ষায় ঈর্ষণীয় সাফল্য ও জিপিএ-৫।',
-      highlightsTitle4: 'নিরাপদ ও সুশৃঙ্খল পরিবেশ',
-      highlightsDesc4: 'সিসিটিভি নিয়ন্ত্রিত শান্ত ও মনোরম শিক্ষাবান্ধব ক্যাম্পাস।',
+      highlightsDesc3: 'যশোর শিক্ষা বোর্ড ও বার্ষিক পরীক্ষায় ধারাবাহিক সাফল্য।',
+      highlightsTitle4: 'সবুজ ও সুশৃঙ্খল পরিবেশ',
+      highlightsDesc4: 'এস ও এস ভিলেজ সংলগ্ন শান্ত, মনোরম ও নিরাপদ ক্যাম্পাস।',
 
-      headmasterTitle: 'প্রধান শিক্ষকের বাণী',
-      headmasterSubtitle: 'Message from the Headmaster',
+      headmasterTitle: 'অধ্যক্ষের বাণী',
+      headmasterSubtitle: 'Message from the Principal',
       readMoreAbout: 'বিদ্যালয়ের পূর্ণ ইতিহাস ও বিবরণ',
       
       achievementCardTitle: 'আমাদের সাফল্য ও অর্জন',
-      achievementCardDesc: 'বিগত পাবলিক ও বার্ষিক পরীক্ষায় শতভাগ পাসসহ ধারাবাহিক জিপিএ-৫ প্রাপ্তি ও বিতর্ক প্রতিযোগিতায় চ্যাম্পিয়ন।',
+      achievementCardDesc: 'বিগত এস.এস.সি ও বার্ষিক পরীক্ষায় শতভাগ পাসসহ ধারাবাহিক জিপিএ-৫ প্রাপ্তি ও বিতর্ক প্রতিযোগিতায় চ্যাম্পিয়ন।',
       achievementStatLabel: 'গড় পাসের হার',
       achievementBtn: 'ফলাফল দেখুন',
 
@@ -73,7 +73,7 @@ export const translations = {
       quickLinks: 'প্রয়োজনীয় লিংক',
       viewRoutine: 'ক্লাস রুটিন দেখুন',
       examSchedule: 'পরীক্ষার সময়সূচি',
-      syllabusDownload: 'সিলেবাস ও পাঠ্যক্রম',
+      syllabusDownload: 'সিলেবাস ও বুক লিস্ট',
       governingBody: 'পরিচালনা পর্ষদ',
       
       statsSectionTitle: 'আমাদের সাফল্য ও পরিসংখ্যান',
@@ -83,6 +83,16 @@ export const translations = {
       classStatsSubtitle: 'চলতি শিক্ষাবর্ষের শ্রেণিওয়ারি সক্রিয় শিক্ষার্থী',
       class: 'শ্রেণি',
       students: 'শিক্ষার্থী',
+
+      // Extra rich sections from soshgskhulna.edu.bd
+      atAGlanceTitle: 'এক নজরে আমাদের বিদ্যাপীঠ',
+      atAGlanceSubtitle: '১৯৮৭ সাল থেকে মানসম্মত শিক্ষা, সুশৃঙ্খল পরিবেশ ও আধুনিক মাল্টিমিডিয়া শিক্ষাদানে নিবেদিত।',
+      aimObjectivesTitle: 'আমাদের লক্ষ্য ও মূল উদ্দেশ্য',
+      aimObjectivesSubtitle: 'সততাই শিক্ষা, শিক্ষাই শান্তি এবং শান্তিই প্রগতি — আদর্শ মূল্যবোধে আলোকবর্তিকা।',
+      eventsCalendarTitle: 'সহশিক্ষা ও বার্ষিক কার্যক্রম ক্যালেন্ডার ২০২৫',
+      eventsCalendarSubtitle: 'নিয়মিত ক্রীড়া, বিতর্ক প্রতিযোগিতা, বিজ্ঞান মেলা ও জাতীয় দিবস উদযাপন।',
+      campusGalleryTitle: 'ক্যাম্পাস প্রাঙ্গণ ও ফটো গ্যালারি',
+      campusGallerySubtitle: 'সবুজ মনোরম প্রাঙ্গণ, আধুনিক ল্যাব ও ক্লাসরুমের আনন্দঘন মুহূর্ত।',
     },
     // Result Page
     result: {
@@ -103,7 +113,7 @@ export const translations = {
       studentName: 'শিক্ষার্থীর নাম',
       fatherName: 'পিতার নাম',
       motherName: 'মাতার নাম',
-      section: ' শাখা',
+      section: 'শাখা',
       group: 'গ্রুপ / বিভাগ',
       session: 'শিক্ষাবর্ষ',
       code: 'কোড',
@@ -121,7 +131,7 @@ export const translations = {
       passed: 'উত্তীর্ণ (PASSED)',
       failed: 'অনুত্তীর্ণ (FAILED)',
       classTeacherSig: 'শ্রেণি শিক্ষকের স্বাক্ষর',
-      headmasterSig: 'প্রধান শিক্ষকের স্বাক্ষর',
+      headmasterSig: 'অধ্যক্ষের স্বাক্ষর',
       printBtn: 'মার্কশিট প্রিন্ট / ডাউনলোড করুন',
     },
     // Admission Page
@@ -155,7 +165,7 @@ export const translations = {
     // Teachers Page
     teachers: {
       title: 'শিক্ষক ও কর্মচারী ডিরেক্টরি',
-      subtitle: 'সোনার বাংলা উচ্চ বিদ্যালয়ের দক্ষ, অভিজ্ঞ ও নিবেদিতপ্রাণ শিক্ষক-কর্মচারীবৃন্দ।',
+      subtitle: 'এস ও এস হারম্যান মেইনার স্কুল খুলনার দক্ষ, অভিজ্ঞ ও নিবেদিতপ্রাণ শিক্ষক-কর্মচারীবৃন্দ।',
       tabTeachers: 'শিক্ষকমণ্ডলী',
       tabStaff: 'অফিস ও সহায়ক স্টাফ',
       subject: 'বিষয়',
@@ -168,15 +178,15 @@ export const translations = {
       title: 'প্রশাসন ও পরিচালনা পর্ষদ',
       subtitle: 'বিদ্যালয়ের সুচারু ব্যবস্থাপনা ও সার্বিক পরিচালনায় নিবেদিত নেতৃত্ব ও কমিটি।',
       leadershipTitle: 'প্রাতিষ্ঠানিক শীর্ষ নেতৃত্ব',
-      headmaster: 'প্রধান শিক্ষক',
+      headmaster: 'অধ্যক্ষ',
       asstHeadmaster: 'সহকারী প্রধান শিক্ষক',
-      committeeTitle: 'সম্মানিত ম্যানেজিং কমিটি',
+      committeeTitle: 'সম্মানিত গভর্নিং বডি ও ম্যানেজিং কমিটি',
       memberType: 'সদস্যের ধরন',
     },
     // About Page
     about: {
       title: 'আমাদের পরিচিতি ও ইতিহাস',
-      subtitle: '১৯৯৫ সাল থেকে নিরবচ্ছিন্নভাবে শিক্ষার আলো ছড়িয়ে যাচ্ছে আমাদের প্রিয় প্রতিষ্ঠান।',
+      subtitle: '১৯৮৭ সাল থেকে নিরবচ্ছিন্নভাবে শিক্ষার আলো ছড়িয়ে যাচ্ছে এস ও এস হারম্যান মেইনার স্কুল খুলনা।',
       historyTitle: 'আমাদের ইতিহাস ও পটভূমি',
       missionVisionTitle: 'লক্ষ্য ও উদ্দেশ্য',
       achievementsTitle: 'আমাদের প্রধান সাফল্যসমূহ',
@@ -232,7 +242,7 @@ export const translations = {
       title: 'যোগাযোগ ও অবস্থান',
       subtitle: 'যেকোনো তথ্য, পরামর্শ বা প্রয়োজনে আমাদের সাথে সরাসরি যোগাযোগ করুন।',
       addressTitle: 'ক্যাম্পাস ঠিকানা',
-      phoneTitle: 'হেল্পলাইন ও মোবাইল',
+      phoneTitle: 'হেল্পলাইন ও টেলিফোন',
       emailTitle: 'ইমেইল ঠিকানা',
       hoursTitle: 'অফিস সময়সূচি',
       hoursDesc: 'রবিবার - বৃহস্পতিবার: সকাল ৯:০০ - বিকাল ৪:০০',
@@ -249,7 +259,7 @@ export const translations = {
     // Students Page
     studentsPage: {
       title: 'শিক্ষার্থী ডাটাবেস',
-      subtitle: 'সোনার বাংলা উচ্চ বিদ্যালয়ের অধ্যয়নরত শিক্ষার্থীদের তালিকা ও তথ্য।',
+      subtitle: 'এস ও এস হারম্যান মেইনার স্কুল খুলনার অধ্যয়নরত শিক্ষার্থীদের তালিকা ও তথ্য।',
       searchPlaceholder: 'রোল, নাম বা শ্রেণি দিয়ে খুঁজুন...',
       tabAll: 'সকল শ্রেণি',
       rollCol: 'রোল',
@@ -311,7 +321,7 @@ export const translations = {
     },
     // Home Page
     home: {
-      heroBadge: 'Smart Education & Heritage Excellence',
+      heroBadge: 'Quality Education & Moral Excellence',
       heroSubtitle: 'Committed to fostering knowledgeable, disciplined, and morally upright human resources for tomorrow.',
       applyNow: 'Apply for Admission',
       seeResults: 'Check Results',
@@ -326,15 +336,15 @@ export const translations = {
       highlightsDesc2: 'Modern classrooms equipped with digital projectors and visual learning.',
       highlightsTitle3: '100% Pass Tradition',
       highlightsDesc3: 'Consistent academic brilliance in board and annual examinations.',
-      highlightsTitle4: 'Safe & Clean Campus',
-      highlightsDesc4: 'CCTV secured, peaceful, and green learner-friendly environment.',
+      highlightsTitle4: 'Safe & Green Campus',
+      highlightsDesc4: 'Peaceful, disciplined, and learner-friendly environment at Gollamari, Khulna.',
 
-      headmasterTitle: "Headmaster's Message",
-      headmasterSubtitle: 'Message from the Headmaster',
+      headmasterTitle: "Principal's Message",
+      headmasterSubtitle: 'Message from the Principal',
       readMoreAbout: 'Read Full History & Background',
       
       achievementCardTitle: 'Our Honors & Achievements',
-      achievementCardDesc: 'Exemplary 100% pass rates in public exams, consistent GPA-5 laurels, and champions in debate competitions.',
+      achievementCardDesc: 'Exemplary 100% pass rates in S.S.C public exams, consistent GPA-5 laurels, and championships.',
       achievementStatLabel: 'Average Pass Rate',
       achievementBtn: 'View Results',
 
@@ -355,8 +365,8 @@ export const translations = {
       quickLinks: 'Quick Access',
       viewRoutine: 'Class Routine',
       examSchedule: 'Exam Schedules',
-      syllabusDownload: 'Syllabus & Curriculum',
-      governingBody: 'Managing Committee',
+      syllabusDownload: 'Syllabus & Book List',
+      governingBody: 'Governing Body',
       
       statsSectionTitle: 'Our Achievements & Statistics',
       statsSectionSubtitle: 'A glance at our continuous institutional milestones',
@@ -365,6 +375,16 @@ export const translations = {
       classStatsSubtitle: 'Active enrollment for the current academic session',
       class: 'Class',
       students: 'Students',
+
+      // Extra rich sections from soshgskhulna.edu.bd
+      atAGlanceTitle: 'At a Glance',
+      atAGlanceSubtitle: 'Dedicated to providing qualitative education, discipline, and modern facilities since 1987.',
+      aimObjectivesTitle: 'Our Aim & Key Objectives',
+      aimObjectivesSubtitle: 'Honesty is education, education is peace and peace is progress — Guiding our path.',
+      eventsCalendarTitle: 'Co-Curricular Events & Annual Calendar 2025',
+      eventsCalendarSubtitle: 'Promoting holistic growth through regular sports, debates, science fairs, and celebrations.',
+      campusGalleryTitle: 'Campus Showcase & Photo Gallery',
+      campusGallerySubtitle: 'Vibrant glimpses of our lush green campus, smart labs, and student activities.',
     },
     // Result Page
     result: {
@@ -403,7 +423,7 @@ export const translations = {
       passed: 'PASSED',
       failed: 'FAILED',
       classTeacherSig: 'Class Teacher Signature',
-      headmasterSig: 'Headmaster Signature',
+      headmasterSig: 'Principal Signature',
       printBtn: 'Print / Save Marksheet',
     },
     // Admission Page
@@ -437,7 +457,7 @@ export const translations = {
     // Teachers Page
     teachers: {
       title: 'Faculty & Staff Directory',
-      subtitle: 'Experienced, passionate, and dedicated teaching & administrative staff of Sonar Bangla High School.',
+      subtitle: 'Experienced, passionate, and dedicated teaching & administrative staff of SOS Hermann Gmeiner School Khulna.',
       tabTeachers: 'Teaching Faculty',
       tabStaff: 'Administrative Staff',
       subject: 'Subject',
@@ -448,17 +468,17 @@ export const translations = {
     // Administration Page
     adminPage: {
       title: 'Administration & Governance',
-      subtitle: 'Dedicated leadership and managing committee ensuring excellence in school operations.',
+      subtitle: 'Dedicated leadership and governing body ensuring excellence in school operations.',
       leadershipTitle: 'School Leadership',
-      headmaster: 'Headmaster',
+      headmaster: 'Principal',
       asstHeadmaster: 'Assistant Headmaster',
-      committeeTitle: 'Honorable Managing Committee',
+      committeeTitle: 'Honorable Governing Body',
       memberType: 'Designation / Role',
     },
     // About Page
     about: {
       title: 'About Our Institution',
-      subtitle: 'Spreading the light of quality education and moral discipline continuously since 1995.',
+      subtitle: 'Spreading the light of quality education and moral discipline continuously since 1987.',
       historyTitle: 'Our History & Heritage',
       missionVisionTitle: 'Mission & Vision',
       achievementsTitle: 'Notable Achievements',
@@ -514,7 +534,7 @@ export const translations = {
       title: 'Contact & Campus Location',
       subtitle: 'Reach out to our administrative desk for queries, feedback, or visits.',
       addressTitle: 'Campus Address',
-      phoneTitle: 'Helpline & Mobile',
+      phoneTitle: 'Helpline & Telephone',
       emailTitle: 'Email Address',
       hoursTitle: 'Office Hours',
       hoursDesc: 'Sunday - Thursday: 9:00 AM - 4:00 PM',
@@ -531,7 +551,7 @@ export const translations = {
     // Students Page
     studentsPage: {
       title: 'Student Directory',
-      subtitle: 'Active student roster and records of Sonar Bangla High School.',
+      subtitle: 'Active student roster and records of SOS Hermann Gmeiner School Khulna.',
       searchPlaceholder: 'Search by roll, name or class...',
       tabAll: 'All Classes',
       rollCol: 'Roll',

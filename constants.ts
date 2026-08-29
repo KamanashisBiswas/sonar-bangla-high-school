@@ -1,9 +1,13 @@
 import { NavItem, Notice, Teacher, EventImage, Student, Staff, CommitteeMember, DownloadItem } from './types';
 
-export const SCHOOL_NAME = "সোনার বাংলা উচ্চ বিদ্যালয়";
-export const SCHOOL_ADDRESS = "ধানমন্ডি, ঢাকা-১২০৯";
-export const EIIN_CODE = "123456";
-export const ESTABLISHED_YEAR = "১৯৮৫";
+export const SCHOOL_NAME = "এস ও এস হারম্যান মেইনার স্কুল খুলনা";
+export const SCHOOL_NAME_EN = "SOS HERMANN GMEINER SCHOOL KHULNA";
+export const SCHOOL_LOGO = "https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png";
+export const SCHOOL_FAVICON = "https://soshgskhulna.edu.bd/media/logos/NUtfNkRmi06Nt5RS26h6sS7TrSc7OuNIx0Wr261V.png";
+export const SCHOOL_ADDRESS = "গল্লামারী, খুলনা - ৯২০৮";
+export const SCHOOL_ADDRESS_EN = "Gollamari, Khulna - 9208";
+export const EIIN_CODE = "117188";
+export const ESTABLISHED_YEAR = "১৯৮৭";
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'হোম', path: '/' },
@@ -22,169 +26,204 @@ export const NAV_ITEMS: NavItem[] = [
 
 export const QUICK_LINKS = [
   { label: 'মাধ্যমিক ও উচ্চশিক্ষা অধিদপ্তর (DSHE)', url: 'http://www.dshe.gov.bd/' },
-  { label: 'শিক্ষক বাতায়ন', url: 'http://www.teachers.gov.bd/' },
-  { label: 'বিশ্ববিদ্যালয় মঞ্জুরী কমিশন (UGC)', url: 'http://www.ugc.gov.bd/' },
+  { label: 'যশোর শিক্ষা বোর্ড (BISE Jessore)', url: 'http://www.jessoreboard.gov.bd/' },
+  { label: 'শিক্ষক বাতায়ন (Shikkhok Batayan)', url: 'http://www.teachers.gov.bd/' },
+  { label: 'এস ও এস চিলড্রেনস ভিলেজ বাংলাদেশ', url: 'https://www.sos-bangladesh.org/' },
+  { label: 'জাতীয় শিক্ষাক্রম ও পাঠ্যপুস্তক বোর্ড (NCTB)', url: 'http://www.nctb.gov.bd/' },
   { label: 'ব্যানবেইস (BANBEIS)', url: 'http://www.banbeis.gov.bd/' },
-  { label: 'প্রাথমিক ও গণশিক্ষা মন্ত্রণালয়', url: 'http://www.mopme.gov.bd/' },
-  { label: 'ঢাকা বিশ্ববিদ্যালয়', url: 'http://www.du.ac.bd/' },
+  { label: 'শিক্ষা মন্ত্রণালয় (MOEDU)', url: 'http://www.moedu.gov.bd/' },
   { label: 'বাংলাদেশ জাতীয় তথ্য বাতায়ন', url: 'http://www.bangladesh.gov.bd/' },
-  { label: 'বাংলাদেশ ফরম', url: 'http://www.forms.gov.bd/' },
-  { label: 'জাতীয় বিশ্ববিদ্যালয়', url: 'http://www.nu.ac.bd/' },
-  { label: 'শিক্ষা মন্ত্রণালয়', url: 'http://www.moedu.gov.bd/' },
-  { label: 'র‍্যাপিড আইটি ইআইএমএস (EIMS)', url: '#' },
-  { label: 'যশোর শিক্ষা বোর্ড', url: 'http://www.jessoreboard.gov.bd/' },
 ];
 
 export const MOCK_NOTICES: Notice[] = [
   {
     id: '1',
-    title: 'বার্ষিক ক্রীড়া প্রতিযোগিতা ২০২৪',
-    date: '2024-10-15',
-    type: 'Event',
-    content: 'আগামী ২০ অক্টোবর ২০২৪ তারিখ রোজ রবিবার বিদ্যালয়ের বার্ষিক ক্রীড়া প্রতিযোগিতা অনুষ্ঠিত হবে।'
+    title: 'গ্রীষ্মকালীন অবকাশ ও ছুটির বিজ্ঞপ্তি ২০২৫',
+    date: '2025-07-28',
+    type: 'General',
+    content: 'এতদ্বারা এস ও এস হারম্যান মেইনার স্কুল খুলনার সকল শিক্ষক, শিক্ষার্থী ও অভিভাবকদের অবগতির জন্য জানানো যাচ্ছে যে, আগামী ২৯-০৭-২০২৫ তারিখ থেকে ০৭-০৮-২০২৫ তারিখ পর্যন্ত বিদ্যালয়ের সকল শ্রেণি কার্যক্রম গ্রীষ্মকালীন ছুটির জন্য বন্ধ থাকবে।'
   },
   {
     id: '2',
-    title: 'অর্ধ-বার্ষিক পরীক্ষার রুটিন প্রকাশ',
-    date: '2024-10-10',
+    title: 'এস.এস.সি পরীক্ষা ২০২৫ এর ফলাফল ও মার্কশিট সংগ্রহ',
+    date: '2025-05-12',
     type: 'Exam',
-    content: 'এতদ্বারা জানানো যাচ্ছে যে, ৬ষ্ঠ থেকে ১০ম শ্রেণীর অর্ধ-বার্ষিক পরীক্ষা আগামী ১লা নভেম্বর থেকে শুরু হবে।'
+    content: 'এস.এস.সি পরীক্ষা ২০২৫ এ উত্তীর্ণ শিক্ষার্থীদের অভিনন্দন। উত্তীর্ণ শিক্ষার্থীরা আগামী ১৫ মে থেকে বিদ্যালয়ের অফিস কক্ষ থেকে অফিশিয়াল একাডেমিক মার্কশিট ও প্রশংসাপত্র সংগ্রহ করতে পারবে।'
   },
   {
     id: '3',
-    title: '৬ষ্ঠ শ্রেণিতে ভর্তি বিজ্ঞপ্তি ২০২৫',
-    date: '2024-09-25',
+    title: 'প্রেপ-১ ও ৬ষ্ঠ শ্রেণিতে অনলাইন ভর্তি আবেদন কার্যক্রম ২০২৫',
+    date: '2024-11-01',
     type: 'Admission',
-    content: '২০২৫ শিক্ষাবর্ষে ৬ষ্ঠ শ্রেণিতে ভর্তির আবেদন ফরম আগামী ০১/১১/২০২৪ হতে বিতরণ করা হবে।'
+    content: 'চলতি শিক্ষাবর্ষে প্রেপ-১ হতে ৯ম শ্রেণি পর্যন্ত শূন্য আসনে অনলাইনে ভর্তি আবেদন গ্রহণ করা হচ্ছে। অভিভাবকগণ ওয়েবসাইট থেকে ঘরে বসেই আবেদন সম্পন্ন করতে পারবেন।'
   },
+  {
+    id: '4',
+    title: 'আন্তর্জাতিক মাতৃভাষা দিবস ও বার্ষিক ক্রীড়া উৎসব উদযাপন',
+    date: '2025-02-21',
+    type: 'Event',
+    content: 'যথাযোগ্য মর্যাদায় শহীদ দিবস ও আন্তর্জাতিক মাতৃভাষা দিবস উপলক্ষে প্রভাতফেরি, আলোচনা সভা ও সাংস্কৃতিক প্রতিযোগিতার আয়োজন করা হয়েছে।'
+  }
 ];
 
 export const TEACHERS: Teacher[] = [
   {
     id: '1',
-    name: 'মোঃ রফিকুল ইসলাম',
-    designation: 'প্রধান শিক্ষক',
-    subject: 'গণিত',
-    image: 'https://picsum.photos/200/200?random=1',
-    qualifications: 'M.Sc (Math), B.Ed'
+    name: 'ইন্দ্রজিৎ কুমার মন্ডল',
+    designation: 'অধ্যক্ষ',
+    subject: 'রসায়ন / বিজ্ঞান',
+    image: 'https://soshgskhulna.edu.bd/media/163/P.sir...jpg',
+    qualifications: 'M.Sc (Chemistry), B.Ed'
   },
   {
     id: '2',
-    name: 'ফারজানা আক্তার',
+    name: 'মোসাম্মৎ রেহানা পারভীন',
     designation: 'সহকারী প্রধান শিক্ষক',
     subject: 'ইংরেজি',
-    image: 'https://picsum.photos/200/200?random=2',
+    image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&fit=crop&q=80',
     qualifications: 'MA (English), M.Ed'
   },
   {
     id: '3',
-    name: 'আব্দুল করিম',
-    designation: 'সিনিয়র শিক্ষক',
-    subject: 'বাংলা',
-    image: 'https://picsum.photos/200/200?random=3',
-    qualifications: 'MA (Bangla)'
+    name: 'মোঃ জহিরুল হক',
+    designation: 'সিনিয়র শিক্ষক',
+    subject: 'গণিত ও উচ্চতর গণিত',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80',
+    qualifications: 'M.Sc (Mathematics), B.Ed'
   },
   {
     id: '4',
-    name: 'সুবর্ণা দাস',
-    designation: 'সহকারী শিক্ষক',
-    subject: 'বিজ্ঞান',
-    image: 'https://picsum.photos/200/200?random=4',
-    qualifications: 'B.Sc (Physics)'
+    name: 'তানজিলা রহমান',
+    designation: 'সিনিয়র শিক্ষক',
+    subject: 'পদার্থবিজ্ঞান',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&fit=crop&q=80',
+    qualifications: 'M.Sc (Physics), B.Ed'
   },
   {
     id: '5',
-    name: 'মাহমুদ হাসান',
+    name: 'আব্দুল করিম শেখ',
     designation: 'সহকারী শিক্ষক',
-    subject: 'ধর্ম',
-    image: 'https://picsum.photos/200/200?random=5',
-    qualifications: 'MA (Islamic Studies)'
+    subject: 'বাংলা সাহিত্য',
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&fit=crop&q=80',
+    qualifications: 'MA (Bangla), B.Ed'
   },
   {
     id: '6',
-    name: 'নাসরিন সুলতানা',
+    name: 'সুবর্ণা দাস',
     designation: 'সহকারী শিক্ষক',
-    subject: 'জীববিজ্ঞান',
-    image: 'https://picsum.photos/200/200?random=6',
+    subject: 'জীববিজ্ঞান ও পরিবেশ',
+    image: 'https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=400&fit=crop&q=80',
     qualifications: 'M.Sc (Botany)'
+  },
+  {
+    id: '7',
+    name: 'মাওলানা মোঃ সাইফুল ইসলাম',
+    designation: 'সহকারী শিক্ষক',
+    subject: 'ইসলাম ও নৈতিক শিক্ষা',
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&fit=crop&q=80',
+    qualifications: 'MA (Islamic Studies)'
+  },
+  {
+    id: '8',
+    name: 'প্রকৌশলী অমিত রায়',
+    designation: 'সহকারী শিক্ষক (আইসিটি)',
+    subject: 'তথ্য ও যোগাযোগ প্রযুক্তি (ICT)',
+    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&fit=crop&q=80',
+    qualifications: 'B.Sc in CSE'
   }
 ];
 
 export const OFFICE_STAFF: Staff[] = [
-  { id: '1', name: 'মোঃ আনোয়ার হোসেন', designation: 'প্রধান করণিক', image: 'https://picsum.photos/200/200?random=50' },
-  { id: '2', name: 'কামাল উদ্দিন', designation: 'হিসাব রক্ষক', image: 'https://picsum.photos/200/200?random=51' },
-  { id: '3', name: 'রহিমা বেগম', designation: 'অফিস সহকারী', image: 'https://picsum.photos/200/200?random=52' },
-  { id: '4', name: 'আবুল কালাম', designation: 'নিরাপত্তা প্রহরী', image: 'https://picsum.photos/200/200?random=53' },
+  { id: '1', name: 'মোঃ আনোয়ার হোসেন', designation: 'প্রধান সহকারী ও হিসাবরক্ষণ কর্মকর্তা', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&fit=crop&q=80', phone: '01712-112233' },
+  { id: '2', name: 'সুভাষ চন্দ্র ঘোষ', designation: 'কম্পিউটার অপারেটর ও অফিস সহকারী', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&fit=crop&q=80', phone: '01713-223344' },
+  { id: '3', name: 'মোছাঃ মমতাজ বেগম', designation: 'ল্যাব সহকারী (বিজ্ঞানাগার)', image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&fit=crop&q=80', phone: '01714-334455' },
+  { id: '4', name: 'মোঃ হারুনুর রশীদ', designation: 'নিরাপত্তা ইনচার্জ ও কেয়ারটেকার', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&fit=crop&q=80', phone: '01715-445566' },
 ];
 
 export const COMMITTEE_MEMBERS: CommitteeMember[] = [
-  { id: '1', name: 'আলহাজ্ব মকবুল হোসেন', position: 'সভাপতি', type: 'President', image: 'https://picsum.photos/200/200?random=60' },
-  { id: '2', name: 'মোঃ রফিকুল ইসলাম', position: 'সদস্য সচিব (প্রধান শিক্ষক)', type: 'Member', image: 'https://picsum.photos/200/200?random=1' },
-  { id: '3', name: 'ডাঃ সালমা বেগম', position: 'দাতা সদস্য', type: 'Donor', image: 'https://picsum.photos/200/200?random=61' },
-  { id: '4', name: 'এডভোকেট জহিরুল ইসলাম', position: 'অভিভাবক সদস্য', type: 'Member', image: 'https://picsum.photos/200/200?random=62' },
+  { 
+    id: '1', 
+    name: 'মাকসুদা সুলতানা', 
+    position: 'সভাপতি (Chairman)', 
+    type: 'President', 
+    image: 'https://soshgskhulna.edu.bd/media/180/Picture_PP.jpg' 
+  },
+  { 
+    id: '2', 
+    name: 'ইন্দ্রজিৎ কুমার মন্ডল', 
+    position: 'সদস্য সচিব (অধ্যক্ষ)', 
+    type: 'Member', 
+    image: 'https://soshgskhulna.edu.bd/media/163/P.sir...jpg' 
+  },
+  { 
+    id: '3', 
+    name: 'প্রতিনিধি, এস ও এস চিলড্রেনস ভিলেজ ইন্টারন্যাশনাল', 
+    position: 'নির্বাহী সদস্য', 
+    type: 'Donor', 
+    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&fit=crop&q=80' 
+  },
+  { 
+    id: '4', 
+    name: 'অভিভাবক প্রতিনিধি পরিষদ', 
+    position: 'অভিভাবক সদস্য', 
+    type: 'Member', 
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80' 
+  },
 ];
 
 export const MOCK_STUDENTS: Student[] = [
   { 
-    id: '1', name: 'আব্দুল্লাহ আল মামুন', class: '১০ম', roll: 101, section: 'ক', group: 'বিজ্ঞান', image: 'https://picsum.photos/200/200?random=20', bloodGroup: 'A+',
-    fatherName: 'মোঃ রফিকুল ইসলাম', motherName: 'মোছাঃ ফাতেমা বেগম', guardianPhone: '01712345678'
+    id: '1', name: 'আব্দুল্লাহ আল মামুন', class: '১০ম', roll: 101, section: 'ক', group: 'বিজ্ঞান', image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&fit=crop&q=80', bloodGroup: 'A+',
+    fatherName: 'মোঃ শফিকুল ইসলাম', motherName: 'মোছাঃ ফাতেমা বেগম', guardianPhone: '01712345678'
   },
   { 
-    id: '2', name: 'সুমাইয়া আক্তার', class: '১০ম', roll: 102, section: 'ক', group: 'বিজ্ঞান', image: 'https://picsum.photos/200/200?random=21', bloodGroup: 'O+',
+    id: '2', name: 'সুমাইয়া আক্তার', class: '১০ম', roll: 102, section: 'ক', group: 'বিজ্ঞান', image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&fit=crop&q=80', bloodGroup: 'O+',
     fatherName: 'আব্দুল করিম', motherName: 'নাসিমা খাতুন', guardianPhone: '01812345678'
   },
   { 
-    id: '3', name: 'রাকিব হাসান', class: '১০ম', roll: 201, section: 'খ', group: 'ব্যবসায় শিক্ষা', image: 'https://picsum.photos/200/200?random=22', bloodGroup: 'B+',
+    id: '3', name: 'রাকিব হাসান', class: '১০ম', roll: 201, section: 'খ', group: 'ব্যবসায় শিক্ষা', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&fit=crop&q=80', bloodGroup: 'B+',
     fatherName: 'জহিরুল ইসলাম', motherName: 'রাবেয়া বসরি', guardianPhone: '01912345678'
   },
   { 
-    id: '4', name: 'নুসরাত জাহান', class: '৯ম', roll: 101, section: 'ক', group: 'বিজ্ঞান', image: 'https://picsum.photos/200/200?random=23', bloodGroup: 'A-',
+    id: '4', name: 'নুসরাত জাহান', class: '৯ম', roll: 101, section: 'ক', group: 'বিজ্ঞান', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&fit=crop&q=80', bloodGroup: 'A-',
     fatherName: 'কামাল হোসেন', motherName: 'সালমা আক্তার', guardianPhone: '01612345678'
   },
   { 
-    id: '5', name: 'মেহেদী হাসান', class: '৯ম', roll: 102, section: 'ক', group: 'বিজ্ঞান', image: 'https://picsum.photos/200/200?random=24', bloodGroup: 'AB+',
+    id: '5', name: 'মেহেদী হাসান', class: '৯ম', roll: 102, section: 'ক', group: 'বিজ্ঞান', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&fit=crop&q=80', bloodGroup: 'AB+',
     fatherName: 'আনোয়ার হোসেন', motherName: 'কুলসুম বিবি', guardianPhone: '01512345678'
   },
   { 
-    id: '6', name: 'ফাতেমা তুজ জোহরা', class: '৮ম', roll: 101, section: 'ক', image: 'https://picsum.photos/200/200?random=25', bloodGroup: 'O-',
+    id: '6', name: 'ফাতেমা তুজ জোহরা', class: '৮ম', roll: 101, section: 'ক', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&fit=crop&q=80', bloodGroup: 'O-',
     fatherName: 'আবুল কালাম', motherName: 'মরিয়ম বেগম', guardianPhone: '01798765432'
   },
   { 
-    id: '7', name: 'সজীব আহমেদ', class: '৮ম', roll: 102, section: 'ক', image: 'https://picsum.photos/200/200?random=26', bloodGroup: 'B+',
+    id: '7', name: 'সজীব আহমেদ', class: '৮ম', roll: 102, section: 'ক', image: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=400&fit=crop&q=80', bloodGroup: 'B+',
     fatherName: 'রশিদ মিয়া', motherName: 'হালিমা খাতুন', guardianPhone: '01898765432'
   },
   { 
-    id: '8', name: 'আরিফা সুলতানা', class: '৭ম', roll: 101, section: 'ক', image: 'https://picsum.photos/200/200?random=27', bloodGroup: 'A+',
+    id: '8', name: 'আরিফা সুলতানা', class: '৭ম', roll: 101, section: 'ক', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&fit=crop&q=80', bloodGroup: 'A+',
     fatherName: 'সিদ্দিকুর রহমান', motherName: 'আমেনা বেগম', guardianPhone: '01998765432'
   },
   { 
-    id: '9', name: 'তানভীর রহমান', class: '৭ম', roll: 102, section: 'খ', image: 'https://picsum.photos/200/200?random=28', bloodGroup: 'O+',
+    id: '9', name: 'তানভীর রহমান', class: '৭ম', roll: 102, section: 'খ', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80', bloodGroup: 'O+',
     fatherName: 'মাসুদ রানা', motherName: 'ফরিদা পারভীন', guardianPhone: '01698765432'
   },
   { 
-    id: '10', name: 'জান্নাতুল ফেরদৌস', class: '৬ষ্ঠ', roll: 101, section: 'ক', image: 'https://picsum.photos/200/200?random=29', bloodGroup: 'B-',
+    id: '10', name: 'জান্নাতুল ফেরদৌস', class: '৬ষ্ঠ', roll: 101, section: 'ক', image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&fit=crop&q=80', bloodGroup: 'B-',
     fatherName: 'বেলাল হোসেন', motherName: 'নুরজাহান বেগম', guardianPhone: '01598765432'
-  },
-  { 
-    id: '11', name: 'ইমরান হোসেন', class: '৬ষ্ঠ', roll: 102, section: 'ক', image: 'https://picsum.photos/200/200?random=30', bloodGroup: 'AB-',
-    fatherName: 'Shahjahan Ali', motherName: 'Rahima Khatun', guardianPhone: '01711223344'
-  },
-  { 
-    id: '12', name: 'সামিয়া রহমান', class: '৯ম', roll: 301, section: 'গ', group: 'মানবিক', image: 'https://picsum.photos/200/200?random=31', bloodGroup: 'A+',
-    fatherName: 'Faruk Ahmed', motherName: 'Sultana Razia', guardianPhone: '01811223344'
-  },
+  }
 ];
 
 export const GALLERY_IMAGES: EventImage[] = [
-  { id: '1', url: 'https://picsum.photos/800/600?random=10', caption: 'বার্ষিক ক্রীড়া প্রতিযোগিতা', date: '2024-03-20' },
-  { id: '2', url: 'https://picsum.photos/800/600?random=11', caption: 'বিজ্ঞান মেলা', date: '2024-05-15' },
-  { id: '3', url: 'https://picsum.photos/800/600?random=12', caption: 'সাংস্কৃতিক অনুষ্ঠান', date: '2024-02-21' },
+  { id: '1', url: 'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg', caption: 'এস ও এস হারম্যান মেইনার স্কুল খুলনা - মূল ক্যাম্পাস ভবন', date: '2025-01-10', category: 'Campus' },
+  { id: '2', url: 'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg', caption: 'বিদ্যালয় প্রাঙ্গণ ও প্রাত্যহিক সমাবেশ', date: '2025-01-15', category: 'Assembly' },
+  { id: '3', url: 'https://soshgskhulna.edu.bd/media/155/Slider-6.jpg', caption: 'ডিজিটাল মাল্টিমিডিয়া ক্লাসরুম ও সহশিক্ষা কার্যক্রম', date: '2025-02-21', category: 'Academic' },
 ];
 
 export const DOWNLOAD_ITEMS: DownloadItem[] = [
-  { id: '1', title: 'ভর্তি ফরম ২০২৫', category: 'Form', date: '2024-10-01', size: '1.2 MB' },
-  { id: '2', title: 'একাডেমিক প্রসপেক্টাস', category: 'Prospectus', date: '2024-01-10', size: '3.5 MB' },
-  { id: '3', title: 'ক্লাস রুটিন ২০২৫', category: 'Routine', date: '2024-12-20', size: '500 KB' },
-  { id: '4', title: 'পাঠ্যসূচি (Syllabus) - ৬ষ্ঠ থেকে ১০ম', category: 'Syllabus', date: '2024-01-15', size: '2.1 MB' },
-  { id: '5', title: 'ছুটির তালিকা ২০২৫', category: 'Routine', date: '2024-12-25', size: '200 KB' },
+  { id: '1', title: 'ভর্তি ফরম ও আবেদন নির্দেশিকা ২০২৫', category: 'Form', date: '2025-01-05', size: '1.2 MB' },
+  { id: '2', title: 'একাডেমিক প্রসপেক্টাস ও কারিকুলাম', category: 'Prospectus', date: '2025-01-10', size: '3.5 MB' },
+  { id: '3', title: 'ক্লাস রুটিন ২০২৫ (Prep to Class X)', category: 'Routine', date: '2025-01-12', size: '500 KB' },
+  { id: '4', title: 'পাঠ্যসূচি (Syllabus) ও বুক লিস্ট', category: 'Syllabus', date: '2025-01-15', size: '2.1 MB' },
+  { id: '5', title: 'বার্ষিক ছুটির তালিকা ও একাডেমিক ক্যালেন্ডার ২০২৫', category: 'Routine', date: '2025-01-01', size: '250 KB' },
 ];

@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Lock, User, AlertCircle, ShieldCheck, ArrowRight, GraduationCap, Globe } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -47,10 +47,14 @@ const Login: React.FC = () => {
 
         {/* Header */}
         <div className="bg-emerald-900 p-8 text-center text-white relative">
-          <div className="w-16 h-16 rounded-2xl bg-emerald-800 flex items-center justify-center mx-auto mb-3 shadow-md border border-emerald-700/50">
-            <GraduationCap size={32} className="text-amber-300" />
+          <div className="w-16 h-16 rounded-2xl bg-white p-1 flex items-center justify-center mx-auto mb-3 shadow-md border border-slate-200">
+            <img 
+              src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png" 
+              alt="SOS Hermann Gmeiner School Khulna" 
+              className="w-full h-full object-contain"
+            />
           </div>
-          <h2 className="text-xl font-extrabold">{language === 'bn' ? settings.schoolName : 'Sonar Bangla High School'}</h2>
+          <h2 className="text-base sm:text-lg font-extrabold">{language === 'bn' ? settings.schoolName : 'SOS HERMANN GMEINER SCHOOL KHULNA'}</h2>
           <p className="text-emerald-200 text-xs font-semibold mt-1">
             {language === 'bn' ? 'অ্যাডমিন ও শিক্ষক পোর্টাল লগইন' : 'Admin & Faculty Portal Login'}
           </p>

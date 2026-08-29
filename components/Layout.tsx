@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { 
   Menu, X, Phone, Mail, MapPin, Facebook, GraduationCap, Lock, 
@@ -102,23 +102,27 @@ const Layout: React.FC = () => {
       {/* Main Institution Header */}
       <header className="bg-white border-b border-slate-200/90 shadow-sm sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-4 group">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-white shadow-md shadow-emerald-700/20 group-hover:scale-105 transition-transform duration-300 border-2 border-emerald-400/30">
-              <GraduationCap size={32} className="drop-shadow" />
+          <Link to="/" className="flex items-center gap-3.5 group">
+            <div className="w-14 h-14 rounded-2xl bg-white p-1 flex items-center justify-center shadow-sm border border-slate-200 group-hover:scale-105 transition-transform duration-300 overflow-hidden flex-shrink-0">
+              <img 
+                src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png" 
+                alt="SOS Hermann Gmeiner School Khulna" 
+                className="w-full h-full object-contain"
+              />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight group-hover:text-emerald-700 transition">
-                  {language === 'bn' ? settings.schoolName : 'Sonar Bangla High School'}
+                <h1 className="text-lg md:text-xl lg:text-2xl font-extrabold text-slate-900 tracking-tight leading-tight group-hover:text-emerald-700 transition">
+                  {language === 'bn' ? settings.schoolName : 'SOS HERMANN GMEINER SCHOOL KHULNA'}
                 </h1>
               </div>
               <p className="text-xs md:text-sm font-medium text-slate-500 flex items-center gap-2 mt-0.5">
-                <span className="text-emerald-700 font-semibold uppercase tracking-wider">
-                  {language === 'bn' ? 'সোনার বাংলা উচ্চ বিদ্যালয়' : 'Sonar Bangla High School'}
+                <span className="text-emerald-700 font-bold tracking-wide">
+                  {language === 'bn' ? 'SOS HERMANN GMEINER SCHOOL KHULNA' : 'গল্লামারী, খুলনা - ৯২০৮'}
                 </span>
                 <span className="text-slate-300 hidden sm:inline">•</span>
-                <span className="hidden sm:inline text-slate-500">
-                  {language === 'bn' ? 'শিক্ষা • শৃঙ্খলা • নৈতিকতা' : 'Education • Discipline • Morality'}
+                <span className="hidden sm:inline text-slate-500 font-normal">
+                  {language === 'bn' ? 'শিক্ষা • শৃঙ্খলা • সততা' : 'Honesty is Education • Peace & Progress'}
                 </span>
               </p>
             </div>
@@ -211,12 +215,16 @@ const Layout: React.FC = () => {
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-slate-100">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center font-bold">
-                    <GraduationCap size={22} />
+                  <div className="w-11 h-11 rounded-xl bg-white p-1 flex items-center justify-center border border-slate-200 shadow-sm flex-shrink-0">
+                    <img 
+                      src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png" 
+                      alt="SOS Hermann Gmeiner School Khulna" 
+                      className="w-full h-full object-contain"
+                    />
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-900 text-sm leading-tight">
-                      {language === 'bn' ? settings.schoolName : 'Sonar Bangla High School'}
+                    <h3 className="font-bold text-slate-900 text-xs sm:text-sm leading-tight line-clamp-1">
+                      {language === 'bn' ? settings.schoolName : 'SOS HERMANN GMEINER SCHOOL KHULNA'}
                     </h3>
                     <span className="text-[11px] text-emerald-700 font-semibold">{language === 'bn' ? 'মেনুবার' : 'Navigation'}</span>
                   </div>
@@ -331,15 +339,19 @@ const Layout: React.FC = () => {
             {/* Column 1: School Identity & Overview */}
             <div className="space-y-4">
               <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-white font-bold shadow-md border border-emerald-400/30">
-                  <GraduationCap size={26} />
+                <div className="w-12 h-12 rounded-2xl bg-white p-1 flex items-center justify-center shadow-md border border-slate-200 flex-shrink-0">
+                  <img 
+                    src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png" 
+                    alt="SOS Hermann Gmeiner School Khulna" 
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div>
-                  <h3 className="text-lg font-black text-slate-900 leading-tight">
-                    {language === 'bn' ? settings.schoolName : 'Sonar Bangla High School'}
+                  <h3 className="text-base font-black text-slate-900 leading-tight">
+                    {language === 'bn' ? settings.schoolName : 'SOS HERMANN GMEINER SCHOOL KHULNA'}
                   </h3>
                   <span className="text-[11px] font-bold text-emerald-700 tracking-wide uppercase block">
-                    {language === 'bn' ? 'সোনার বাংলা উচ্চ বিদ্যালয়' : 'Secondary Academic Institution'}
+                    {language === 'bn' ? 'SOS HERMANN GMEINER SCHOOL KHULNA' : 'Gollamari, Khulna - 9208'}
                   </span>
                 </div>
               </div>
