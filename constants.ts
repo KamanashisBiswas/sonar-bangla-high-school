@@ -223,9 +223,87 @@ export const MOCK_STUDENTS: Student[] = [
 ];
 
 export const GALLERY_IMAGES: EventImage[] = [
-  { id: '1', url: 'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg', caption: 'এস ও এস হারম্যান মেইনার স্কুল খুলনা - মূল ক্যাম্পাস ভবন', date: '2025-01-10', category: 'Campus' },
-  { id: '2', url: 'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg', caption: 'বিদ্যালয় প্রাঙ্গণ ও প্রাত্যহিক সমাবেশ', date: '2025-01-15', category: 'Assembly' },
-  { id: '3', url: 'https://soshgskhulna.edu.bd/media/155/Slider-6.jpg', caption: 'ডিজিটাল মাল্টিমিডিয়া ক্লাসরুম ও সহশিক্ষা কার্যক্রম', date: '2025-02-21', category: 'Academic' },
+  { 
+    id: '1', 
+    url: '/hero_slider.jpg', 
+    caption: 'আন্তঃস্কুল ভলিবল ও বার্ষিক ক্রীড়া চ্যাম্পিয়নশিপ ২০২৫', 
+    date: '2025-02-18', 
+    category: 'Sports',
+    photos: [
+      '/hero_slider.jpg',
+      '/hero_slider_2.jpg',
+      'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg',
+      'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=1600&fit=crop&q=85',
+      'https://images.unsplash.com/photo-1544717305-2782549b5136?w=1200&fit=crop&q=80'
+    ]
+  },
+  { 
+    id: '2', 
+    url: '/hero_slider_2.jpg', 
+    caption: 'জয়ন্তী ২০২৬ — ক্রীড়া, সহশিক্ষা ও মেধা মূল্যায়ন উৎসব', 
+    date: '2026-01-20', 
+    category: 'Jayanti',
+    photos: [
+      '/hero_slider_2.jpg',
+      '/hero_slider_3.jpg',
+      '/hero_slider.jpg',
+      'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg',
+      'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&fit=crop&q=80'
+    ]
+  },
+  { 
+    id: '3', 
+    url: '/hero_slider_3.jpg', 
+    caption: 'জয়ন্তী ২০২৬ — শিক্ষা, মানবতা ও ভবিষ্যৎ সম্মাননা স্মারক প্রদান', 
+    date: '2026-01-22', 
+    category: 'Leadership',
+    photos: [
+      '/hero_slider_3.jpg',
+      'https://soshgskhulna.edu.bd/media/163/P.sir...jpg',
+      'https://soshgskhulna.edu.bd/media/180/Picture_PP.jpg',
+      '/hero_slider_2.jpg',
+      'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=1200&fit=crop&q=80'
+    ]
+  },
+  { 
+    id: '4', 
+    url: 'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg', 
+    caption: 'এস ও এস হারম্যান মেইনার স্কুল খুলনা — সুদৃশ্য মূল একাডেমি ও সবুজ ক্যাম্পাস', 
+    date: '2025-01-10', 
+    category: 'Campus',
+    photos: [
+      'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg',
+      'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg',
+      'https://images.unsplash.com/photo-1562774053-701939374585?w=1200&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&fit=crop&q=80'
+    ]
+  },
+  { 
+    id: '5', 
+    url: 'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg', 
+    caption: 'বিদ্যালয় প্রাঙ্গণ ও শিক্ষার্থীদের সুশৃঙ্খল প্রাত্যহিক সমাবেশ', 
+    date: '2025-01-15', 
+    category: 'Assembly',
+    photos: [
+      'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg',
+      '/hero_slider.jpg',
+      'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=1200&fit=crop&q=80'
+    ]
+  },
+  { 
+    id: '6', 
+    url: 'https://soshgskhulna.edu.bd/media/155/Slider-6.jpg', 
+    caption: 'স্মার্ট মাল্টিমিডিয়া ক্লাসরুম ও ব্যবহারিক বিজ্ঞান ল্যাব সেশন', 
+    date: '2025-02-21', 
+    category: 'Academic',
+    photos: [
+      'https://soshgskhulna.edu.bd/media/155/Slider-6.jpg',
+      'https://images.unsplash.com/photo-1588072432836-e10032774350?w=1200&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&fit=crop&q=80'
+    ]
+  },
 ];
 
 export const DOWNLOAD_ITEMS: DownloadItem[] = [

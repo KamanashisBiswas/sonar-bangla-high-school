@@ -86,7 +86,27 @@ const loadData = <T,>(key: string, defaultData: T): T => {
         return item;
       }) as unknown as T;
     }
-    return parsed;
+    if (key === 'gallery' && Array.isArray(parsed)) {
+      const mockMap = new Map((defaultData as EventImage[]).map(g => [g.id, g]));
+      const existingUrls = new Set(parsed.map((g: EventImage) => g.url));
+      const newItems = (defaultData as EventImage[]).filter(g => !existingUrls.has(g.url));
+      
+      const updatedExisting = parsed.map((item: EventImage) => {
+        const mockItem = mockMap.get(item.id);
+        if (mockItem) {
+          return {
+            ...item,
+            photos: (item.photos && item.photos.length > 1) ? item.photos : mockItem.photos,
+            caption: item.caption || mockItem.caption,
+            category: item.category || mockItem.category
+          };
+        }
+        return item;
+      });
+
+      return [...newItems, ...updatedExisting] as unknown as T;
+    }
+    return parsed as unknown as T;
   } catch (e) {
     return defaultData;
   }

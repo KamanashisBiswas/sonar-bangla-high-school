@@ -22,6 +22,10 @@ import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Administration from './pages/Administration';
 import Downloads from './pages/Downloads';
+import FacultyExcellence from './pages/FacultyExcellence';
+import SmartClassrooms from './pages/SmartClassrooms';
+import AcademicBrilliance from './pages/AcademicBrilliance';
+import CampusTour from './pages/CampusTour';
 
 // Admin Pages
 import AdminDashboard from './pages/admin/Dashboard';
@@ -57,6 +61,10 @@ const App: React.FC = () => {
                 <Route path="gallery" element={<Gallery />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="about" element={<About />} />
+                <Route path="faculty-excellence" element={<FacultyExcellence />} />
+                <Route path="smart-classrooms" element={<SmartClassrooms />} />
+                <Route path="academic-excellence" element={<AcademicBrilliance />} />
+                <Route path="campus-tour" element={<CampusTour />} />
                 <Route path="admin-login" element={<Login />} />
               </Route>
 

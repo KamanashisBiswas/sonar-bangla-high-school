@@ -128,6 +128,7 @@ export interface EventImage {
   caption: string;
   date?: string;
   category?: string;
+  photos?: string[];
 }
 
 export interface DownloadItem {

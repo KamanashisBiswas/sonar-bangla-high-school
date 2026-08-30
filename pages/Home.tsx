@@ -9,7 +9,7 @@ import {
   Monitor, Library, Play, Image as ImageIcon,
   Clock, MapPin, Trophy, Sparkles, GraduationCap, BarChart3,
   Layers, Briefcase, Activity, ShieldCheck, FileText, ChevronRight, ChevronLeft,
-  Target, Compass, HeartHandshake, Phone
+  Target, Compass, HeartHandshake, Phone, Headphones, Laptop, Presentation, TreePine
 } from 'lucide-react';
 
 const NOTICE_EN_MAP: Record<string, string> = {
@@ -177,7 +177,7 @@ const Home: React.FC = () => {
             {/* Text & Button Layer (Zero Dark Gradient Overlay) */}
             <div className="absolute inset-0 z-20 flex items-end pointer-events-none">
               {/* Photo Description & Read More Button (No Card Box, Clean Typography with Text Shadow) */}
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-16 sm:pb-16 lg:pb-20 pointer-events-auto">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-16 sm:pb-20 md:pb-24 lg:pb-28 pointer-events-auto">
                 <div className="max-w-2xl space-y-1.5 sm:space-y-2 animate-fade-in">
                   <span className="inline-block text-[11px] sm:text-xs font-bold text-emerald-300 uppercase tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
                     {slide.category}
@@ -201,8 +201,8 @@ const Home: React.FC = () => {
           </div>
         ))}
 
-        {/* Carousel Active Panel Indicators (Positioned at Bottom Right) */}
-        <div className="absolute bottom-16 sm:bottom-14 lg:bottom-16 right-4 sm:right-6 lg:right-8 z-20 flex items-center gap-2 bg-slate-950/60 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/20 shadow-xl">
+        {/* Carousel Active Panel Indicators (Lifted Comfortably Above Floating Action Cards) */}
+        <div className="absolute bottom-16 sm:bottom-20 md:bottom-24 right-4 sm:right-6 lg:right-8 z-20 flex items-center gap-2 bg-slate-950/70 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/20 shadow-xl">
           {heroSlides.map((_, index) => (
             <button
               key={index}
@@ -216,54 +216,164 @@ const Home: React.FC = () => {
             />
           ))}
         </div>
-
-        {/* Quick Portal Access Ribbon */}
-        <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 hidden lg:block shadow-md z-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center text-xs">
-            <div className="flex items-center gap-8">
-              <span className="font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-2.5 h-2.5 bg-emerald-600 rounded-full animate-pulse"></span>
-                {t.home.quickLinks}:
-              </span>
-              <Link to="/admission" className="text-slate-600 hover:text-emerald-700 font-semibold flex items-center gap-1.5 transition">
-                <BookOpen size={14} className="text-emerald-600" /> {t.topbar.onlineAdmission}
-              </Link>
-              <Link to="/academic" className="text-slate-600 hover:text-emerald-700 font-semibold flex items-center gap-1.5 transition">
-                <Calendar size={14} className="text-blue-600" /> {t.academic.routineTitle}
-              </Link>
-              <Link to="/contact" className="text-slate-600 hover:text-emerald-700 font-semibold flex items-center gap-1.5 transition">
-                <Phone size={14} className="text-rose-600" /> {language === 'bn' ? 'যোগাযোগ ও হেল্পডেস্ক' : 'Contact Us & Help Desk'}
-              </Link>
-            </div>
-          </div>
-        </div>
       </section>
 
-      {/* Main Content Body */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        
-        {/* Quick 4-Feature Highlights */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-16 -mt-10 lg:-mt-6 relative z-10">
-          {[
-            { title: t.home.highlightsTitle1, desc: t.home.highlightsDesc1, icon: Users, color: 'emerald' },
-            { title: t.home.highlightsTitle2, desc: t.home.highlightsDesc2, icon: Monitor, color: 'blue' },
-            { title: t.home.highlightsTitle3, desc: t.home.highlightsDesc3, icon: Trophy, color: 'amber' },
-            { title: t.home.highlightsTitle4, desc: t.home.highlightsDesc4, icon: ShieldCheck, color: 'purple' },
-          ].map((card, i) => (
-            <div 
-              key={i} 
-              className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200/90 flex items-start gap-4 group"
-            >
-              <div className={`w-12 h-12 rounded-xl bg-${card.color}-50 text-${card.color}-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-inner`}>
-                <card.icon size={24} />
-              </div>
-              <div>
-                <h4 className="font-bold text-slate-900 text-base mb-1">{card.title}</h4>
-                <p className="text-xs text-slate-500 leading-relaxed">{card.desc}</p>
-              </div>
+      {/* 3-Column Floating Quick Action Cards (Directly Below Carousel) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-8 md:-mt-10 relative z-30 mb-6">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl shadow-slate-200/70 border border-slate-100/90 p-3 sm:p-4 grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 md:divide-x md:divide-slate-200/70">
+          
+          {/* Card 1: Online Admission */}
+          <Link 
+            to="/admission" 
+            className="flex items-center gap-4 group p-3.5 sm:p-4 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-slate-200/90 hover:-translate-y-0.5 border border-transparent hover:border-slate-100 transition-all duration-300 cursor-pointer"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 shadow-xs">
+              <Laptop size={24} />
             </div>
-          ))}
+            <div>
+              <h4 className="font-extrabold text-slate-900 text-sm sm:text-base group-hover:text-emerald-700 transition">
+                {language === 'bn' ? 'অনলাইন ভর্তি আবেদন' : 'Online Admission'}
+              </h4>
+              <p className="text-xs text-slate-500 font-medium mt-0.5">
+                {language === 'bn' ? 'অনলাইনে ভর্তির আবেদন করুন' : 'Apply for admission online'}
+              </p>
+            </div>
+          </Link>
+
+          {/* Card 2: Daily Class Schedule */}
+          <Link 
+            to="/academic" 
+            className="flex items-center gap-4 group p-3.5 sm:p-4 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-slate-200/90 hover:-translate-y-0.5 border border-transparent hover:border-slate-100 transition-all duration-300 md:pl-6 cursor-pointer"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 shadow-xs">
+              <Calendar size={24} />
+            </div>
+            <div>
+              <h4 className="font-extrabold text-slate-900 text-sm sm:text-base group-hover:text-emerald-700 transition">
+                {language === 'bn' ? 'শ্রেণি কার্যক্রম ও রুটিন' : 'Daily Class Schedule'}
+              </h4>
+              <p className="text-xs text-slate-500 font-medium mt-0.5">
+                {language === 'bn' ? 'ক্লাস রুটিন ও সময়সূচি দেখুন' : 'View routine & class time'}
+              </p>
+            </div>
+          </Link>
+
+          {/* Card 3: Contact & Help Desk */}
+          <Link 
+            to="/contact" 
+            className="flex items-center gap-4 group p-3.5 sm:p-4 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-slate-200/90 hover:-translate-y-0.5 border border-transparent hover:border-slate-100 transition-all duration-300 md:pl-6 cursor-pointer"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0 shadow-xs">
+              <Headphones size={24} />
+            </div>
+            <div>
+              <h4 className="font-extrabold text-slate-900 text-sm sm:text-base group-hover:text-emerald-700 transition">
+                {language === 'bn' ? 'যোগাযোগ ও হেল্পডেস্ক' : 'Contact & Help Desk'}
+              </h4>
+              <p className="text-xs text-slate-500 font-medium mt-0.5">
+                {language === 'bn' ? 'আমরা আপনাকে সহায়তা করতে প্রস্তুত' : "We're here to help you"}
+              </p>
+            </div>
+          </Link>
+
         </div>
+      </div>
+
+      {/* Main Content Body */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        
+        {/* OUR CORE PILLARS & CAMPUS EXCELLENCE (Matching Reference Image 1) */}
+        <section className="mb-16 -mt-2 sm:-mt-4 relative z-10">
+          
+          {/* Section Header */}
+          <div className="text-center mb-8">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight uppercase">
+              {language === 'bn' ? 'আমাদের মূল ভিত্তি ও ক্যাম্পাস শ্রেষ্ঠত্ব' : 'OUR CORE PILLARS & CAMPUS EXCELLENCE'}
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
+              {language === 'bn' 
+                ? 'গল্লামারী, খুলনায় মানবিক ও যুগোপযোগী শিক্ষাদানে অঙ্গীকারবদ্ধ।' 
+                : 'Committed to Holistic Education and Academic Brilliance at Gollamari, Khulna.'}
+            </p>
+          </div>
+
+          {/* 4 Pillars Grid with 3D Glossy Icon Blocks & Action Links */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              {
+                title: language === 'bn' ? 'যোগ্য ও অভিজ্ঞ শিক্ষকবৃন্দ' : 'Qualified Faculty',
+                desc: language === 'bn' ? 'আমাদের নিবেদিতপ্রাণ, অভিজ্ঞ ও উচ্চ প্রশিক্ষিত শিক্ষকদের পাঠদান।' : 'Instruction by our dedicated, experienced, and highly trained educators.',
+                action: language === 'bn' ? 'আরও জানুন →' : 'Learn More →',
+                link: '/faculty-excellence',
+                icon: Users,
+                gradient: 'from-emerald-200 via-emerald-300 to-emerald-400 text-emerald-950 ring-emerald-300/80 shadow-emerald-200/60',
+              },
+              {
+                title: language === 'bn' ? 'মাল্টিমিডিয়া স্মার্ট ক্লাসরুম' : 'Multimedia Smart Classrooms',
+                desc: language === 'bn' ? 'ডিজিটাল প্রজেক্টর ও উন্নত ভিজ্যুয়াল লার্নিং সমৃদ্ধ আধুনিক শ্রেণিকক্ষ।' : 'Equipped with integrated digital projectors and advanced visual learning technologies.',
+                action: language === 'bn' ? 'বিস্তারিত দেখুন →' : 'View Details →',
+                link: '/smart-classrooms',
+                icon: Presentation,
+                gradient: 'from-sky-200 via-blue-300 to-blue-400 text-blue-950 ring-blue-300/80 shadow-blue-200/60',
+              },
+              {
+                title: language === 'bn' ? 'একাডেমিক সাফল্য ও ঐতিহ্য' : 'Academic Brilliance & Tradition',
+                desc: language === 'bn' ? 'বোর্ড ও বার্ষিক পরীক্ষায় শতভাগ পাস ও ধারাবাহিক ঈর্ষণীয় সাফল্য।' : 'A consistent history of board and annual examination excellence.',
+                action: language === 'bn' ? 'ফলাফল ও রেকর্ড →' : 'Record →',
+                link: '/academic-excellence',
+                icon: Trophy,
+                gradient: 'from-amber-200 via-amber-300 to-amber-400 text-amber-950 ring-amber-300/80 shadow-amber-200/60',
+              },
+              {
+                title: language === 'bn' ? 'নিরাপদ ও সুশৃঙ্খল সবুজ ক্যাম্পাস' : 'Safe, Green & Disciplined Campus',
+                desc: language === 'bn' ? 'খুলনার গল্লামারীতে মনোরম, শান্ত ও শিক্ষার্থীবান্ধব প্রাকৃতিক পরিবেশ।' : 'A peaceful, learner-friendly environment in Gollamari, Khulna.',
+                action: language === 'bn' ? 'ক্যাম্পাস ট্যুর →' : 'Take a Tour →',
+                link: '/campus-tour',
+                icon: TreePine,
+                gradient: 'from-purple-200 via-purple-300 to-purple-400 text-purple-950 ring-purple-300/80 shadow-purple-200/60',
+              },
+            ].map((card, i) => (
+              <Link 
+                key={i} 
+                to={card.link}
+                className="bg-white p-5 sm:p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200/80 flex flex-col justify-between group hover:-translate-y-1 cursor-pointer"
+              >
+                <div className="flex items-start gap-4">
+                  {/* 3D Glossy Glassmorphism Icon Block */}
+                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${card.gradient} flex items-center justify-center flex-shrink-0 shadow-md ring-2 group-hover:scale-105 transition-all duration-300`}>
+                    <card.icon size={26} strokeWidth={2.2} />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-extrabold text-slate-900 text-sm sm:text-base leading-snug group-hover:text-emerald-700 transition">
+                      {card.title}
+                    </h4>
+                    <p className="text-xs text-slate-500 font-medium leading-relaxed mt-1.5">
+                      {card.desc}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Footer Action Link */}
+                <div className="mt-4 pt-3 border-t border-slate-100/80">
+                  <span className="text-xs font-bold text-slate-700 group-hover:text-emerald-700 inline-flex items-center gap-1 transition">
+                    {card.action}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Bottom Explore Admissions Button */}
+          <div className="text-center mt-6">
+            <Link 
+              to="/admission"
+              className="inline-block px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-700 bg-white hover:bg-emerald-700 hover:text-white border border-slate-200 shadow-sm transition-all duration-200 cursor-pointer"
+            >
+              {language === 'bn' ? 'ভর্তি সংক্রান্ত তথ্য (Explore Admissions)' : 'EXPLORE ADMISSIONS'}
+            </Link>
+          </div>
+
+        </section>
 
         {/* 2-Column Grid: Left (Principal Message & Success) | Right (Interactive Notice Board & Quick Actions) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
