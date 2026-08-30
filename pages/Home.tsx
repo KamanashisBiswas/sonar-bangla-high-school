@@ -26,41 +26,45 @@ const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  // Hero carousel slides
+  // Hero carousel slides based on photo gallery
   const heroSlides = useMemo(() => [
     {
-      image: settings.heroImage || 'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg',
-      badge: language === 'bn' ? 'মানসম্মত শিক্ষা ও সুশৃঙ্খল মেলবন্ধন • স্থাপিত ১৯৮৭' : `Excellence in Education • Estd ${settings.establishedYear}`,
-      title: language === 'bn' ? settings.heroTitle : 'Education • Discipline • Integrity — Commitment to Bright Future',
-      subtitle: language === 'bn' ? settings.heroSubtitle : t.home.heroSubtitle,
-      primaryBtn: { text: t.home.applyNow, link: '/admission', icon: BookOpen },
-      secondaryBtn: { text: t.home.seeResults, link: '/result', icon: ShieldCheck }
+      image: '/hero_slider.jpg',
+      title: language === 'bn' ? 'আন্তঃস্কুল ভলিবল ও ক্রীড়া প্রতিযোগিতায় চ্যাম্পিয়ন হওয়ার গৌরবময় মুহূর্ত' : 'Champions in Inter-School Volleyball & Sports Tournament',
+      category: language === 'bn' ? 'ফটো গ্যালারি • ক্রীড়া ও সহশিক্ষা' : 'Photo Gallery • Sports & Achievements',
+      link: '/gallery'
+    },
+    {
+      image: '/hero_slider_2.jpg',
+      title: language === 'bn' ? 'জয়ন্তী ২০২৬ — ক্রীড়া ও সহশিক্ষা কার্যক্রমে শিক্ষার্থীদের গৌরবময় অর্জন' : 'Jayanti 2026 — Glorious Student Triumphs in Sports & Co-Curricular',
+      category: language === 'bn' ? 'ফটো গ্যালারি • জয়ন্তী ২০২৬' : 'Photo Gallery • Jayanti 2026',
+      link: '/gallery'
+    },
+    {
+      image: '/hero_slider_3.jpg',
+      title: language === 'bn' ? 'জয়ন্তী ২০২৬ — শিক্ষা, মানবতা ও ভবিষ্যৎ গড়ার প্রত্যয়' : 'Jayanti 2026 — Education, Humanity & Fostering Bright Futures',
+      category: language === 'bn' ? 'ফটো গ্যালারি • অধ্যক্ষ ও জয়ন্তী ২০২৬' : 'Photo Gallery • Leadership & Jayanti',
+      link: '/gallery'
+    },
+    {
+      image: 'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg',
+      title: language === 'bn' ? 'এস ও এস হারম্যান মেইনার স্কুল খুলনা — মূল একাডেমি ও সবুজ ক্যাম্পাস' : 'SOS Hermann Gmeiner School Khulna — Main Academic Campus & Grounds',
+      category: language === 'bn' ? 'ফটো গ্যালারি • ক্যাম্পাস ভবন' : 'Photo Gallery • Campus',
+      link: '/gallery'
     },
     {
       image: 'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg',
-      badge: language === 'bn' ? 'সুশৃঙ্খল ক্যাম্পাস ও প্রাত্যহিক সমাবেশ' : 'Disciplined Campus & Daily Assembly',
-      title: language === 'bn' ? 'নৈতিক মূল্যবোধ ও দেশপ্রেমিক নাগরিক গড়ার প্রত্যয়' : 'Fostering Ethical Values & Responsible Citizens',
-      subtitle: language === 'bn' ? 'শিক্ষার্থীবান্ধব ও আনন্দময় পরিবেশে আধুনিক যুগোপযোগী শিক্ষা ও চরিত্র গঠনের সর্বোত্তম বিদ্যাপীঠ।' : 'A student-friendly, joyful environment ensuring holistic character development and modern quality education.',
-      primaryBtn: { text: language === 'bn' ? 'শিক্ষক পরিচিতি' : 'Our Faculty', link: '/teachers', icon: Users },
-      secondaryBtn: { text: language === 'bn' ? 'একাডেমিক তথ্য' : 'Academic Info', link: '/academic', icon: BookOpen }
+      title: language === 'bn' ? 'সুশৃঙ্খল পরিবেশ ও শিক্ষার্থীদের প্রাত্যহিক সমাবেশ' : 'Disciplined Environment & Morning Student Assembly',
+      category: language === 'bn' ? 'ফটো গ্যালারি • প্রাত্যহিক সমাবেশ' : 'Photo Gallery • Assembly',
+      link: '/gallery'
     },
     {
       image: 'https://soshgskhulna.edu.bd/media/155/Slider-6.jpg',
-      badge: language === 'bn' ? 'ডিজিটাল মাল্টিমিডিয়া ক্লাসরুম ও বিজ্ঞান চর্চা' : 'Digital Classrooms & Science Labs',
-      title: language === 'bn' ? 'আধুনিক প্রযুক্তি ও বিজ্ঞানমনস্ক শিক্ষায় অগ্রগামী' : 'Pioneering in STEM & Modern Digital Learning',
-      subtitle: language === 'bn' ? 'স্মার্ট মাল্টিমিডিয়া ক্লাসরুম, আধুনিক কম্পিউটার ও সাইন্স ল্যাবে বাস্তবমুখী শিক্ষার অপার সুযোগ।' : 'State-of-the-art multimedia classrooms, advanced computer labs, and hands-on science education.',
-      primaryBtn: { text: language === 'bn' ? 'অনলাইন ভর্তি' : 'Online Admission', link: '/admission', icon: BookOpen },
-      secondaryBtn: { text: language === 'bn' ? 'নোটিশ বোর্ড' : 'Notice Board', link: '/notices', icon: FileText }
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=1600&fit=crop&q=85',
-      badge: language === 'bn' ? 'সহশিক্ষা, ক্রীড়া ও সাংস্কৃতিক অঙ্গন' : 'Co-Curricular & Sports Championship',
-      title: language === 'bn' ? 'ক্রীড়া, বিতর্ক ও সাংস্কৃতিক অঙ্গনে গৌরবময় সাফল্য' : 'Glorious Triumphs in Sports, Debate & Cultural Arts',
-      subtitle: language === 'bn' ? 'পড়াশোনার পাশাপাশি শারীরিক ও মানসিক বিকাশের জন্য বছরব্যাপী নানা সহশিক্ষা কার্যক্রম ও ক্রীড়া উৎসব।' : 'Year-round sports tournaments, cultural meets, and debate competitions ensuring 360-degree student growth.',
-      primaryBtn: { text: language === 'bn' ? 'ফটো গ্যালারি' : 'Photo Gallery', link: '/gallery', icon: ImageIcon },
-      secondaryBtn: { text: language === 'bn' ? 'যোগাযোগ করুন' : 'Contact Us', link: '/contact', icon: Phone }
+      title: language === 'bn' ? 'স্মার্ট ডিজিটাল মাল্টিমিডিয়া ক্লাসরুম ও বিজ্ঞান ল্যাব' : 'Smart Digital Classrooms & Hands-on Science Labs',
+      category: language === 'bn' ? 'ফটো গ্যালারি • ডিজিটাল ল্যাব' : 'Photo Gallery • Digital Labs',
+      link: '/gallery'
     }
-  ], [settings, language, t]);
+  ], [language]);
 
   // Auto slide interval
   useEffect(() => {
@@ -70,14 +74,6 @@ const Home: React.FC = () => {
     }, 5000);
     return () => clearInterval(timer);
   }, [isHovered, heroSlides.length]);
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1));
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-  };
 
   // Filtered notices
   const filteredNotices = useMemo(() => {
@@ -157,59 +153,46 @@ const Home: React.FC = () => {
     <div className="bg-slate-50 relative">
       <Marquee />
 
-      {/* Hero Section Carousel */}
+      {/* Hero Section Carousel - 100% Full Fit, Zero Crop, Zero Whitespace */}
       <section 
-        className="relative h-[520px] sm:h-[560px] md:h-[640px] w-full overflow-hidden select-none"
+        className="relative w-full h-[360px] sm:h-[460px] md:h-[540px] lg:h-[600px] overflow-hidden select-none bg-slate-900"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Background Image Slides with Smooth Fade */}
+        {/* Background Image Slides with Smooth Fade & Full Fit */}
         {heroSlides.map((slide, index) => (
           <div
             key={index}
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentSlide ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 pointer-events-none z-0'
+              index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none z-0'
             }`}
-            style={{
-              backgroundImage: `url("${slide.image}")`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              transition: 'opacity 1000ms ease-in-out, transform 7000ms ease-out'
-            }}
           >
-            {/* Dark & Emerald Overlay for Superior Text Legibility */}
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-emerald-950/85 to-slate-900/45 flex items-center">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <div className="max-w-2xl text-white space-y-5 sm:space-y-6">
-                  {/* Badge */}
-                  <div className="inline-flex items-center gap-2 bg-emerald-500/25 backdrop-blur-md border border-emerald-400/50 text-emerald-200 text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-lg animate-fade-in">
-                    <Sparkles size={15} className="text-amber-300 animate-pulse" />
-                    <span>{slide.badge}</span>
-                  </div>
-                  
-                  {/* Title */}
-                  <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight drop-shadow-lg text-white">
+            {/* Image fills 100% of the carousel area completely without any white space or cropping */}
+            <img 
+              src={slide.image} 
+              alt={slide.title} 
+              className="w-full h-full object-fill"
+            />
+
+            {/* Text & Button Layer (Zero Dark Gradient Overlay) */}
+            <div className="absolute inset-0 z-20 flex items-end pointer-events-none">
+              {/* Photo Description & Read More Button (No Card Box, Clean Typography with Text Shadow) */}
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-16 sm:pb-16 lg:pb-20 pointer-events-auto">
+                <div className="max-w-2xl space-y-1.5 sm:space-y-2 animate-fade-in">
+                  <span className="inline-block text-[11px] sm:text-xs font-bold text-emerald-300 uppercase tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
+                    {slide.category}
+                  </span>
+                  <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-snug text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] max-w-xl">
                     {slide.title}
                   </h2>
-                  
-                  {/* Subtitle */}
-                  <p className="text-sm sm:text-base md:text-lg text-slate-200 drop-shadow max-w-xl font-normal leading-relaxed">
-                    {slide.subtitle}
-                  </p>
-                  
-                  {/* Action Buttons */}
-                  <div className="pt-2 flex flex-wrap gap-3.5 sm:gap-4">
-                    <Link 
-                      to={slide.primaryBtn.link} 
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl font-bold transition shadow-xl shadow-emerald-950/40 hover:scale-105 transform flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base cursor-pointer"
+                  <div className="pt-1.5">
+                    <Link
+                      to="/gallery"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold transition shadow-lg shadow-slate-950/60 hover:scale-105 transform inline-flex items-center gap-1.5 text-xs sm:text-sm cursor-pointer"
                     >
-                      <slide.primaryBtn.icon size={18}/> {slide.primaryBtn.text} <ArrowRight size={18}/>
-                    </Link>
-                    <Link 
-                      to={slide.secondaryBtn.link} 
-                      className="bg-white/15 backdrop-blur-md border border-white/40 hover:bg-white/25 text-white px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl font-bold transition flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base cursor-pointer"
-                    >
-                      <slide.secondaryBtn.icon size={18} className="text-amber-300"/> {slide.secondaryBtn.text}
+                      <ImageIcon size={16} />
+                      <span>{language === 'bn' ? 'ফটো গ্যালারি দেখুন' : 'Read More'}</span>
+                      <ArrowRight size={15} />
                     </Link>
                   </div>
                 </div>
@@ -218,31 +201,15 @@ const Home: React.FC = () => {
           </div>
         ))}
 
-        {/* Carousel Navigation Arrows */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-slate-950/40 hover:bg-emerald-600 text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-xl cursor-pointer"
-          aria-label="Previous Slide"
-        >
-          <ChevronLeft size={24} />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-slate-950/40 hover:bg-emerald-600 text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-xl cursor-pointer"
-          aria-label="Next Slide"
-        >
-          <ChevronRight size={24} />
-        </button>
-
-        {/* Carousel Slide Indicators */}
-        <div className="absolute bottom-16 sm:bottom-14 lg:bottom-16 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5 bg-slate-950/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+        {/* Carousel Active Panel Indicators (Positioned at Bottom Right) */}
+        <div className="absolute bottom-16 sm:bottom-14 lg:bottom-16 right-4 sm:right-6 lg:right-8 z-20 flex items-center gap-2 bg-slate-950/60 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/20 shadow-xl">
           {heroSlides.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
               className={`transition-all duration-300 rounded-full cursor-pointer ${
                 index === currentSlide 
-                  ? 'w-8 h-2.5 bg-emerald-400 shadow-md shadow-emerald-500/50' 
+                  ? 'w-7 h-2.5 bg-emerald-400 shadow-md shadow-emerald-500/50' 
                   : 'w-2.5 h-2.5 bg-white/40 hover:bg-white/80'
               }`}
               aria-label={`Go to slide ${index + 1}`}
@@ -252,7 +219,7 @@ const Home: React.FC = () => {
 
         {/* Quick Portal Access Ribbon */}
         <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 hidden lg:block shadow-md z-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center text-xs">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center text-xs">
             <div className="flex items-center gap-8">
               <span className="font-bold text-slate-900 flex items-center gap-2">
                 <span className="w-2.5 h-2.5 bg-emerald-600 rounded-full animate-pulse"></span>
@@ -264,12 +231,9 @@ const Home: React.FC = () => {
               <Link to="/academic" className="text-slate-600 hover:text-emerald-700 font-semibold flex items-center gap-1.5 transition">
                 <Calendar size={14} className="text-blue-600" /> {t.academic.routineTitle}
               </Link>
-              <Link to="/downloads" className="text-slate-600 hover:text-emerald-700 font-semibold flex items-center gap-1.5 transition">
-                <FileText size={14} className="text-amber-600" /> {t.nav.downloads}
+              <Link to="/contact" className="text-slate-600 hover:text-emerald-700 font-semibold flex items-center gap-1.5 transition">
+                <Phone size={14} className="text-rose-600" /> {language === 'bn' ? 'যোগাযোগ ও হেল্পডেস্ক' : 'Contact Us & Help Desk'}
               </Link>
-            </div>
-            <div className="text-slate-500 font-medium">
-              EIIN: <span className="font-bold text-slate-800">{toBanglaNum(settings.eiinCode)}</span> | {t.topbar.helpline}: <span className="font-bold text-slate-800">{toBanglaNum(settings.contactPhone)}</span>
             </div>
           </div>
         </div>
