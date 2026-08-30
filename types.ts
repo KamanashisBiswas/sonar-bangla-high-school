@@ -14,6 +14,8 @@ export interface Teacher {
   subject: string;
   image: string;
   qualifications: string;
+  phone?: string;
+  email?: string;
 }
 
 export interface Staff {
@@ -40,20 +42,21 @@ export interface SubjectResult {
   obtained: number;
   grade: string;
   gpa: number;
+  subjectEn?: string;
 }
 
 export interface Result {
   id: string;
   studentName: string;
   fatherName: string;
-  motherName: string;
+  motherName?: string;
   roll: string;
   class: string;
-  section: string;
+  section?: string;
   year: string;
   examName: string;
-  group: string;
-  dob: string;
+  group?: string;
+  dob?: string;
   gpa: number;
   grade: string;
   status: 'Passed' | 'Failed';
@@ -65,7 +68,7 @@ export interface Student {
   id: string;
   name: string;
   class: string;
-  roll: number;
+  roll: string | number;
   section: string;
   image: string;
   group?: string;
@@ -121,7 +124,7 @@ export interface EventImage {
   id: string;
   url: string;
   caption: string;
-  date: string;
+  date?: string;
   category?: string;
 }
 

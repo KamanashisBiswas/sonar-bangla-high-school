@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Student } from '../types';
@@ -14,7 +14,7 @@ const Students: React.FC = () => {
   const filteredStudents = students.filter(student => {
     const matchesClass = selectedClass === 'all' || student.class.includes(selectedClass) || student.class === selectedClass;
     const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          student.roll.includes(searchTerm);
+                          String(student.roll).includes(searchTerm);
     return matchesClass && matchesSearch;
   });
 

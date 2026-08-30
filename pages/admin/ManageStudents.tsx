@@ -53,7 +53,7 @@ const ManageStudents: React.FC = () => {
 
   const filteredStudents = students.filter(s => 
     s.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    s.roll.includes(searchTerm) ||
+    String(s.roll).includes(searchTerm) ||
     s.class.includes(searchTerm)
   );
 
