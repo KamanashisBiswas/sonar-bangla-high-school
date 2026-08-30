@@ -9,7 +9,8 @@ import {
   Monitor, Library, Play, Image as ImageIcon,
   Clock, MapPin, Trophy, Sparkles, GraduationCap, BarChart3,
   Layers, Briefcase, Activity, ShieldCheck, FileText, ChevronRight, ChevronLeft,
-  Target, Compass, HeartHandshake, Phone, Headphones, Laptop, Presentation, TreePine
+  Target, Compass, HeartHandshake, Phone, Headphones, Laptop, Presentation, TreePine,
+  Download, Link2, Leaf, Shield, Heart
 } from 'lucide-react';
 
 const NOTICE_EN_MAP: Record<string, string> = {
@@ -17,6 +18,16 @@ const NOTICE_EN_MAP: Record<string, string> = {
   'এস.এস.সি পরীক্ষা ২০২৫ এর ফলাফল ও মার্কশিট সংগ্রহ': 'SSC Examination 2025 Results & Marksheet Distribution',
   'প্রেপ-১ ও ৬ষ্ঠ শ্রেণিতে অনলাইন ভর্তি আবেদন কার্যক্রম ২০২৫': 'Online Admission Open for Prep-1 & Class 6 (Session 2025)',
   'আন্তর্জাতিক মাতৃভাষা দিবস ও বার্ষিক ক্রীড়া উৎসব উদযাপন': 'International Mother Language Day & Annual Sports Meet',
+  'অর্ধ-বার্ষিক ও প্রাক-নির্বাচনী পরীক্ষা ২০২৫ এর সময়সূচি প্রকাশ': 'Half-Yearly & Pre-Test Exam 2025 Schedule Published',
+  'বার্ষিক বিজ্ঞান মেলা ও আইসিটি উদ্ভাবন প্রদর্শনী ২০২৫': 'Annual Science Fair & ICT Innovation Expo 2025',
+  'মাসিক বেতন ও পরীক্ষার ফি পরিশোধের সময়সীমা সংক্রান্ত': 'Notice Regarding Monthly Tuition & Exam Fee Payment',
+  'নতুন শিক্ষাবর্ষে ডিজিটাল আইডি কার্ড ও ইউনিফর্ম বিতরণ': 'Distribution of Digital Student ID Card & School Uniform',
+};
+
+const PERSON_NAME_EN_MAP: Record<string, string> = {
+  'মাকসুদা সুলতানা': 'Maksuda Sultana',
+  'ইন্দ্রজিৎ কুমার মন্ডল': 'Indrajit Kumar Mondal',
+  'মোহাম্মদ রফিকুল ইসলাম': 'Mohammad Rafiqul Islam',
 };
 
 const Home: React.FC = () => {
@@ -77,9 +88,19 @@ const Home: React.FC = () => {
 
   // Filtered notices
   const filteredNotices = useMemo(() => {
-    if (activeNoticeTab === 'All') return notices.slice(0, 6);
-    return notices.filter(n => n.type === activeNoticeTab).slice(0, 6);
+    if (activeNoticeTab === 'All') return notices;
+    return notices.filter(n => n.type === activeNoticeTab);
   }, [notices, activeNoticeTab]);
+
+  // Guaranteed seamless loop track (minimum 8 items so track height is ~600px, greater than container 370px)
+  const noticeMarqueeTrack = useMemo(() => {
+    if (!filteredNotices.length) return [];
+    let items = [...filteredNotices];
+    while (items.length < 8) {
+      items = [...items, ...filteredNotices];
+    }
+    return items;
+  }, [filteredNotices]);
 
   // Calculate Class-wise statistics
   const classStats = useMemo(() => {
@@ -99,40 +120,6 @@ const Home: React.FC = () => {
       border: cls.border
     }));
   }, [students, language]);
-
-  // Co-curricular activities from soshgskhulna.edu.bd
-  const annualActivities = [
-    {
-      date: language === 'bn' ? '০১ জানুয়ারি' : '01 January',
-      title: language === 'bn' ? 'বই বিতরণ উৎসব ও প্রতিষ্ঠাবার্ষিকী' : 'Book Distribution & Foundation Day',
-      category: language === 'bn' ? 'জাতীয় উৎসব' : 'Foundation',
-    },
-    {
-      date: language === 'bn' ? 'জানুয়ারি (৩য় সপ্তাহ)' : '3rd Week of Jan',
-      title: language === 'bn' ? 'হারম্যান মেইনার স্কলারশিপ মূল্যায়ন' : 'Dr. Hermann Gmeiner Scholarship',
-      category: language === 'bn' ? 'মেধা বৃত্তি' : 'Scholarship',
-    },
-    {
-      date: language === 'bn' ? 'ফেব্রুয়ারি (২য় সপ্তাহ)' : '2nd Week of Feb',
-      title: language === 'bn' ? 'বার্ষিক ক্রীড়া প্রতিযোগিতা ও সাংস্কৃতিক উৎসব' : 'Annual Sports & Cultural Meet',
-      category: language === 'bn' ? 'ক্রীড়া ও সংস্কৃতি' : 'Sports & Culture',
-    },
-    {
-      date: language === 'bn' ? '২১ ফেব্রুয়ারি' : '21 February',
-      title: language === 'bn' ? 'আন্তর্জাতিক মাতৃভাষা ও শহীদ দিবস উদযাপন' : 'International Mother Language Day',
-      category: language === 'bn' ? 'জাতীয় দিবস' : 'National Day',
-    },
-    {
-      date: language === 'bn' ? 'ফেব্রুয়ারি (৪র্থ সপ্তাহ)' : '4th Week of Feb',
-      title: language === 'bn' ? 'বার্ষিক শিক্ষাসফর ও বিজ্ঞান মেলা' : 'Annual Study Tour & Science Fair',
-      category: language === 'bn' ? 'সহশিক্ষা' : 'Co-Curricular',
-    },
-    {
-      date: language === 'bn' ? '২৬ মার্চ' : '26 March',
-      title: language === 'bn' ? 'মহান স্বাধীনতা ও জাতীয় দিবস উদযাপন' : 'Independence & National Day',
-      category: language === 'bn' ? 'জাতীয় দিবস' : 'National Day',
-    }
-  ];
 
   // Helper for Date Rendering in Notices
   const renderNoticeDate = (dateStr: string) => {
@@ -569,15 +556,15 @@ const Home: React.FC = () => {
 
         </div>
 
-        {/* 2-Column Grid: Left (Principal Message & Success) | Right (Interactive Notice Board & Quick Actions) */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+        {/* 2-Column Grid: Left (Chairman's & Principal's Speeches) | Right (Interactive Notice Board & Quick Actions) */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-20 items-stretch">
           
-          {/* Left Column (2 spans): Chairman's Speech, Principal's Speech & Success highlights */}
-          <div className="lg:col-span-2 space-y-8">
+          {/* Left Column (2 spans): Chairman's Speech & Principal's Speech */}
+          <div className="lg:col-span-2 flex flex-col justify-between gap-6">
 
             {/* Chairman's Message Card */}
-            <div className="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/90 relative overflow-hidden">
-              <div className="border-b border-slate-100 pb-4 mb-6 flex items-center justify-between">
+            <div className="bg-white p-6 sm:p-7 rounded-3xl shadow-sm border border-slate-200/90 relative overflow-hidden flex-1 flex flex-col justify-between">
+              <div className="border-b border-slate-100 pb-3.5 mb-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
                     <ShieldCheck size={20} />
@@ -591,208 +578,212 @@ const Home: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 sm:gap-6">
                 <div className="flex flex-col items-center flex-shrink-0 text-center">
-                  <div className="w-36 h-44 rounded-2xl overflow-hidden shadow-md border-4 border-slate-100 mb-3 bg-slate-100">
+                  <div className="w-28 h-34 sm:w-32 sm:h-40 rounded-2xl overflow-hidden shadow-sm border-2 border-slate-100 mb-2.5 bg-slate-100">
                     <img 
                       src={settings.chairmanImage || "https://soshgskhulna.edu.bd/media/180/Picture_PP.jpg"} 
                       alt={settings.chairmanName || "মাকসুদা সুলতানা"} 
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <h4 className="font-bold text-slate-900 text-base">{settings.chairmanName || "মাকসুদা সুলতানা"}</h4>
-                  <p className="text-xs text-amber-700 font-bold">{language === 'bn' ? 'সভাপতি, গভর্নিং বডি' : 'Chairman, Governing Body'}</p>
+                  <h4 className="font-extrabold text-slate-900 text-sm sm:text-base">
+                    {language === 'bn' 
+                      ? (settings.chairmanName || 'মাকসুদা সুলতানা') 
+                      : (PERSON_NAME_EN_MAP[settings.chairmanName || ''] || 'Maksuda Sultana')}
+                  </h4>
+                  <p className="text-xs text-amber-700 font-bold mt-0.5">{language === 'bn' ? 'সভাপতি, গভর্নিং বডি' : 'Chairman, Governing Body'}</p>
                   <p className="text-[10px] text-slate-400 max-w-[180px] leading-tight mt-0.5">
-                    {language === 'bn' ? 'প্রকল্প পরিচালক, এস ও এস চিলড্রেন্স ভিলেজ খুলনা' : "Project Director, SOS Children's Village Khulna"}
+                    {language === 'bn' ? 'এসওএস হারম্যান মেইনার স্কুল খুলনা' : 'SOS Hermann Gmeiner School Khulna'}
                   </p>
                 </div>
 
-                <div className="text-slate-600 leading-relaxed text-sm space-y-4">
-                  <blockquote className="italic font-medium text-slate-800 bg-amber-50/50 p-4 rounded-xl border-l-4 border-amber-500 text-xs sm:text-sm">
-                    {language === 'bn' 
-                      ? '"এস ও এস হারম্যান মেইনার স্কুল খুলনা এস ও এস চিলড্রেন্স ভিলেজ খুলনার সবুজ আঙিনায় প্রতিষ্ঠিত। মানসম্মত শিক্ষা ও শিক্ষার পরিবেশ নিশ্চিত করাই আমাদের অঙ্গীকার।"'
-                      : '"SOS Hermann Gmeiner School Khulna is established within the green serene campus of SOS Children\'s Village Khulna, committed to ensuring qualitative education and moral integrity."'
-                    }
+                <div className="text-slate-600 leading-relaxed text-xs sm:text-sm space-y-3 flex-1">
+                  <blockquote className="font-medium text-slate-800 bg-amber-50/40 p-3.5 rounded-xl border-l-4 border-amber-500 text-xs sm:text-sm flex items-start gap-2">
+                    <span className="text-amber-600 font-serif text-2xl leading-none flex-shrink-0">“</span>
+                    <p className="italic leading-relaxed">
+                      {language === 'bn' 
+                        ? 'এস ও এস হারম্যান মেইনার স্কুল খুলনা এর এ এস চিলড্রেন্স ভিলেজ খুলনার সবুজ আঙিনায় প্রতিষ্ঠিত। মানসম্মত শিক্ষা ও শিক্ষার পরিবেশ নিশ্চিত করাই আমাদের অঙ্গীকার।'
+                        : 'SOS Hermann Gmeiner School Khulna is established within the serene campus of SOS Children\'s Village Khulna, committed to ensuring qualitative education and moral integrity.'}
+                    </p>
                   </blockquote>
-                  <p className="whitespace-pre-line leading-relaxed text-xs sm:text-sm">
-                    {settings.chairmanMessage}
+                  <p className="leading-relaxed text-justify">
+                    {language === 'bn'
+                      ? 'এস ও এস হারম্যান মেইনার স্কুল খুলনা এর এ এস চিলড্রেন্স ভিলেজ খুলনার সবুজ আঙিনায় প্রতিষ্ঠিত। মানসম্মত শিক্ষা ও শিক্ষার পরিবেশ নিশ্চিত করার লক্ষ্য নিয়ে আমরা প্রতিজ্ঞাবদ্ধ।'
+                      : 'SOS Hermann Gmeiner School Khulna is dedicated to delivering exemplary education in a peaceful, supportive atmosphere.'}
+                  </p>
+                  <p className="leading-relaxed text-justify">
+                    {language === 'bn'
+                      ? 'বিদ্যালয়ের সার্বিক কার্যক্রম পরিচালিত হচ্ছে সেই আদলে। শিক্ষার্থীদের মানসিক চেতনায় উন্নত করতে সহযোগিতার চেষ্টাই আমাদের মূল লক্ষ্য। দক্ষ শিক্ষকমণ্ডলী ও বিস্তৃত সুরক্ষিত পরিবেশ বিদ্যালয়ের ভিত্তি।'
+                      : 'The institution guides students toward intellectual and moral excellence through modern pedagogy, disciplined leadership, and dedicated educators.'}
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Principal's Message Card */}
-            <div className="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/90 relative overflow-hidden">
-              <div className="border-b border-slate-100 pb-4 mb-6 flex items-center justify-between">
+            <div className="bg-white p-6 sm:p-7 rounded-3xl shadow-sm border border-slate-200/90 relative overflow-hidden flex-1 flex flex-col justify-between">
+              <div className="border-b border-slate-100 pb-3.5 mb-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
                     <GraduationCap size={20} />
                   </div>
                   <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-slate-900">{t.home.headmasterTitle}</h3>
-                    <p className="text-xs text-slate-500 font-medium">{t.home.headmasterSubtitle}</p>
+                    <h3 className="text-lg sm:text-xl font-bold text-slate-900">
+                      {language === 'bn' ? 'অধ্যক্ষের বাণী' : 'Message from the Principal'}
+                    </h3>
+                    <p className="text-xs text-slate-500 font-medium">Message from the Principal</p>
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 sm:gap-6">
                 <div className="flex flex-col items-center flex-shrink-0 text-center">
-                  <div className="w-36 h-44 rounded-2xl overflow-hidden shadow-md border-4 border-slate-100 mb-3 bg-slate-100">
+                  <div className="w-28 h-34 sm:w-32 sm:h-40 rounded-2xl overflow-hidden shadow-sm border-2 border-slate-100 mb-2.5 bg-slate-100">
                     <img 
-                      src={settings.headmasterImage} 
-                      alt={settings.headmasterName} 
+                      src={settings.headmasterImage || "https://soshgskhulna.edu.bd/media/163/P.sir...jpg"} 
+                      alt={settings.headmasterName || "ইন্দ্রজিৎ কুমার মন্ডল"} 
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <h4 className="font-bold text-slate-900 text-base">{settings.headmasterName}</h4>
-                  <p className="text-xs text-emerald-800 font-bold">{t.adminPage.headmaster}</p>
-                  <p className="text-[11px] text-slate-400">{language === 'bn' ? settings.schoolName : 'SOS HERMANN GMEINER SCHOOL KHULNA'}</p>
-                </div>
-
-                <div className="text-slate-600 leading-relaxed text-sm space-y-4">
-                  <blockquote className="italic font-medium text-slate-800 bg-emerald-50/50 p-4 rounded-xl border-l-4 border-emerald-500 text-xs sm:text-sm">
+                  <h4 className="font-extrabold text-slate-900 text-sm sm:text-base">
                     {language === 'bn' 
-                      ? '"Honesty is education, education is peace and peace is progress — সততা, শৃঙ্খলা ও মানবিক গুণাবলীর সমন্বয়ে সুনাগরিক গড়ে তোলাই আমাদের লক্ষ্য।"'
-                      : '"Honesty is education, education is peace and peace is progress — Our mission is to foster disciplined, moral, and capable future citizens."'
-                    }
-                  </blockquote>
-                  <p className="whitespace-pre-line leading-relaxed text-xs sm:text-sm">
-                    {settings.headmasterMessage}
+                      ? (settings.headmasterName || 'ইন্দ্রজিৎ কুমার মন্ডল') 
+                      : (PERSON_NAME_EN_MAP[settings.headmasterName || ''] || 'Indrajit Kumar Mondal')}
+                  </h4>
+                  <p className="text-xs text-emerald-800 font-bold mt-0.5">{language === 'bn' ? 'অধ্যক্ষ' : 'Principal'}</p>
+                  <p className="text-[10px] text-slate-400 max-w-[180px] leading-tight mt-0.5">
+                    {language === 'bn' ? 'এসওএস হারম্যান মেইনার স্কুল খুলনা' : 'SOS Hermann Gmeiner School Khulna'}
                   </p>
-                  <div className="pt-2">
-                    <Link 
-                      to="/about" 
-                      className="text-emerald-700 font-bold text-xs hover:text-emerald-800 inline-flex items-center gap-1.5 group cursor-pointer"
-                    >
-                      {t.home.readMoreAbout} <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform"/>
-                    </Link>
-                  </div>
+                </div>
+
+                <div className="text-slate-600 leading-relaxed text-xs sm:text-sm space-y-3 flex-1">
+                  <blockquote className="font-medium text-slate-800 bg-emerald-50/40 p-3.5 rounded-xl border-l-4 border-emerald-500 text-xs sm:text-sm flex items-start gap-2">
+                    <span className="text-emerald-600 font-serif text-2xl leading-none flex-shrink-0">“</span>
+                    <p className="italic leading-relaxed">
+                      {language === 'bn' 
+                        ? '“Honesty is education, education is peace and peace is progress — সততা, শৃঙ্খলা ও মননশীলতার সমন্বয়ে সুনাগরিক গড়ে তোলাই আমাদের লক্ষ্য।”'
+                        : '“Honesty is education, education is peace and peace is progress — Fostering disciplined, moral, and capable future citizens is our core mission.”'}
+                    </p>
+                  </blockquote>
+                  <p className="leading-relaxed text-justify">
+                    {language === 'bn'
+                      ? 'এস ও এস হারম্যান মেইনার স্কুল খুলনা মানসম্মত শিক্ষা নিশ্চিতকরণে প্রতিষ্ঠিত। ১৯৮৭ সালে প্রতিষ্ঠিত এই বিদ্যালয়টি পরিচালনায় রয়েছে দক্ষ গভর্নিং বডি ও প্রশিক্ষণপ্রাপ্ত নিবেদিতপ্রাণ শিক্ষকমণ্ডলী।'
+                      : 'SOS Hermann Gmeiner School Khulna was established in 1987 to guarantee quality education steered by a proficient governing board and devoted educators.'}
+                  </p>
+                  <p className="leading-relaxed text-justify">
+                    {language === 'bn'
+                      ? 'বিদ্যালয়ের শিক্ষার্থীদের আনন্দময় পাঠদান উপযোগী পরিবেশ নিশ্চিত করা হয়েছে। শিক্ষার মানোন্নয়ন ও শিক্ষার্থীদের যোগ্য মানবসম্পদে পরিণত করতে আমরা প্রতিশ্রুতিবদ্ধ।'
+                      : 'We provide an inspiring learning environment focused on cognitive development, creative pursuits, and molding students into valuable human resources.'}
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Academic Highlights 2-Col - Clean Light Theme */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {/* Achievement Card */}
-              <div className="bg-white p-6 rounded-3xl border border-emerald-200/90 shadow-sm hover:shadow-md transition relative overflow-hidden group">
-                <div className="absolute -right-4 -bottom-4 text-emerald-100/50 group-hover:scale-110 transition-transform pointer-events-none">
-                  <Trophy size={110} />
-                </div>
-                <div className="relative z-10 flex items-center gap-2.5 mb-3">
-                  <span className="p-2.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-xl">
-                    <Trophy size={18} />
-                  </span>
-                  <h4 className="text-base sm:text-lg font-bold text-slate-900">{t.home.achievementCardTitle}</h4>
-                </div>
-                <p className="relative z-10 text-slate-600 text-xs mb-6 leading-relaxed">
-                  {t.home.achievementCardDesc}
-                </p>
-                <div className="relative z-10 flex items-end justify-between pt-3 border-t border-slate-100">
-                  <div>
-                    <p className="text-2xl sm:text-3xl font-black text-emerald-700">{toBanglaNum('98.5%')}</p>
-                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">{t.home.achievementStatLabel}</p>
-                  </div>
-                  <Link 
-                    to="/result" 
-                    className="relative z-20 bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 rounded-xl text-xs font-bold active:scale-95 transition shadow-sm inline-flex items-center gap-1 cursor-pointer"
-                  >
-                    {t.home.achievementBtn}
-                  </Link>
-                </div>
-              </div>
-
-              {/* Smart Digital Campus Card */}
-              <div className="bg-white p-6 rounded-3xl border border-blue-200/90 shadow-sm hover:shadow-md transition relative overflow-hidden group">
-                <div className="absolute -right-4 -bottom-4 text-blue-100/50 group-hover:scale-110 transition-transform pointer-events-none">
-                  <Smartphone size={110} />
-                </div>
-                <div className="relative z-10 flex items-center gap-2.5 mb-3">
-                  <span className="p-2.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-xl">
-                    <Globe size={18} />
-                  </span>
-                  <h4 className="text-base sm:text-lg font-bold text-slate-900">{t.home.smartCampusTitle}</h4>
-                </div>
-                <p className="relative z-10 text-slate-600 text-xs mb-6 leading-relaxed">
-                  {t.home.smartCampusDesc}
-                </p>
-                <div className="relative z-10 flex items-end justify-between pt-3 border-t border-slate-100">
-                  <div>
-                    <p className="text-2xl sm:text-3xl font-black text-blue-700">{toBanglaNum('100%')}</p>
-                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">{t.home.smartCampusStatLabel}</p>
-                  </div>
-                  <Link 
-                    to="/admission" 
-                    className="relative z-20 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-xl text-xs font-bold active:scale-95 transition shadow-sm inline-flex items-center gap-1 cursor-pointer"
-                  >
-                    {t.home.smartCampusBtn}
-                  </Link>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Right Column (1 span): Notice Board & Quick Access */}
-          <div className="space-y-6">
-            {/* Notice Board Box */}
-            <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/90 relative">
-              <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+          <div className="flex flex-col justify-between gap-6">
+            {/* Notice Board Box - Fully Filled Height */}
+            <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-slate-200/90 relative flex-1 flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
-                    <Calendar size={18} />
+                  <div className="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
+                    <Calendar size={17} />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-slate-900">{t.home.noticeBoardTitle}</h3>
-                    <p className="text-[11px] text-slate-400">{t.home.noticeBoardSubtitle}</p>
+                    <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                      {language === 'bn' ? 'নোটিশ বোর্ড' : 'Notice Board'}
+                    </h3>
+                    <p className="text-[10px] text-slate-400">
+                      {language === 'bn' ? 'সর্বশেষ বিজ্ঞপ্তি ও নির্দেশনা' : 'Latest announcements'}
+                    </p>
                   </div>
                 </div>
                 <Link 
                   to="/notices" 
-                  className="text-xs text-emerald-700 hover:text-emerald-800 font-bold bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-lg transition"
+                  className="text-xs text-emerald-800 hover:text-emerald-900 font-bold bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/80 px-2.5 py-1 rounded-xl transition"
                 >
-                  {t.home.tabAll}
+                  {language === 'bn' ? 'সবগুলো দেখুন' : 'View All'}
                 </Link>
               </div>
 
-              {/* Tabs */}
-              <div className="flex items-center gap-1 pb-3 mb-3 border-b border-slate-100 overflow-x-auto text-xs">
-                {(['All', 'General', 'Exam', 'Admission'] as const).map(tab => (
+              {/* Category Filter Pills */}
+              <div className="flex items-center gap-1.5 pb-2.5 mb-3 border-b border-slate-100 overflow-x-auto text-xs scrollbar-none">
+                {[
+                  { key: 'All', labelBn: 'সকল', labelEn: 'All' },
+                  { key: 'General', labelBn: 'সাধারণ', labelEn: 'General' },
+                  { key: 'Exam', labelBn: 'পরীক্ষা', labelEn: 'Exam' },
+                  { key: 'Admission', labelBn: 'ভর্তি', labelEn: 'Admission' },
+                  { key: 'Event', labelBn: 'ইভেন্ট', labelEn: 'Event' },
+                ].map(tab => (
                   <button
-                    key={tab}
-                    onClick={() => setActiveNoticeTab(tab)}
-                    className={`px-3 py-1 rounded-lg font-semibold transition ${
-                      activeNoticeTab === tab 
-                        ? 'bg-emerald-700 text-white' 
-                        : 'text-slate-500 hover:bg-slate-100'
+                    key={tab.key}
+                    onClick={() => setActiveNoticeTab(tab.key as any)}
+                    className={`px-2.5 py-0.5 rounded-lg font-bold transition whitespace-nowrap cursor-pointer text-[11px] ${
+                      activeNoticeTab === tab.key 
+                        ? 'bg-emerald-800 text-white shadow-xs' 
+                        : 'text-slate-600 hover:bg-slate-100'
                     }`}
                   >
-                    {tab === 'All' ? t.home.tabAll : tab === 'General' ? t.home.tabGeneral : tab === 'Exam' ? t.home.tabExam : t.home.tabAdmission}
+                    {language === 'bn' ? tab.labelBn : tab.labelEn}
                   </button>
                 ))}
               </div>
 
-              {/* Notice List */}
-              <div className="space-y-3.5">
+              {/* Notice List Container - Clean Manual Scroll with Custom Scrollbar */}
+              <div className="relative flex-1 min-h-[340px] max-h-[380px] overflow-y-auto pr-1.5 space-y-2.5 rounded-2xl bg-slate-50/40 p-1.5 border border-slate-100/80 custom-notice-scrollbar">
+                <style>{`
+                  .custom-notice-scrollbar {
+                    scrollbar-width: thin;
+                    scrollbar-color: #047857 #f1f5f9;
+                  }
+                  .custom-notice-scrollbar::-webkit-scrollbar {
+                    width: 5px;
+                  }
+                  .custom-notice-scrollbar::-webkit-scrollbar-track {
+                    background: #f1f5f9;
+                    border-radius: 9999px;
+                  }
+                  .custom-notice-scrollbar::-webkit-scrollbar-thumb {
+                    background: #047857;
+                    border-radius: 9999px;
+                  }
+                  .custom-notice-scrollbar::-webkit-scrollbar-thumb:hover {
+                    background: #065f46;
+                  }
+                `}</style>
+                
                 {filteredNotices.map((notice) => {
                   const dateInfo = renderNoticeDate(notice.date);
+                  const badgeColor = 
+                    notice.type === 'General' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                    notice.type === 'Exam' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                    notice.type === 'Admission' ? 'bg-amber-50 text-amber-800 border-amber-200' :
+                    'bg-purple-50 text-purple-700 border-purple-200';
+
                   return (
                     <Link 
                       key={notice.id} 
                       to="/notices" 
-                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition group border border-transparent hover:border-slate-200"
+                      className="flex items-start gap-3 p-2.5 rounded-xl bg-white hover:bg-emerald-50/80 transition-all duration-200 group border border-slate-100 shadow-xs hover:shadow-sm cursor-pointer"
                     >
-                      <div className="bg-emerald-50 text-emerald-800 p-2 rounded-xl text-center min-w-[50px] border border-emerald-100 flex-shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                        <span className="block text-base font-bold leading-tight">{dateInfo.day}</span>
-                        <span className="block text-[9px] uppercase font-semibold">{dateInfo.month}</span>
+                      <div className="bg-emerald-50 text-emerald-800 p-1.5 rounded-xl text-center w-12 flex-shrink-0 border border-emerald-100/80 group-hover:bg-emerald-700 group-hover:text-white transition-colors">
+                        <span className="block text-base font-black leading-none">{dateInfo.day}</span>
+                        <span className="block text-[9px] uppercase font-bold mt-0.5">{dateInfo.month}</span>
                       </div>
                       <div className="flex-grow min-w-0">
-                        <h4 className="font-semibold text-slate-800 group-hover:text-emerald-700 text-xs line-clamp-2 leading-snug">
+                        <h4 className="font-bold text-slate-800 group-hover:text-emerald-700 text-xs sm:text-[13px] line-clamp-1 leading-tight">
                           {language === 'bn' ? notice.title : (notice.titleEn || NOTICE_EN_MAP[notice.title] || notice.title)}
                         </h4>
                         <div className="flex items-center gap-2 mt-1">
-                          <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                          <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded border ${badgeColor}`}>
                             {notice.type}
                           </span>
-                          <span className="text-[10px] text-slate-400">{toBanglaNum(notice.date.split('-').reverse().join('/'))}</span>
+                          <span className="text-[10px] text-slate-400 font-medium flex items-center gap-1">
+                            <Calendar size={10} /> {toBanglaNum(notice.date.split('-').reverse().join('/'))}
+                          </span>
                         </div>
                       </div>
                     </Link>
@@ -800,145 +791,197 @@ const Home: React.FC = () => {
                 })}
               </div>
 
-              <div className="mt-5 pt-3 border-t border-slate-100 text-center">
+              {/* Bottom Full-Width CTA */}
+              <div className="mt-3 pt-2.5 border-t border-slate-100 text-center">
                 <Link 
                   to="/notices" 
-                  className="w-full bg-slate-100 hover:bg-emerald-700 hover:text-white text-slate-700 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition"
+                  className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition cursor-pointer"
                 >
-                  {t.home.allNotices} <ArrowRight size={14} />
+                  <span>{language === 'bn' ? 'সব নোটিশ দেখুন →' : 'View All Notices →'}</span>
                 </Link>
               </div>
             </div>
 
-            {/* Quick Link Cards Grid */}
-            <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/90">
-              <h3 className="text-base font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
-                <Layers size={18} className="text-emerald-700" /> {t.home.quickLinks}
+            {/* Quick Link Cards Grid - Compact Sleek 1-Line Layout */}
+            <div className="bg-white p-4 sm:p-4.5 rounded-3xl shadow-sm border border-slate-200/90">
+              <h3 className="text-xs sm:text-sm font-bold text-slate-900 mb-3 pb-1.5 border-b border-slate-100 flex items-center gap-1.5">
+                <Link2 size={16} className="text-emerald-700" /> {language === 'bn' ? 'প্রয়োজনীয় লিংক' : 'Quick Access'}
               </h3>
-              <div className="grid grid-cols-2 gap-3 text-xs">
-                <Link to="/academic" className="p-3 bg-slate-50 hover:bg-emerald-50 border border-slate-200/80 rounded-xl font-bold text-slate-700 hover:text-emerald-800 transition flex flex-col items-center text-center gap-1.5">
-                  <Calendar size={18} className="text-emerald-700"/>
-                  <span>{t.home.viewRoutine}</span>
+              <div className="grid grid-cols-4 gap-2">
+                {/* 1. Class Routine */}
+                <Link 
+                  to="/academic" 
+                  className="py-2 px-1 bg-slate-50 hover:bg-emerald-50 border border-slate-100 rounded-xl font-bold text-slate-700 hover:text-emerald-800 transition-all flex flex-col items-center text-center gap-1 hover:shadow-xs hover:-translate-y-0.5 group cursor-pointer"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200/70 flex items-center justify-center group-hover:scale-105 transition">
+                    <Calendar size={15} />
+                  </div>
+                  <span className="text-[10px] font-bold leading-tight line-clamp-1">
+                    {language === 'bn' ? 'ক্লাস রুটিন' : 'Routine'}
+                  </span>
                 </Link>
-                <Link to="/result" className="p-3 bg-slate-50 hover:bg-amber-50 border border-slate-200/80 rounded-xl font-bold text-slate-700 hover:text-amber-800 transition flex flex-col items-center text-center gap-1.5">
-                  <ShieldCheck size={18} className="text-amber-600"/>
-                  <span>{t.home.examSchedule}</span>
+
+                {/* 2. Faculty Directory */}
+                <Link 
+                  to="/faculty" 
+                  className="py-2 px-1 bg-slate-50 hover:bg-blue-50 border border-slate-100 rounded-xl font-bold text-slate-700 hover:text-blue-800 transition-all flex flex-col items-center text-center gap-1 hover:shadow-xs hover:-translate-y-0.5 group cursor-pointer"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 border border-blue-200/70 flex items-center justify-center group-hover:scale-105 transition">
+                    <Users size={15} />
+                  </div>
+                  <span className="text-[10px] font-bold leading-tight line-clamp-1">
+                    {language === 'bn' ? 'শিক্ষক তালিকা' : 'Faculty'}
+                  </span>
                 </Link>
-                <Link to="/downloads" className="p-3 bg-slate-50 hover:bg-blue-50 border border-slate-200/80 rounded-xl font-bold text-slate-700 hover:text-blue-800 transition flex flex-col items-center text-center gap-1.5">
-                  <FileText size={18} className="text-blue-600"/>
-                  <span>{t.home.syllabusDownload}</span>
+
+                {/* 3. Exam Schedules */}
+                <Link 
+                  to="/result" 
+                  className="py-2 px-1 bg-slate-50 hover:bg-purple-50 border border-slate-100 rounded-xl font-bold text-slate-700 hover:text-purple-800 transition-all flex flex-col items-center text-center gap-1 hover:shadow-xs hover:-translate-y-0.5 group cursor-pointer"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-700 border border-purple-200/70 flex items-center justify-center group-hover:scale-105 transition">
+                    <ShieldCheck size={15} />
+                  </div>
+                  <span className="text-[10px] font-bold leading-tight line-clamp-1">
+                    {language === 'bn' ? 'পরীক্ষা সূচি' : 'Exams'}
+                  </span>
                 </Link>
-                <Link to="/administration" className="p-3 bg-slate-50 hover:bg-purple-50 border border-slate-200/80 rounded-xl font-bold text-slate-700 hover:text-purple-800 transition flex flex-col items-center text-center gap-1.5">
-                  <Users size={18} className="text-purple-600"/>
-                  <span>{t.home.governingBody}</span>
+
+                {/* 4. Download Center */}
+                <Link 
+                  to="/downloads" 
+                  className="py-2 px-1 bg-slate-50 hover:bg-amber-50 border border-slate-100 rounded-xl font-bold text-slate-700 hover:text-amber-800 transition-all flex flex-col items-center text-center gap-1 hover:shadow-xs hover:-translate-y-0.5 group cursor-pointer"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 border border-amber-200/70 flex items-center justify-center group-hover:scale-105 transition">
+                    <Download size={15} />
+                  </div>
+                  <span className="text-[10px] font-bold leading-tight line-clamp-1">
+                    {language === 'bn' ? 'ডাউনলোড' : 'Downloads'}
+                  </span>
                 </Link>
               </div>
-            </div>
-
-            {/* Helpline / Contact Widget */}
-            <div className="bg-gradient-to-br from-emerald-50 to-emerald-100/50 p-6 rounded-3xl border border-emerald-200/80">
-              <h4 className="font-bold text-slate-900 text-sm mb-2 flex items-center gap-2">
-                <Phone size={16} className="text-emerald-700" /> {language === 'bn' ? 'জরুরি ভর্তি ও তথ্য সহায়তা' : 'Direct Helpline'}
-              </h4>
-              <p className="text-xs text-slate-600 mb-3 leading-relaxed">
-                {language === 'bn' ? 'ভর্তি, ফলাফল বা যেকোনো প্রাতিষ্ঠানিক তথ্যের জন্য সরাসরি যোগাযোগ করুন।' : 'Contact our administration for admission or inquiries.'}
-              </p>
-              <a 
-                href={`tel:${settings.contactPhone}`}
-                className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition shadow-sm"
-              >
-                <Phone size={14} /> {toBanglaNum(settings.contactPhone)}
-              </a>
             </div>
 
           </div>
 
         </div>
 
-        {/* 4. AIMS & CORE OBJECTIVES (Direct from soshgskhulna.edu.bd) */}
-        <div className="mb-20">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
-              <Target size={14} /> {t.home.aimObjectivesTitle}
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-black text-slate-900">{t.home.aimObjectivesTitle}</h3>
-            <p className="text-slate-500 text-xs sm:text-sm mt-1">{t.home.aimObjectivesSubtitle}</p>
+        {/* 4. AIMS & KEY OBJECTIVES (Matching Reference Design 1:1) */}
+        <div className="mb-20 relative">
+          {/* Subtle Background Target Watermark on Top-Right */}
+          <div className="absolute top-0 right-4 text-slate-100/70 pointer-events-none hidden md:block select-none">
+            <Target size={170} strokeWidth={1} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="text-center max-w-2xl mx-auto mb-12 relative z-10">
+            <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200/90 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+              <Target size={14} className="text-emerald-700" /> 
+              {language === 'bn' ? 'আমাদের লক্ষ্য ও মূল উদ্দেশ্য' : 'OUR AIM & KEY OBJECTIVES'}
+            </div>
+            <h3 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              {language === 'bn' ? 'আমাদের লক্ষ্য ও মূল উদ্দেশ্য' : 'Our Aim & Key Objectives'}
+            </h3>
+            <div className="w-12 h-1 bg-emerald-600 rounded-full mx-auto mt-3 mb-3" />
+            <p className="text-slate-500 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
+              {language === 'bn'
+                ? 'সততা, শৃঙ্খলা ও মননশীলতার সমন্বয়ে সুনাগরিক গড়ে তোলাই আমাদের পথপ্রদর্শক।'
+                : 'Honesty is education, education is peace and peace is progress — Guiding our path.'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
             {[
               {
-                icon: <Compass size={24} className="text-emerald-700" />,
+                icon: <Leaf size={24} className="text-emerald-600" />,
+                topBorder: 'bg-emerald-600',
+                iconBg: 'bg-emerald-50 border-emerald-100',
+                lineBg: 'bg-emerald-600',
+                buttonBg: 'bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white',
                 title: language === 'bn' ? 'সুপ্ত প্রতিভার পূর্ণ বিকাশ' : 'Full Potential Growth',
-                desc: language === 'bn' ? 'শিক্ষার্থীদের শারীরিক, মানসিক, সামাজিক ও বুদ্ধিবৃত্তিক ক্ষমতার সামঞ্জস্যপূর্ণ উৎকর্ষ সাধন।' : 'To enable each student to progress physically, emotionally, socially, and intellectually.',
-                color: 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                desc: language === 'bn' 
+                  ? 'শিক্ষার্থীদের শারীরিক, মানসিক, সামাজিক ও বুদ্ধিবৃত্তিক ক্ষমতার সামঞ্জস্যপূর্ণ উৎকর্ষ সাধন।' 
+                  : 'To enable each student to progress physically, emotionally, socially, and intellectually.',
+                link: '/about'
               },
               {
-                icon: <HeartHandshake size={24} className="text-blue-700" />,
-                title: language === 'bn' ? 'মানবিক মূল্যবোধ ও অবদান' : 'Social Contribution',
-                desc: language === 'bn' ? 'আত্মজ্ঞান ও উপলব্ধির মাধ্যমে নিজের মেধা দেশের ও সমাজের কল্যাণে নিবেদিত করা।' : 'To enable students to see beyond their own needs and contribute to the betterment of society.',
-                color: 'bg-blue-50 border-blue-200 text-blue-700'
+                icon: <Heart size={24} className="text-blue-600 fill-blue-50" />,
+                topBorder: 'bg-blue-600',
+                iconBg: 'bg-blue-50 border-blue-100',
+                lineBg: 'bg-blue-600',
+                buttonBg: 'bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white',
+                title: language === 'bn' ? 'সামাজিক অবদান ও মূল্যবোধ' : 'Social Contribution',
+                desc: language === 'bn' 
+                  ? 'শিক্ষার্থীদের নিজ স্বার্থের ঊর্ধ্বে উঠে সমাজের উন্নয়ন ও কল্যাণে সক্রিয় অবদান রাখতে উদ্বুদ্ধ করা।' 
+                  : 'To enable students to see beyond their own needs and contribute to the betterment of society.',
+                link: '/about'
               },
               {
-                icon: <ShieldCheck size={24} className="text-purple-700" />,
+                icon: <Shield size={24} className="text-purple-600" />,
+                topBorder: 'bg-purple-600',
+                iconBg: 'bg-purple-50 border-purple-100',
+                lineBg: 'bg-purple-600',
+                buttonBg: 'bg-purple-50 text-purple-600 group-hover:bg-purple-600 group-hover:text-white',
                 title: language === 'bn' ? 'শিশু সুরক্ষা ও যত্ন' : 'Child Care & Safety',
-                desc: language === 'bn' ? 'এস ও এস ভিলেজের শিশুবান্ধব নীতিমালা ও আনন্দময় নিরাপদ শিক্ষাবান্ধব পরিবেশ নিশ্চিতকরণ।' : 'Recognizing the uniqueness of early childhood and fostering a protective, inspiring learning atmosphere.',
-                color: 'bg-purple-50 border-purple-200 text-purple-700'
+                desc: language === 'bn' 
+                  ? 'শৈশবের অনন্যতাকে মূল্যায়ন করে একটি নিরাপদ, সুরক্ষিত ও অনুপ্রেরণাদায়ক শিক্ষার পরিবেশ নিশ্চিত করা।' 
+                  : 'Recognizing the uniqueness of early childhood and fostering a protective, inspiring learning atmosphere.',
+                link: '/about'
               },
               {
-                icon: <Award size={24} className="text-amber-700" />,
-                title: language === 'bn' ? 'মেধাভিত্তিক সমসুযোগ' : 'Equal Opportunity',
-                desc: language === 'bn' ? 'মেধা, সততা ও শৃঙ্খলার ভিত্তিতে সকল শিক্ষার্থীর জন্য বৈষম্যহীন সমান সুযোগ প্রদান।' : 'Providing equal opportunity to all children on the basis of merit without any form of discrimination.',
-                color: 'bg-amber-50 border-amber-200 text-amber-700'
+                icon: <Award size={24} className="text-amber-600" />,
+                topBorder: 'bg-amber-500',
+                iconBg: 'bg-amber-50 border-amber-100',
+                lineBg: 'bg-amber-500',
+                buttonBg: 'bg-amber-50 text-amber-600 group-hover:bg-amber-500 group-hover:text-white',
+                title: language === 'bn' ? 'সবার জন্য সমান সুযোগ' : 'Equal Opportunity',
+                desc: language === 'bn' 
+                  ? 'মেধা ও যোগ্যতার ভিত্তিতে সকল শিক্ষার্থীকে যেকোনো ধরনের বৈষম্যহীন মানসম্মত শিক্ষার সুযোগ প্রদান।' 
+                  : 'Providing equal opportunity to all children on the basis of merit without any form of discrimination.',
+                link: '/about'
               }
-            ].map((pillar, i) => (
-              <div key={i} className="bg-white p-6 rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-md transition flex flex-col justify-between group">
+            ].map((card, i) => (
+              <div 
+                key={i} 
+                className="bg-white rounded-3xl border border-slate-100/90 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden flex flex-col justify-between p-6 sm:p-7 group"
+              >
+                {/* Top Colored Accent Bar */}
+                <div className={`h-1.5 w-full ${card.topBorder} absolute top-0 left-0`} />
+
+                {/* Subtle Dot Grid Background Pattern in top-right */}
+                <div 
+                  className="absolute top-2 right-2 w-24 h-24 opacity-25 pointer-events-none"
+                  style={{
+                    backgroundImage: 'radial-gradient(#94a3b8 1px, transparent 1px)',
+                    backgroundSize: '8px 8px'
+                  }}
+                />
+
                 <div>
-                  <div className={`w-12 h-12 rounded-2xl ${pillar.color} border flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                    {pillar.icon}
+                  {/* Circular Icon Button */}
+                  <div className={`w-14 h-14 rounded-full ${card.iconBg} border flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300 shadow-xs`}>
+                    {card.icon}
                   </div>
-                  <h4 className="font-extrabold text-slate-900 text-base mb-2">{pillar.title}</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed">{pillar.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* 5. CO-CURRICULAR & ANNUAL ACTIVITY CALENDAR (From soshgskhulna.edu.bd) */}
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-sm mb-20">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 mb-6 border-b border-slate-100 gap-4">
-            <div>
-              <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider mb-1">
-                <Calendar size={13} /> {language === 'bn' ? 'বাৎসরিক সময়সূচি' : 'Calendar 2025'}
-              </div>
-              <h3 className="text-xl sm:text-2xl font-black text-slate-900">{t.home.eventsCalendarTitle}</h3>
-              <p className="text-xs text-slate-500 mt-0.5">{t.home.eventsCalendarSubtitle}</p>
-            </div>
-            <Link 
-              to="/academic" 
-              className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5"
-            >
-              <Calendar size={14} /> {language === 'bn' ? 'সম্পূর্ণ একাডেমিক ক্যালেন্ডার' : 'View Full Schedule'}
-            </Link>
-          </div>
+                  {/* Accent Divider Line */}
+                  <div className={`w-8 h-1 ${card.lineBg} rounded-full mb-4`} />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {annualActivities.map((act, idx) => (
-              <div key={idx} className="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 hover:border-emerald-300 hover:bg-emerald-50/30 transition flex items-start gap-3.5 group">
-                <div className="w-10 h-10 rounded-xl bg-white text-emerald-700 border border-slate-200 flex items-center justify-center font-bold text-xs flex-shrink-0 group-hover:bg-emerald-700 group-hover:text-white transition-colors">
-                  {toBanglaNum(idx + 1)}
-                </div>
-                <div className="min-w-0 flex-grow">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100/70 px-2 py-0.5 rounded">
-                      {act.date}
-                    </span>
-                    <span className="text-[10px] text-slate-400 font-medium">{act.category}</span>
-                  </div>
-                  <h4 className="font-bold text-slate-800 text-xs sm:text-sm group-hover:text-emerald-700 transition leading-snug line-clamp-2">
-                    {act.title}
+                  {/* Title & Description */}
+                  <h4 className="font-extrabold text-slate-900 text-lg mb-2.5 leading-snug">
+                    {card.title}
                   </h4>
+                  <p className="text-xs sm:text-[13px] text-slate-500 leading-relaxed text-justify">
+                    {card.desc}
+                  </p>
+                </div>
+
+                {/* Bottom Action Circle Button */}
+                <div className="pt-6 mt-auto">
+                  <Link 
+                    to={card.link} 
+                    className={`w-9 h-9 rounded-full ${card.buttonBg} transition-all duration-300 flex items-center justify-center shadow-xs cursor-pointer`}
+                  >
+                    <ArrowRight size={16} />
+                  </Link>
                 </div>
               </div>
             ))}

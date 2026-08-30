@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Users, GraduationCap, ShieldCheck, Award } from 'lucide-react';
@@ -43,7 +43,9 @@ const Administration: React.FC = () => {
                 <span className="bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
                   {language === 'bn' ? 'সভাপতি (Chairman)' : 'Chairman'}
                 </span>
-                <h4 className="text-xl font-extrabold text-slate-900">{settings.chairmanName || "মাকসুদা সুলতানা"}</h4>
+                <h4 className="text-xl font-extrabold text-slate-900">
+                  {language === 'bn' ? (settings.chairmanName || "মাকসুদা সুলতানা") : (settings.chairmanName === 'মাকসুদা সুলতানা' ? 'Maksuda Sultana' : settings.chairmanName || 'Maksuda Sultana')}
+                </h4>
                 <p className="text-xs text-slate-500 font-medium leading-relaxed">
                   {language === 'bn' ? 'প্রকল্প পরিচালক, এস ও এস চিলড্রেন্স ভিলেজ খুলনা' : "Project Director, SOS Children's Village Khulna"}
                 </p>
@@ -66,7 +68,9 @@ const Administration: React.FC = () => {
                 <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
                   {t.adminPage.headmaster}
                 </span>
-                <h4 className="text-xl font-extrabold text-slate-900">{settings.headmasterName}</h4>
+                <h4 className="text-xl font-extrabold text-slate-900">
+                  {language === 'bn' ? settings.headmasterName : (settings.headmasterName === 'ইন্দ্রজিৎ কুমার মন্ডল' ? 'Indrajit Kumar Mondal' : settings.headmasterName === 'মোহাম্মদ রফিকুল ইসলাম' ? 'Mohammad Rafiqul Islam' : settings.headmasterName)}
+                </h4>
                 <p className="text-xs text-slate-500 font-medium leading-relaxed">
                   {language === 'bn' ? 'অধ্যক্ষ ও সদস্য সচিব, গভর্নিং বডি' : 'Principal & Member Secretary, Governing Body'}
                 </p>

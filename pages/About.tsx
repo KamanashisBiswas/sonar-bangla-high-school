@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { BookOpen, Award, CheckCircle, Trophy, Target, Compass, Sparkles, Building, Clock, Users, ShieldCheck, HeartHandshake } from 'lucide-react';
@@ -80,7 +80,9 @@ const About: React.FC = () => {
                   className="w-16 h-16 rounded-2xl object-cover border border-slate-200 shadow-sm"
                 />
                 <div>
-                  <h4 className="font-black text-slate-900 text-base">{settings.chairmanName || "মাকসুদা সুলতানা"}</h4>
+                  <h4 className="font-black text-slate-900 text-base">
+                    {language === 'bn' ? (settings.chairmanName || "মাকসুদা সুলতানা") : (settings.chairmanName === 'মাকসুদা সুলতানা' ? 'Maksuda Sultana' : settings.chairmanName || 'Maksuda Sultana')}
+                  </h4>
                   <p className="text-xs text-amber-700 font-bold">{language === 'bn' ? 'সভাপতি, গভর্নিং বডি' : 'Chairman, Governing Body'}</p>
                   <p className="text-[10px] text-slate-400">{language === 'bn' ? 'প্রকল্প পরিচালক, এস ও এস চিলড্রেন্স ভিলেজ খুলনা' : "Project Director, SOS Children's Village Khulna"}</p>
                 </div>
@@ -101,7 +103,9 @@ const About: React.FC = () => {
                   className="w-16 h-16 rounded-2xl object-cover border border-slate-200 shadow-sm"
                 />
                 <div>
-                  <h4 className="font-black text-slate-900 text-base">{settings.headmasterName}</h4>
+                  <h4 className="font-black text-slate-900 text-base">
+                    {language === 'bn' ? settings.headmasterName : (settings.headmasterName === 'ইন্দ্রজিৎ কুমার মন্ডল' ? 'Indrajit Kumar Mondal' : settings.headmasterName === 'মোহাম্মদ রফিকুল ইসলাম' ? 'Mohammad Rafiqul Islam' : settings.headmasterName)}
+                  </h4>
                   <p className="text-xs text-emerald-800 font-bold">{t.adminPage.headmaster}</p>
                   <p className="text-[10px] text-slate-400">{language === 'bn' ? settings.schoolName : 'SOS HERMANN GMEINER SCHOOL KHULNA'}</p>
                 </div>

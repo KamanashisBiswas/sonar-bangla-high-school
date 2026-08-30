@@ -71,6 +71,42 @@ export const MOCK_NOTICES: Notice[] = [
     type: 'Event',
     content: 'যথাযোগ্য মর্যাদায় শহীদ দিবস ও আন্তর্জাতিক মাতৃভাষা দিবস উপলক্ষে প্রভাতফেরি, আলোচনা সভা ও সাংস্কৃতিক প্রতিযোগিতার আয়োজন করা হয়েছে।',
     contentEn: 'On the occasion of Martyrs Day & International Mother Language Day, a morning procession, discussion assembly, and cultural events have been organized.'
+  },
+  {
+    id: '5',
+    title: 'অর্ধ-বার্ষিক ও প্রাক-নির্বাচনী পরীক্ষা ২০২৫ এর সময়সূচি প্রকাশ',
+    titleEn: 'Half-Yearly & Pre-Test Exam 2025 Schedule Published',
+    date: '2025-06-10',
+    type: 'Exam',
+    content: 'সকল শ্রেণির অর্ধ-বার্ষিক ও ১০ম শ্রেণির প্রাক-নির্বাচনী পরীক্ষার রুটিন প্রকাশিত হয়েছে। শিক্ষার্থীরা একাডেমিক সেকশন থেকে রুটিন ডাউনলোড করতে পারবে।',
+    contentEn: 'The schedule for Half-Yearly Examinations for all classes and Pre-Test for Class 10 has been published and is downloadable from the academic section.'
+  },
+  {
+    id: '6',
+    title: 'বার্ষিক বিজ্ঞান মেলা ও আইসিটি উদ্ভাবন প্রদর্শনী ২০২৫',
+    titleEn: 'Annual Science Fair & ICT Innovation Expo 2025',
+    date: '2025-03-15',
+    type: 'Event',
+    content: 'শিক্ষার্থীদের বিজ্ঞানমনস্ক ও প্রযুক্তি উদ্ভাবনে উৎসাহিত করতে আগামী ১৫ মার্চ স্কুল অডিটোরিয়ামে বিজ্ঞান মেলা অনুষ্ঠিত হবে।',
+    contentEn: 'To foster scientific curiosity and technological innovation, an Annual Science Fair will be held on March 15 in the school auditorium.'
+  },
+  {
+    id: '7',
+    title: 'মাসিক বেতন ও পরীক্ষার ফি পরিশোধের সময়সীমা সংক্রান্ত',
+    titleEn: 'Notice Regarding Monthly Tuition & Exam Fee Payment',
+    date: '2025-04-05',
+    type: 'General',
+    content: 'অভিভাবকবৃন্দের অবগতির জন্য জানানো যাচ্ছে যে, চলতি মাসের টিউশন ফি আগামী ১০ তারিখের মধ্যে অনলাইন গেটওয়ে বা হিসাব শাখায় পরিশোধের অনুরোধ করা হচ্ছে।',
+    contentEn: 'Guardians are kindly requested to clear the current month tuition fee by the 10th through the online fee payment gateway or accounts office.'
+  },
+  {
+    id: '8',
+    title: 'নতুন শিক্ষাবর্ষে ডিজিটাল আইডি কার্ড ও ইউনিফর্ম বিতরণ',
+    titleEn: 'Distribution of Digital Student ID Card & School Uniform',
+    date: '2025-01-10',
+    type: 'Admission',
+    content: '২০২৫ শিক্ষাবর্ষে নতুন ভর্তি হওয়া শিক্ষার্থীদের ডিজিটাল আইডি কার্ড ও ইউনিফর্ম আগামী ১২ জানুয়ারি সকাল ১০টা থেকে বিতরণ করা হবে।',
+    contentEn: 'Digital Student ID cards and uniform materials for newly admitted students will be distributed from January 12 at 10:00 AM.'
   }
 ];
 
