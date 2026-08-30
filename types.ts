@@ -1,9 +1,11 @@
 export interface Notice {
   id: string;
   title: string;
+  titleEn?: string;
   date: string;
   type: 'General' | 'Exam' | 'Admission' | 'Event';
   content?: string;
+  contentEn?: string;
   pdfUrl?: string;
 }
 

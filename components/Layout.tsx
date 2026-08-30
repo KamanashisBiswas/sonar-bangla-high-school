@@ -87,24 +87,7 @@ const Layout: React.FC = () => {
               <span className="bg-emerald-800 text-emerald-200 px-2.5 py-0.5 rounded text-[11px] font-semibold tracking-wider">
                 {t.topbar.eiin}: {toBanglaNum(settings.eiinCode)}
               </span>
-              <span className="bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded text-[11px] font-medium">
-                {t.topbar.estd}: {toBanglaNum(settings.establishedYear)}
-              </span>
             </div>
-
-            {/* Language Switcher Button */}
-            <button
-              onClick={toggleLanguage}
-              className="flex items-center gap-1.5 bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 hover:text-white border border-amber-400/30 px-2.5 py-1 rounded-md text-xs font-bold transition shadow-sm cursor-pointer"
-              title={
-                language === "bn"
-                  ? "Switch to English"
-                  : "বাংলায় পরিবর্তন করুন"
-              }
-            >
-              <Globe size={13} className="text-amber-300" />
-              <span>{language === "bn" ? "English" : "বাংলা"}</span>
-            </button>
           </div>
         </div>
       </div>
@@ -112,34 +95,22 @@ const Layout: React.FC = () => {
       {/* Main Institution Header */}
       <header className="bg-white border-b border-slate-200/90 shadow-sm sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-3.5 group">
-            <div className="w-14 h-14 rounded-2xl bg-white p-1 flex items-center justify-center shadow-sm border border-slate-200 group-hover:scale-105 transition-transform duration-300 overflow-hidden flex-shrink-0">
-              <img
-                src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png"
-                alt="SOS Hermann Gmeiner School Khulna"
-                className="w-full h-full object-contain"
-              />
-            </div>
+          <Link to="/" className="flex items-center gap-4 group">
+            <img
+              src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png"
+              alt="SOS Hermann Gmeiner School Khulna"
+              className="h-16 sm:h-20 md:h-22 w-auto object-contain flex-shrink-0 group-hover:scale-105 transition-transform duration-300"
+            />
             <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-lg md:text-xl lg:text-2xl font-extrabold text-slate-900 tracking-tight leading-tight group-hover:text-emerald-700 transition">
-                  {language === "bn"
-                    ? settings.schoolName
-                    : "SOS HERMANN GMEINER SCHOOL KHULNA"}
-                </h1>
-              </div>
-              <p className="text-xs md:text-sm font-medium text-slate-500 flex items-center gap-2 mt-0.5">
-                <span className="text-emerald-700 font-bold tracking-wide">
-                  {language === "bn"
-                    ? "SOS HERMANN GMEINER SCHOOL KHULNA"
-                    : "গল্লামারী, খুলনা - ৯২০৮"}
-                </span>
-                <span className="text-slate-300 hidden sm:inline">•</span>
-                <span className="hidden sm:inline text-slate-500 font-normal">
-                  {language === "bn"
-                    ? "শিক্ষা • শৃঙ্খলা • সততা"
-                    : "Honesty is Education • Peace & Progress"}
-                </span>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight group-hover:text-emerald-700 transition">
+                {language === "bn"
+                  ? settings.schoolName
+                  : "SOS HERMANN GMEINER SCHOOL KHULNA"}
+              </h1>
+              <p className="text-xs sm:text-sm font-semibold text-emerald-700 mt-1 tracking-wide">
+                {language === "bn"
+                  ? settings.schoolAddress
+                  : "Gollamari, Khulna - 9208"}
               </p>
             </div>
           </Link>
@@ -161,14 +132,31 @@ const Layout: React.FC = () => {
               </Link>
             </div>
 
-            {/* Mobile Language Switcher */}
-            <button
-              onClick={toggleLanguage}
-              className="md:hidden flex items-center gap-1 bg-amber-50 text-amber-900 border border-amber-200 px-2.5 py-1.5 rounded-lg text-xs font-bold"
-            >
-              <Globe size={14} className="text-amber-700" />
-              <span>{language === "bn" ? "EN" : "বাং"}</span>
-            </button>
+            {/* Mobile Language Switcher (BN | EN) */}
+            <div className="md:hidden bg-slate-100 p-0.5 rounded-lg border border-slate-200 flex items-center shadow-xs">
+              <button
+                type="button"
+                onClick={() => language !== 'bn' && toggleLanguage()}
+                className={`px-2 py-1 rounded-md text-xs font-black transition ${
+                  language === 'bn'
+                    ? 'bg-emerald-700 text-white shadow-xs'
+                    : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                BN
+              </button>
+              <button
+                type="button"
+                onClick={() => language !== 'en' && toggleLanguage()}
+                className={`px-2 py-1 rounded-md text-xs font-black transition ${
+                  language === 'en'
+                    ? 'bg-emerald-700 text-white shadow-xs'
+                    : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                EN
+              </button>
+            </div>
 
             {/* Mobile Menu Button */}
             <button
@@ -208,13 +196,34 @@ const Layout: React.FC = () => {
                 })}
               </ul>
 
-              <div className="py-2 flex items-center gap-2">
-                <Link
-                  to="/admin-login"
-                  className="bg-emerald-900/80 hover:bg-emerald-950 text-emerald-200 hover:text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 border border-emerald-700"
-                >
-                  <Lock size={12} /> {t.topbar.adminLogin}
-                </Link>
+              <div className="py-2 flex items-center">
+                {/* Language Switch Toggle (BN | EN) */}
+                <div className="bg-emerald-950/90 p-0.5 rounded-full border border-emerald-700/60 flex items-center shadow-inner">
+                  <button
+                    type="button"
+                    onClick={() => language !== 'bn' && toggleLanguage()}
+                    className={`px-3 py-1 rounded-full text-xs font-black transition-all duration-200 cursor-pointer ${
+                      language === 'bn'
+                        ? 'bg-amber-400 text-emerald-950 shadow-sm scale-100'
+                        : 'text-emerald-300 hover:text-white'
+                    }`}
+                    title="বাংলা"
+                  >
+                    BN
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => language !== 'en' && toggleLanguage()}
+                    className={`px-3 py-1 rounded-full text-xs font-black transition-all duration-200 cursor-pointer ${
+                      language === 'en'
+                        ? 'bg-amber-400 text-emerald-950 shadow-sm scale-100'
+                        : 'text-emerald-300 hover:text-white'
+                    }`}
+                    title="English"
+                  >
+                    EN
+                  </button>
+                </div>
               </div>
             </nav>
           </div>
@@ -234,13 +243,11 @@ const Layout: React.FC = () => {
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-slate-100">
                 <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-xl bg-white p-1 flex items-center justify-center border border-slate-200 shadow-sm flex-shrink-0">
-                    <img
-                      src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png"
-                      alt="SOS Hermann Gmeiner School Khulna"
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
+                  <img
+                    src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png"
+                    alt="SOS Hermann Gmeiner School Khulna"
+                    className="h-12 w-auto object-contain flex-shrink-0"
+                  />
                   <div>
                     <h3 className="font-bold text-slate-900 text-xs sm:text-sm leading-tight line-clamp-1">
                       {language === "bn"
@@ -248,7 +255,7 @@ const Layout: React.FC = () => {
                         : "SOS HERMANN GMEINER SCHOOL KHULNA"}
                     </h3>
                     <span className="text-[11px] text-emerald-700 font-semibold">
-                      {language === "bn" ? "মেনুবার" : "Navigation"}
+                      {language === "bn" ? settings.schoolAddress : "Gollamari, Khulna"}
                     </span>
                   </div>
                 </div>
@@ -289,18 +296,36 @@ const Layout: React.FC = () => {
             </div>
 
             <div className="pt-4 border-t border-slate-100 space-y-2">
-              <button
-                onClick={() => {
-                  toggleLanguage();
-                  setIsMenuOpen(false);
-                }}
-                className="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl font-bold text-xs transition"
-              >
-                <Globe size={14} className="text-emerald-700" />
-                <span>
-                  {language === "bn" ? "Switch to English" : "বাংলায় দেখুন"}
+              {/* Language Segmented Switch for Mobile Drawer */}
+              <div className="bg-slate-100 p-1 rounded-xl border border-slate-200 flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-600 pl-2">
+                  {language === 'bn' ? 'ভাষা নির্বাচন' : 'Language'}
                 </span>
-              </button>
+                <div className="flex items-center gap-1 bg-white p-0.5 rounded-lg border border-slate-200 shadow-xs">
+                  <button
+                    type="button"
+                    onClick={() => { if (language !== 'bn') toggleLanguage(); }}
+                    className={`px-3 py-1 rounded-md text-xs font-black transition ${
+                      language === 'bn'
+                        ? 'bg-emerald-700 text-white shadow-xs'
+                        : 'text-slate-500 hover:text-slate-800'
+                    }`}
+                  >
+                    BN
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { if (language !== 'en') toggleLanguage(); }}
+                    className={`px-3 py-1 rounded-md text-xs font-black transition ${
+                      language === 'en'
+                        ? 'bg-emerald-700 text-white shadow-xs'
+                        : 'text-slate-500 hover:text-slate-800'
+                    }`}
+                  >
+                    EN
+                  </button>
+                </div>
+              </div>
 
               <Link
                 to="/admin-login"
@@ -386,22 +411,20 @@ const Layout: React.FC = () => {
             {/* Column 1: School Identity & Overview */}
             <div className="space-y-4">
               <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-white p-1 flex items-center justify-center shadow-md border border-slate-200 flex-shrink-0">
-                  <img
-                    src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png"
-                    alt="SOS Hermann Gmeiner School Khulna"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
+                <img
+                  src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png"
+                  alt="SOS Hermann Gmeiner School Khulna"
+                  className="h-14 w-auto object-contain flex-shrink-0"
+                />
                 <div>
                   <h3 className="text-base font-black text-slate-900 leading-tight">
                     {language === "bn"
                       ? settings.schoolName
                       : "SOS HERMANN GMEINER SCHOOL KHULNA"}
                   </h3>
-                  <span className="text-[11px] font-bold text-emerald-700 tracking-wide uppercase block">
+                  <span className="text-[11px] font-bold text-emerald-700 tracking-wide block mt-0.5">
                     {language === "bn"
-                      ? "SOS HERMANN GMEINER SCHOOL KHULNA"
+                      ? settings.schoolAddress
                       : "Gollamari, Khulna - 9208"}
                   </span>
                 </div>

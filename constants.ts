@@ -39,30 +39,38 @@ export const MOCK_NOTICES: Notice[] = [
   {
     id: '1',
     title: 'গ্রীষ্মকালীন অবকাশ ও ছুটির বিজ্ঞপ্তি ২০২৫',
+    titleEn: 'Summer Vacation & Holiday Notice 2025',
     date: '2025-07-28',
     type: 'General',
-    content: 'এতদ্বারা এস ও এস হারম্যান মেইনার স্কুল খুলনার সকল শিক্ষক, শিক্ষার্থী ও অভিভাবকদের অবগতির জন্য জানানো যাচ্ছে যে, আগামী ২৯-০৭-২০২৫ তারিখ থেকে ০৭-০৮-২০২৫ তারিখ পর্যন্ত বিদ্যালয়ের সকল শ্রেণি কার্যক্রম গ্রীষ্মকালীন ছুটির জন্য বন্ধ থাকবে।'
+    content: 'এতদ্বারা এস ও এস হারম্যান মেইনার স্কুল খুলনার সকল শিক্ষক, শিক্ষার্থী ও অভিভাবকদের অবগতির জন্য জানানো যাচ্ছে যে, আগামী ২৯-০৭-২০২৫ তারিখ থেকে ০৭-০৮-২০২৫ তারিখ পর্যন্ত বিদ্যালয়ের সকল শ্রেণি কার্যক্রম গ্রীষ্মকালীন ছুটির জন্য বন্ধ থাকবে।',
+    contentEn: 'This is to inform all teachers, students, and guardians of SOS Hermann Gmeiner School Khulna that all academic classes will remain closed from 29-07-2025 to 07-08-2025 for summer vacation.'
   },
   {
     id: '2',
     title: 'এস.এস.সি পরীক্ষা ২০২৫ এর ফলাফল ও মার্কশিট সংগ্রহ',
+    titleEn: 'SSC Examination 2025 Results & Marksheet Distribution',
     date: '2025-05-12',
     type: 'Exam',
-    content: 'এস.এস.সি পরীক্ষা ২০২৫ এ উত্তীর্ণ শিক্ষার্থীদের অভিনন্দন। উত্তীর্ণ শিক্ষার্থীরা আগামী ১৫ মে থেকে বিদ্যালয়ের অফিস কক্ষ থেকে অফিশিয়াল একাডেমিক মার্কশিট ও প্রশংসাপত্র সংগ্রহ করতে পারবে।'
+    content: 'এস.এস.সি পরীক্ষা ২০২৫ এ উত্তীর্ণ শিক্ষার্থীদের অভিনন্দন। উত্তীর্ণ শিক্ষার্থীরা আগামী ১৫ মে থেকে বিদ্যালয়ের অফিস কক্ষ থেকে অফিশিয়াল একাডেমিক মার্কশিট ও প্রশংসাপত্র সংগ্রহ করতে পারবে।',
+    contentEn: 'Congratulations to all successful candidates of SSC Exam 2025. Students can collect official academic marksheets and testimonials from the school office starting May 15.'
   },
   {
     id: '3',
     title: 'প্রেপ-১ ও ৬ষ্ঠ শ্রেণিতে অনলাইন ভর্তি আবেদন কার্যক্রম ২০২৫',
+    titleEn: 'Online Admission Open for Prep-1 & Class 6 (Session 2025)',
     date: '2024-11-01',
     type: 'Admission',
-    content: 'চলতি শিক্ষাবর্ষে প্রেপ-১ হতে ৯ম শ্রেণি পর্যন্ত শূন্য আসনে অনলাইনে ভর্তি আবেদন গ্রহণ করা হচ্ছে। অভিভাবকগণ ওয়েবসাইট থেকে ঘরে বসেই আবেদন সম্পন্ন করতে পারবেন।'
+    content: 'চলতি শিক্ষাবর্ষে প্রেপ-১ হতে ৯ম শ্রেণি পর্যন্ত শূন্য আসনে অনলাইনে ভর্তি আবেদন গ্রহণ করা হচ্ছে। অভিভাবকগণ ওয়েবসাইট থেকে ঘরে বসেই আবেদন সম্পন্ন করতে পারবেন।',
+    contentEn: 'Online admission applications are now open for vacant seats from Prep-1 to Class 9. Guardians can submit applications directly online via the portal.'
   },
   {
     id: '4',
     title: 'আন্তর্জাতিক মাতৃভাষা দিবস ও বার্ষিক ক্রীড়া উৎসব উদযাপন',
+    titleEn: 'International Mother Language Day & Annual Sports Meet',
     date: '2025-02-21',
     type: 'Event',
-    content: 'যথাযোগ্য মর্যাদায় শহীদ দিবস ও আন্তর্জাতিক মাতৃভাষা দিবস উপলক্ষে প্রভাতফেরি, আলোচনা সভা ও সাংস্কৃতিক প্রতিযোগিতার আয়োজন করা হয়েছে।'
+    content: 'যথাযোগ্য মর্যাদায় শহীদ দিবস ও আন্তর্জাতিক মাতৃভাষা দিবস উপলক্ষে প্রভাতফেরি, আলোচনা সভা ও সাংস্কৃতিক প্রতিযোগিতার আয়োজন করা হয়েছে।',
+    contentEn: 'On the occasion of Martyrs Day & International Mother Language Day, a morning procession, discussion assembly, and cultural events have been organized.'
   }
 ];
 

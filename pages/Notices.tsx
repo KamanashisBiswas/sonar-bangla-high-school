@@ -1,8 +1,15 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Notice } from '../types';
 import { Bell, Search, Calendar, Tag, ChevronRight, FileText, X } from 'lucide-react';
+
+const NOTICE_EN_MAP: Record<string, string> = {
+  'গ্রীষ্মকালীন অবকাশ ও ছুটির বিজ্ঞপ্তি ২০২৫': 'Summer Vacation & Holiday Notice 2025',
+  'এস.এস.সি পরীক্ষা ২০২৫ এর ফলাফল ও মার্কশিট সংগ্রহ': 'SSC Examination 2025 Results & Marksheet Distribution',
+  'প্রেপ-১ ও ৬ষ্ঠ শ্রেণিতে অনলাইন ভর্তি আবেদন কার্যক্রম ২০২৫': 'Online Admission Open for Prep-1 & Class 6 (Session 2025)',
+  'আন্তর্জাতিক মাতৃভাষা দিবস ও বার্ষিক ক্রীড়া উৎসব উদযাপন': 'International Mother Language Day & Annual Sports Meet',
+};
 
 const Notices: React.FC = () => {
   const { notices } = useData();
@@ -99,10 +106,10 @@ const Notices: React.FC = () => {
                       {notice.type}
                     </span>
                     <h3 className="font-extrabold text-slate-900 text-sm sm:text-base group-hover:text-emerald-700 transition leading-snug">
-                      {notice.title}
+                      {language === 'bn' ? notice.title : (notice.titleEn || NOTICE_EN_MAP[notice.title] || notice.title)}
                     </h3>
                     <p className="text-xs text-slate-400 mt-1 flex items-center gap-2">
-                      <span>{t.downloads.dateCol}: {toBanglaNum(notice.date)}</span>
+                      <span>{t.downloads.dateCol}: {toBanglaNum(notice.date.split('-').reverse().join('/'))}</span>
                     </p>
                   </div>
                 </div>
@@ -133,15 +140,20 @@ const Notices: React.FC = () => {
                 <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-lg text-xs font-bold uppercase">
                   {selectedNotice.type}
                 </span>
-                <span className="text-xs text-slate-400 font-semibold ml-3">{toBanglaNum(selectedNotice.date)}</span>
+                <span className="text-xs text-slate-400 font-semibold ml-3">
+                  {toBanglaNum(selectedNotice.date.split('-').reverse().join('/'))}
+                </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-4 leading-snug">
-                {selectedNotice.title}
+                {language === 'bn' ? selectedNotice.title : (selectedNotice.titleEn || NOTICE_EN_MAP[selectedNotice.title] || selectedNotice.title)}
               </h2>
 
               <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line mb-6 max-h-96 overflow-y-auto">
-                {selectedNotice.content || (language === 'bn' ? 'উক্ত নোটিশের সকল শিক্ষক, শিক্ষার্থী ও অভিভাবকবৃন্দকে যথাযথ নির্দেশনা অনুসরণের জন্য অনুরোধ জানানো যাচ্ছে।' : 'All concerned teachers, students, and guardians are requested to follow the circular accordingly.')}
+                {language === 'bn' 
+                  ? (selectedNotice.content || 'উক্ত নোটিশের সকল শিক্ষক, শিক্ষার্থী ও অভিভাবকবৃন্দকে যথাযথ নির্দেশনা অনুসরণের জন্য অনুরোধ জানানো যাচ্ছে।')
+                  : (selectedNotice.contentEn || selectedNotice.content || 'All concerned teachers, students, and guardians are requested to follow the circular accordingly.')
+                }
               </div>
 
               <div className="flex justify-end">

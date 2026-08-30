@@ -12,6 +12,13 @@ import {
   Target, Compass, HeartHandshake, Phone
 } from 'lucide-react';
 
+const NOTICE_EN_MAP: Record<string, string> = {
+  'গ্রীষ্মকালীন অবকাশ ও ছুটির বিজ্ঞপ্তি ২০২৫': 'Summer Vacation & Holiday Notice 2025',
+  'এস.এস.সি পরীক্ষা ২০২৫ এর ফলাফল ও মার্কশিট সংগ্রহ': 'SSC Examination 2025 Results & Marksheet Distribution',
+  'প্রেপ-১ ও ৬ষ্ঠ শ্রেণিতে অনলাইন ভর্তি আবেদন কার্যক্রম ২০২৫': 'Online Admission Open for Prep-1 & Class 6 (Session 2025)',
+  'আন্তর্জাতিক মাতৃভাষা দিবস ও বার্ষিক ক্রীড়া উৎসব উদযাপন': 'International Mother Language Day & Annual Sports Meet',
+};
+
 const Home: React.FC = () => {
   const { settings, notices, teachers, students, gallery, staff } = useData();
   const { language, t, toBanglaNum } = useLanguage();
@@ -510,13 +517,13 @@ const Home: React.FC = () => {
                       </div>
                       <div className="flex-grow min-w-0">
                         <h4 className="font-semibold text-slate-800 group-hover:text-emerald-700 text-xs line-clamp-2 leading-snug">
-                          {notice.title}
+                          {language === 'bn' ? notice.title : (notice.titleEn || NOTICE_EN_MAP[notice.title] || notice.title)}
                         </h4>
                         <div className="flex items-center gap-2 mt-1">
                           <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
                             {notice.type}
                           </span>
-                          <span className="text-[10px] text-slate-400">{toBanglaNum(notice.date)}</span>
+                          <span className="text-[10px] text-slate-400">{toBanglaNum(notice.date.split('-').reverse().join('/'))}</span>
                         </div>
                       </div>
                     </Link>

@@ -72,10 +72,19 @@ const loadData = <T,>(key: string, defaultData: T): T => {
     const saved = localStorage.getItem(key);
     if (!saved) return defaultData;
     const parsed = JSON.parse(saved);
-    if (key === 'settings' && parsed) {
-      if (!parsed.headmasterName || parsed.headmasterName.includes('রফিকুল') || parsed.schoolName?.includes('সোনার বাংলা')) {
-        return defaultData;
-      }
+    if (key === 'notices' && Array.isArray(parsed)) {
+      const mockMap = new Map((defaultData as Notice[]).map(n => [n.id, n]));
+      return parsed.map((item: Notice) => {
+        const mockItem = mockMap.get(item.id);
+        if (mockItem) {
+          return {
+            ...item,
+            titleEn: item.titleEn || mockItem.titleEn,
+            contentEn: item.contentEn || mockItem.contentEn
+          };
+        }
+        return item;
+      }) as unknown as T;
     }
     return parsed;
   } catch (e) {
