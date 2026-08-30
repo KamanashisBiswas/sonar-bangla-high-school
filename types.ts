@@ -21,6 +21,8 @@ export interface Staff {
   name: string;
   designation: string;
   image: string;
+  phone?: string;
+  email?: string;
 }
 
 export interface CommitteeMember {
@@ -28,7 +30,7 @@ export interface CommitteeMember {
   name: string;
   position: string;
   image: string;
-  type: 'President' | 'Member' | 'Donor';
+  type: string;
 }
 
 export interface SubjectResult {
@@ -120,12 +122,14 @@ export interface EventImage {
   url: string;
   caption: string;
   date: string;
+  category?: string;
 }
 
 export interface DownloadItem {
   id: string;
   title: string;
-  category: 'Form' | 'Syllabus' | 'Routine' | 'Prospectus';
+  category: string;
   date: string;
   size: string;
+  fileUrl?: string;
 }

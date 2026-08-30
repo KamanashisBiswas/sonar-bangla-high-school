@@ -1,4 +1,4 @@
-﻿export type Language = 'bn' | 'en';
+export type Language = 'bn' | 'en';
 
 export const translations = {
   bn: {
@@ -200,6 +200,7 @@ export const translations = {
       routineSubtitle: 'রবিবার থেকে বৃহস্পতিবার পর্যন্ত নিয়মিত পাঠদান সময়সূচি',
       period: 'পিরিয়ড',
       time: 'সময়',
+      class: 'শ্রেণি',
       class6: '৬ষ্ঠ শ্রেণি',
       class7: '৭ম শ্রেণি',
       class8: '৮ম শ্রেণি',
@@ -492,6 +493,7 @@ export const translations = {
       routineSubtitle: 'Regular class timetable from Sunday through Thursday',
       period: 'Period',
       time: 'Time',
+      class: 'Class',
       class6: 'Class 6',
       class7: 'Class 7',
       class8: 'Class 8',

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { 
-  Menu, X, Phone, Mail, MapPin, Facebook, GraduationCap, Lock, 
-  ExternalLink, Files, Link as LinkIcon, BookOpen, Clock, ShieldCheck, 
+import {
+  Menu, X, Phone, Mail, MapPin, Facebook, GraduationCap, Lock,
+  ExternalLink, Files, Link as LinkIcon, BookOpen, Clock, ShieldCheck,
   ChevronRight, Globe, Award, Sparkles, Send, CheckCircle2, ArrowRight
 } from 'lucide-react';
 import { QUICK_LINKS } from '../constants';
@@ -52,7 +52,7 @@ const Layout: React.FC = () => {
       <AnimatePresence>
         {isLoading && <PageLoader />}
       </AnimatePresence>
-      
+
       {/* Top Utility Bar */}
       <div className="bg-emerald-900 text-emerald-50 text-xs py-2 border-b border-emerald-800/80 shadow-sm hidden md:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
@@ -67,7 +67,7 @@ const Layout: React.FC = () => {
               <Clock size={13} className="text-emerald-400" /> {language === 'bn' ? 'রবি - বৃহস্পতি: সকাল ৯:০০ - বিকাল ৪:০০' : 'Sun - Thu: 9:00 AM - 4:00 PM'}
             </span>
           </div>
-          
+
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="bg-emerald-800 text-emerald-200 px-2.5 py-0.5 rounded text-[11px] font-semibold tracking-wider">
@@ -79,7 +79,7 @@ const Layout: React.FC = () => {
             </div>
 
             {/* Language Switcher Button */}
-            <button 
+            <button
               onClick={toggleLanguage}
               className="flex items-center gap-1.5 bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 hover:text-white border border-amber-400/30 px-2.5 py-1 rounded-md text-xs font-bold transition shadow-sm cursor-pointer"
               title={language === 'bn' ? 'Switch to English' : 'বাংলায় পরিবর্তন করুন'}
@@ -88,8 +88,8 @@ const Layout: React.FC = () => {
               <span>{language === 'bn' ? 'English' : 'বাংলা'}</span>
             </button>
 
-            <Link 
-              to="/admin-login" 
+            <Link
+              to="/admin-login"
               className="flex items-center gap-1.5 bg-emerald-800 hover:bg-emerald-700 text-emerald-100 hover:text-white px-3 py-1 rounded-md text-xs font-semibold transition shadow-sm"
             >
               <Lock size={12} className="text-emerald-300" />
@@ -104,9 +104,9 @@ const Layout: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center">
           <Link to="/" className="flex items-center gap-3.5 group">
             <div className="w-14 h-14 rounded-2xl bg-white p-1 flex items-center justify-center shadow-sm border border-slate-200 group-hover:scale-105 transition-transform duration-300 overflow-hidden flex-shrink-0">
-              <img 
-                src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png" 
-                alt="SOS Hermann Gmeiner School Khulna" 
+              <img
+                src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png"
+                alt="SOS Hermann Gmeiner School Khulna"
                 className="w-full h-full object-contain"
               />
             </div>
@@ -127,18 +127,18 @@ const Layout: React.FC = () => {
               </p>
             </div>
           </Link>
-          
+
           <div className="flex items-center gap-3">
             {/* Quick Action Badges / CTAs for Desktop */}
             <div className="hidden lg:flex items-center gap-2">
-              <Link 
-                to="/admission" 
+              <Link
+                to="/admission"
                 className="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
               >
                 <BookOpen size={14} /> {t.topbar.onlineAdmission}
               </Link>
-              <Link 
-                to="/result" 
+              <Link
+                to="/result"
                 className="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
               >
                 <ShieldCheck size={14} /> {t.topbar.result}
@@ -146,7 +146,7 @@ const Layout: React.FC = () => {
             </div>
 
             {/* Mobile Language Switcher */}
-            <button 
+            <button
               onClick={toggleLanguage}
               className="md:hidden flex items-center gap-1 bg-amber-50 text-amber-900 border border-amber-200 px-2.5 py-1.5 rounded-lg text-xs font-bold"
             >
@@ -155,8 +155,8 @@ const Layout: React.FC = () => {
             </button>
 
             {/* Mobile Menu Button */}
-            <button 
-              onClick={toggleMenu} 
+            <button
+              onClick={toggleMenu}
               aria-label="Toggle Menu"
               className="md:hidden text-slate-700 hover:text-emerald-700 p-2 rounded-xl border border-slate-200 hover:bg-slate-50 transition shadow-sm"
             >
@@ -174,11 +174,11 @@ const Layout: React.FC = () => {
                   const isActive = location.pathname === item.path;
                   return (
                     <li key={item.path}>
-                      <Link 
-                        to={item.path} 
+                      <Link
+                        to={item.path}
                         className={`inline-block px-3.5 py-3 text-sm font-semibold transition-all duration-200 relative ${
-                          isActive 
-                            ? 'bg-emerald-950 text-white shadow-inner font-bold' 
+                          isActive
+                            ? 'bg-emerald-950 text-white shadow-inner font-bold'
                             : 'text-emerald-50 hover:bg-emerald-700/80 hover:text-white'
                         }`}
                       >
@@ -193,8 +193,8 @@ const Layout: React.FC = () => {
               </ul>
 
               <div className="py-2 flex items-center gap-2">
-                <Link 
-                  to="/admin-login" 
+                <Link
+                  to="/admin-login"
                   className="bg-emerald-900/80 hover:bg-emerald-950 text-emerald-200 hover:text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 border border-emerald-700"
                 >
                   <Lock size={12} /> {t.topbar.adminLogin}
@@ -208,7 +208,7 @@ const Layout: React.FC = () => {
       {/* Mobile Drawer Menu */}
       {isMenuOpen && (
         <div className="md:hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onClick={toggleMenu}>
-          <div 
+          <div
             className="w-4/5 max-w-sm bg-white h-full shadow-2xl p-6 overflow-y-auto flex flex-col justify-between"
             onClick={(e) => e.stopPropagation()}
           >
@@ -216,9 +216,9 @@ const Layout: React.FC = () => {
               <div className="flex items-center justify-between pb-4 border-b border-slate-100">
                 <div className="flex items-center gap-3">
                   <div className="w-11 h-11 rounded-xl bg-white p-1 flex items-center justify-center border border-slate-200 shadow-sm flex-shrink-0">
-                    <img 
-                      src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png" 
-                      alt="SOS Hermann Gmeiner School Khulna" 
+                    <img
+                      src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png"
+                      alt="SOS Hermann Gmeiner School Khulna"
                       className="w-full h-full object-contain"
                     />
                   </div>
@@ -229,8 +229,8 @@ const Layout: React.FC = () => {
                     <span className="text-[11px] text-emerald-700 font-semibold">{language === 'bn' ? 'মেনুবার' : 'Navigation'}</span>
                   </div>
                 </div>
-                <button 
-                  onClick={toggleMenu} 
+                <button
+                  onClick={toggleMenu}
                   className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100"
                 >
                   <X size={20} />
@@ -242,12 +242,12 @@ const Layout: React.FC = () => {
                   const isActive = location.pathname === item.path;
                   return (
                     <li key={item.path}>
-                      <Link 
-                        to={item.path} 
+                      <Link
+                        to={item.path}
                         onClick={() => setIsMenuOpen(false)}
                         className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold transition ${
-                          isActive 
-                            ? 'bg-emerald-50 text-emerald-800 border-l-4 border-emerald-600 font-bold' 
+                          isActive
+                            ? 'bg-emerald-50 text-emerald-800 border-l-4 border-emerald-600 font-bold'
                             : 'text-slate-700 hover:bg-slate-50 hover:text-emerald-700'
                         }`}
                       >
@@ -261,7 +261,7 @@ const Layout: React.FC = () => {
             </div>
 
             <div className="pt-4 border-t border-slate-100 space-y-2">
-              <button 
+              <button
                 onClick={() => { toggleLanguage(); setIsMenuOpen(false); }}
                 className="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl font-bold text-xs transition"
               >
@@ -269,8 +269,8 @@ const Layout: React.FC = () => {
                 <span>{language === 'bn' ? 'Switch to English' : 'বাংলায় দেখুন'}</span>
               </button>
 
-              <Link 
-                to="/admin-login" 
+              <Link
+                to="/admin-login"
                 onClick={() => setIsMenuOpen(false)}
                 className="w-full flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white py-3 rounded-xl font-bold text-sm shadow-md transition"
               >
@@ -289,7 +289,7 @@ const Layout: React.FC = () => {
 
       {/* Modern High-Class Institutional LIGHT Footer */}
       <footer className="bg-slate-100 text-slate-700 border-t-2 border-emerald-600 relative overflow-hidden">
-        
+
         {/* Pre-Footer Action Banner (Light Emerald Tint) */}
         <div className="border-b border-emerald-100 bg-emerald-50/70">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7">
@@ -315,14 +315,14 @@ const Layout: React.FC = () => {
               </div>
 
               <div className="flex items-center justify-start md:justify-end gap-3">
-                <Link 
-                  to="/admission" 
+                <Link
+                  to="/admission"
                   className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition shadow-md shadow-emerald-800/20 flex items-center gap-1.5 cursor-pointer"
                 >
                   {t.topbar.onlineAdmission} <ArrowRight size={14} />
                 </Link>
-                <Link 
-                  to="/contact" 
+                <Link
+                  to="/contact"
                   className="bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-300 transition shadow-sm cursor-pointer"
                 >
                   {t.nav.contact}
@@ -335,14 +335,14 @@ const Layout: React.FC = () => {
         {/* Main Footer Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 mb-12">
-            
+
             {/* Column 1: School Identity & Overview */}
             <div className="space-y-4">
               <div className="flex items-center gap-3.5">
                 <div className="w-12 h-12 rounded-2xl bg-white p-1 flex items-center justify-center shadow-md border border-slate-200 flex-shrink-0">
-                  <img 
-                    src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png" 
-                    alt="SOS Hermann Gmeiner School Khulna" 
+                  <img
+                    src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png"
+                    alt="SOS Hermann Gmeiner School Khulna"
                     className="w-full h-full object-contain"
                   />
                 </div>
@@ -357,7 +357,7 @@ const Layout: React.FC = () => {
               </div>
 
               <p className="text-xs leading-relaxed text-slate-600">
-                {language === 'bn' 
+                {language === 'bn'
                   ? 'জ্ঞান, শৃঙ্খলা ও নৈতিক শিক্ষার সমন্বয়ে ভবিষ্যৎ সুনাগরিক গড়ে তোলাই আমাদের মূল লক্ষ্য। আধুনিক স্মার্ট ক্যাম্পাস ও সুশৃঙ্খল শিক্ষাব্যবস্থা।'
                   : 'Committed to nurturing enlightened, disciplined, and morally sound future citizens through modern educational excellence.'
                 }
@@ -373,21 +373,21 @@ const Layout: React.FC = () => {
               </div>
 
               <div className="pt-2 flex items-center gap-3">
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="w-9 h-9 bg-white hover:bg-blue-600 text-slate-600 hover:text-white rounded-xl flex items-center justify-center transition border border-slate-200 shadow-sm"
                   aria-label="Facebook Page"
                 >
                   <Facebook size={16}/>
                 </a>
-                <a 
+                <a
                   href={`mailto:${settings.contactEmail}`}
                   className="w-9 h-9 bg-white hover:bg-emerald-600 text-slate-600 hover:text-white rounded-xl flex items-center justify-center transition border border-slate-200 shadow-sm"
                   aria-label="Send Email"
                 >
                   <Mail size={16}/>
                 </a>
-                <a 
+                <a
                   href={`tel:${settings.contactPhone}`}
                   className="w-9 h-9 bg-white hover:bg-emerald-600 text-slate-600 hover:text-white rounded-xl flex items-center justify-center transition border border-slate-200 shadow-sm"
                   aria-label="Call Hotline"
@@ -434,15 +434,15 @@ const Layout: React.FC = () => {
               </h4>
               <ul className="space-y-3 text-xs text-slate-600">
                 <li className="flex items-start gap-2.5">
-                  <MapPin size={16} className="text-emerald-700 flex-shrink-0 mt-0.5" /> 
+                  <MapPin size={16} className="text-emerald-700 flex-shrink-0 mt-0.5" />
                   <span className="leading-relaxed text-slate-800">{settings.schoolAddress}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <Phone size={16} className="text-emerald-700 flex-shrink-0" /> 
+                  <Phone size={16} className="text-emerald-700 flex-shrink-0" />
                   <a href={`tel:${settings.contactPhone}`} className="hover:text-emerald-800 font-mono font-bold text-slate-900">{toBanglaNum(settings.contactPhone)}</a>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <Mail size={16} className="text-emerald-700 flex-shrink-0" /> 
+                  <Mail size={16} className="text-emerald-700 flex-shrink-0" />
                   <a href={`mailto:${settings.contactEmail}`} className="hover:text-emerald-800 font-mono font-semibold text-slate-800">{settings.contactEmail}</a>
                 </li>
                 <li className="p-3 bg-amber-50/80 border border-amber-200/80 rounded-2xl">
@@ -468,10 +468,10 @@ const Layout: React.FC = () => {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 text-xs">
               {QUICK_LINKS.slice(0, 8).map((link, idx) => (
-                <a 
-                  key={idx} 
-                  href={link.url} 
-                  target="_blank" 
+                <a
+                  key={idx}
+                  href={link.url}
+                  target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-2 bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 transition py-1.5 px-2.5 rounded-lg border border-slate-200/80 text-[11px] truncate group shadow-xs"
                 >
