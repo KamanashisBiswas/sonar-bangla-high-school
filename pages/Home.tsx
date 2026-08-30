@@ -818,7 +818,7 @@ const Home: React.FC = () => {
                   className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex flex-col justify-end p-4 text-white">
-                  <span className="text-[10px] text-emerald-300 font-bold uppercase tracking-wider">{toBanglaNum(item.date)}</span>
+                  <span className="text-[10px] text-emerald-300 font-bold uppercase tracking-wider">{toBanglaNum(item.date || '')}</span>
                   <h4 className="font-bold text-xs sm:text-sm leading-snug">{item.caption}</h4>
                 </div>
               </div>
