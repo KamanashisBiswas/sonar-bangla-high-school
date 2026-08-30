@@ -22,11 +22,12 @@ import {
   Send,
   CheckCircle2,
   ArrowRight,
+  Youtube,
+  Building2
 } from "lucide-react";
 import { QUICK_LINKS } from "../constants";
 import { useData } from "../contexts/DataContext";
 import { useLanguage } from "../contexts/LanguageContext";
-import BackToTop from "./ui/BackToTop";
 import { PageLoader } from "./ui/Loading";
 import { AnimatePresence } from "framer-motion";
 
@@ -345,367 +346,244 @@ const Layout: React.FC = () => {
       {/* Main Content Area */}
       <main className="flex-grow">{!isLoading && <Outlet />}</main>
 
-      {/* Modern High-Class Institutional LIGHT Footer */}
-      <footer className="bg-slate-100 text-slate-700 border-t-2 border-emerald-600 relative overflow-hidden">
-        {/* Pre-Footer Action Banner (Light Emerald Tint) */}
-        <div className="border-b border-emerald-100 bg-emerald-50/70">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-white text-emerald-700 border border-emerald-200 flex items-center justify-center flex-shrink-0 shadow-sm">
-                  <BookOpen size={24} />
-                </div>
-                <div>
-                  <h4 className="text-slate-900 font-extrabold text-sm">
-                    {language === "bn"
-                      ? "ভর্তি আবেদন ২০২৫"
-                      : "Admissions Open 2025"}
-                  </h4>
-                  <p className="text-xs text-slate-600">
-                    {language === "bn"
-                      ? "সকল শ্রেণিতে অনলাইনে আবেদন চলছে"
-                      : "Online applications open for all grades"}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-white text-amber-700 border border-amber-200 flex items-center justify-center flex-shrink-0 shadow-sm">
-                  <ShieldCheck size={24} />
-                </div>
-                <div>
-                  <h4 className="text-slate-900 font-extrabold text-sm">
-                    {language === "bn"
-                      ? "ফলাফল ও মার্কশিট"
-                      : "Results & Marksheets"}
-                  </h4>
-                  <p className="text-xs text-slate-600">
-                    {language === "bn"
-                      ? "রোল নম্বর দিয়ে দ্রুত রেজাল্ট যাচাই"
-                      : "Instant marksheet generation"}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-start md:justify-end gap-3">
-                <Link
-                  to="/admission"
-                  className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition shadow-md shadow-emerald-800/20 flex items-center gap-1.5 cursor-pointer"
-                >
-                  {t.topbar.onlineAdmission} <ArrowRight size={14} />
-                </Link>
-                <Link
-                  to="/contact"
-                  className="bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-300 transition shadow-sm cursor-pointer"
-                >
-                  {t.nav.contact}
-                </Link>
-              </div>
-            </div>
+      {/* Important National & Education Portals Box (Matching Image 1 & 2) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm">
+          <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+            <h4 className="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
+              {language === "bn" ? "গুরুত্বপূর্ণ জাতীয় ও শিক্ষা পোর্টাল" : "Important National & Education Portals"}
+            </h4>
+            <Link to="/downloads" className="text-xs sm:text-sm text-emerald-700 hover:text-emerald-800 font-bold">
+              {language === "bn" ? "সকল লিংক দেখুন" : "View All"}
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+            {[
+              { label: "মাধ্যমিক ও উচ্চশিক্ষা অধিদপ্তর (DSHE)", url: "http://www.dshe.gov.bd/" },
+              { label: "মাধ্যমিক শিক্ষা বোর্ড (BISE Jessore)", url: "https://www.jessoreboard.gov.bd/" },
+              { label: "শিক্ষক বাতায়ন (Shikkhok Batayan)", url: "https://www.teachers.gov.bd/" },
+              { label: "এস ও এস চিলড্রেনস ভিলেজ বাংলাদেশ", url: "https://www.sos-bangladesh.org/" },
+              { label: "জাতীয় শিক্ষাক্রম ও পাঠ্যপুস্তক বোর্ড (NCTB)", url: "http://www.nctb.gov.bd/" },
+              { label: "ব্যানবেইস (BANBEIS)", url: "http://www.banbeis.gov.bd/" },
+              { label: "শিক্ষা মন্ত্রণালয় (MOEDU)", url: "http://www.moedu.gov.bd/" },
+              { label: "বাংলাদেশ জাতীয় তথ্য বাতায়ন", url: "https://bangladesh.gov.bd/" },
+            ].map((link, idx) => (
+              <a
+                key={idx}
+                href={link.url}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2.5 bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 transition py-3 px-4 rounded-xl border border-slate-100 text-xs font-semibold truncate group shadow-xs cursor-pointer"
+              >
+                <ExternalLink size={14} className="text-emerald-600 flex-shrink-0" />
+                <span className="truncate">{link.label}</span>
+              </a>
+            ))}
           </div>
         </div>
+      </div>
 
-        {/* Main Footer Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 mb-12">
-            {/* Column 1: School Identity & Overview */}
+      {/* Solid Rich Deep Green Institutional Footer (Pixel Perfect 1:1 Matching Reference Image) */}
+      <footer className="bg-[#064e3b] text-white pt-14 pb-6 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 pb-12">
+            {/* Column 1: School Identity & Social */}
             <div className="space-y-4">
               <div className="flex items-center gap-3.5">
-                <img
-                  src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png"
-                  alt="SOS Hermann Gmeiner School Khulna"
-                  className="h-14 w-auto object-contain flex-shrink-0"
-                />
+                <div className="w-14 h-14 rounded-full bg-white p-1 flex items-center justify-center flex-shrink-0 shadow-md">
+                  <img
+                    src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png"
+                    alt="SOS Hermann Gmeiner School Khulna"
+                    className="h-full w-full object-contain"
+                  />
+                </div>
                 <div>
-                  <h3 className="text-base font-black text-slate-900 leading-tight">
+                  <h3 className="text-sm font-black text-white leading-tight uppercase tracking-tight">
                     {language === "bn"
-                      ? settings.schoolName
-                      : "SOS HERMANN GMEINER SCHOOL KHULNA"}
+                      ? "এস ও এস হারম্যান মেইনার স্কুল খুলনা"
+                      : "SOS HERMANN\nGMEINER SCHOOL\nKHULNA"}
                   </h3>
-                  <span className="text-[11px] font-bold text-emerald-700 tracking-wide block mt-0.5">
-                    {language === "bn"
-                      ? settings.schoolAddress
-                      : "Gollamari, Khulna - 9208"}
-                  </span>
+                  <p className="text-xs text-emerald-200/90 mt-0.5">
+                    {language === "bn" ? "গল্লামারী, খুলনা - ৯২০৮" : "Gollamari, Khulna - 9208"}
+                  </p>
                 </div>
               </div>
 
-              <p className="text-xs leading-relaxed text-slate-600">
+              <p className="text-xs leading-relaxed text-emerald-100/80">
                 {language === "bn"
                   ? "জ্ঞান, শৃঙ্খলা ও নৈতিক শিক্ষার সমন্বয়ে ভবিষ্যৎ সুনাগরিক গড়ে তোলাই আমাদের মূল লক্ষ্য। আধুনিক স্মার্ট ক্যাম্পাস ও সুশৃঙ্খল শিক্ষাব্যবস্থা।"
                   : "Committed to nurturing enlightened, disciplined, and morally sound future citizens through modern educational excellence."}
               </p>
 
-              <div className="flex flex-wrap items-center gap-2 pt-1">
-                <span className="bg-white text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-lg text-[11px] font-bold font-mono shadow-xs">
-                  {t.topbar.eiin}: {toBanglaNum(settings.eiinCode)}
-                </span>
-                <span className="bg-white text-amber-800 border border-amber-200 px-2.5 py-1 rounded-lg text-[11px] font-bold font-mono shadow-xs">
-                  {t.topbar.estd}: {toBanglaNum(settings.establishedYear)}
-                </span>
-              </div>
-
-              <div className="pt-2 flex items-center gap-3">
+              {/* 4 Circular Social Icons */}
+              <div className="pt-2 flex items-center gap-2.5">
                 <a
-                  href="#"
-                  className="w-9 h-9 bg-white hover:bg-blue-600 text-slate-600 hover:text-white rounded-xl flex items-center justify-center transition border border-slate-200 shadow-sm"
-                  aria-label="Facebook Page"
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-9 h-9 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition shadow-xs"
+                  aria-label="Facebook"
                 >
-                  <Facebook size={16} />
+                  <Facebook size={15} />
                 </a>
                 <a
                   href={`mailto:${settings.contactEmail}`}
-                  className="w-9 h-9 bg-white hover:bg-emerald-600 text-slate-600 hover:text-white rounded-xl flex items-center justify-center transition border border-slate-200 shadow-sm"
+                  className="w-9 h-9 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition shadow-xs"
                   aria-label="Send Email"
                 >
-                  <Mail size={16} />
+                  <Mail size={15} />
                 </a>
                 <a
                   href={`tel:${settings.contactPhone}`}
-                  className="w-9 h-9 bg-white hover:bg-emerald-600 text-slate-600 hover:text-white rounded-xl flex items-center justify-center transition border border-slate-200 shadow-sm"
+                  className="w-9 h-9 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition shadow-xs"
                   aria-label="Call Hotline"
                 >
-                  <Phone size={16} />
+                  <Phone size={15} />
+                </a>
+                <a
+                  href="https://youtube.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-9 h-9 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition shadow-xs"
+                  aria-label="YouTube"
+                >
+                  <Youtube size={15} />
                 </a>
               </div>
             </div>
 
-            {/* Column 2: Academic & Portals */}
+            {/* Column 2: Academic & Services */}
             <div>
-              <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider mb-5 pb-2.5 border-b border-slate-200 flex items-center gap-2">
-                <BookOpen size={16} className="text-emerald-700" />{" "}
+              <h4 className="text-sm font-extrabold text-white uppercase tracking-wider mb-5">
                 {language === "bn" ? "একাডেমিক ও সেবা" : "Academic & Services"}
               </h4>
-              <ul className="space-y-2.5 text-xs text-slate-600">
+              <ul className="space-y-3 text-xs text-emerald-100/90 font-medium">
                 <li>
-                  <Link
-                    to="/admission"
-                    className="hover:text-emerald-700 transition flex items-center gap-2"
-                  >
-                    <ChevronRight size={13} className="text-emerald-600" />{" "}
-                    {t.topbar.onlineAdmission}
+                  <Link to="/admission" className="hover:text-white transition flex items-center gap-2">
+                    <span className="text-emerald-300">›</span> {language === "bn" ? "অনলাইন ভর্তি" : "Online Admission"}
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/result"
-                    className="hover:text-emerald-700 transition flex items-center gap-2"
-                  >
-                    <ChevronRight size={13} className="text-emerald-600" />{" "}
-                    {t.result.title}
+                  <Link to="/result" className="hover:text-white transition flex items-center gap-2">
+                    <span className="text-emerald-300">›</span> {language === "bn" ? "একাডেমিক ফলাফল ও মার্কশিট" : "Academic Results & Marksheet"}
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/academic"
-                    className="hover:text-emerald-700 transition flex items-center gap-2"
-                  >
-                    <ChevronRight size={13} className="text-emerald-600" />{" "}
-                    {t.academic.routineTitle}
+                  <Link to="/academic" className="hover:text-white transition flex items-center gap-2">
+                    <span className="text-emerald-300">›</span> {language === "bn" ? "দৈনিক ক্লাস রুটিন" : "Daily Class Schedule & Routine"}
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/students"
-                    className="hover:text-emerald-700 transition flex items-center gap-2"
-                  >
-                    <ChevronRight size={13} className="text-emerald-600" />{" "}
-                    {t.studentsPage.title}
+                  <Link to="/students" className="hover:text-white transition flex items-center gap-2">
+                    <span className="text-emerald-300">›</span> {language === "bn" ? "শিক্ষার্থী ডিরেক্টরি" : "Student Directory"}
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/teachers"
-                    className="hover:text-emerald-700 transition flex items-center gap-2"
-                  >
-                    <ChevronRight size={13} className="text-emerald-600" />{" "}
-                    {t.teachers.title}
+                  <Link to="/teachers" className="hover:text-white transition flex items-center gap-2">
+                    <span className="text-emerald-300">›</span> {language === "bn" ? "শিক্ষক ও কর্মকর্তা পরিচিতি" : "Faculty & Staff Directory"}
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/downloads"
-                    className="hover:text-emerald-700 transition flex items-center gap-2"
-                  >
-                    <ChevronRight size={13} className="text-emerald-600" />{" "}
-                    {t.downloads.title}
+                  <Link to="/downloads" className="hover:text-white transition flex items-center gap-2">
+                    <span className="text-emerald-300">›</span> {language === "bn" ? "ডাউনলোড সেন্টার" : "Download Center"}
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Column 3: Administration & Policies */}
+            {/* Column 3: Governance & Info (Without Admin Login) */}
             <div>
-              <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider mb-5 pb-2.5 border-b border-slate-200 flex items-center gap-2">
-                <ShieldCheck size={16} className="text-emerald-700" />{" "}
+              <h4 className="text-sm font-extrabold text-white uppercase tracking-wider mb-5">
                 {language === "bn" ? "প্রশাসন ও পরিচিতি" : "Governance & Info"}
               </h4>
-              <ul className="space-y-2.5 text-xs text-slate-600">
+              <ul className="space-y-3 text-xs text-emerald-100/90 font-medium">
                 <li>
-                  <Link
-                    to="/about"
-                    className="hover:text-emerald-700 transition flex items-center gap-2"
-                  >
-                    <ChevronRight size={13} className="text-emerald-600" />{" "}
-                    {t.about.title}
+                  <Link to="/about" className="hover:text-white transition flex items-center gap-2">
+                    <span className="text-emerald-300">›</span> {language === "bn" ? "প্রতিষ্ঠান পরিচিতি" : "About Our Institution"}
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/administration"
-                    className="hover:text-emerald-700 transition flex items-center gap-2"
-                  >
-                    <ChevronRight size={13} className="text-emerald-600" />{" "}
-                    {t.adminPage.title}
+                  <Link to="/administration" className="hover:text-white transition flex items-center gap-2">
+                    <span className="text-emerald-300">›</span> {language === "bn" ? "পরিচালনা পর্ষদ ও প্রশাসন" : "Administration & Governance"}
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/notices"
-                    className="hover:text-emerald-700 transition flex items-center gap-2"
-                  >
-                    <ChevronRight size={13} className="text-emerald-600" />{" "}
-                    {t.notices.title}
+                  <Link to="/notices" className="hover:text-white transition flex items-center gap-2">
+                    <span className="text-emerald-300">›</span> {language === "bn" ? "অফিসিয়াল নোটিশ বোর্ড" : "Official Notice Board"}
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/gallery"
-                    className="hover:text-emerald-700 transition flex items-center gap-2"
-                  >
-                    <ChevronRight size={13} className="text-emerald-600" />{" "}
-                    {t.gallery.title}
+                  <Link to="/gallery" className="hover:text-white transition flex items-center gap-2">
+                    <span className="text-emerald-300">›</span> {language === "bn" ? "ফটো গ্যালারি" : "Photo Gallery"}
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/contact"
-                    className="hover:text-emerald-700 transition flex items-center gap-2"
-                  >
-                    <ChevronRight size={13} className="text-emerald-600" />{" "}
-                    {t.contact.title}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/admin-login"
-                    className="hover:text-emerald-700 transition flex items-center gap-2 text-emerald-800 font-bold"
-                  >
-                    <Lock size={12} /> {t.topbar.adminLogin}
+                  <Link to="/contact" className="hover:text-white transition flex items-center gap-2">
+                    <span className="text-emerald-300">›</span> {language === "bn" ? "যোগাযোগ ও ক্যাম্পাস অবস্থান" : "Contact & Campus Location"}
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Column 4: Contact, Map & Hours */}
+            {/* Column 4: Contact Information */}
             <div>
-              <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider mb-5 pb-2.5 border-b border-slate-200 flex items-center gap-2">
-                <Phone size={16} className="text-emerald-700" />{" "}
-                {t.footer.contactInfo}
+              <h4 className="text-sm font-extrabold text-white uppercase tracking-wider mb-5">
+                {language === "bn" ? "যোগাযোগের তথ্য" : "Contact Information"}
               </h4>
-              <ul className="space-y-3 text-xs text-slate-600">
+              <ul className="space-y-3 text-xs text-emerald-100/90">
                 <li className="flex items-start gap-2.5">
-                  <MapPin
-                    size={16}
-                    className="text-emerald-700 flex-shrink-0 mt-0.5"
-                  />
-                  <span className="leading-relaxed text-slate-800">
-                    {settings.schoolAddress}
-                  </span>
+                  <MapPin size={15} className="text-emerald-300 flex-shrink-0 mt-0.5" />
+                  <span>{language === "bn" ? "গল্লামারী, খুলনা - ৯২০৮" : "Gollamari, Khulna - 9208"}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <Phone size={16} className="text-emerald-700 flex-shrink-0" />
-                  <a
-                    href={`tel:${settings.contactPhone}`}
-                    className="hover:text-emerald-800 font-mono font-bold text-slate-900"
-                  >
+                  <Phone size={15} className="text-emerald-300 flex-shrink-0" />
+                  <a href={`tel:${settings.contactPhone}`} className="hover:text-white font-mono font-bold">
                     {toBanglaNum(settings.contactPhone)}
                   </a>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <Mail size={16} className="text-emerald-700 flex-shrink-0" />
-                  <a
-                    href={`mailto:${settings.contactEmail}`}
-                    className="hover:text-emerald-800 font-mono font-semibold text-slate-800"
-                  >
+                  <Mail size={15} className="text-emerald-300 flex-shrink-0" />
+                  <a href={`mailto:${settings.contactEmail}`} className="hover:text-white">
                     {settings.contactEmail}
                   </a>
                 </li>
-                <li className="p-3 bg-amber-50/80 border border-amber-200/80 rounded-2xl">
-                  <div className="flex items-start gap-2 text-amber-950">
-                    <Clock
-                      size={16}
-                      className="text-amber-700 flex-shrink-0 mt-0.5"
-                    />
-                    <div>
-                      <span className="block font-bold text-xs">
-                        {language === "bn" ? "অফিস সময়সূচি:" : "Office Hours:"}
-                      </span>
-                      <span className="text-[11px] text-amber-900">
-                        {language === "bn"
-                          ? "রবি - বৃহস্পতি: সকাল ৯:০০ - বিকাল ৪:০০"
-                          : "Sun - Thu: 9:00 AM - 4:00 PM"}
-                      </span>
-                    </div>
+
+                {/* Office Hours Gold-Border Box */}
+                <li className="p-3.5 bg-emerald-950/40 border border-amber-400/40 rounded-2xl flex items-center gap-3.5 mt-4">
+                  <div className="w-8 h-8 rounded-full border border-amber-300 text-amber-300 flex items-center justify-center font-bold flex-shrink-0">
+                    <Clock size={16} />
+                  </div>
+                  <div>
+                    <span className="block font-bold text-xs text-amber-300">
+                      {language === "bn" ? "অফিস সময়সূচি" : "Office Hours"}
+                    </span>
+                    <span className="text-[11px] text-white/90 block mt-0.5 font-medium">
+                      {language === "bn" ? "রবি - বৃহস্পতি: ৯:০০ AM - ৪:০০ PM" : "Sun - Thu: 9:00 AM - 4:00 PM"}
+                    </span>
+                    <span className="text-[10px] text-emerald-200 block mt-0.5 font-medium">
+                      {language === "bn" ? "শুক্রবার: বন্ধ" : "Friday: Closed"}
+                    </span>
                   </div>
                 </li>
               </ul>
             </div>
           </div>
 
-          {/* National & Educational Portals Banner */}
-          <div className="border-t border-slate-200 pt-7 pb-4">
-            <div className="mb-3">
-              <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                <Files size={14} className="text-emerald-700" />{" "}
-                {language === "bn"
-                  ? "প্রয়োজনীয় সরকারি ও শিক্ষা পোর্টাল লিংকসমূহ"
-                  : "Important National & Education Portals"}
-              </h4>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 text-xs">
-              {QUICK_LINKS.slice(0, 8).map((link, idx) => (
-                <a
-                  key={idx}
-                  href={link.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 transition py-1.5 px-2.5 rounded-lg border border-slate-200/80 text-[11px] truncate group shadow-xs"
-                >
-                  <ExternalLink
-                    size={11}
-                    className="text-slate-400 group-hover:text-emerald-700 flex-shrink-0"
-                  />
-                  <span className="truncate font-medium">{link.label}</span>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Bottom Copyright & Credits Bar */}
-          <div className="border-t border-slate-200 mt-6 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-            <p className="text-center sm:text-left text-slate-600">
-              &copy; {toBanglaNum(new Date().getFullYear())}{" "}
-              <strong className="text-slate-900 font-bold">
-                {language === "bn"
-                  ? settings.schoolName
-                  : "Sonar Bangla High School"}
-              </strong>
-              । {t.footer.rights}
+          {/* Bottom Copyright & Credits */}
+          <div className="border-t border-emerald-800/60 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-emerald-200/90">
+            <p className="text-center sm:text-left">
+              &copy; {toBanglaNum(2026)}{" "}
+              <strong className="text-white font-bold">SOS Hermann Gmeiner School Khulna</strong>. All rights reserved.
             </p>
-            <div className="flex items-center gap-3">
-              <span className="text-[11px] text-slate-600">
-                {t.footer.developedBy}:{" "}
-                <span className="text-emerald-800 font-bold bg-white border border-slate-200 px-2 py-0.5 rounded-md shadow-xs">
-                  PerkTech
-                </span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-emerald-200/80">Design & Development:</span>
+              <span className="bg-white text-emerald-950 font-bold px-3.5 py-1 rounded-full text-xs shadow-xs">
+                PerkTech
               </span>
             </div>
           </div>
         </div>
       </footer>
-
-      <BackToTop />
     </div>
   );
 };

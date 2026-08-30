@@ -10,7 +10,7 @@ import {
   Clock, MapPin, Trophy, Sparkles, GraduationCap, BarChart3,
   Layers, Briefcase, Activity, ShieldCheck, FileText, ChevronRight, ChevronLeft,
   Target, Compass, HeartHandshake, Phone, Headphones, Laptop, Presentation, TreePine,
-  Download, Link2, Leaf, Shield, Heart
+  Download, Link2, Leaf, Shield, Heart, FlaskConical, Images, Building2, School
 } from 'lucide-react';
 
 const NOTICE_EN_MAP: Record<string, string> = {
@@ -101,25 +101,6 @@ const Home: React.FC = () => {
     }
     return items;
   }, [filteredNotices]);
-
-  // Calculate Class-wise statistics
-  const classStats = useMemo(() => {
-    const classes = [
-      { name: '৬ষ্ঠ', enName: 'Class 6', color: 'emerald', bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' },
-      { name: '৭ম', enName: 'Class 7', color: 'blue', bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200' },
-      { name: '৮ম', enName: 'Class 8', color: 'amber', bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200' },
-      { name: '৯ম', enName: 'Class 9', color: 'purple', bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200' },
-      { name: '১০ম', enName: 'Class 10', color: 'rose', bg: 'bg-rose-50', text: 'text-rose-700', border: 'border-rose-200' },
-    ];
-    return classes.map(cls => ({
-      className: language === 'bn' ? cls.name : cls.enName,
-      count: students.filter(s => s.class === cls.name || s.class === cls.name.replace('ম', '') || s.class === cls.name.replace('ষ্ঠ', '')).length,
-      icon: GraduationCap,
-      bg: cls.bg,
-      text: cls.text,
-      border: cls.border
-    }));
-  }, [students, language]);
 
   // Helper for Date Rendering in Notices
   const renderNoticeDate = (dateStr: string) => {
@@ -988,113 +969,253 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        {/* Global Statistics Banner - Clean Light Theme */}
-        <div className="bg-gradient-to-br from-slate-50 via-emerald-50/30 to-slate-100 rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm mb-20 relative overflow-hidden">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 bg-emerald-100/70 text-emerald-800 border border-emerald-200 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
-              <Trophy size={14} /> {t.home.statsSectionTitle}
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">{t.home.statsSectionTitle}</h3>
-            <p className="text-slate-500 text-xs sm:text-sm mt-1">{t.home.statsSectionSubtitle}</p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 text-center">
-            <div className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-md transition">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center mx-auto mb-3">
-                <Users size={24} />
-              </div>
-              <h4 className="text-3xl sm:text-4xl font-black text-slate-900">{toBanglaNum(students.length)}</h4>
-              <p className="text-xs text-slate-500 mt-1 uppercase font-bold tracking-wider">{t.home.studentsCount}</p>
-            </div>
-            <div className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-md transition">
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center mx-auto mb-3">
-                <GraduationCap size={24} />
-              </div>
-              <h4 className="text-3xl sm:text-4xl font-black text-slate-900">{toBanglaNum(teachers.length + staff.length)}</h4>
-              <p className="text-xs text-slate-500 mt-1 uppercase font-bold tracking-wider">{t.home.teachersCount}</p>
-            </div>
-            <div className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-md transition">
-              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center mx-auto mb-3">
-                <Trophy size={24} />
-              </div>
-              <h4 className="text-3xl sm:text-4xl font-black text-slate-900">{toBanglaNum('98.5%')}</h4>
-              <p className="text-xs text-slate-500 mt-1 uppercase font-bold tracking-wider">{t.home.passRate}</p>
-            </div>
-            <div className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-md transition">
-              <div className="w-12 h-12 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center mx-auto mb-3">
-                <Award size={24} />
-              </div>
-              <h4 className="text-3xl sm:text-4xl font-black text-slate-900">{toBanglaNum('120+')}</h4>
-            </div>
-          </div>
-        </div>
-
-        {/* 7. CAMPUS PHOTO GALLERY SHOWCASE */}
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-sm mb-20">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 mb-6 border-b border-slate-100 gap-4">
-            <div>
-              <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider mb-1">
-                <ImageIcon size={13} /> {language === 'bn' ? 'ফটো অ্যালবাম' : 'Photo Gallery'}
-              </div>
-              <h3 className="text-xl sm:text-2xl font-black text-slate-900">{t.home.campusGalleryTitle}</h3>
-              <p className="text-xs text-slate-500 mt-0.5">{t.home.campusGallerySubtitle}</p>
+        {/* 7. CAMPUS SHOWCASE & PHOTO GALLERY (12 Stacked Deck Cards Matching Reference Image) */}
+        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-100 shadow-sm mb-12 relative">
+          {/* Header */}
+          <div className="flex items-center justify-between pb-6 mb-8 border-b border-slate-100 gap-4">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-6 bg-emerald-600 rounded-full inline-block" />
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                {language === 'bn' ? 'ক্যাম্পাস ফটো গ্যালারি ও অ্যালবাম' : 'Campus Showcase & Photo Gallery'}
+              </h3>
             </div>
             <Link 
               to="/gallery" 
-              className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5"
+              className="text-xs sm:text-sm font-bold text-emerald-700 hover:text-emerald-800 transition flex items-center gap-1 cursor-pointer"
             >
-              <ImageIcon size={14} /> {language === 'bn' ? 'সকল ছবি দেখুন' : 'View Full Gallery'}
+              <span>{language === 'bn' ? 'সকল ছবি দেখুন' : 'View Full Gallery'}</span>
+              <ChevronRight size={16} />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {gallery.slice(0, 3).map((item) => (
-              <div key={item.id} className="group relative rounded-2xl overflow-hidden shadow-sm border border-slate-200 bg-slate-100">
-                <img 
-                  src={item.url} 
-                  alt={item.caption} 
-                  className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex flex-col justify-end p-4 text-white">
-                  <span className="text-[10px] text-emerald-300 font-bold uppercase tracking-wider">{toBanglaNum(item.date || '')}</span>
-                  <h4 className="font-bold text-xs sm:text-sm leading-snug">{item.caption}</h4>
+          {/* 12 Stacked Deck Photo Album Cards Grid (4 Columns x 3 Rows) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
+            {[
+              {
+                id: '1',
+                title: language === 'bn' ? 'বার্ষিক ক্রীড়া ও সাংস্কৃতিক অনুষ্ঠান ২০২৫' : 'Annual Sports & Cultural Program 2025',
+                date: '18 FEB 2025',
+                dateBn: '১৮ ফেব্রুয়ারি ২০২৫',
+                photosCount: 16,
+                cover: '/hero_slider.jpg',
+                stack1: '/hero_slider_2.jpg',
+                stack2: '/hero_slider_3.jpg'
+              },
+              {
+                id: '2',
+                title: language === 'bn' ? 'বিজ্ঞান মেলা ও রোবোটিক্স প্রদর্শনী' : 'Science Fair & Exhibition',
+                date: '20 JAN 2025',
+                dateBn: '২০ জানুয়ারি ২০২৫',
+                photosCount: 16,
+                cover: '/hero_slider_2.jpg',
+                stack1: '/hero_slider.jpg',
+                stack2: '/hero_slider_3.jpg'
+              },
+              {
+                id: '3',
+                title: language === 'bn' ? 'বার্ষিক পুরস্কার বিতরণী ও কৃতি সংবর্ধনা ২০২৫' : 'Prize Giving Ceremony 2025',
+                date: '22 JAN 2025',
+                dateBn: '২২ জানুয়ারি ২০২৫',
+                photosCount: 16,
+                cover: '/hero_slider_3.jpg',
+                stack1: '/hero_slider_2.jpg',
+                stack2: '/hero_slider.jpg'
+              },
+              {
+                id: '4',
+                title: language === 'bn' ? 'স্মার্ট ক্লাসরুম ও সহশিক্ষা কার্যক্রম' : 'Classroom Activities',
+                date: '15 JAN 2025',
+                dateBn: '১৫ জানুয়ারি ২০২৫',
+                photosCount: 20,
+                cover: 'https://soshgskhulna.edu.bd/media/155/Slider-6.jpg',
+                stack1: 'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg',
+                stack2: '/hero_slider.jpg'
+              },
+              {
+                id: '5',
+                title: language === 'bn' ? 'আন্তর্জাতিক মাতৃভাষা দিবস ও প্রভাতফেরি' : 'International Mother Language Day',
+                date: '21 FEB 2025',
+                dateBn: '২১ ফেব্রুয়ারি ২০২৫',
+                photosCount: 18,
+                cover: 'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg',
+                stack1: '/hero_slider_2.jpg',
+                stack2: 'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg'
+              },
+              {
+                id: '6',
+                title: language === 'bn' ? 'স্কাউট ক্যাম্পুরি ও সামাজিক নেতৃত্ব প্রশিক্ষণ' : 'Scout Camporee & Youth Training',
+                date: '12 JAN 2025',
+                dateBn: '১২ জানুয়ারি ২০২৫',
+                photosCount: 14,
+                cover: 'https://images.unsplash.com/photo-1472653431158-6364773b2a56?w=800&fit=crop&q=80',
+                stack1: 'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg',
+                stack2: '/hero_slider.jpg'
+              },
+              {
+                id: '7',
+                title: language === 'bn' ? 'এস.এস.সি কৃতি শিক্ষার্থী সংবর্ধনা ও সম্মাননা' : 'SSC Brilliant Student Reception',
+                date: '25 MAY 2025',
+                dateBn: '২৫ মে ২০২৫',
+                photosCount: 24,
+                cover: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&fit=crop&q=80',
+                stack1: '/hero_slider_2.jpg',
+                stack2: '/hero_slider_3.jpg'
+              },
+              {
+                id: '8',
+                title: language === 'bn' ? 'ক্যাম্পাস বৃক্ষরোপণ অভিযান ও পরিবেশ দিবস' : 'Campus Greenery & Tree Plantation',
+                date: '05 JUN 2025',
+                dateBn: '০৫ জুন ২০২৫',
+                photosCount: 12,
+                cover: 'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg',
+                stack1: '/hero_slider_2.jpg',
+                stack2: '/hero_slider.jpg'
+              },
+              {
+                id: '9',
+                title: language === 'bn' ? 'বার্ষিক বনভোজন ও সুন্দরবন শিক্ষাসফর' : 'Annual Study Tour & Picnic',
+                date: '28 JAN 2025',
+                dateBn: '২৮ জানুয়ারি ২০২৫',
+                photosCount: 28,
+                cover: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&fit=crop&q=80',
+                stack1: '/hero_slider_3.jpg',
+                stack2: '/hero_slider.jpg'
+              },
+              {
+                id: '10',
+                title: language === 'bn' ? 'জাতীয় বই বিতরণ উৎসব ও নবীন বরণ' : 'National Book Festival 2025',
+                date: '01 JAN 2025',
+                dateBn: '০১ জানুয়ারি ২০২৫',
+                photosCount: 15,
+                cover: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=800&fit=crop&q=80',
+                stack1: '/hero_slider_2.jpg',
+                stack2: '/hero_slider_3.jpg'
+              },
+              {
+                id: '11',
+                title: language === 'bn' ? 'বার্ষিক শিশু চিত্রাঙ্কন ও চারুকলা প্রদর্শনী' : 'Children Art & Painting Exhibition',
+                date: '08 APR 2025',
+                dateBn: '০৮ এপ্রিল ২০২৫',
+                photosCount: 19,
+                cover: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&fit=crop&q=80',
+                stack1: '/hero_slider.jpg',
+                stack2: '/hero_slider_2.jpg'
+              },
+              {
+                id: '12',
+                title: language === 'bn' ? 'আন্তঃস্কুল ভলিবল চ্যাম্পিয়নশিপ ও ট্রফি' : 'Volleyball Championship Trophy',
+                date: '10 MAR 2025',
+                dateBn: '১০ মার্চ ২০২৫',
+                photosCount: 17,
+                cover: '/hero_slider.jpg',
+                stack1: '/hero_slider_3.jpg',
+                stack2: '/hero_slider_2.jpg'
+              }
+            ].map((album) => (
+              <Link 
+                key={album.id}
+                to="/gallery" 
+                className="bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between cursor-pointer"
+              >
+                {/* Stacked Photo Deck Container */}
+                <div className="relative w-full h-44 mb-5 flex items-center justify-center pt-2">
+                  {/* Layer 2 (Bottom Stack, Tilted Left) */}
+                  <div className="absolute w-[88%] h-36 bg-slate-200 rounded-2xl overflow-hidden border-2 border-white shadow-md transform -rotate-6 top-1 opacity-70 group-hover:-rotate-8 transition-transform">
+                    <img src={album.stack2} alt="Back Stack" className="w-full h-full object-cover" />
+                  </div>
+                  {/* Layer 1 (Middle Stack, Tilted Right) */}
+                  <div className="absolute w-[92%] h-38 bg-slate-100 rounded-2xl overflow-hidden border-2 border-white shadow-md transform rotate-6 top-2 opacity-85 group-hover:rotate-8 transition-transform">
+                    <img src={album.stack1} alt="Middle Stack" className="w-full h-full object-cover" />
+                  </div>
+                  {/* Front Main Photo Card */}
+                  <div className="relative w-[96%] h-40 bg-white rounded-2xl overflow-hidden border-2 border-white shadow-lg z-10">
+                    <img 
+                      src={album.cover} 
+                      alt={album.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    />
+                    {/* Small Green Gallery Icon Badge on bottom-left */}
+                    <div className="absolute bottom-2 left-2 w-7 h-7 rounded-lg bg-white/95 text-emerald-700 flex items-center justify-center shadow-md">
+                      <ImageIcon size={14} />
+                    </div>
+                  </div>
                 </div>
-              </div>
+
+                {/* Content */}
+                <div>
+                  <h4 className="font-bold text-slate-900 text-sm leading-snug line-clamp-2 mb-2 group-hover:text-emerald-700 transition-colors">
+                    {album.title}
+                  </h4>
+                  <div className="flex items-center gap-2 text-xs font-bold text-emerald-700 mb-1">
+                    <span>{language === 'bn' ? album.dateBn : album.date}</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-[11px] text-slate-400 font-medium">
+                    <Clock size={12} />
+                    <span>{language === 'bn' ? `${toBanglaNum(album.photosCount)} টি ছবি` : `${album.photosCount} Photos`}</span>
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
 
-        {/* Class-wise Student Overview */}
-        <div className="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm mb-16">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 mb-6 border-b border-slate-100 gap-2">
-            <div>
-              <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                <BarChart3 size={22} className="text-emerald-700" /> {t.home.classStatsTitle}
-              </h3>
-              <p className="text-xs text-slate-400 mt-0.5">{t.home.classStatsSubtitle}</p>
-            </div>
-            <Link 
-              to="/students" 
-              className="text-xs text-emerald-700 hover:text-emerald-800 font-bold bg-emerald-50 hover:bg-emerald-100 px-4 py-2 rounded-xl transition"
-            >
-              {t.nav.students} ডিরেক্টরি <ChevronRight size={14} className="inline" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-            {classStats.map((item, idx) => (
-              <div 
-                key={idx} 
-                className={`${item.bg} p-5 rounded-2xl border ${item.border} flex flex-col items-center justify-center text-center transition hover:shadow-md`}
-              >
-                <div className={`w-10 h-10 rounded-xl bg-white flex items-center justify-center ${item.text} mb-3 shadow-sm`}>
-                  <item.icon size={20} />
-                </div>
-                <h4 className="text-base font-extrabold text-slate-900 mb-1">{item.className}</h4>
-                <p className={`text-2xl font-black ${item.text}`}>{toBanglaNum(item.count || 45)}</p>
-                <span className="text-[10px] text-slate-500 uppercase font-semibold mt-1">{t.home.students}</span>
+        {/* 8. SOLID RICH GREEN INSTITUTIONAL STATS COUNTER STRIP (Matching Image 1 & 2) */}
+        <div className="bg-[#044e3a] text-white rounded-3xl p-6 sm:p-8 mb-12 shadow-sm">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-between">
+            {/* 1. Established */}
+            <div className="flex items-center gap-3.5 justify-center sm:justify-start">
+              <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
+                <School size={22} />
               </div>
-            ))}
+              <div>
+                <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum(1987)}</h4>
+                <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'স্থাপিত' : 'Established'}</p>
+              </div>
+            </div>
+
+            {/* 2. EIIN Number */}
+            <div className="flex items-center gap-3.5 justify-center sm:justify-start">
+              <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
+                <Building2 size={22} />
+              </div>
+              <div>
+                <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum(117188)}</h4>
+                <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'ইআইআইএন নম্বর' : 'EIIN Number'}</p>
+              </div>
+            </div>
+
+            {/* 3. Qualified Teachers */}
+            <div className="flex items-center gap-3.5 justify-center sm:justify-start">
+              <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
+                <GraduationCap size={22} />
+              </div>
+              <div>
+                <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum('25+')}</h4>
+                <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'দক্ষ শিক্ষক-শিক্ষিকা' : 'Qualified Teachers'}</p>
+              </div>
+            </div>
+
+            {/* 4. Students */}
+            <div className="flex items-center gap-3.5 justify-center sm:justify-start">
+              <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
+                <Users size={22} />
+              </div>
+              <div>
+                <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum('1200+')}</h4>
+                <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'শিক্ষার্থী' : 'Students'}</p>
+              </div>
+            </div>
+
+            {/* 5. Pass Tradition */}
+            <div className="flex items-center gap-3.5 justify-center sm:justify-start">
+              <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
+                <ShieldCheck size={22} />
+              </div>
+              <div>
+                <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum('100%')}</h4>
+                <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'পাস ঐতিহ্য' : 'Pass Tradition'}</p>
+              </div>
+            </div>
           </div>
         </div>
 

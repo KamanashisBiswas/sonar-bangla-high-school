@@ -9,7 +9,6 @@ import {
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import BackToTop from './ui/BackToTop';
 import { PageLoader } from './ui/Loading';
 import { AnimatePresence } from 'framer-motion';
 
@@ -203,8 +202,6 @@ const AdminLayout: React.FC = () => {
       {mobileMenuOpen && (
         <div onClick={() => setMobileMenuOpen(false)} className="fixed inset-0 bg-slate-900/60 z-40 md:hidden backdrop-blur-sm"></div>
       )}
-
-      <BackToTop />
     </div>
   );
 };
