@@ -346,44 +346,7 @@ const Layout: React.FC = () => {
       {/* Main Content Area */}
       <main className="flex-grow">{!isLoading && <Outlet />}</main>
 
-      {/* Important National & Education Portals Box (Matching Image 1 & 2) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm">
-          <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
-            <h4 className="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
-              {language === "bn" ? "গুরুত্বপূর্ণ জাতীয় ও শিক্ষা পোর্টাল" : "Important National & Education Portals"}
-            </h4>
-            <Link to="/downloads" className="text-xs sm:text-sm text-emerald-700 hover:text-emerald-800 font-bold">
-              {language === "bn" ? "সকল লিংক দেখুন" : "View All"}
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-            {[
-              { label: "মাধ্যমিক ও উচ্চশিক্ষা অধিদপ্তর (DSHE)", url: "http://www.dshe.gov.bd/" },
-              { label: "মাধ্যমিক শিক্ষা বোর্ড (BISE Jessore)", url: "https://www.jessoreboard.gov.bd/" },
-              { label: "শিক্ষক বাতায়ন (Shikkhok Batayan)", url: "https://www.teachers.gov.bd/" },
-              { label: "এস ও এস চিলড্রেনস ভিলেজ বাংলাদেশ", url: "https://www.sos-bangladesh.org/" },
-              { label: "জাতীয় শিক্ষাক্রম ও পাঠ্যপুস্তক বোর্ড (NCTB)", url: "http://www.nctb.gov.bd/" },
-              { label: "ব্যানবেইস (BANBEIS)", url: "http://www.banbeis.gov.bd/" },
-              { label: "শিক্ষা মন্ত্রণালয় (MOEDU)", url: "http://www.moedu.gov.bd/" },
-              { label: "বাংলাদেশ জাতীয় তথ্য বাতায়ন", url: "https://bangladesh.gov.bd/" },
-            ].map((link, idx) => (
-              <a
-                key={idx}
-                href={link.url}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-2.5 bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 transition py-3 px-4 rounded-xl border border-slate-100 text-xs font-semibold truncate group shadow-xs cursor-pointer"
-              >
-                <ExternalLink size={14} className="text-emerald-600 flex-shrink-0" />
-                <span className="truncate">{link.label}</span>
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Solid Rich Deep Green Institutional Footer (Pixel Perfect 1:1 Matching Reference Image) */}
+      {/* Solid Rich Deep Green Institutional Footer (4-Column Layout - Pixel Perfect) */}
       <footer className="bg-[#064e3b] text-white pt-14 pb-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 pb-12">
