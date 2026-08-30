@@ -118,7 +118,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="bg-slate-50 relative">
+    <div className="bg-[#edf9f3] relative">
       <Marquee />
 
       {/* Hero Section Carousel - 100% Full Fit, Zero Crop, Zero Whitespace */}
