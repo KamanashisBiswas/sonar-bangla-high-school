@@ -282,92 +282,111 @@ const Home: React.FC = () => {
       {/* Main Content Body */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         
-        {/* OUR CORE PILLARS & CAMPUS EXCELLENCE (Matching Reference Image 1) */}
+        {/* OUR CORE PILLARS & CAMPUS EXCELLENCE (Matching Latest Reference Mockup) */}
         <section className="mb-16 -mt-2 sm:-mt-4 relative z-10">
           
           {/* Section Header */}
           <div className="text-center mb-8">
-            <h3 className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight uppercase">
+            <h3 className="text-xl sm:text-2xl font-black text-emerald-950 tracking-wide uppercase">
               {language === 'bn' ? 'আমাদের মূল ভিত্তি ও ক্যাম্পাস শ্রেষ্ঠত্ব' : 'OUR CORE PILLARS & CAMPUS EXCELLENCE'}
             </h3>
-            <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
+            <p className="text-xs sm:text-sm text-slate-600 font-medium mt-1">
               {language === 'bn' 
-                ? 'গল্লামারী, খুলনায় মানবিক ও যুগোপযোগী শিক্ষাদানে অঙ্গীকারবদ্ধ।' 
-                : 'Committed to Holistic Education and Academic Brilliance at Gollamari, Khulna.'}
+                ? 'গল্লামারী, খুলনায় মানবিক ও যুগোপযোগী শিক্ষাদানে দৃঢ় অঙ্গীকার।' 
+                : 'A commitment to holistic education and academic brilliance at Gollamari, Khulna.'}
             </p>
           </div>
 
-          {/* 4 Pillars Grid with 3D Glossy Icon Blocks & Action Links */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {/* 4 Pillars Grid with Background Images & Dark Overlay (No Icons) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
                 title: language === 'bn' ? 'যোগ্য ও অভিজ্ঞ শিক্ষকবৃন্দ' : 'Qualified Faculty',
-                desc: language === 'bn' ? 'আমাদের নিবেদিতপ্রাণ, অভিজ্ঞ ও উচ্চ প্রশিক্ষিত শিক্ষকদের পাঠদান।' : 'Instruction by our dedicated, experienced, and highly trained educators.',
-                action: language === 'bn' ? 'আরও জানুন →' : 'Learn More →',
+                desc: language === 'bn' ? 'আমাদের নিবেদিতপ্রাণ, অভিজ্ঞ ও উচ্চ প্রশিক্ষিত শিক্ষকদের পাঠদান ও দিকনির্দেশনা।' : 'Direction by our dedicated, experienced, and highly trained educators.',
+                action: language === 'bn' ? 'শিক্ষকবৃন্দের সাথে পরিচিত হোন →' : 'Meet Our Faculty →',
                 link: '/faculty-excellence',
-                icon: Users,
-                gradient: 'from-emerald-200 via-emerald-300 to-emerald-400 text-emerald-950 ring-emerald-300/80 shadow-emerald-200/60',
+                image: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800&fit=crop&q=80',
+                badge: language === 'bn' ? 'শিক্ষক পরিষদ' : 'Faculty',
+                badgeColor: 'bg-emerald-600/90 text-white',
               },
               {
                 title: language === 'bn' ? 'মাল্টিমিডিয়া স্মার্ট ক্লাসরুম' : 'Multimedia Smart Classrooms',
-                desc: language === 'bn' ? 'ডিজিটাল প্রজেক্টর ও উন্নত ভিজ্যুয়াল লার্নিং সমৃদ্ধ আধুনিক শ্রেণিকক্ষ।' : 'Equipped with integrated digital projectors and advanced visual learning technologies.',
-                action: language === 'bn' ? 'বিস্তারিত দেখুন →' : 'View Details →',
+                desc: language === 'bn' ? 'ডিজিটাল প্রজেক্টর ও উন্নত ভিজ্যুয়াল লার্নিং প্রযুক্তি সমৃদ্ধ আধুনিক ক্লাসরুম।' : 'Modern, fully integrated digital projectors and advanced visual learning tech.',
+                action: language === 'bn' ? 'ক্লাসরুম গ্যালারি দেখুন →' : 'Explore Classroom Galleries →',
                 link: '/smart-classrooms',
-                icon: Presentation,
-                gradient: 'from-sky-200 via-blue-300 to-blue-400 text-blue-950 ring-blue-300/80 shadow-blue-200/60',
+                image: 'https://soshgskhulna.edu.bd/media/155/Slider-6.jpg',
+                badge: language === 'bn' ? 'ডিজিটাল ল্যাব' : 'Smart Lab',
+                badgeColor: 'bg-sky-600/90 text-white',
               },
               {
-                title: language === 'bn' ? 'একাডেমিক সাফল্য ও ঐতিহ্য' : 'Academic Brilliance & Tradition',
-                desc: language === 'bn' ? 'বোর্ড ও বার্ষিক পরীক্ষায় শতভাগ পাস ও ধারাবাহিক ঈর্ষণীয় সাফল্য।' : 'A consistent history of board and annual examination excellence.',
-                action: language === 'bn' ? 'ফলাফল ও রেকর্ড →' : 'Record →',
+                title: language === 'bn' ? 'একাডেমিক সাফল্য ও ঐতিহ্য' : 'Academic Excellence & Tradition',
+                desc: language === 'bn' ? 'বোর্ড ও বার্ষিক পরীক্ষায় ধারাবাহিক সাফল্য ও শতভাগ পাসের গৌরবময় ঐতিহ্য।' : 'A consistent history of board and annual examination achievements.',
+                action: language === 'bn' ? 'মেধা ও সাফল্য রেকর্ড দেখুন →' : 'View Merit Records →',
                 link: '/academic-excellence',
-                icon: Trophy,
-                gradient: 'from-amber-200 via-amber-300 to-amber-400 text-amber-950 ring-amber-300/80 shadow-amber-200/60',
+                image: '/hero_slider.jpg',
+                badge: language === 'bn' ? 'শতভাগ পাস' : '100% Pass',
+                badgeColor: 'bg-amber-600/90 text-white',
               },
               {
                 title: language === 'bn' ? 'নিরাপদ ও সুশৃঙ্খল সবুজ ক্যাম্পাস' : 'Safe, Green & Disciplined Campus',
-                desc: language === 'bn' ? 'খুলনার গল্লামারীতে মনোরম, শান্ত ও শিক্ষার্থীবান্ধব প্রাকৃতিক পরিবেশ।' : 'A peaceful, learner-friendly environment in Gollamari, Khulna.',
-                action: language === 'bn' ? 'ক্যাম্পাস ট্যুর →' : 'Take a Tour →',
+                desc: language === 'bn' ? 'খুলনার গল্লামারীতে মনোরম, শান্ত ও পরিবেশবান্ধব প্রাকৃতিক সবুজ ক্যাম্পাস।' : 'A serene, environment-friendly campus in Gollamari, Khulna.',
+                action: language === 'bn' ? 'ভার্চুয়াল ট্যুর শুরু করুন →' : 'Start Virtual Tour →',
                 link: '/campus-tour',
-                icon: TreePine,
-                gradient: 'from-purple-200 via-purple-300 to-purple-400 text-purple-950 ring-purple-300/80 shadow-purple-200/60',
+                image: 'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg',
+                badge: language === 'bn' ? 'সবুজ ক্যাম্পাস' : 'Campus',
+                badgeColor: 'bg-purple-600/90 text-white',
               },
             ].map((card, i) => (
               <Link 
                 key={i} 
                 to={card.link}
-                className="bg-white p-5 sm:p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200/80 flex flex-col justify-between group hover:-translate-y-1 cursor-pointer"
+                className="relative h-80 sm:h-96 rounded-[28px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-slate-700/30 flex flex-col justify-between p-6 group hover:-translate-y-2 cursor-pointer select-none"
               >
-                <div className="flex items-start gap-4">
-                  {/* 3D Glossy Glassmorphism Icon Block */}
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${card.gradient} flex items-center justify-center flex-shrink-0 shadow-md ring-2 group-hover:scale-105 transition-all duration-300`}>
-                    <card.icon size={26} strokeWidth={2.2} />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-extrabold text-slate-900 text-sm sm:text-base leading-snug group-hover:text-emerald-700 transition">
-                      {card.title}
-                    </h4>
-                    <p className="text-xs text-slate-500 font-medium leading-relaxed mt-1.5">
-                      {card.desc}
-                    </p>
-                  </div>
+                {/* Background Image with Zoom on hover */}
+                <img 
+                  src={card.image} 
+                  alt={card.title} 
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 -z-20"
+                />
+
+                {/* Dark Gradient Overlay for High-Contrast Text */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/30 group-hover:from-slate-950 group-hover:via-slate-950/60 transition-all duration-300 -z-10" />
+
+                {/* Top Badge & Number */}
+                <div className="flex items-center justify-between">
+                  <span className={`text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full backdrop-blur-md ${card.badgeColor} shadow-md`}>
+                    {card.badge}
+                  </span>
+                  <span className="text-xs font-black text-white/50 group-hover:text-white transition">
+                    0{i + 1}
+                  </span>
                 </div>
 
-                {/* Footer Action Link */}
-                <div className="mt-4 pt-3 border-t border-slate-100/80">
-                  <span className="text-xs font-bold text-slate-700 group-hover:text-emerald-700 inline-flex items-center gap-1 transition">
-                    {card.action}
-                  </span>
+                {/* Bottom Content Area */}
+                <div className="space-y-2.5">
+                  <h4 className="font-extrabold text-white text-base sm:text-lg leading-snug drop-shadow-md group-hover:text-emerald-300 transition duration-300">
+                    {card.title}
+                  </h4>
+                  <p className="text-xs text-slate-200/90 font-medium leading-relaxed drop-shadow-sm line-clamp-3">
+                    {card.desc}
+                  </p>
+
+                  {/* Action Link Button */}
+                  <div className="pt-3 border-t border-white/15">
+                    <span className="text-xs font-bold text-emerald-400 group-hover:text-white group-hover:underline inline-flex items-center gap-1.5 transition">
+                      <span>{card.action}</span>
+                    </span>
+                  </div>
                 </div>
               </Link>
             ))}
           </div>
 
-          {/* Bottom Explore Admissions Button */}
-          <div className="text-center mt-6">
+          {/* Bottom Solid Pill Explore Admissions Button */}
+          <div className="text-center mt-7">
             <Link 
               to="/admission"
-              className="inline-block px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-700 bg-white hover:bg-emerald-700 hover:text-white border border-slate-200 shadow-sm transition-all duration-200 cursor-pointer"
+              className="inline-block px-8 py-2.5 rounded-full text-xs font-black uppercase tracking-widest text-white bg-emerald-950 hover:bg-emerald-900 shadow-md shadow-emerald-950/20 hover:scale-105 transition-all duration-200 cursor-pointer"
             >
               {language === 'bn' ? 'ভর্তি সংক্রান্ত তথ্য (Explore Admissions)' : 'EXPLORE ADMISSIONS'}
             </Link>
