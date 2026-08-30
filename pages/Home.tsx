@@ -394,11 +394,187 @@ const Home: React.FC = () => {
 
         </section>
 
+        {/* Full-Width School Overview (বিদ্যালয় পরিচিতি) Section - Matching Reference Mockup */}
+        <div className="bg-white p-6 sm:p-8 lg:p-10 rounded-[32px] shadow-sm border border-slate-200/80 mb-14 relative overflow-hidden">
+          
+          {/* Header Bar */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b border-slate-100 gap-4">
+            <div className="flex items-start gap-4">
+              {/* Left Round Green Icon */}
+              <div className="w-14 h-14 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center flex-shrink-0 shadow-xs">
+                <GraduationCap size={28} />
+              </div>
+              <div>
+                <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-widest block mb-0.5">
+                  {language === 'bn' ? 'আমাদের প্রতিষ্ঠান সম্পর্কে' : 'ABOUT OUR INSTITUTION'}
+                </span>
+                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+                  {language === 'bn' ? 'বিদ্যালয় পরিচিতি ও ইতিহাস' : 'School Overview'}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
+                  {language === 'bn' ? 'ঐতিহ্য, মানবিক মূল্যবোধ ও আধুনিক শিক্ষার মেলবন্ধন' : 'Heritage, Human Values & Contemporary Academic Excellence'}
+                </p>
+                <div className="h-1 w-12 bg-emerald-600 rounded-full mt-2" />
+              </div>
+            </div>
+
+            {/* Read Full History Button */}
+            <Link 
+              to="/about"
+              className="border border-emerald-600 text-emerald-800 hover:bg-emerald-700 hover:text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition flex items-center gap-2 self-start sm:self-center shadow-xs cursor-pointer"
+            >
+              <span>{language === 'bn' ? 'সম্পূর্ণ ইতিহাস পড়ুন' : 'Read Full History'}</span>
+              <ChevronRight size={16} />
+            </Link>
+          </div>
+
+          {/* Middle Body: Left Image & Right Info */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-8">
+            {/* Left Photo with Estd and Location Badges */}
+            <div className="lg:col-span-5">
+              <div className="relative rounded-3xl overflow-hidden shadow-md aspect-[16/11] bg-slate-900 group">
+                <img 
+                  src="/hero_slider.jpg" 
+                  alt="SOS Hermann Gmeiner School Students & Campus" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                
+                {/* Badges Overlaid at Bottom */}
+                <div className="absolute bottom-3.5 left-3.5 flex items-center gap-2">
+                  <span className="bg-slate-950/90 text-white text-[11px] sm:text-xs font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-md border border-white/10">
+                    <MapPin size={13} className="text-emerald-400" />
+                    <span>{language === 'bn' ? 'গল্লামারী, খুলনা' : 'Gollamari, Khulna'}</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Narrative & 4 Info Cards */}
+            <div className="lg:col-span-7 space-y-6">
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify">
+                {language === 'bn' ? (
+                  <>
+                    <strong className="text-emerald-800 font-extrabold">{settings.schoolName}</strong> ১৯৮৭ সালে খুলনার গল্লামারীতে এস ও এস চিলড্রেন্স ভিলেজ ইন্টারন্যাশনাল দ্বারা প্রতিষ্ঠিত একটি ঐতিহ্যবাহী ও শীর্ষস্থানীয় বিদ্যাপীঠ। মনোরম ও শান্ত প্রাকৃতিক পরিবেশে আধুনিক ডিজিটাল ক্লাসরুম, সমৃদ্ধ বিজ্ঞানাগার, চারিত্রিক নৈতিকতা গঠন ও যুগোপযোগী সহশিক্ষা কার্যক্রমের মাধ্যমে প্রতিটি শিক্ষার্থীকে আলোকিত ও দক্ষ বৈশ্বিক নাগরিক হিসেবে গড়ে তোলাই আমাদের পরম ব্রত।
+                  </>
+                ) : (
+                  <>
+                    <strong className="text-emerald-800 font-extrabold">SOS Hermann Gmeiner School Khulna</strong> is a premier educational institution founded in <strong className="text-slate-900 font-extrabold">1987</strong> at Gollamari, Khulna under SOS Children's Villages International. Nestled in a lush, peaceful campus, the institution combines state-of-the-art multimedia learning, science laboratories, holistic character formation, and dynamic co-curricular activities to prepare learners for leadership in the 21st century.
+                  </>
+                )}
+              </p>
+
+              {/* 4 Standalone White Info Cards */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+                {/* Card 1: EIIN Code */}
+                <div className="bg-white p-4 rounded-2xl border border-slate-100/90 shadow-sm flex flex-col items-center justify-between text-center hover:shadow-md transition">
+                  <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2.5">
+                    <ShieldCheck size={20} />
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">EIIN CODE</span>
+                  <span className="font-extrabold text-slate-900 text-sm sm:text-base mt-0.5">{toBanglaNum(settings.eiinCode)}</span>
+                </div>
+
+                {/* Card 2: Established */}
+                <div className="bg-white p-4 rounded-2xl border border-slate-100/90 shadow-sm flex flex-col items-center justify-between text-center hover:shadow-md transition">
+                  <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2.5">
+                    <Calendar size={20} />
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">{language === 'bn' ? 'প্রতিষ্ঠিত' : 'ESTABLISHED'}</span>
+                  <span className="font-extrabold text-slate-900 text-sm sm:text-base mt-0.5">{toBanglaNum(settings.establishedYear || '1987')}</span>
+                </div>
+
+                {/* Card 3: Levels */}
+                <div className="bg-white p-4 rounded-2xl border border-slate-100/90 shadow-sm flex flex-col items-center justify-between text-center hover:shadow-md transition">
+                  <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2.5">
+                    <BarChart3 size={20} />
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">{language === 'bn' ? 'শ্রেণি পর্যায়' : 'LEVELS'}</span>
+                  <span className="font-extrabold text-slate-900 text-sm sm:text-base mt-0.5">{language === 'bn' ? 'প্লে - ১০ম' : 'Play - 10th'}</span>
+                </div>
+
+                {/* Card 4: Campus Area */}
+                <div className="bg-white p-4 rounded-2xl border border-slate-100/90 shadow-sm flex flex-col items-center justify-between text-center hover:shadow-md transition">
+                  <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2.5">
+                    <TreePine size={20} />
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">{language === 'bn' ? 'ক্যাম্পাস' : 'CAMPUS AREA'}</span>
+                  <span className="font-extrabold text-slate-900 text-xs sm:text-sm mt-0.5">{language === 'bn' ? 'সবুজ ক্যাম্পাস' : 'Green Eco-Campus'}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom 4 Core Values Banner Strip */}
+          <div className="bg-emerald-50/60 border border-emerald-100/80 rounded-2xl p-5 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-center">
+            {/* Value 1 */}
+            <div className="flex items-start gap-3.5">
+              <div className="w-11 h-11 rounded-full bg-emerald-100/90 text-emerald-700 flex items-center justify-center flex-shrink-0">
+                <Users size={20} />
+              </div>
+              <div>
+                <h4 className="font-bold text-slate-900 text-xs sm:text-sm">
+                  {language === 'bn' ? 'মূল্যবোধভিত্তিক শিক্ষা' : 'Value Based Education'}
+                </h4>
+                <p className="text-[11px] text-slate-500 leading-snug mt-0.5">
+                  {language === 'bn' ? 'চরিত্র গঠন, সহানুভূতি ও দায়িত্বশীলতা।' : 'Building character, empathy and responsibility.'}
+                </p>
+              </div>
+            </div>
+
+            {/* Value 2 */}
+            <div className="flex items-start gap-3.5">
+              <div className="w-11 h-11 rounded-full bg-emerald-100/90 text-emerald-700 flex items-center justify-center flex-shrink-0">
+                <GraduationCap size={20} />
+              </div>
+              <div>
+                <h4 className="font-bold text-slate-900 text-xs sm:text-sm">
+                  {language === 'bn' ? 'সার্বিক মেধা বিকাশ' : 'Holistic Development'}
+                </h4>
+                <p className="text-[11px] text-slate-500 leading-snug mt-0.5">
+                  {language === 'bn' ? 'পড়াশোনা, ক্রীড়া, শিল্প ও জীবনদক্ষতার সমন্বয়।' : 'Balancing academics, sports, arts and life skills.'}
+                </p>
+              </div>
+            </div>
+
+            {/* Value 3 */}
+            <div className="flex items-start gap-3.5">
+              <div className="w-11 h-11 rounded-full bg-emerald-100/90 text-emerald-700 flex items-center justify-center flex-shrink-0">
+                <Globe size={20} />
+              </div>
+              <div>
+                <h4 className="font-bold text-slate-900 text-xs sm:text-sm">
+                  {language === 'bn' ? 'বৈশ্বিক দৃষ্টিভঙ্গি' : 'Global Perspective'}
+                </h4>
+                <p className="text-[11px] text-slate-500 leading-snug mt-0.5">
+                  {language === 'bn' ? 'আধুনিক বিশ্বের জন্য দক্ষ নাগরিক তৈরি।' : 'Preparing learners for a connected world.'}
+                </p>
+              </div>
+            </div>
+
+            {/* Value 4 */}
+            <div className="flex items-start gap-3.5">
+              <div className="w-11 h-11 rounded-full bg-emerald-100/90 text-emerald-700 flex items-center justify-center flex-shrink-0">
+                <HeartHandshake size={20} />
+              </div>
+              <div>
+                <h4 className="font-bold text-slate-900 text-xs sm:text-sm">
+                  {language === 'bn' ? 'সমাজ ও মানবিক যত্ন' : 'Community & Care'}
+                </h4>
+                <p className="text-[11px] text-slate-500 leading-snug mt-0.5">
+                  {language === 'bn' ? 'সহমর্মিতা ও সামাজিক দায়বদ্ধতা চর্চা।' : 'Nurturing compassion and social responsibility.'}
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
         {/* 2-Column Grid: Left (Principal Message & Success) | Right (Interactive Notice Board & Quick Actions) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
           
           {/* Left Column (2 spans): Chairman's Speech, Principal's Speech & Success highlights */}
           <div className="lg:col-span-2 space-y-8">
+
             {/* Chairman's Message Card */}
             <div className="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/90 relative overflow-hidden">
               <div className="border-b border-slate-100 pb-4 mb-6 flex items-center justify-between">

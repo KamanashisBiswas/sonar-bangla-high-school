@@ -1,4 +1,4 @@
-﻿import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { translations, Language } from '../locales/translations';
 
 interface LanguageContextType {
@@ -33,12 +33,19 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [language]);
 
   const toBanglaNum = (input: string | number): string => {
-    if (language === 'en') return String(input);
+    const str = String(input ?? '');
+    if (language === 'en') {
+      const enDigits: { [key: string]: string } = {
+        '০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4',
+        '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'
+      };
+      return str.replace(/[০-৯]/g, (digit) => enDigits[digit] || digit);
+    }
     const bnDigits: { [key: string]: string } = {
       '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪',
       '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯'
     };
-    return String(input).replace(/[0-9]/g, (digit) => bnDigits[digit] || digit);
+    return str.replace(/[0-9]/g, (digit) => bnDigits[digit] || digit);
   };
 
   const toEngNum = (input: string | number): string => {
