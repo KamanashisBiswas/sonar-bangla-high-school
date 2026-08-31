@@ -52,7 +52,7 @@ interface DataContextType {
 
 const DataContext = createContext<DataContextType>(null!);
 
-const CURRENT_DATA_VERSION = 'v9_soshgs_more_notices_scroll';
+const CURRENT_DATA_VERSION = 'v10_soshgs_16_notices_pagination';
 
 // Clean outdated localStorage data on version mismatch
 if (typeof window !== 'undefined') {

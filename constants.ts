@@ -40,14 +40,14 @@ export const MOCK_NOTICES: Notice[] = [
     id: '1',
     title: 'গ্রীষ্মকালীন অবকাশ ও ছুটির বিজ্ঞপ্তি ২০২৫',
     titleEn: 'Summer Vacation & Holiday Notice 2025',
-    date: '2025-07-28',
+    date: '2025-05-18',
     type: 'General',
-    content: 'এতদ্বারা এস ও এস হারম্যান মেইনার স্কুল খুলনার সকল শিক্ষক, শিক্ষার্থী ও অভিভাবকদের অবগতির জন্য জানানো যাচ্ছে যে, আগামী ২৯-০৭-২০২৫ তারিখ থেকে ০৭-০৮-২০২৫ তারিখ পর্যন্ত বিদ্যালয়ের সকল শ্রেণি কার্যক্রম গ্রীষ্মকালীন ছুটির জন্য বন্ধ থাকবে।',
-    contentEn: 'This is to inform all teachers, students, and guardians of SOS Hermann Gmeiner School Khulna that all academic classes will remain closed from 29-07-2025 to 07-08-2025 for summer vacation.'
+    content: 'এতদ্বারা এস ও এস হারম্যান মেইনার স্কুল খুলনার সকল শিক্ষক, শিক্ষার্থী ও অভিভাবকদের অবগতির জন্য জানানো যাচ্ছে যে, আগামী ২৯-০৫-২০২৫ তারিখ থেকে ০৭-০৬-২০২৫ তারিখ পর্যন্ত বিদ্যালয়ের সকল শ্রেণি কার্যক্রম গ্রীষ্মকালীন ছুটির জন্য বন্ধ থাকবে।',
+    contentEn: 'This is to inform all teachers, students, and guardians of SOS Hermann Gmeiner School Khulna that all academic classes will remain closed from 29-05-2025 to 07-06-2025 for summer vacation.'
   },
   {
     id: '2',
-    title: 'এস.এস.সি পরীক্ষা ২০২৫ এর ফলাফল ও মার্কশিট সংগ্রহ',
+    title: 'এস.এস.সি পরীক্ষা ২০২৫ এর ফলাফল ও মার্কশিট সংক্রান্ত',
     titleEn: 'SSC Examination 2025 Results & Marksheet Distribution',
     date: '2025-05-12',
     type: 'Exam',
@@ -56,27 +56,27 @@ export const MOCK_NOTICES: Notice[] = [
   },
   {
     id: '3',
-    title: 'প্রেপ-১ ও ৬ষ্ঠ শ্রেণিতে অনলাইন ভর্তি আবেদন কার্যক্রম ২০২৫',
-    titleEn: 'Online Admission Open for Prep-1 & Class 6 (Session 2025)',
-    date: '2024-11-01',
+    title: 'শ্রেণি-১ ও ৬ষ্ঠ শ্রেণিতে অনলাইন ভর্তি আবেদন কার্যক্রম ২০২৫',
+    titleEn: 'Online Admission Open for Class 1 & Class 6 (Session 2025)',
+    date: '2025-05-01',
     type: 'Admission',
-    content: 'চলতি শিক্ষাবর্ষে প্রেপ-১ হতে ৯ম শ্রেণি পর্যন্ত শূন্য আসনে অনলাইনে ভর্তি আবেদন গ্রহণ করা হচ্ছে। অভিভাবকগণ ওয়েবসাইট থেকে ঘরে বসেই আবেদন সম্পন্ন করতে পারবেন।',
-    contentEn: 'Online admission applications are now open for vacant seats from Prep-1 to Class 9. Guardians can submit applications directly online via the portal.'
+    content: 'চলতি শিক্ষাবর্ষে ১ম হতে ৯ম শ্রেণি পর্যন্ত শূন্য আসনে অনলাইনে ভর্তি আবেদন গ্রহণ করা হচ্ছে। অভিভাবকগণ ওয়েবসাইট থেকে ঘরে বসেই আবেদন সম্পন্ন করতে পারবেন।',
+    contentEn: 'Online admission applications are now open for vacant seats from Class 1 to Class 9. Guardians can submit applications directly online via the portal.'
   },
   {
     id: '4',
     title: 'আন্তর্জাতিক মাতৃভাষা দিবস ও বার্ষিক ক্রীড়া উৎসব উদযাপন',
     titleEn: 'International Mother Language Day & Annual Sports Meet',
-    date: '2025-02-21',
+    date: '2025-04-21',
     type: 'Event',
-    content: 'যথাযোগ্য মর্যাদায় শহীদ দিবস ও আন্তর্জাতিক মাতৃভাষা দিবস উপলক্ষে প্রভাতফেরি, আলোচনা সভা ও সাংস্কৃতিক প্রতিযোগিতার আয়োজন করা হয়েছে।',
-    contentEn: 'On the occasion of Martyrs Day & International Mother Language Day, a morning procession, discussion assembly, and cultural events have been organized.'
+    content: 'যথাযোগ্য মর্যাদায় শহীদ দিবস ও আন্তর্জাতিক মাতৃভাষা দিবস উপলক্ষে প্রভাতফেরি, আলোচনা সভা ও বার্ষিক ক্রীড়া প্রতিযোগিতার আয়োজন করা হয়েছে।',
+    contentEn: 'On the occasion of Martyrs Day & International Mother Language Day, a morning procession, discussion assembly, and sports competitions have been organized.'
   },
   {
     id: '5',
     title: 'অর্ধ-বার্ষিক ও প্রাক-নির্বাচনী পরীক্ষা ২০২৫ এর সময়সূচি প্রকাশ',
     titleEn: 'Half-Yearly & Pre-Test Exam 2025 Schedule Published',
-    date: '2025-06-10',
+    date: '2025-04-10',
     type: 'Exam',
     content: 'সকল শ্রেণির অর্ধ-বার্ষিক ও ১০ম শ্রেণির প্রাক-নির্বাচনী পরীক্ষার রুটিন প্রকাশিত হয়েছে। শিক্ষার্থীরা একাডেমিক সেকশন থেকে রুটিন ডাউনলোড করতে পারবে।',
     contentEn: 'The schedule for Half-Yearly Examinations for all classes and Pre-Test for Class 10 has been published and is downloadable from the academic section.'
@@ -87,26 +87,98 @@ export const MOCK_NOTICES: Notice[] = [
     titleEn: 'Annual Science Fair & ICT Innovation Expo 2025',
     date: '2025-03-15',
     type: 'Event',
-    content: 'শিক্ষার্থীদের বিজ্ঞানমনস্ক ও প্রযুক্তি উদ্ভাবনে উৎসাহিত করতে আগামী ১৫ মার্চ স্কুল অডিটোরিয়ামে বিজ্ঞান মেলা অনুষ্ঠিত হবে।',
-    contentEn: 'To foster scientific curiosity and technological innovation, an Annual Science Fair will be held on March 15 in the school auditorium.'
+    content: 'শিক্ষার্থীদের বিজ্ঞানমনস্ক ও প্রযুক্তি উদ্ভাবনে উৎসাহিত করতে আগামী ১৫ মার্চ স্কুল অডিটোরিয়ামে বিজ্ঞান মেলা ও রোবোটিক্স প্রদর্শনী অনুষ্ঠিত হবে।',
+    contentEn: 'To foster scientific curiosity and technological innovation, an Annual Science Fair and Robotics Exhibition will be held on March 15 in the auditorium.'
   },
   {
     id: '7',
     title: 'মাসিক বেতন ও পরীক্ষার ফি পরিশোধের সময়সীমা সংক্রান্ত',
     titleEn: 'Notice Regarding Monthly Tuition & Exam Fee Payment',
-    date: '2025-04-05',
+    date: '2025-03-05',
     type: 'General',
     content: 'অভিভাবকবৃন্দের অবগতির জন্য জানানো যাচ্ছে যে, চলতি মাসের টিউশন ফি আগামী ১০ তারিখের মধ্যে অনলাইন গেটওয়ে বা হিসাব শাখায় পরিশোধের অনুরোধ করা হচ্ছে।',
     contentEn: 'Guardians are kindly requested to clear the current month tuition fee by the 10th through the online fee payment gateway or accounts office.'
   },
   {
     id: '8',
-    title: 'নতুন শিক্ষাবর্ষে ডিজিটাল আইডি কার্ড ও ইউনিফর্ম বিতরণ',
-    titleEn: 'Distribution of Digital Student ID Card & School Uniform',
-    date: '2025-01-10',
+    title: 'নতুন শিক্ষার্থীদের ভর্তির জন্য আইডি কার্ড ও ইউনিফর্ম বিজ্ঞপ্তি',
+    titleEn: 'ID Card & Uniform Notice for Newly Admitted Students',
+    date: '2025-02-10',
     type: 'Admission',
-    content: '২০২৫ শিক্ষাবর্ষে নতুন ভর্তি হওয়া শিক্ষার্থীদের ডিজিটাল আইডি কার্ড ও ইউনিফর্ম আগামী ১২ জানুয়ারি সকাল ১০টা থেকে বিতরণ করা হবে।',
-    contentEn: 'Digital Student ID cards and uniform materials for newly admitted students will be distributed from January 12 at 10:00 AM.'
+    content: '২০২৫ শিক্ষাবর্ষে নতুন ভর্তি হওয়া শিক্ষার্থীদের ডিজিটাল আইডি কার্ড ও নির্ধারিত ইউনিফর্ম আগামী ১২ ফেব্রুয়ারি সকাল ১০টা থেকে বিতরণ করা হবে।',
+    contentEn: 'Digital Student ID cards and prescribed school uniform for newly admitted students will be distributed from February 12 at 10:00 AM.'
+  },
+  {
+    id: '9',
+    title: 'জাতির পিতা বঙ্গবন্ধু শেখ মুজিবুর রহমানের জন্মবার্ষিকী ও জাতীয় শিশু দিবস',
+    titleEn: 'Birth Anniversary of Bangabandhu & National Children Day',
+    date: '2025-03-17',
+    type: 'Event',
+    content: '১৭ মার্চ জাতীয় শিশু দিবস উপলক্ষে চিত্রাঙ্কন প্রতিযোগিতা, রচনা প্রতিযোগিতা ও বিশেষ আলোচনা সভার আয়োজন করা হয়েছে। সকল শিক্ষার্থীকে উপস্থিত থাকতে বলা হলো।',
+    contentEn: 'On March 17, National Children Day will be observed with art competitions, essay writing, and cultural assemblies.'
+  },
+  {
+    id: '10',
+    title: '৯ম ও ১০ম শ্রেণির বিজ্ঞান ল্যাব ও ব্যবহারিক ক্লাসের বিশেষ সময়সূচি',
+    titleEn: 'Special Schedule for Science Lab & Practical Classes (Class 9-10)',
+    date: '2025-02-25',
+    type: 'Exam',
+    content: 'বিজ্ঞান বিভাগের শিক্ষার্থীদের পদার্থ, রসায়ন ও জীববিজ্ঞান ল্যাব ক্লাসের নতুন রুটিন নোটিশ বোর্ডে প্রকাশ করা হয়েছে। সকল শিক্ষার্থীকে নির্ধারিত অ্যাপ্রন পরিধান করতে হবে।',
+    contentEn: 'The updated science laboratory schedule for Physics, Chemistry, and Biology has been published. Lab aprons are mandatory.'
+  },
+  {
+    id: '11',
+    title: 'অভিভাবক সমাবেশ ও ত্রৈমাসিক প্রগতি প্রতিবেদন পর্যালোচনা ২০২৫',
+    titleEn: 'Parent-Teacher Meeting & Quarterly Progress Review 2025',
+    date: '2025-02-15',
+    type: 'General',
+    content: 'শিক্ষার্থীদের সার্বিক একাডেমিক ও আচরণিক মূল্যায়ন সংক্রান্ত মতবিনিময়ের জন্য আগামী ২০ ফেব্রুয়ারি অভিভাবক সমাবেশ অনুষ্ঠিত হবে।',
+    contentEn: 'A Parent-Teacher meeting will be held on February 20 to review student academic and co-curricular progress.'
+  },
+  {
+    id: '12',
+    title: '২০২৫ শিক্ষাবর্ষে মেধাভিত্তিক বৃত্তি ও বিশেষ ওয়েভার আবেদন',
+    titleEn: 'Merit Scholarship & Tuition Fee Waiver Application 2025',
+    date: '2025-01-25',
+    type: 'Admission',
+    content: 'অসহায় ও মেধাবী শিক্ষার্থীদের জন্য এস ও এস চিলড্রেনস ভিলেজ ট্রাস্টের বিশেষ শিক্ষাবৃত্তি ও ফি ওয়েভার আবেদন আগামী ৩১ জানুয়ারি পর্যন্ত গ্রহণ করা হবে।',
+    contentEn: 'Applications for merit scholarships and tuition waivers for deserving students will be accepted until January 31.'
+  },
+  {
+    id: '13',
+    title: 'আন্তঃহাউস বিতর্ক ও উপস্থিত বক্তৃতা প্রতিযোগিতা ২০২৫',
+    titleEn: 'Inter-House Debate & Extempore Speech Competition 2025',
+    date: '2025-01-18',
+    type: 'Event',
+    content: 'শিক্ষার্থীদের যুক্তি ও নেতৃত্ব বিকাশে আগামী ২৩ জানুয়ারি স্কুল মিলনায়তনে আন্তঃহাউস বিতর্ক প্রতিযোগিতা অনুষ্ঠিত হবে।',
+    contentEn: 'The Inter-House Debate competition will take place on January 23 in the school auditorium.'
+  },
+  {
+    id: '14',
+    title: 'স্কাউট ও গার্ল গাইডস বার্ষিক ক্যাম্পিং ওরিয়েন্টেশন ২০২৫',
+    titleEn: 'Scouts & Girl Guides Annual Camping Orientation 2025',
+    date: '2025-01-12',
+    type: 'Event',
+    content: 'এস ও এস হারম্যান মেইনার স্কুল খুলনা স্কাউট দলের ৩ দিনব্যাপী বার্ষিক ক্যাম্পিং ওরিয়েন্টেশন আগামী সপ্তাহে অনুষ্ঠিত হবে।',
+    contentEn: 'A 3-day annual camp orientation for Scouts and Girl Guides unit will be conducted next week.'
+  },
+  {
+    id: '15',
+    title: 'একাদশ শ্রেণিতে ভর্তিচ্ছু শিক্ষার্থীদের জন্য গুরুত্বপূর্ণ নির্দেশনা',
+    titleEn: 'Important Guidelines for Class 11 College Admission Applicants',
+    date: '2025-05-25',
+    type: 'Admission',
+    content: 'এসএসসি উত্তীর্ণ যেসকল শিক্ষার্থী একাদশ শ্রেণিতে ভর্তি হতে ইচ্ছুক, তাদের কলেজ আবেদন পোর্টাল ও ডকুমেন্ট ভেরিফিকেশনের নিয়মাবলী অনুসরণ করতে বলা হলো।',
+    contentEn: 'Guidelines and verification procedures for Class 11 college admissions have been released for SSC graduates.'
+  },
+  {
+    id: '16',
+    title: 'বার্ষিক পরীক্ষার ফলাফল পুনঃনিরীক্ষণ আবেদন সংক্রান্ত বিজ্ঞপ্তি',
+    titleEn: 'Notice Regarding Re-scrutiny of Annual Examination Results',
+    date: '2024-12-28',
+    type: 'Exam',
+    content: 'বার্ষিক পরীক্ষার খাতা পুনঃনিরীক্ষণের আবেদন আগামী ৫ জানুয়ারির মধ্যে নির্ধারিত ফি সহ পরীক্ষা নিয়ন্ত্রণ শাখায় জমা দিতে হবে।',
+    contentEn: 'Applications for answer sheet re-scrutiny must be submitted to the exam controller office by January 5.'
   }
 ];
 

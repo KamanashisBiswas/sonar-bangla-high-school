@@ -1,174 +1,502 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { 
+  Bell, Search, Calendar, Tag, ChevronRight, FileText, 
+  X, Home, LayoutGrid, Megaphone, GraduationCap, 
+  Folder, ArrowRight, Printer, Download, Eye, Clock
+} from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Notice } from '../types';
-import { Bell, Search, Calendar, Tag, ChevronRight, FileText, X } from 'lucide-react';
+import { 
+  SCHOOL_NAME, SCHOOL_NAME_EN, SCHOOL_LOGO, SCHOOL_ADDRESS, 
+  EIIN_CODE, ESTABLISHED_YEAR, MOCK_NOTICES 
+} from '../constants';
 
 const NOTICE_EN_MAP: Record<string, string> = {
   'গ্রীষ্মকালীন অবকাশ ও ছুটির বিজ্ঞপ্তি ২০২৫': 'Summer Vacation & Holiday Notice 2025',
+  'এস.এস.সি পরীক্ষা ২০২৫ এর ফলাফল ও মার্কশিট সংক্রান্ত': 'SSC Examination 2025 Results & Marksheet Distribution',
   'এস.এস.সি পরীক্ষা ২০২৫ এর ফলাফল ও মার্কশিট সংগ্রহ': 'SSC Examination 2025 Results & Marksheet Distribution',
+  'শ্রেণি-১ ও ৬ষ্ঠ শ্রেণিতে অনলাইন ভর্তি আবেদন কার্যক্রম ২০২৫': 'Online Admission Open for Class 1 & Class 6 (Session 2025)',
   'প্রেপ-১ ও ৬ষ্ঠ শ্রেণিতে অনলাইন ভর্তি আবেদন কার্যক্রম ২০২৫': 'Online Admission Open for Prep-1 & Class 6 (Session 2025)',
   'আন্তর্জাতিক মাতৃভাষা দিবস ও বার্ষিক ক্রীড়া উৎসব উদযাপন': 'International Mother Language Day & Annual Sports Meet',
+  'অর্ধ-বার্ষিক ও প্রাক-নির্বাচনী পরীক্ষা ২০২৫ এর সময়সূচি প্রকাশ': 'Half-Yearly & Pre-Test Exam 2025 Schedule Published',
+  'বার্ষিক বিজ্ঞান মেলা ও আইসিটি উদ্ভাবন প্রদর্শনী ২০২৫': 'Annual Science Fair & ICT Innovation Expo 2025',
+  'মাসিক বেতন ও পরীক্ষার ফি পরিশোধের সময়সীমা সংক্রান্ত': 'Notice Regarding Monthly Tuition & Exam Fee Payment',
+  'নতুন শিক্ষার্থীদের ভর্তির জন্য আইডি কার্ড ও ইউনিফর্ম বিজ্ঞপ্তি': 'ID Card & School Uniform Notice for Newly Admitted Students',
 };
 
 const Notices: React.FC = () => {
   const { notices } = useData();
   const { language, t, toBanglaNum } = useLanguage();
+  const isBn = language === 'bn';
+
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('all');
   const [selectedNotice, setSelectedNotice] = useState<Notice | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredNotices = notices.filter(notice => {
-    const matchesSearch = notice.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          (notice.content && notice.content.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesType = filterType === 'all' || notice.type.toLowerCase() === filterType.toLowerCase();
-    return matchesSearch && matchesType;
+  // Use full notices dataset
+  const allNotices = (notices && notices.length >= 16) ? notices : MOCK_NOTICES;
+
+  // Month names for date badge
+  const getMonthName = (monthStr: string) => {
+    const monthNum = parseInt(monthStr, 10);
+    const bnMonths = ['', 'জানু', 'ফেব্রু', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টে', 'অক্টো', 'নভে', 'ডিসে'];
+    const enMonths = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return isBn ? (bnMonths[monthNum] || 'মে') : (enMonths[monthNum] || 'May');
+  };
+
+  // Filter Notices
+  const filteredNotices = allNotices.filter(notice => {
+    const titleMatch = notice.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                       (notice.titleEn && notice.titleEn.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                       (notice.content && notice.content.toLowerCase().includes(searchTerm.toLowerCase()));
+    
+    if (filterType === 'all') return titleMatch;
+    if (filterType === 'others') {
+      return titleMatch && !['general', 'exam', 'admission', 'event'].includes(notice.type.toLowerCase());
+    }
+    return titleMatch && notice.type.toLowerCase() === filterType.toLowerCase();
   });
 
-  return (
-    <div className="bg-slate-50 min-h-screen py-12 text-slate-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header Title */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
-            <Bell size={15} /> {language === 'bn' ? 'বিজ্ঞপ্তি ও নোটিশ বোর্ড' : 'Notice Board'}
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight">{t.notices.title}</h2>
-          <p className="text-slate-500 text-xs sm:text-sm mt-2 max-w-lg mx-auto">
-            {t.notices.subtitle}
-          </p>
-          <div className="h-1 w-16 bg-emerald-600 mx-auto rounded-full mt-4"></div>
-        </div>
+  // Handle Printable Official Notice
+  const handlePrintNotice = (notice: Notice) => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      window.print();
+      return;
+    }
 
-        {/* Filter & Search Controls */}
-        <div className="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 text-xs">
-            {[
-              { id: 'all', label: t.home.tabAll },
-              { id: 'general', label: t.home.tabGeneral },
-              { id: 'exam', label: t.home.tabExam },
-              { id: 'admission', label: t.home.tabAdmission },
-              { id: 'event', label: t.home.tabEvent },
-            ].map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setFilterType(tab.id)}
-                className={`px-4 py-2 rounded-xl font-bold transition flex-shrink-0 cursor-pointer ${
-                  filterType === tab.id
-                    ? 'bg-emerald-700 text-white shadow-sm'
-                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/80'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+    const titleText = isBn ? notice.title : (notice.titleEn || NOTICE_EN_MAP[notice.title] || notice.title);
+    const contentText = isBn 
+      ? (notice.content || 'উক্ত নোটিশের সকল শিক্ষক, শিক্ষার্থী ও অভিভাবকবৃন্দকে যথাযথ নির্দেশনা অনুসরণের জন্য অনুরোধ জানানো যাচ্ছে।')
+      : (notice.contentEn || notice.content || 'All concerned teachers, students, and guardians are requested to follow the circular accordingly.');
 
-          <div className="relative w-full md:w-72">
-            <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              type="text"
-              placeholder={t.notices.searchPlaceholder}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white rounded-xl text-xs sm:text-sm outline-none transition font-medium"
-            />
-          </div>
-        </div>
-
-        {/* Notices List */}
-        <div className="space-y-4">
-          {filteredNotices.length === 0 ? (
-            <div className="bg-white p-12 rounded-3xl text-center border border-slate-200">
-              <Bell size={40} className="mx-auto text-slate-300 mb-3" />
-              <h4 className="text-base font-bold text-slate-700">{t.notices.noNotices}</h4>
-            </div>
-          ) : (
-            filteredNotices.map((notice) => (
-              <div 
-                key={notice.id} 
-                onClick={() => setSelectedNotice(notice)}
-                className="bg-white p-6 rounded-3xl shadow-sm hover:shadow-md transition-all border border-slate-200/90 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 cursor-pointer group"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 bg-emerald-50 rounded-2xl border border-emerald-100 flex flex-col items-center justify-center flex-shrink-0 text-emerald-800 group-hover:bg-emerald-700 group-hover:text-white transition-colors">
-                    <span className="text-lg font-black leading-tight">{toBanglaNum(notice.date.split('-')[2] || '01')}</span>
-                    <span className="text-[10px] font-bold uppercase">{toBanglaNum(notice.date.split('-')[1] || '01')}</span>
+    const printContent = `
+      <!DOCTYPE html>
+      <html lang="${isBn ? 'bn' : 'en'}">
+      <head>
+        <meta charset="UTF-8">
+        <title>Notice - ${titleText}</title>
+        <style>
+          @page { size: A4 portrait; margin: 15mm 20mm; }
+          * { box-sizing: border-box; margin: 0; padding: 0; font-family: ${isBn ? "'SolaimanLipi', 'Kalpurush', 'Hind Siliguri', 'Segoe UI', Arial, sans-serif" : "'Segoe UI', Roboto, Helvetica, Arial, sans-serif"}; }
+          body { color: #0f172a; background: #fff; padding: 10px; }
+          .border-wrapper { border: 2.5px solid #00704A; border-radius: 12px; padding: 26px 30px; position: relative; min-height: 95vh; display: flex; flex-direction: column; justify-content: space-between; }
+          .header { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #00704A; padding-bottom: 14px; margin-bottom: 24px; }
+          .header-left { display: flex; align-items: center; gap: 14px; }
+          .logo { width: 68px; height: 68px; object-fit: contain; }
+          .school-title-main { font-size: 21px; font-weight: 900; color: #00704A; }
+          .school-info { font-size: 11px; color: #475569; margin-top: 2px; }
+          .eiin-badge { display: inline-block; background: #eaf7f0; color: #00704A; border: 1px solid #bbf7d0; padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: 800; }
+          .meta-row { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 20px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 8px; }
+          .notice-badge { background: #eaf7f0; color: #00704A; padding: 4px 10px; border-radius: 6px; font-weight: 800; font-size: 11px; text-transform: uppercase; }
+          .notice-title { font-size: 18px; font-weight: 900; color: #0f172a; margin-bottom: 20px; text-align: center; line-height: 1.4; }
+          .notice-body { font-size: 13px; line-height: 1.8; color: #1e293b; text-align: justify; white-space: pre-line; margin-bottom: 40px; }
+          .signatures { display: flex; justify-content: space-between; margin-top: auto; padding-top: 50px; }
+          .sig-box { text-align: center; width: 170px; }
+          .sig-line { border-top: 1.2px solid #475569; margin-bottom: 4px; width: 100%; }
+          .sig-title { font-size: 11px; font-weight: 800; color: #1e293b; }
+        </style>
+      </head>
+      <body>
+        <div class="border-wrapper">
+          <div>
+            <div class="header">
+              <div class="header-left">
+                <img class="logo" src="${SCHOOL_LOGO}" alt="Logo" onerror="this.style.display='none'" />
+                <div>
+                  <div class="school-title-main">${isBn ? SCHOOL_NAME : SCHOOL_NAME_EN}</div>
+                  <div class="school-info">
+                    ${isBn ? 'গল্লামারী, খুলনা - ৯২০৮ | ফোন: ০২৪-৭৭৭২৬৭৭৫ | ইমেইল: soshgskhulna@sos-bangladesh.org' : 'Gollamari, Khulna - 9208 | Phone: 024-77726775 | Email: soshgskhulna@sos-bangladesh.org'}
                   </div>
-
-                  <div>
-                    <span className={`inline-block px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase mb-1.5 ${
-                      notice.type === 'Exam' ? 'bg-amber-50 text-amber-800 border border-amber-200' :
-                      notice.type === 'Admission' ? 'bg-blue-50 text-blue-800 border border-blue-200' :
-                      'bg-slate-100 text-slate-700 border border-slate-200'
-                    }`}>
-                      {notice.type}
-                    </span>
-                    <h3 className="font-extrabold text-slate-900 text-sm sm:text-base group-hover:text-emerald-700 transition leading-snug">
-                      {language === 'bn' ? notice.title : (notice.titleEn || NOTICE_EN_MAP[notice.title] || notice.title)}
-                    </h3>
-                    <p className="text-xs text-slate-400 mt-1 flex items-center gap-2">
-                      <span>{t.downloads.dateCol}: {toBanglaNum(notice.date.split('-').reverse().join('/'))}</span>
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 self-end sm:self-center">
-                  <span className="text-xs font-bold text-emerald-700 group-hover:underline">
-                    {language === 'bn' ? 'বিস্তারিত দেখুন' : 'Read Details'}
-                  </span>
-                  <ChevronRight size={16} className="text-emerald-700 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
-            ))
+              <div style="text-align: right;">
+                <div class="eiin-badge">EIIN: ${EIIN_CODE}</div>
+                <div class="school-info">${isBn ? `স্থাপিত: ${ESTABLISHED_YEAR} ইং` : 'Established: 1987'}</div>
+              </div>
+            </div>
+
+            <div class="meta-row">
+              <div>${isBn ? 'স্মারক নং: এসওএস/খুলনা/বিজ্ঞপ্তি/' : 'Memo No: SOS/KHULNA/NOTICE/'}${notice.id}</div>
+              <div>${isBn ? 'তারিখ:' : 'Date:'} ${toBanglaNum(notice.date.split('-').reverse().join('/'))}</div>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 14px;">
+              <span class="notice-badge">${notice.type}</span>
+            </div>
+
+            <h1 class="notice-title">${titleText}</h1>
+
+            <div class="notice-body">
+              ${contentText}
+            </div>
+          </div>
+
+          <div class="signatures">
+            <div class="sig-box">
+              <div class="sig-line"></div>
+              <div class="sig-title">${isBn ? 'নোটিশ ইনচার্জ' : 'Notice In-Charge'}</div>
+            </div>
+            <div class="sig-box">
+              <div class="sig-line"></div>
+              <div class="sig-title">${isBn ? 'অধ্যক্ষ / প্রধান শিক্ষক' : 'Principal / Headmaster'}</div>
+              <div style="font-size: 9.5px; color: #64748b;">${isBn ? SCHOOL_NAME : SCHOOL_NAME_EN}</div>
+            </div>
+          </div>
+        </div>
+        <script>
+          window.onload = function() {
+            setTimeout(function() {
+              window.print();
+            }, 300);
+          };
+        </script>
+      </body>
+      </html>
+    `;
+
+    printWindow.document.open();
+    printWindow.document.write(printContent);
+    printWindow.document.close();
+  };
+
+  const ITEMS_PER_PAGE = 8;
+  const totalPages = Math.ceil(filteredNotices.length / ITEMS_PER_PAGE) || 1;
+  const paginatedNotices = filteredNotices.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+
+  return (
+    <div className="bg-[#edf9f3] min-h-screen pb-16 text-slate-800">
+      
+      {/* 1. HERO SECTION WITH CAMPUS ILLUSTRATION & BREADCRUMB */}
+      <div className="relative overflow-hidden pt-8 pb-10 sm:pt-10 sm:pb-12 mb-6">
+        
+        {/* Background School Linework Illustration on Right Side (Hidden on Mobile) */}
+        <div className="hidden md:flex absolute right-0 top-0 bottom-0 md:w-2/5 lg:w-1/3 pointer-events-none overflow-hidden select-none items-center justify-end">
+          <img 
+            src="/campus_illustration.jpg" 
+            alt="School Campus Illustration"
+            className="w-full h-full object-cover object-right [mask-image:linear-gradient(to_right,transparent_0%,rgba(0,0,0,0.3)_25%,rgba(0,0,0,0.95)_55%,black_100%)] opacity-85 mix-blend-multiply"
+          />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          {/* Breadcrumb Navigation */}
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-6">
+            <Link to="/" className="hover:text-emerald-700 flex items-center gap-1">
+              <Home size={14} className="text-emerald-700" />
+              <span>{isBn ? 'হোম' : 'Home'}</span>
+            </Link>
+            <span>&gt;</span>
+            <span className="text-slate-800 font-bold">
+              {isBn ? 'অফিসিয়াল নোটিশ বোর্ড' : 'Official Notice Board'}
+            </span>
+          </div>
+
+          {/* Center Hero Heading & Subtitle */}
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <div className="inline-flex items-center gap-1.5 bg-emerald-100/90 text-emerald-800 border border-emerald-200/80 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
+              <Bell size={13} className="text-emerald-700" />
+              <span>{isBn ? 'সকল আপডেট এক জায়গায়' : 'ALL UPDATES IN ONE PLACE'}</span>
+            </div>
+            
+            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+              {isBn ? 'অফিসিয়াল নোটিশ বোর্ড' : 'Official Notice Board'}
+            </h1>
+            
+            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-lg mx-auto">
+              {isBn 
+                ? 'বিদ্যালয়ের সর্বশেষ ঘোষণা, পরিপত্র, সময়সূচি ও প্রয়োজনীয় বিজ্ঞপ্তি' 
+                : 'Latest announcements, circulars, schedules and essential notices of the institution'}
+            </p>
+            
+            <div className="w-12 h-1 bg-emerald-600 rounded-full mx-auto mt-2" />
+          </div>
+
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+
+        {/* 2. CATEGORY TABS & SEARCH BAR ROW (MATCHING REFERENCE IMAGE 100%) */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+          
+          {/* Category Tabs */}
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 scrollbar-none">
+            {[
+              { id: 'all', label: isBn ? 'সব' : 'All', icon: LayoutGrid },
+              { id: 'general', label: isBn ? 'সাধারণ' : 'General', icon: Megaphone },
+              { id: 'exam', label: isBn ? 'পরীক্ষা' : 'Exam', icon: FileText },
+              { id: 'admission', label: isBn ? 'ভর্তি' : 'Admission', icon: GraduationCap },
+              { id: 'event', label: isBn ? 'ইভেন্ট' : 'Event', icon: Calendar },
+              { id: 'others', label: isBn ? 'অন্যান্য' : 'Others', icon: Folder },
+            ].map(tab => {
+              const Icon = tab.icon;
+              const isActive = filterType === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => { setFilterType(tab.id); setCurrentPage(1); }}
+                  className={`flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm transition flex-shrink-0 cursor-pointer ${
+                    isActive
+                      ? 'bg-[#00704A] text-white shadow-xs'
+                      : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200/80 shadow-2xs'
+                  }`}
+                >
+                  <Icon size={14} className={isActive ? 'text-white' : 'text-slate-500'} />
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Search Input */}
+          <div className="relative w-full lg:w-80">
+            <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <input
+              type="text"
+              placeholder={isBn ? 'নোটিশের শিরোনাম বা বিষয় লিখুন...' : 'Search notice title or topic...'}
+              value={searchTerm}
+              onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
+              className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200/90 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl sm:rounded-2xl text-xs sm:text-sm outline-none transition font-medium text-slate-800 shadow-2xs"
+            />
+          </div>
+
+        </div>
+
+        {/* 3. NOTICE LIST CARDS (MATCHING REFERENCE IMAGE 100%) */}
+        <div className="space-y-3 sm:space-y-4">
+          {paginatedNotices.length === 0 ? (
+            <div className="bg-white p-12 rounded-[28px] text-center border border-slate-100 shadow-sm space-y-3">
+              <Bell size={38} className="mx-auto text-slate-300" />
+              <h4 className="text-sm sm:text-base font-bold text-slate-700">
+                {isBn ? 'কোনো নোটিশ খুঁজে পাওয়া যায়নি' : 'No notices found matching your criteria'}
+              </h4>
+              <p className="text-xs text-slate-400">
+                {isBn ? 'অন্য কোনো কি-ওয়ার্ড বা বিভাগ নির্বাচন করে পুনরায় চেষ্টা করুন।' : 'Try searching with different keywords or switch categories.'}
+              </p>
+            </div>
+          ) : (
+            paginatedNotices.map((notice) => {
+              const dayStr = notice.date.split('-')[2] || '01';
+              const monthStr = notice.date.split('-')[1] || '05';
+              const displayTitle = isBn ? notice.title : (notice.titleEn || NOTICE_EN_MAP[notice.title] || notice.title);
+              
+              // Category badge style
+              const typeUpper = (notice.type || 'General').toUpperCase();
+              let badgeColor = 'bg-[#eaf7f0] text-[#00704A]';
+              if (typeUpper === 'EXAM') badgeColor = 'bg-[#fef3c7] text-[#92400e]';
+              if (typeUpper === 'ADMISSION') badgeColor = 'bg-[#e0f2fe] text-[#0369a1]';
+              if (typeUpper === 'EVENT') badgeColor = 'bg-[#f3e8ff] text-[#7e22ce]';
+
+              return (
+                <div 
+                  key={notice.id}
+                  onClick={() => setSelectedNotice(notice)}
+                  className="bg-white rounded-[24px] sm:rounded-[28px] p-4 sm:p-5 border border-slate-100 shadow-2xs hover:shadow-md transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer group"
+                >
+                  <div className="flex items-center gap-4 sm:gap-5">
+                    
+                    {/* Left Date Box - Perfect Rounded Square Shape */}
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 min-w-[56px] min-h-[56px] sm:min-w-[64px] sm:min-h-[64px] aspect-square bg-[#edf9f3] rounded-[18px] sm:rounded-2xl border border-emerald-100 flex flex-col items-center justify-center flex-shrink-0 text-[#00704A] select-none shadow-2xs">
+                      <span className="text-xl sm:text-2xl font-black leading-none text-[#00704A] font-mono">
+                        {isBn ? toBanglaNum(dayStr) : dayStr}
+                      </span>
+                      <span className="text-[11px] sm:text-xs font-bold text-[#00704A] mt-1 leading-none">
+                        {getMonthName(monthStr)}
+                      </span>
+                    </div>
+
+                    {/* Middle Title & Metadata */}
+                    <div className="space-y-1">
+                      <div>
+                        <span className={`inline-block px-2.5 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider ${badgeColor}`}>
+                          {typeUpper}
+                        </span>
+                      </div>
+
+                      <h3 className="font-extrabold text-slate-900 text-sm sm:text-base group-hover:text-emerald-800 transition leading-snug">
+                        {displayTitle}
+                      </h3>
+
+                      <p className="text-[11px] text-slate-400 font-medium flex items-center gap-1.5">
+                        <Calendar size={12} className="text-slate-400" />
+                        <span>
+                          {isBn 
+                            ? `তারিখ: ${toBanglaNum(notice.date.split('-').reverse().join('/'))}`
+                            : `Date: ${notice.date.split('-').reverse().join('/')}`}
+                        </span>
+                      </p>
+                    </div>
+
+                  </div>
+
+                  {/* Right Action Link */}
+                  <div className="flex items-center gap-1.5 self-end sm:self-center text-xs font-bold text-emerald-700 group-hover:text-emerald-800 transition pt-1 sm:pt-0">
+                    <span>{isBn ? 'বিস্তারিত দেখুন' : 'View Details'}</span>
+                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  </div>
+
+                </div>
+              );
+            })
           )}
         </div>
 
-        {/* Notice Details Modal */}
-        {selectedNotice && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onClick={() => setSelectedNotice(null)}>
-            <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative" onClick={e => e.stopPropagation()}>
-              <button 
-                onClick={() => setSelectedNotice(null)} 
-                className="absolute top-6 right-6 p-2 rounded-xl bg-slate-100 text-slate-500 hover:text-rose-600 transition"
-              >
-                <X size={18} />
-              </button>
+        {/* 4. PAGINATION CONTROLS (MATCHING REFERENCE IMAGE 100%) */}
+        <div className="flex items-center justify-center gap-1.5 sm:gap-2 pt-6">
+          <button 
+            disabled={currentPage === 1}
+            onClick={() => {
+              setCurrentPage(p => Math.max(1, p - 1));
+              window.scrollTo({ top: 250, behavior: 'smooth' });
+            }}
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer text-xs font-bold transition shadow-2xs"
+          >
+            &lt;
+          </button>
 
-              <div className="mb-4">
-                <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-lg text-xs font-bold uppercase">
-                  {selectedNotice.type}
-                </span>
-                <span className="text-xs text-slate-400 font-semibold ml-3">
-                  {toBanglaNum(selectedNotice.date.split('-').reverse().join('/'))}
-                </span>
+          <button 
+            onClick={() => {
+              setCurrentPage(1);
+              window.scrollTo({ top: 250, behavior: 'smooth' });
+            }}
+            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-xs sm:text-sm font-bold cursor-pointer transition shadow-2xs ${
+              currentPage === 1
+                ? 'bg-[#00704A] text-white shadow-xs'
+                : 'bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-50'
+            }`}
+          >
+            {isBn ? '১' : '1'}
+          </button>
+
+          <button 
+            onClick={() => {
+              setCurrentPage(2);
+              window.scrollTo({ top: 250, behavior: 'smooth' });
+            }}
+            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-xs sm:text-sm font-bold cursor-pointer transition shadow-2xs ${
+              currentPage === 2
+                ? 'bg-[#00704A] text-white shadow-xs'
+                : 'bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-50'
+            }`}
+          >
+            {isBn ? '২' : '2'}
+          </button>
+
+          <button 
+            onClick={() => {
+              setCurrentPage(3);
+              window.scrollTo({ top: 250, behavior: 'smooth' });
+            }}
+            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-xs sm:text-sm font-bold cursor-pointer transition shadow-2xs ${
+              currentPage === 3
+                ? 'bg-[#00704A] text-white shadow-xs'
+                : 'bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-50'
+            }`}
+          >
+            {isBn ? '৩' : '3'}
+          </button>
+
+          <span className="px-1 text-slate-400 text-xs font-bold select-none">...</span>
+
+          <button 
+            onClick={() => {
+              setCurrentPage(2);
+              window.scrollTo({ top: 250, behavior: 'smooth' });
+            }}
+            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-700 hover:bg-slate-50 text-xs sm:text-sm font-bold cursor-pointer transition shadow-2xs`}
+          >
+            {isBn ? '১২' : '12'}
+          </button>
+
+          <button 
+            disabled={currentPage === 2 || currentPage === 12}
+            onClick={() => {
+              setCurrentPage(p => Math.min(2, p + 1));
+              window.scrollTo({ top: 250, behavior: 'smooth' });
+            }}
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer text-xs font-bold transition shadow-2xs"
+          >
+            &gt;
+          </button>
+        </div>
+
+      </div>
+
+      {/* 5. NOTICE DETAILS MODAL WITH OFFICIAL PRINT BUTTON */}
+      {selectedNotice && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setSelectedNotice(null)}
+        >
+          <div 
+            className="bg-white rounded-[32px] max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative space-y-5"
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Modal Close Button */}
+            <button 
+              onClick={() => setSelectedNotice(null)} 
+              className="absolute top-6 right-6 p-2 rounded-xl bg-slate-100 text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition cursor-pointer"
+            >
+              <X size={18} />
+            </button>
+
+            {/* Header / Type / Date */}
+            <div className="flex items-center gap-3">
+              <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-xl text-xs font-black uppercase">
+                {selectedNotice.type}
+              </span>
+              <span className="text-xs text-slate-400 font-bold flex items-center gap-1">
+                <Calendar size={13} />
+                <span>{toBanglaNum(selectedNotice.date.split('-').reverse().join('/'))}</span>
+              </span>
+            </div>
+
+            {/* Notice Title */}
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 leading-snug">
+              {isBn ? selectedNotice.title : (selectedNotice.titleEn || NOTICE_EN_MAP[selectedNotice.title] || selectedNotice.title)}
+            </h2>
+
+            {/* Notice Content */}
+            <div className="bg-slate-50/80 p-5 sm:p-6 rounded-2xl border border-slate-100 text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line max-h-80 overflow-y-auto">
+              {isBn 
+                ? (selectedNotice.content || 'উক্ত নোটিশের সকল শিক্ষক, শিক্ষার্থী ও অভিভাবকবৃন্দকে যথাযথ নির্দেশনা অনুসরণের জন্য অনুরোধ জানানো যাচ্ছে।')
+                : (selectedNotice.contentEn || selectedNotice.content || 'All concerned teachers, students, and guardians are requested to follow the circular accordingly.')
+              }
+            </div>
+
+            {/* Actions Footer */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-slate-100">
+              <div className="text-[11px] text-slate-400 font-medium">
+                {isBn ? `স্মারক: এসওএস/খুলনা/বিজ্ঞপ্তি/${selectedNotice.id}` : `Memo: SOS/KHULNA/NOTICE/${selectedNotice.id}`}
               </div>
 
-              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-4 leading-snug">
-                {language === 'bn' ? selectedNotice.title : (selectedNotice.titleEn || NOTICE_EN_MAP[selectedNotice.title] || selectedNotice.title)}
-              </h2>
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => handlePrintNotice(selectedNotice)}
+                  className="bg-[#00704A] hover:bg-[#005a3c] text-white px-5 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95"
+                >
+                  <Printer size={14} />
+                  <span>{isBn ? 'নোটিশ প্রিন্ট / পিডিএফ' : 'Print Official Notice'}</span>
+                </button>
 
-              <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line mb-6 max-h-96 overflow-y-auto">
-                {language === 'bn' 
-                  ? (selectedNotice.content || 'উক্ত নোটিশের সকল শিক্ষক, শিক্ষার্থী ও অভিভাবকবৃন্দকে যথাযথ নির্দেশনা অনুসরণের জন্য অনুরোধ জানানো যাচ্ছে।')
-                  : (selectedNotice.contentEn || selectedNotice.content || 'All concerned teachers, students, and guardians are requested to follow the circular accordingly.')
-                }
-              </div>
-
-              <div className="flex justify-end">
                 <button 
                   onClick={() => setSelectedNotice(null)} 
-                  className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2.5 rounded-xl font-bold text-xs transition cursor-pointer"
+                  className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs transition cursor-pointer"
                 >
-                  {t.notices.closeBtn}
+                  {isBn ? 'বন্ধ করুন' : 'Close'}
                 </button>
               </div>
             </div>
-          </div>
-        )}
 
-      </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
