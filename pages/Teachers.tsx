@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
+import { 
+  ScrollReveal, ScrollStaggerContainer, ScrollStaggerItem 
+} from '../components/ui/MotionComponents';
 import { 
   GraduationCap, Briefcase, Mail, Phone, BookOpen, 
   FlaskConical, Binary, Atom, Calculator, Laptop, Users, X,
@@ -313,7 +317,7 @@ const Teachers: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
 
         {/* 2. TEACHING FACULTY SECTION (4-Column Grid) */}
-        <div>
+        <ScrollReveal duration={0.6} distance={25}>
           <div className="flex items-center gap-2.5 mb-5">
             <GraduationCap className="text-emerald-700" size={22} />
             <h2 className="text-lg sm:text-xl font-black text-slate-900">
@@ -324,12 +328,12 @@ const Teachers: React.FC = () => {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          <ScrollStaggerContainer staggerDelay={0.05} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {teacherList.map((teacher) => (
-              <div 
+              <ScrollStaggerItem 
                 key={teacher.id} 
                 onClick={() => setSelectedPerson({ ...teacher, roleType: 'teacher' })}
-                className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between cursor-pointer group"
+                className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between cursor-pointer group"
               >
                 {/* Top Info with Photo */}
                 <div className="flex items-start gap-3.5">
@@ -359,13 +363,13 @@ const Teachers: React.FC = () => {
                     {language === 'bn' ? 'বিস্তারিত' : 'View'}
                   </span>
                 </div>
-              </div>
+              </ScrollStaggerItem>
             ))}
-          </div>
-        </div>
+          </ScrollStaggerContainer>
+        </ScrollReveal>
 
         {/* 3. ADMINISTRATIVE STAFF SECTION (4-Column Grid) */}
-        <div>
+        <ScrollReveal duration={0.6} distance={25}>
           <div className="flex items-center gap-2.5 mb-5">
             <Briefcase className="text-emerald-700" size={22} />
             <h2 className="text-lg sm:text-xl font-black text-slate-900">
@@ -376,12 +380,12 @@ const Teachers: React.FC = () => {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          <ScrollStaggerContainer staggerDelay={0.05} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {staffList.map((member) => (
-              <div 
+              <ScrollStaggerItem 
                 key={member.id} 
                 onClick={() => setSelectedPerson({ ...member, roleType: 'staff' })}
-                className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex items-start gap-3.5 cursor-pointer group"
+                className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 flex items-start gap-3.5 cursor-pointer group"
               >
                 <img 
                   src={member.image} 
@@ -412,23 +416,32 @@ const Teachers: React.FC = () => {
                     )}
                   </div>
                 </div>
-              </div>
+              </ScrollStaggerItem>
             ))}
-          </div>
-        </div>
+          </ScrollStaggerContainer>
+        </ScrollReveal>
 
       </div>
 
-      {/* 4. DETAIL MODAL POPUP (FULLY RESPONSIVE ON ALL DEVICES & RESOLUTIONS) */}
-      {selectedPerson && (
-        <div 
-          className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs p-3 sm:p-4 md:p-6 flex min-h-full items-center justify-center animate-fade-in"
-          onClick={() => setSelectedPerson(null)}
-        >
-          <div 
-            className="bg-white rounded-3xl sm:rounded-[32px] max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 relative my-auto overflow-hidden transform transition-all animate-scale-up"
-            onClick={(e) => e.stopPropagation()}
+      {/* 4. DETAIL MODAL POPUP (ANIMATED WITH FRAMER MOTION) */}
+      <AnimatePresence>
+        {selectedPerson && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22 }}
+            className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs p-3 sm:p-4 md:p-6 flex min-h-full items-center justify-center"
+            onClick={() => setSelectedPerson(null)}
           >
+            <motion.div 
+              initial={{ scale: 0.92, opacity: 0, y: 15 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.92, opacity: 0, y: 15 }}
+              transition={{ type: "spring", damping: 26, stiffness: 320 }}
+              className="bg-white rounded-3xl sm:rounded-[32px] max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 relative my-auto overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
             {/* Top Right Circular Close Button */}
             <button
               onClick={() => setSelectedPerson(null)}
@@ -682,10 +695,11 @@ const Teachers: React.FC = () => {
 
             </div>
 
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
-    </div>
+    </AnimatePresence>
+  </div>
   );
 };
 

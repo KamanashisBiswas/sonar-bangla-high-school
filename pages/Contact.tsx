@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { 
@@ -89,7 +90,13 @@ const Contact: React.FC = () => {
           <div className="lg:col-span-4 space-y-4">
             
             {/* Card 1: Our Location */}
-            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-2xs hover:shadow-md transition flex items-start gap-4">
+            <motion.div 
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.05 }}
+              whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              className="bg-white p-5 rounded-2xl border border-slate-100 shadow-2xs hover:shadow-md transition flex items-start gap-4"
+            >
               <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center flex-shrink-0">
                 <MapPin size={20} />
               </div>
@@ -104,10 +111,16 @@ const Contact: React.FC = () => {
                   {isBn ? 'বাংলাদেশ' : 'Bangladesh'}
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 2: Call Us */}
-            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-2xs hover:shadow-md transition flex items-start gap-4">
+            <motion.div 
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.1 }}
+              whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              className="bg-white p-5 rounded-2xl border border-slate-100 shadow-2xs hover:shadow-md transition flex items-start gap-4"
+            >
               <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center flex-shrink-0">
                 <PhoneCall size={20} />
               </div>
@@ -122,10 +135,16 @@ const Contact: React.FC = () => {
                   EIIN: {toBanglaNum(settings.eiinCode || '117188')}
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 3: Email Us */}
-            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-2xs hover:shadow-md transition flex items-start gap-4">
+            <motion.div 
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.15 }}
+              whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              className="bg-white p-5 rounded-2xl border border-slate-100 shadow-2xs hover:shadow-md transition flex items-start gap-4"
+            >
               <div className="w-11 h-11 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center flex-shrink-0">
                 <Mail size={20} />
               </div>
@@ -137,10 +156,16 @@ const Contact: React.FC = () => {
                   {settings.contactEmail || 'soshgskhul@sos-bangladesh.org'}
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 4: Office Hours */}
-            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-2xs hover:shadow-md transition flex items-start gap-4">
+            <motion.div 
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.2 }}
+              whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              className="bg-white p-5 rounded-2xl border border-slate-100 shadow-2xs hover:shadow-md transition flex items-start gap-4"
+            >
               <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center flex-shrink-0">
                 <Clock size={20} />
               </div>
@@ -155,12 +180,17 @@ const Contact: React.FC = () => {
                   {isBn ? 'শুক্রবার: বন্ধ' : 'Friday: Closed'}
                 </p>
               </div>
-            </div>
+            </motion.div>
 
           </div>
 
           {/* Right Column: Send us a Message Card (8 Spans) */}
-          <div className="lg:col-span-8 bg-white p-6 sm:p-8 md:p-10 rounded-3xl border border-slate-100 shadow-2xs">
+          <motion.div 
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.12 }}
+            className="lg:col-span-8 bg-white p-6 sm:p-8 md:p-10 rounded-3xl border border-slate-100 shadow-2xs"
+          >
             
             {/* Header with Icon */}
             <div className="mb-6 flex items-start gap-3.5">
@@ -279,7 +309,7 @@ const Contact: React.FC = () => {
 
             </form>
 
-          </div>
+          </motion.div>
 
         </div>
       </div>

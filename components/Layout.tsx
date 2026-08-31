@@ -28,26 +28,20 @@ import {
 import { QUICK_LINKS } from "../constants";
 import { useData } from "../contexts/DataContext";
 import { useLanguage } from "../contexts/LanguageContext";
-import { PageLoader } from "./ui/Loading";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { ScrollProgressBar } from "./ui/MotionComponents";
 
 const Layout: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const { settings } = useData();
   const { language, toggleLanguage, t, toBanglaNum } = useLanguage();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  // Trigger smooth loading indicator on route change
+  // Smooth scroll to top on route change
   useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 350);
-    return () => clearTimeout(timer);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.pathname]);
 
   const navItems = [
@@ -67,8 +61,8 @@ const Layout: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-slate-50 text-slate-800 selection:bg-emerald-100 selection:text-emerald-900">
-      {/* Global Page Loader */}
-      <AnimatePresence>{isLoading && <PageLoader />}</AnimatePresence>
+      {/* Sleek Scroll Progress Bar */}
+      <ScrollProgressBar />
 
       {/* Top Utility Bar */}
       <div className="bg-emerald-900 text-emerald-50 text-xs py-2 border-b border-emerald-800/80 shadow-sm hidden md:block">
@@ -343,8 +337,20 @@ const Layout: React.FC = () => {
         </div>
       )}
 
-      {/* Main Content Area */}
-      <main className="flex-grow">{!isLoading && <Outlet />}</main>
+      {/* Main Content Area with Butter-Smooth Page Transitions */}
+      <main className="flex-grow">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Outlet />
+          </motion.div>
+        </AnimatePresence>
+      </main>
 
       {/* Solid Rich Deep Green Institutional Footer (4-Column Layout - Pixel Perfect) */}
       <footer className="bg-[#064e3b] text-white pt-14 pb-6 relative overflow-hidden">

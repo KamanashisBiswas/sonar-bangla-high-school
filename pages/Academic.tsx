@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
+import { 
+  ScrollReveal, ScrollStaggerContainer, ScrollStaggerItem 
+} from '../components/ui/MotionComponents';
 import { 
   Shirt, ShieldCheck, CheckCircle2, 
   Download, Calendar, Home, ChevronDown, Info
@@ -453,234 +457,240 @@ const Academic: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
-        {/* 2. DAILY CLASS ROUTINE CARD */}
-        <div className="bg-white rounded-[32px] p-6 sm:p-8 border border-slate-100 shadow-sm space-y-6">
-          
-          {/* Section Header & Download Action */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-100">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center flex-shrink-0">
-                <Calendar size={20} />
+        {/* 2. DAILY CLASS ROUTINE CARD (ANIMATED WITH SCROLLREVEAL) */}
+        <ScrollReveal duration={0.6} distance={25}>
+          <div className="bg-white rounded-[32px] p-6 sm:p-8 border border-slate-100 shadow-sm space-y-6">
+            
+            {/* Section Header & Download Action */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center flex-shrink-0">
+                  <Calendar size={20} />
+                </div>
+                <div>
+                  <h2 className="text-lg sm:text-xl font-black text-slate-900">
+                    {language === 'bn' ? 'দৈনিক শ্রেণি কার্যক্রম ও ক্লাস রুটিন' : 'Daily Class Schedule & Routine'}
+                  </h2>
+                  <p className="text-xs text-slate-500 font-medium mt-0.5">
+                    {language === 'bn' ? 'শ্রেণি অনুযায়ী সময়সূচি দেখুন' : 'View daily timetable by class'}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-lg sm:text-xl font-black text-slate-900">
-                  {language === 'bn' ? 'দৈনিক শ্রেণি কার্যক্রম ও ক্লাস রুটিন' : 'Daily Class Schedule & Routine'}
-                </h2>
-                <p className="text-xs text-slate-500 font-medium mt-0.5">
-                  {language === 'bn' ? 'শ্রেণি অনুযায়ী সময়সূচি দেখুন' : 'View daily timetable by class'}
-                </p>
-              </div>
-            </div>
 
-            {/* Professional Timetable Download/Print Button */}
-            <button 
-              onClick={handleDownloadTimetable}
-              className="inline-flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/90 px-4 py-2 rounded-2xl text-xs font-bold transition shadow-2xs cursor-pointer active:scale-95"
-            >
-              <Download size={14} className="text-emerald-700" />
-              <span>{language === 'bn' ? 'রুটিন ডাউনলোড করুন' : 'Download Timetable'}</span>
-            </button>
-          </div>
-
-          {/* Class Selector Dropdown */}
-          <div className="flex items-center gap-3">
-            <label className="text-xs sm:text-sm font-bold text-slate-700">
-              {language === 'bn' ? 'শ্রেণি নির্বাচন করুন' : 'Select Class'}
-            </label>
-            <div className="relative w-40 sm:w-48">
-              <select
-                value={selectedClass}
-                onChange={(e) => setSelectedClass(e.target.value)}
-                className="w-full pl-3.5 pr-8 py-1.5 bg-slate-50 border border-slate-200/90 focus:border-emerald-600 focus:bg-white rounded-xl text-xs sm:text-sm font-bold text-slate-800 outline-none transition appearance-none cursor-pointer"
+              {/* Professional Timetable Download/Print Button */}
+              <button 
+                onClick={handleDownloadTimetable}
+                className="inline-flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/90 px-4 py-2 rounded-2xl text-xs font-bold transition shadow-2xs cursor-pointer active:scale-95"
               >
-                <option value="6">{language === 'bn' ? '৬ষ্ঠ শ্রেণি' : 'Class 6'}</option>
-                <option value="7">{language === 'bn' ? '৭ম শ্রেণি' : 'Class 7'}</option>
-                <option value="8">{language === 'bn' ? '৮ম শ্রেণি' : 'Class 8'}</option>
-                <option value="9">{language === 'bn' ? '৯ম শ্রেণি' : 'Class 9'}</option>
-                <option value="10">{language === 'bn' ? '১০ম শ্রেণি' : 'Class 10'}</option>
-              </select>
-              <ChevronDown size={15} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                <Download size={14} className="text-emerald-700" />
+                <span>{language === 'bn' ? 'রুটিন ডাউনলোড করুন' : 'Download Timetable'}</span>
+              </button>
             </div>
-          </div>
 
-          {/* Routine Timetable Grid */}
-          <div className="overflow-x-auto rounded-2xl border border-slate-200/80">
-            <table className="w-full text-center text-xs sm:text-sm">
-              <thead>
-                <tr className="bg-slate-50/90 text-slate-700 uppercase font-black tracking-wider text-[11px] border-b border-slate-200/80">
-                  <th className="p-3 sm:p-4 text-left pl-5">{language === 'bn' ? 'সময়' : 'Time'}</th>
-                  <th className="p-3 sm:p-4">{language === 'bn' ? 'রবিবার' : 'Sunday'}</th>
-                  <th className="p-3 sm:p-4">{language === 'bn' ? 'সোমবার' : 'Monday'}</th>
-                  <th className="p-3 sm:p-4">{language === 'bn' ? 'মঙ্গলবার' : 'Tuesday'}</th>
-                  <th className="p-3 sm:p-4">{language === 'bn' ? 'বুধবার' : 'Wednesday'}</th>
-                  <th className="p-3 sm:p-4">{language === 'bn' ? 'বৃহস্পতিবার' : 'Thursday'}</th>
-                  <th className="p-3 sm:p-4 pr-5">{language === 'bn' ? 'শুক্রবার' : 'Friday'}</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {currentRoutine.map((row, idx) => (
-                  <tr 
-                    key={idx} 
-                    className={`transition-colors ${
-                      row.isBreak 
-                        ? 'bg-amber-50/70 font-bold text-amber-900' 
-                        : 'hover:bg-slate-50/70'
-                    }`}
-                  >
-                    <td className="p-3.5 sm:p-4 text-left pl-5">
-                      <span className="font-black text-slate-900 block leading-tight">
-                        {language === 'bn' ? row.periodBn : row.periodEn}
-                      </span>
-                      <span className="text-[10px] text-slate-500 font-medium block mt-0.5">
-                        {language === 'bn' ? row.timeBn : row.timeEn}
-                      </span>
-                    </td>
-                    
-                    {row.isBreak ? (
-                      <td colSpan={6} className="p-3.5 sm:p-4 text-center font-bold text-amber-800 text-xs">
-                        {language === 'bn' ? 'টিফিন বিরতি (১১:০০ - ১১:২০)' : 'Tiffin Break: 11:00 AM - 11:20 AM'}
-                      </td>
-                    ) : (
-                      <>
-                        <td className="p-3.5 sm:p-4 font-semibold text-slate-700">{language === 'bn' ? row.sunBn : row.sunEn}</td>
-                        <td className="p-3.5 sm:p-4 font-semibold text-slate-700">{language === 'bn' ? row.monBn : row.monEn}</td>
-                        <td className="p-3.5 sm:p-4 font-semibold text-slate-700">{language === 'bn' ? row.tueBn : row.tueEn}</td>
-                        <td className="p-3.5 sm:p-4 font-semibold text-slate-700">{language === 'bn' ? row.wedBn : row.wedEn}</td>
-                        <td className="p-3.5 sm:p-4 font-semibold text-slate-700">{language === 'bn' ? row.thuBn : row.thuEn}</td>
-                        <td className="p-3.5 sm:p-4 pr-5 font-semibold text-slate-700">{language === 'bn' ? row.friBn : row.friEn}</td>
-                      </>
-                    )}
+            {/* Class Selector Dropdown */}
+            <div className="flex items-center gap-3">
+              <label className="text-xs sm:text-sm font-bold text-slate-700">
+                {language === 'bn' ? 'শ্রেণি নির্বাচন করুন' : 'Select Class'}
+              </label>
+              <div className="relative w-40 sm:w-48">
+                <select
+                  value={selectedClass}
+                  onChange={(e) => setSelectedClass(e.target.value)}
+                  className="w-full pl-3.5 pr-8 py-1.5 bg-slate-50 border border-slate-200/90 focus:border-emerald-600 focus:bg-white rounded-xl text-xs sm:text-sm font-bold text-slate-800 outline-none transition appearance-none cursor-pointer"
+                >
+                  <option value="6">{language === 'bn' ? '৬ষ্ঠ শ্রেণি' : 'Class 6'}</option>
+                  <option value="7">{language === 'bn' ? '৭ম শ্রেণি' : 'Class 7'}</option>
+                  <option value="8">{language === 'bn' ? '৮ম শ্রেণি' : 'Class 8'}</option>
+                  <option value="9">{language === 'bn' ? '৯ম শ্রেণি' : 'Class 9'}</option>
+                  <option value="10">{language === 'bn' ? '১০ম শ্রেণি' : 'Class 10'}</option>
+                </select>
+                <ChevronDown size={15} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+              </div>
+            </div>
+
+            {/* Routine Timetable Grid */}
+            <div className="overflow-x-auto rounded-2xl border border-slate-200/80">
+              <table className="w-full text-center text-xs sm:text-sm">
+                <thead>
+                  <tr className="bg-slate-50/90 text-slate-700 uppercase font-black tracking-wider text-[11px] border-b border-slate-200/80">
+                    <th className="p-3 sm:p-4 text-left pl-5">{language === 'bn' ? 'সময়' : 'Time'}</th>
+                    <th className="p-3 sm:p-4">{language === 'bn' ? 'রবিবার' : 'Sunday'}</th>
+                    <th className="p-3 sm:p-4">{language === 'bn' ? 'সোমবার' : 'Monday'}</th>
+                    <th className="p-3 sm:p-4">{language === 'bn' ? 'মঙ্গলবার' : 'Tuesday'}</th>
+                    <th className="p-3 sm:p-4">{language === 'bn' ? 'বুধবার' : 'Wednesday'}</th>
+                    <th className="p-3 sm:p-4">{language === 'bn' ? 'বৃহস্পতিবার' : 'Thursday'}</th>
+                    <th className="p-3 sm:p-4 pr-5">{language === 'bn' ? 'শুক্রবার' : 'Friday'}</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {currentRoutine.map((row, idx) => (
+                    <tr 
+                      key={idx} 
+                      className={`transition-colors ${
+                        row.isBreak 
+                          ? 'bg-amber-50/70 font-bold text-amber-900' 
+                          : 'hover:bg-slate-50/70'
+                      }`}
+                    >
+                      <td className="p-3.5 sm:p-4 text-left pl-5">
+                        <span className="font-black text-slate-900 block leading-tight">
+                          {language === 'bn' ? row.periodBn : row.periodEn}
+                        </span>
+                        <span className="text-[10px] text-slate-500 font-medium block mt-0.5">
+                          {language === 'bn' ? row.timeBn : row.timeEn}
+                        </span>
+                      </td>
+                      
+                      {row.isBreak ? (
+                        <td colSpan={6} className="p-3.5 sm:p-4 text-center font-bold text-amber-800 text-xs">
+                          {language === 'bn' ? 'টিফিন বিরতি (১১:০০ - ১১:২০)' : 'Tiffin Break: 11:00 AM - 11:20 AM'}
+                        </td>
+                      ) : (
+                        <>
+                          <td className="p-3.5 sm:p-4 font-semibold text-slate-700">{language === 'bn' ? row.sunBn : row.sunEn}</td>
+                          <td className="p-3.5 sm:p-4 font-semibold text-slate-700">{language === 'bn' ? row.monBn : row.monEn}</td>
+                          <td className="p-3.5 sm:p-4 font-semibold text-slate-700">{language === 'bn' ? row.tueBn : row.tueEn}</td>
+                          <td className="p-3.5 sm:p-4 font-semibold text-slate-700">{language === 'bn' ? row.wedBn : row.wedEn}</td>
+                          <td className="p-3.5 sm:p-4 font-semibold text-slate-700">{language === 'bn' ? row.thuBn : row.thuEn}</td>
+                          <td className="p-3.5 sm:p-4 pr-5 font-semibold text-slate-700">{language === 'bn' ? row.friBn : row.friEn}</td>
+                        </>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
-          {/* Routine Note */}
-          <div className="flex items-center gap-2 text-xs text-slate-500 pt-1">
-            <Info size={14} className="text-emerald-700 flex-shrink-0" />
-            <span>
-              {language === 'bn' 
-                ? 'উল্লেখ্য: সময়সূচি প্রয়োজনে পরিবর্তন হতে পারে। নোটিশ বোর্ড দেখুন।' 
-                : 'Note: Schedule may be subject to changes upon administrative requirements. Please check notice board.'}
-            </span>
-          </div>
+            {/* Routine Note */}
+            <div className="flex items-center gap-2 text-xs text-slate-500 pt-1">
+              <Info size={14} className="text-emerald-700 flex-shrink-0" />
+              <span>
+                {language === 'bn' 
+                  ? 'উল্লেখ্য: সময়সূচি প্রয়োজনে পরিবর্তন হতে পারে। নোটিশ বোর্ড দেখুন।' 
+                  : 'Note: Schedule may be subject to changes upon administrative requirements. Please check notice board.'}
+              </span>
+            </div>
 
-        </div>
+          </div>
+        </ScrollReveal>
 
         {/* 3. UNIFORM & DRESS CODE CARDS (2-COLUMN GRID) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* Boys Dress Card */}
-          <div className="bg-white rounded-[28px] p-6 sm:p-8 border border-slate-100 shadow-sm space-y-4">
-            <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center flex-shrink-0">
-                <Shirt size={18} />
-              </div>
-              <h3 className="text-base sm:text-lg font-black text-slate-900">
-                {language === 'bn' ? 'ছাত্রদের পোশাক (ছেলে)' : "Boys' School Uniform"}
-              </h3>
-            </div>
+        <ScrollReveal duration={0.6} distance={25}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700">
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-                <span>{language === 'bn' ? 'সাদা রঙের হাফ/ফুল হাতা শার্ট (স্কুলের নকশা অনুযায়ী)' : 'White half/full sleeve shirt (as per school design)'}</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-                <span>{language === 'bn' ? 'নেভি ব্লু রঙের ফুল প্যান্ট ও কালো বেল্ট' : 'Navy blue formal trousers with black belt'}</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-                <span>{language === 'bn' ? 'সাদা মোজা ও কালো জুতা' : 'White socks and black school shoes'}</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-                <span>{language === 'bn' ? 'স্কুলের ব্যাজ বাধ্যতামূলক' : 'Official school crest/badge is mandatory'}</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Girls Dress Card */}
-          <div className="bg-white rounded-[28px] p-6 sm:p-8 border border-slate-100 shadow-sm space-y-4">
-            <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center flex-shrink-0">
-                <Shirt size={18} />
+            {/* Boys Dress Card */}
+            <div className="bg-white rounded-[28px] p-6 sm:p-8 border border-slate-100 shadow-sm space-y-4">
+              <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
+                <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center flex-shrink-0">
+                  <Shirt size={18} />
+                </div>
+                <h3 className="text-base sm:text-lg font-black text-slate-900">
+                  {language === 'bn' ? 'ছাত্রদের পোশাক (ছেলে)' : "Boys' School Uniform"}
+                </h3>
               </div>
-              <h3 className="text-base sm:text-lg font-black text-slate-900">
-                {language === 'bn' ? 'ছাত্রীদের পোশাক (মেয়ে)' : "Girls' School Uniform"}
-              </h3>
+              
+              <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700">
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <span>{language === 'bn' ? 'সাদা রঙের হাফ/ফুল হাতা শার্ট (স্কুলের নকশা অনুযায়ী)' : 'White half/full sleeve shirt (as per school design)'}</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <span>{language === 'bn' ? 'নেভি ব্লু রঙের ফুল প্যান্ট ও কালো বেল্ট' : 'Navy blue formal trousers with black belt'}</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <span>{language === 'bn' ? 'সাদা মোজা ও কালো জুতা' : 'White socks and black school shoes'}</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <span>{language === 'bn' ? 'স্কুলের ব্যাজ বাধ্যতামূলক' : 'Official school crest/badge is mandatory'}</span>
+                </li>
+              </ul>
             </div>
-            
-            <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700">
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-                <span>{language === 'bn' ? 'নেভি ব্লু রঙের স্কুল ফ্রক/সালোয়ার ও সাদা ওড়না/হিজাব' : 'Navy blue school salwar/frock with white dupatta/hijab'}</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-                <span>{language === 'bn' ? 'সাদা স্কার্ফ / ওয়ান-পিস শার্ট (স্কুলের নকশা অনুযায়ী)' : 'White scarf / one-piece shirt (as per school design)'}</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-                <span>{language === 'bn' ? 'সাদা মোজা ও কালো জুতা' : 'White socks and black school shoes'}</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-                <span>{language === 'bn' ? 'স্কুলের ব্যাজ বাধ্যতামূলক' : 'Official school crest/badge is mandatory'}</span>
-              </li>
-            </ul>
-          </div>
 
-        </div>
+            {/* Girls Dress Card */}
+            <div className="bg-white rounded-[28px] p-6 sm:p-8 border border-slate-100 shadow-sm space-y-4">
+              <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
+                <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center flex-shrink-0">
+                  <Shirt size={18} />
+                </div>
+                <h3 className="text-base sm:text-lg font-black text-slate-900">
+                  {language === 'bn' ? 'ছাত্রীদের পোশাক (মেয়ে)' : "Girls' School Uniform"}
+                </h3>
+              </div>
+              
+              <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700">
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <span>{language === 'bn' ? 'নেভি ব্লু রঙের স্কুল ফ্রক/সালোয়ার ও সাদা ওড়না/হিজাব' : 'Navy blue school salwar/frock with white dupatta/hijab'}</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <span>{language === 'bn' ? 'সাদা স্কার্ফ / ওয়ান-পিস শার্ট (স্কুলের নকশা অনুযায়ী)' : 'White scarf / one-piece shirt (as per school design)'}</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <span>{language === 'bn' ? 'সাদা মোজা ও কালো জুতা' : 'White socks and black school shoes'}</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <span>{language === 'bn' ? 'স্কুলের ব্যাজ বাধ্যতামূলক' : 'Official school crest/badge is mandatory'}</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </ScrollReveal>
 
         {/* 4. DISCIPLINE & CODE OF CONDUCT CARD */}
-        <div className="bg-white rounded-[28px] p-6 sm:p-8 border border-slate-100 shadow-sm space-y-4">
-          <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center flex-shrink-0">
-              <ShieldCheck size={18} />
+        <ScrollReveal duration={0.6} distance={25}>
+          <div className="bg-white rounded-[28px] p-6 sm:p-8 border border-slate-100 shadow-sm space-y-4">
+            <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
+              <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center flex-shrink-0">
+                <ShieldCheck size={18} />
+              </div>
+              <h3 className="text-base sm:text-lg font-black text-slate-900">
+                {language === 'bn' ? 'শৃঙ্খলা ও আচরণবিধি' : 'Discipline & Code of Conduct'}
+              </h3>
             </div>
-            <h3 className="text-base sm:text-lg font-black text-slate-900">
-              {language === 'bn' ? 'শৃঙ্খলা ও আচরণবিধি' : 'Discipline & Code of Conduct'}
-            </h3>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 text-xs sm:text-sm text-slate-700">
-            <div className="flex items-start gap-2.5">
-              <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-              <span>{language === 'bn' ? 'প্রতিদিন সকাল ৮:০০ ঘটিকার মধ্যে বিদ্যালয়ে উপস্থিত হওয়া বাধ্যতামূলক।' : 'Students must arrive at school by 8:00 AM daily.'}</span>
-            </div>
-            <div className="flex items-start gap-2.5">
-              <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-              <span>{language === 'bn' ? 'অনুপস্থিতির ক্ষেত্রে অভিভাবকের স্বাক্ষরসহ আবেদনপত্র জমা দিতে হবে।' : 'Absence requires a written application signed by parents.'}</span>
-            </div>
-            <div className="flex items-start gap-2.5">
-              <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-              <span>{language === 'bn' ? 'বিদ্যালয় চত্বরে মোবাইল ফোন বা ইলেকট্রনিক ডিভাইস বহন সম্পূর্ণ নিষিদ্ধ।' : 'Mobile phones and electronic gadgets are strictly prohibited on campus.'}</span>
-            </div>
-            <div className="flex items-start gap-2.5">
-              <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-              <span>{language === 'bn' ? 'শ্রেণিকক্ষ ও বিদ্যালয় প্রাঙ্গণের পরিচ্ছন্নতা বজায় রাখতে হবে।' : 'Students must maintain classroom and campus cleanliness.'}</span>
-            </div>
-            <div className="flex items-start gap-2.5">
-              <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-              <span>{language === 'bn' ? 'শিক্ষক ও সহপাঠীদের সাথে মার্জিত ও শ্রদ্ধাশীল আচরণ বজায় রাখা আবশ্যক।' : 'Show respect and courteous behavior towards teachers and peers.'}</span>
-            </div>
-            <div className="flex items-start gap-2.5">
-              <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-              <span>{language === 'bn' ? 'বিদ্যালয়ের সম্পদ ও আসবাবপত্রের কোনো প্রকার ক্ষতিসাধন করা যাবে না।' : 'Any damage to school property and furniture is strictly punishable.'}</span>
-            </div>
-            <div className="flex items-start gap-2.5">
-              <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-              <span>{language === 'bn' ? 'সকল পরীক্ষায় অংশগ্রহণ ও নিয়মানুবর্তিতা বজায় রাখা বাধ্যতামূলক।' : 'Participation in all scheduled exams and evaluations is mandatory.'}</span>
-            </div>
-            <div className="flex items-start gap-2.5">
-              <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-              <span>{language === 'bn' ? 'শ্রেণি কার্যক্রম চলাকালীন অনুমতি ব্যতিরেকে ক্লাসরুম ত্যাগ নিষেধ।' : 'Leaving classroom during session without permission is not allowed.'}</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 text-xs sm:text-sm text-slate-700">
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                <span>{language === 'bn' ? 'প্রতিদিন সকাল ৮:০০ ঘটিকার মধ্যে বিদ্যালয়ে উপস্থিত হওয়া বাধ্যতামূলক।' : 'Students must arrive at school by 8:00 AM daily.'}</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                <span>{language === 'bn' ? 'অনুপস্থিতির ক্ষেত্রে অভিভাবকের স্বাক্ষরসহ আবেদনপত্র জমা দিতে হবে।' : 'Absence requires a written application signed by parents.'}</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                <span>{language === 'bn' ? 'বিদ্যালয় চত্বরে মোবাইল ফোন বা ইলেকট্রনিক ডিভাইস বহন সম্পূর্ণ নিষিদ্ধ।' : 'Mobile phones and electronic gadgets are strictly prohibited on campus.'}</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                <span>{language === 'bn' ? 'শ্রেণিকক্ষ ও বিদ্যালয় প্রাঙ্গণের পরিচ্ছন্নতা বজায় রাখতে হবে।' : 'Students must maintain classroom and campus cleanliness.'}</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                <span>{language === 'bn' ? 'শিক্ষক ও সহপাঠীদের সাথে মার্জিত ও শ্রদ্ধাশীল আচরণ বজায় রাখা আবশ্যক।' : 'Show respect and courteous behavior towards teachers and peers.'}</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                <span>{language === 'bn' ? 'বিদ্যালয়ের সম্পদ ও আসবাবপত্রের কোনো প্রকার ক্ষতিসাধন করা যাবে না।' : 'Any damage to school property and furniture is strictly punishable.'}</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                <span>{language === 'bn' ? 'সকল পরীক্ষায় অংশগ্রহণ ও নিয়মানুবর্তিতা বজায় রাখা বাধ্যতামূলক।' : 'Participation in all scheduled exams and evaluations is mandatory.'}</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                <span>{language === 'bn' ? 'শ্রেণি কার্যক্রম চলাকালীন অনুমতি ব্যতিরেকে ক্লাসরুম ত্যাগ নিষেধ।' : 'Leaving classroom during session without permission is not allowed.'}</span>
+              </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
       </div>
 

@@ -1,8 +1,12 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import Marquee from '../components/Marquee';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
+import { 
+  ScrollReveal, ScrollScale, ScrollStaggerContainer, ScrollStaggerItem, HoverCard 
+} from '../components/ui/MotionComponents';
 import { 
   ArrowRight, Calendar, Users, BookOpen, Award, 
   ExternalLink, CheckCircle, Smartphone, Globe, 
@@ -362,85 +366,86 @@ const Home: React.FC = () => {
 
         </section>
 
-        {/* Full-Width School Overview (বিদ্যালয় পরিচিতি) Section - Matching Reference Mockup */}
-        <div className="bg-white p-6 sm:p-8 lg:p-10 rounded-[32px] shadow-sm border border-slate-200/80 mb-14 relative overflow-hidden">
-          
-          {/* Header Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b border-slate-100 gap-4">
-            <div className="flex items-start gap-4">
-              {/* Left Round Green Icon */}
-              <div className="w-14 h-14 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center flex-shrink-0 shadow-xs">
-                <GraduationCap size={28} />
-              </div>
-              <div>
-                <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-widest block mb-0.5">
-                  {language === 'bn' ? 'আমাদের প্রতিষ্ঠান সম্পর্কে' : 'ABOUT OUR INSTITUTION'}
-                </span>
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
-                  {language === 'bn' ? 'বিদ্যালয় পরিচিতি ও ইতিহাস' : 'School Overview'}
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
-                  {language === 'bn' ? 'ঐতিহ্য, মানবিক মূল্যবোধ ও আধুনিক শিক্ষার মেলবন্ধন' : 'Heritage, Human Values & Contemporary Academic Excellence'}
-                </p>
-                <div className="h-1 w-12 bg-emerald-600 rounded-full mt-2" />
-              </div>
-            </div>
-
-            {/* Read Full History Button */}
-            <Link 
-              to="/about"
-              className="border border-emerald-600 text-emerald-800 hover:bg-emerald-700 hover:text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition flex items-center gap-2 self-start sm:self-center shadow-xs cursor-pointer"
-            >
-              <span>{language === 'bn' ? 'সম্পূর্ণ ইতিহাস পড়ুন' : 'Read Full History'}</span>
-              <ChevronRight size={16} />
-            </Link>
-          </div>
-
-          {/* Middle Body: Left Image & Right Info */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-8">
-            {/* Left Photo with Estd and Location Badges */}
-            <div className="lg:col-span-5">
-              <div className="relative rounded-3xl overflow-hidden shadow-md aspect-[16/11] bg-slate-900 group">
-                <img 
-                  src="/hero_slider.jpg" 
-                  alt="SOS Hermann Gmeiner School Students & Campus" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                
-                {/* Badges Overlaid at Bottom */}
-                <div className="absolute bottom-3.5 left-3.5 flex items-center gap-2">
-                  <span className="bg-slate-950/90 text-white text-[11px] sm:text-xs font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-md border border-white/10">
-                    <MapPin size={13} className="text-emerald-400" />
-                    <span>{language === 'bn' ? 'গল্লামারী, খুলনা' : 'Gollamari, Khulna'}</span>
+        {/* Full-Width School Overview (বিদ্যালয় পরিচিতি) Section - Animated with ScrollReveal */}
+        <ScrollReveal duration={0.65} distance={35}>
+          <div className="bg-white p-6 sm:p-8 lg:p-10 rounded-[32px] shadow-sm border border-slate-200/80 mb-14 relative overflow-hidden">
+            
+            {/* Header Bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b border-slate-100 gap-4">
+              <div className="flex items-start gap-4">
+                {/* Left Round Green Icon */}
+                <div className="w-14 h-14 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <GraduationCap size={28} />
+                </div>
+                <div>
+                  <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-widest block mb-0.5">
+                    {language === 'bn' ? 'আমাদের প্রতিষ্ঠান সম্পর্কে' : 'ABOUT OUR INSTITUTION'}
                   </span>
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    {language === 'bn' ? 'বিদ্যালয় পরিচিতি ও ইতিহাস' : 'School Overview'}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
+                    {language === 'bn' ? 'ঐতিহ্য, মানবিক মূল্যবোধ ও আধুনিক শিক্ষার মেলবন্ধন' : 'Heritage, Human Values & Contemporary Academic Excellence'}
+                  </p>
+                  <div className="h-1 w-12 bg-emerald-600 rounded-full mt-2" />
                 </div>
               </div>
+
+              {/* Read Full History Button */}
+              <Link 
+                to="/about"
+                className="border border-emerald-600 text-emerald-800 hover:bg-emerald-700 hover:text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition flex items-center gap-2 self-start sm:self-center shadow-xs cursor-pointer active:scale-95"
+              >
+                <span>{language === 'bn' ? 'সম্পূর্ণ ইতিহাস পড়ুন' : 'Read Full History'}</span>
+                <ChevronRight size={16} />
+              </Link>
             </div>
 
-            {/* Right Narrative & 4 Info Cards */}
-            <div className="lg:col-span-7 space-y-6">
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify">
-                {language === 'bn' ? (
-                  <>
-                    <strong className="text-emerald-800 font-extrabold">{settings.schoolName}</strong> ১৯৮৭ সালে খুলনার গল্লামারীতে এস ও এস চিলড্রেন্স ভিলেজ ইন্টারন্যাশনাল দ্বারা প্রতিষ্ঠিত একটি ঐতিহ্যবাহী ও শীর্ষস্থানীয় বিদ্যাপীঠ। মনোরম ও শান্ত প্রাকৃতিক পরিবেশে আধুনিক ডিজিটাল ক্লাসরুম, সমৃদ্ধ বিজ্ঞানাগার, চারিত্রিক নৈতিকতা গঠন ও যুগোপযোগী সহশিক্ষা কার্যক্রমের মাধ্যমে প্রতিটি শিক্ষার্থীকে আলোকিত ও দক্ষ বৈশ্বিক নাগরিক হিসেবে গড়ে তোলাই আমাদের পরম ব্রত।
-                  </>
-                ) : (
-                  <>
-                    <strong className="text-emerald-800 font-extrabold">SOS Hermann Gmeiner School Khulna</strong> is a premier educational institution founded in <strong className="text-slate-900 font-extrabold">1987</strong> at Gollamari, Khulna under SOS Children's Villages International. Nestled in a lush, peaceful campus, the institution combines state-of-the-art multimedia learning, science laboratories, holistic character formation, and dynamic co-curricular activities to prepare learners for leadership in the 21st century.
-                  </>
-                )}
-              </p>
-
-              {/* 4 Standalone White Info Cards */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-                {/* Card 1: EIIN Code */}
-                <div className="bg-white p-4 rounded-2xl border border-slate-100/90 shadow-sm flex flex-col items-center justify-between text-center hover:shadow-md transition">
-                  <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2.5">
-                    <ShieldCheck size={20} />
+            {/* Middle Body: Left Image & Right Info */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-8">
+              {/* Left Photo with Estd and Location Badges */}
+              <div className="lg:col-span-5">
+                <div className="relative rounded-3xl overflow-hidden shadow-md aspect-[16/11] bg-slate-900 group">
+                  <img 
+                    src="/hero_slider.jpg" 
+                    alt="SOS Hermann Gmeiner School Students & Campus" 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  
+                  {/* Badges Overlaid at Bottom */}
+                  <div className="absolute bottom-3.5 left-3.5 flex items-center gap-2">
+                    <span className="bg-slate-950/90 text-white text-[11px] sm:text-xs font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-md border border-white/10">
+                      <MapPin size={13} className="text-emerald-400" />
+                      <span>{language === 'bn' ? 'গল্লামারী, খুলনা' : 'Gollamari, Khulna'}</span>
+                    </span>
                   </div>
-                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">EIIN CODE</span>
-                  <span className="font-extrabold text-slate-900 text-sm sm:text-base mt-0.5">{toBanglaNum(settings.eiinCode)}</span>
                 </div>
+              </div>
+
+              {/* Right Narrative & 4 Info Cards */}
+              <div className="lg:col-span-7 space-y-6">
+                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify">
+                  {language === 'bn' ? (
+                    <>
+                      <strong className="text-emerald-800 font-extrabold">{settings.schoolName}</strong> ১৯৮৭ সালে খুলনার গল্লামারীতে এস ও এস চিলড্রেন্স ভিলেজ ইন্টারন্যাশনাল দ্বারা প্রতিষ্ঠিত একটি ঐতিহ্যবাহী ও শীর্ষস্থানীয় বিদ্যাপীঠ। মনোরম ও শান্ত প্রাকৃতিক পরিবেশে আধুনিক ডিজিটাল ক্লাসরুম, সমৃদ্ধ বিজ্ঞানাগার, চারিত্রিক নৈতিকতা গঠন ও যুগোপযোগী সহশিক্ষা কার্যক্রমের মাধ্যমে প্রতিটি শিক্ষার্থীকে আলোকিত ও দক্ষ বৈশ্বিক নাগরিক হিসেবে গড়ে তোলাই আমাদের পরম ব্রত।
+                    </>
+                  ) : (
+                    <>
+                      <strong className="text-emerald-800 font-extrabold">SOS Hermann Gmeiner School Khulna</strong> is a premier educational institution founded in <strong className="text-slate-900 font-extrabold">1987</strong> at Gollamari, Khulna under SOS Children's Villages International. Nestled in a lush, peaceful campus, the institution combines state-of-the-art multimedia learning, science laboratories, holistic character formation, and dynamic co-curricular activities to prepare learners for leadership in the 21st century.
+                    </>
+                  )}
+                </p>
+
+                {/* 4 Standalone White Info Cards */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+                  {/* Card 1: EIIN Code */}
+                  <div className="bg-white p-4 rounded-2xl border border-slate-100/90 shadow-sm flex flex-col items-center justify-between text-center hover:shadow-md transition">
+                    <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2.5">
+                      <ShieldCheck size={20} />
+                    </div>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">EIIN CODE</span>
+                    <span className="font-extrabold text-slate-900 text-sm sm:text-base mt-0.5">{toBanglaNum(settings.eiinCode)}</span>
+                  </div>
 
                 {/* Card 2: Established */}
                 <div className="bg-white p-4 rounded-2xl border border-slate-100/90 shadow-sm flex flex-col items-center justify-between text-center hover:shadow-md transition">
@@ -536,9 +541,11 @@ const Home: React.FC = () => {
           </div>
 
         </div>
+      </ScrollReveal>
 
         {/* 2-Column Grid: Left (Chairman's & Principal's Speeches) | Right (Interactive Notice Board & Quick Actions) */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-20 items-stretch">
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-20 items-stretch">
           
           {/* Left Column (2 spans): Chairman's Speech & Principal's Speech */}
           <div className="lg:col-span-2 flex flex-col justify-between gap-6">
@@ -846,9 +853,10 @@ const Home: React.FC = () => {
           </div>
 
         </div>
+      </ScrollReveal>
 
-        {/* 4. AIMS & KEY OBJECTIVES (Matching Reference Design 1:1) */}
-        <div className="mb-20 relative">
+        {/* 4. AIMS & KEY OBJECTIVES (Animated with ScrollStagger) */}
+        <ScrollReveal duration={0.6} distance={25} className="mb-20 relative">
           {/* Subtle Background Target Watermark on Top-Right */}
           <div className="absolute top-0 right-4 text-slate-100/70 pointer-events-none hidden md:block select-none">
             <Target size={170} strokeWidth={1} />
@@ -870,7 +878,7 @@ const Home: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+          <ScrollStaggerContainer staggerDelay={0.09} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
             {[
               {
                 icon: <Leaf size={24} className="text-emerald-600" />,
@@ -921,7 +929,7 @@ const Home: React.FC = () => {
                 link: '/about'
               }
             ].map((card, i) => (
-              <div 
+              <ScrollStaggerItem 
                 key={i} 
                 className="bg-white rounded-3xl border border-slate-100/90 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden flex flex-col justify-between p-6 sm:p-7 group"
               >
@@ -959,18 +967,19 @@ const Home: React.FC = () => {
                 <div className="pt-6 mt-auto">
                   <Link 
                     to={card.link} 
-                    className={`w-9 h-9 rounded-full ${card.buttonBg} transition-all duration-300 flex items-center justify-center shadow-xs cursor-pointer`}
+                    className={`w-9 h-9 rounded-full ${card.buttonBg} transition-all duration-300 flex items-center justify-center shadow-xs cursor-pointer active:scale-95`}
                   >
                     <ArrowRight size={16} />
                   </Link>
                 </div>
-              </div>
+              </ScrollStaggerItem>
             ))}
-          </div>
-        </div>
+          </ScrollStaggerContainer>
+        </ScrollReveal>
 
         {/* 7. CAMPUS SHOWCASE & PHOTO GALLERY (12 Stacked Deck Cards Matching Reference Image) */}
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-100 shadow-sm mb-12 relative">
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-100 shadow-sm mb-12 relative">
           {/* Header */}
           <div className="flex items-center justify-between pb-6 mb-8 border-b border-slate-100 gap-4">
             <div className="flex items-center gap-2">
@@ -1156,68 +1165,71 @@ const Home: React.FC = () => {
                 </div>
               </Link>
             ))}
-          </div>
-        </div>
-
-        {/* 8. SOLID RICH GREEN INSTITUTIONAL STATS COUNTER STRIP (Matching Image 1 & 2) */}
-        <div className="bg-[#044e3a] text-white rounded-3xl p-6 sm:p-8 mb-12 shadow-sm">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-between">
-            {/* 1. Established */}
-            <div className="flex items-center gap-3.5 justify-center sm:justify-start">
-              <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
-                <School size={22} />
-              </div>
-              <div>
-                <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum(1987)}</h4>
-                <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'স্থাপিত' : 'Established'}</p>
-              </div>
-            </div>
-
-            {/* 2. EIIN Number */}
-            <div className="flex items-center gap-3.5 justify-center sm:justify-start">
-              <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
-                <Building2 size={22} />
-              </div>
-              <div>
-                <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum(117188)}</h4>
-                <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'ইআইআইএন নম্বর' : 'EIIN Number'}</p>
-              </div>
-            </div>
-
-            {/* 3. Qualified Teachers */}
-            <div className="flex items-center gap-3.5 justify-center sm:justify-start">
-              <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
-                <GraduationCap size={22} />
-              </div>
-              <div>
-                <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum('25+')}</h4>
-                <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'দক্ষ শিক্ষক-শিক্ষিকা' : 'Qualified Teachers'}</p>
-              </div>
-            </div>
-
-            {/* 4. Students */}
-            <div className="flex items-center gap-3.5 justify-center sm:justify-start">
-              <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
-                <Users size={22} />
-              </div>
-              <div>
-                <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum('1200+')}</h4>
-                <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'শিক্ষার্থী' : 'Students'}</p>
-              </div>
-            </div>
-
-            {/* 5. Pass Tradition */}
-            <div className="flex items-center gap-3.5 justify-center sm:justify-start">
-              <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
-                <ShieldCheck size={22} />
-              </div>
-              <div>
-                <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum('100%')}</h4>
-                <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'পাস ঐতিহ্য' : 'Pass Tradition'}</p>
-              </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
+
+        {/* 8. SOLID RICH GREEN INSTITUTIONAL STATS COUNTER STRIP (Animated with ScrollReveal) */}
+        <ScrollReveal duration={0.65} distance={25}>
+          <div className="bg-[#044e3a] text-white rounded-3xl p-6 sm:p-8 mb-12 shadow-sm">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-between">
+              {/* 1. Established */}
+              <div className="flex items-center gap-3.5 justify-center sm:justify-start">
+                <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
+                  <School size={22} />
+                </div>
+                <div>
+                  <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum(1987)}</h4>
+                  <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'স্থাপিত' : 'Established'}</p>
+                </div>
+              </div>
+
+              {/* 2. EIIN Number */}
+              <div className="flex items-center gap-3.5 justify-center sm:justify-start">
+                <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
+                  <Building2 size={22} />
+                </div>
+                <div>
+                  <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum(117188)}</h4>
+                  <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'ইআইআইএন নম্বর' : 'EIIN Number'}</p>
+                </div>
+              </div>
+
+              {/* 3. Qualified Teachers */}
+              <div className="flex items-center gap-3.5 justify-center sm:justify-start">
+                <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
+                  <GraduationCap size={22} />
+                </div>
+                <div>
+                  <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum('25+')}</h4>
+                  <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'দক্ষ শিক্ষক-শিক্ষিকা' : 'Qualified Teachers'}</p>
+                </div>
+              </div>
+
+              {/* 4. Students */}
+              <div className="flex items-center gap-3.5 justify-center sm:justify-start">
+                <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
+                  <Users size={22} />
+                </div>
+                <div>
+                  <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum('1200+')}</h4>
+                  <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'শিক্ষার্থী' : 'Students'}</p>
+                </div>
+              </div>
+
+              {/* 5. Pass Tradition */}
+              <div className="flex items-center gap-3.5 justify-center sm:justify-start">
+                <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
+                  <ShieldCheck size={22} />
+                </div>
+                <div>
+                  <h4 className="text-2xl sm:text-3xl font-black text-white">{toBanglaNum('100%')}</h4>
+                  <p className="text-xs text-emerald-200/90 font-medium">{language === 'bn' ? 'পাস ঐতিহ্য' : 'Pass Tradition'}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
 
       </div>
     </div>

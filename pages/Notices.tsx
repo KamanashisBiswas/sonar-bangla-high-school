@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Bell, Search, Calendar, Tag, ChevronRight, FileText, 
   X, Home, LayoutGrid, Megaphone, GraduationCap, 
@@ -276,7 +277,7 @@ const Notices: React.FC = () => {
               </p>
             </div>
           ) : (
-            paginatedNotices.map((notice) => {
+            paginatedNotices.map((notice, idx) => {
               const dayStr = notice.date.split('-')[2] || '01';
               const monthStr = notice.date.split('-')[1] || '05';
               const displayTitle = isBn ? notice.title : (notice.titleEn || NOTICE_EN_MAP[notice.title] || notice.title);
@@ -289,15 +290,19 @@ const Notices: React.FC = () => {
               if (typeUpper === 'EVENT') badgeColor = 'bg-[#f3e8ff] text-[#7e22ce]';
 
               return (
-                <div 
+                <motion.div 
                   key={notice.id}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, delay: idx * 0.04, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -3, transition: { duration: 0.2 } }}
                   onClick={() => setSelectedNotice(notice)}
                   className="bg-white rounded-[24px] sm:rounded-[28px] p-4 sm:p-5 border border-slate-100 shadow-2xs hover:shadow-md transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer group"
                 >
                   <div className="flex items-center gap-4 sm:gap-5">
                     
                     {/* Left Date Box - Perfect Rounded Square Shape */}
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 min-w-[56px] min-h-[56px] sm:min-w-[64px] sm:min-h-[64px] aspect-square bg-[#edf9f3] rounded-[18px] sm:rounded-2xl border border-emerald-100 flex flex-col items-center justify-center flex-shrink-0 text-[#00704A] select-none shadow-2xs">
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 min-w-[56px] min-h-[56px] sm:min-w-[64px] sm:min-h-[64px] aspect-square bg-[#edf9f3] rounded-[18px] sm:rounded-2xl border border-emerald-100 flex flex-col items-center justify-center flex-shrink-0 text-[#00704A] select-none shadow-2xs group-hover:scale-105 transition-transform">
                       <span className="text-xl sm:text-2xl font-black leading-none text-[#00704A] font-mono">
                         {isBn ? toBanglaNum(dayStr) : dayStr}
                       </span>
@@ -336,7 +341,7 @@ const Notices: React.FC = () => {
                     <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                   </div>
 
-                </div>
+                </motion.div>
               );
             })
           )}
@@ -388,36 +393,44 @@ const Notices: React.FC = () => {
 
       </div>
 
-      {/* 5. NOTICE DETAILS MODAL (100% MOBILE RESPONSIVE & MATCHING REFERENCE IMAGE) */}
-      {selectedNotice && (() => {
-        const titleText = isBn ? selectedNotice.title : (selectedNotice.titleEn || NOTICE_EN_MAP[selectedNotice.title] || selectedNotice.title);
-        const day = selectedNotice.date.split('-')[2] || '28';
-        const monthNum = parseInt(selectedNotice.date.split('-')[1] || '07', 10);
-        const year = selectedNotice.date.split('-')[0] || '2025';
-        const fullBnMonths = ['', 'জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
-        const fullEnMonths = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        const formattedDate = isBn 
-          ? `${toBanglaNum(day)} ${fullBnMonths[monthNum]} ${toBanglaNum(year)}`
-          : `${day} ${fullEnMonths[monthNum]} ${year}`;
+      {/* 5. NOTICE DETAILS MODAL (ANIMATED WITH FRAMER MOTION) */}
+      <AnimatePresence>
+        {selectedNotice && (() => {
+          const titleText = isBn ? selectedNotice.title : (selectedNotice.titleEn || NOTICE_EN_MAP[selectedNotice.title] || selectedNotice.title);
+          const day = selectedNotice.date.split('-')[2] || '28';
+          const monthNum = parseInt(selectedNotice.date.split('-')[1] || '07', 10);
+          const year = selectedNotice.date.split('-')[0] || '2025';
+          const fullBnMonths = ['', 'জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
+          const fullEnMonths = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+          const formattedDate = isBn 
+            ? `${toBanglaNum(day)} ${fullBnMonths[monthNum]} ${toBanglaNum(year)}`
+            : `${day} ${fullEnMonths[monthNum]} ${year}`;
 
-        const isHolidayNotice = selectedNotice.id === '1' || selectedNotice.title.includes('গ্রীষ্মকালীন') || selectedNotice.title.includes('ছুটি');
+          const isHolidayNotice = selectedNotice.id === '1' || selectedNotice.title.includes('গ্রীষ্মকালীন') || selectedNotice.title.includes('ছুটি');
 
-        return (
-          <div 
-            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto"
-            onClick={() => setSelectedNotice(null)}
-          >
-            <div 
-              className="bg-white rounded-[28px] sm:rounded-[36px] max-w-2xl w-full p-5 sm:p-8 md:p-9 shadow-2xl border border-slate-100 relative space-y-4 my-auto animate-in zoom-in-95 duration-200"
-              onClick={e => e.stopPropagation()}
+          return (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-xs overflow-y-auto"
+              onClick={() => setSelectedNotice(null)}
             >
-              {/* Circular Close Button Pinned to Top Right */}
-              <button 
-                onClick={() => setSelectedNotice(null)} 
-                className="absolute top-4 right-4 sm:top-7 sm:right-7 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition flex items-center justify-center cursor-pointer z-10"
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95, y: 16 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 16 }}
+                transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                className="bg-white rounded-[28px] sm:rounded-[36px] max-w-2xl w-full p-5 sm:p-8 md:p-9 shadow-2xl border border-slate-100 relative space-y-4 my-auto"
+                onClick={e => e.stopPropagation()}
               >
-                <X size={18} />
-              </button>
+                {/* Circular Close Button Pinned to Top Right */}
+                <button 
+                  onClick={() => setSelectedNotice(null)} 
+                  className="absolute top-4 right-4 sm:top-7 sm:right-7 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition flex items-center justify-center cursor-pointer z-10"
+                >
+                  <X size={18} />
+                </button>
 
               {/* Top Header Row: Icon + Pill Tag + Date */}
               <div className="flex flex-wrap items-center gap-2 sm:gap-3 pr-10 sm:pr-12">
@@ -519,10 +532,11 @@ const Notices: React.FC = () => {
                 </div>
               </div>
 
-            </div>
-          </div>
-        );
-      })()}
+              </motion.div>
+            </motion.div>
+          );
+        })()}
+      </AnimatePresence>
 
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { 
@@ -214,7 +215,7 @@ const Gallery: React.FC = () => {
 
         </div>
 
-        {/* 3. PHOTO ALBUM CARDS — EXACT STACKED DECK STYLE MATCHING HOME PAGE & MEDIA_1788170009483.PNG */}
+        {/* 3. PHOTO ALBUM CARDS — ANIMATED WITH MOTION.DIV */}
         {filteredAlbums.length === 0 ? (
           <div className="bg-white rounded-[28px] p-12 text-center text-slate-400 font-semibold space-y-2 border border-slate-100">
             <ImageIcon size={40} className="mx-auto text-slate-300 mb-2" />
@@ -222,44 +223,42 @@ const Gallery: React.FC = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {paginatedAlbums.map((album) => {
-              const albumPhotos = getAlbumPhotos(album);
-              const totalCount = albumPhotos.length >= 15 ? albumPhotos.length : 16;
+            {paginatedAlbums.map((album, index) => {
+              const currentPhotos = getAlbumPhotos(album);
+              const stack1 = currentPhotos[1] || currentPhotos[0] || album.url;
+              const stack2 = currentPhotos[2] || currentPhotos[0] || album.url;
+              const totalCount = currentPhotos.length;
               const titleText = isBn ? album.caption : (album.captionEn || album.caption);
-              const stack1 = albumPhotos[1] || '/hero_slider_2.jpg';
-              const stack2 = albumPhotos[2] || '/hero_slider_3.jpg';
 
               return (
-                <div 
+                <motion.div
                   key={album.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.38, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -5, transition: { duration: 0.22 } }}
                   onClick={() => openAlbum(album, 0)}
-                  className="bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between cursor-pointer"
+                  className="bg-white rounded-3xl p-4 sm:p-5 border border-slate-100 shadow-2xs hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between"
                 >
-                  {/* Stacked Photo Deck Container matching Home Page 100% */}
-                  <div className="relative w-full h-40 sm:h-44 mb-4 flex items-center justify-center pt-2">
-                    {/* Layer 2 (Bottom Stack, Tilted Left) */}
+                  <div className="relative w-full h-44 sm:h-48 flex items-center justify-center mb-3">
                     <div className="absolute w-[88%] h-32 sm:h-36 bg-slate-200 rounded-2xl overflow-hidden border-2 border-white shadow-sm transform -rotate-6 top-1 origin-top opacity-70 group-hover:-rotate-8 transition-transform pointer-events-none">
                       <img src={stack2} alt="" className="w-full h-full object-cover" />
                     </div>
-                    {/* Layer 1 (Middle Stack, Tilted Right) */}
                     <div className="absolute w-[92%] h-34 sm:h-38 bg-slate-100 rounded-2xl overflow-hidden border-2 border-white shadow-md transform rotate-6 top-1.5 origin-top opacity-85 group-hover:rotate-8 transition-transform pointer-events-none">
                       <img src={stack1} alt="" className="w-full h-full object-cover" />
                     </div>
-                    {/* Front Main Photo Card */}
                     <div className="relative w-[96%] h-36 sm:h-40 bg-white rounded-2xl overflow-hidden border-2 border-white shadow-md z-10">
                       <img 
                         src={album.url} 
                         alt={titleText} 
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                       />
-                      {/* Small Green Gallery Icon Badge on bottom-left */}
                       <div className="absolute bottom-2 left-2 w-7 h-7 rounded-lg bg-white/95 text-emerald-700 flex items-center justify-center shadow-md">
                         <ImageIcon size={14} />
                       </div>
                     </div>
                   </div>
 
-                  {/* Content */}
                   <div>
                     <h4 className="font-bold text-slate-900 text-sm leading-snug line-clamp-2 mb-2 group-hover:text-emerald-700 transition-colors">
                       {titleText}
@@ -274,14 +273,13 @@ const Gallery: React.FC = () => {
                       <span>{isBn ? `${toBanglaNum(totalCount)} টি ছবি` : `${totalCount} Photos`}</span>
                     </div>
                   </div>
-
-                </div>
+                </motion.div>
               );
             })}
           </div>
         )}
 
-        {/* 4. DYNAMIC PAGINATION CONTROLS (ONLY REAL PAGES) */}
+        {/* 4. DYNAMIC PAGINATION CONTROLS */}
         {totalPages > 1 && (
           <div className="pt-8 flex items-center justify-center gap-2 select-none">
             <button 
@@ -327,113 +325,120 @@ const Gallery: React.FC = () => {
 
       </div>
 
-      {/* 5. INTERACTIVE MULTI-PHOTO ALBUM LIGHTBOX MODAL (MATCHING REFERENCE IMAGE 1 100%) */}
-      {selectedAlbum && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8 bg-black/60 backdrop-blur-xs animate-fade-in" 
-          onClick={() => setSelectedAlbum(null)}
-        >
-          <div 
-            className="bg-white rounded-3xl max-w-4xl w-full p-5 sm:p-7 md:p-8 shadow-2xl relative border border-slate-100 flex flex-col max-h-[95vh] overflow-y-auto" 
-            onClick={e => e.stopPropagation()}
+      {/* 5. INTERACTIVE MULTI-PHOTO ALBUM LIGHTBOX MODAL (ANIMATED WITH FRAMER MOTION) */}
+      <AnimatePresence>
+        {selectedAlbum && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8 bg-black/60 backdrop-blur-xs" 
+            onClick={() => setSelectedAlbum(null)}
           >
-            {/* Top Close Button */}
-            <button 
-              onClick={() => setSelectedAlbum(null)} 
-              className="absolute top-5 right-5 sm:top-7 sm:right-7 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100/90 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition cursor-pointer z-20"
-              aria-label="Close modal"
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-white rounded-3xl max-w-4xl w-full p-5 sm:p-7 md:p-8 shadow-2xl relative border border-slate-100 flex flex-col max-h-[95vh] overflow-y-auto" 
+              onClick={e => e.stopPropagation()}
             >
-              <X size={18} />
-            </button>
-
-            {/* Header Info */}
-            <div className="pr-12">
-              <div className="flex items-center gap-2.5">
-                <span className="bg-emerald-100/80 text-emerald-800 border border-emerald-200/80 px-2.5 py-0.5 rounded-md text-[11px] font-black uppercase tracking-wider">
-                  {(selectedAlbum.category || 'ACADEMIC').toUpperCase()}
-                </span>
-                <span className="text-xs font-semibold text-slate-500">
-                  {isBn 
-                    ? `ছবি ${toBanglaNum(activePhotoIndex + 1)} / ${toBanglaNum(currentPhotos.length)}` 
-                    : `Photo ${activePhotoIndex + 1} of ${currentPhotos.length}`}
-                </span>
-              </div>
-
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mt-2 tracking-tight">
-                {isBn ? selectedAlbum.caption : (selectedAlbum.captionEn || selectedAlbum.caption)}
-              </h2>
-
-              <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1 leading-relaxed">
-                {isBn 
-                  ? 'আমাদের শিক্ষার্থীদের মেধা বিকাশ, উদ্ভাবনী কার্যক্রম ও প্রাতিষ্ঠানিক স্মরণীয় মুহূর্ত।'
-                  : 'Students collaborating and learning together in the campus activities.'}
-              </p>
-            </div>
-
-            {/* Main Photo View with Expand & Arrows */}
-            <div className="relative mt-5 aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-950 shadow-sm flex items-center justify-center">
-              <img 
-                src={currentPhotos[activePhotoIndex]} 
-                alt={selectedAlbum.caption} 
-                className="w-full h-full object-cover select-none transition-all duration-300"
-              />
-
-              {/* Expand Button */}
-              <button
-                onClick={() => {
-                  window.open(currentPhotos[activePhotoIndex], '_blank');
-                }}
-                className="absolute top-3.5 right-3.5 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-md border border-white/20 transition cursor-pointer"
+              <button 
+                onClick={() => setSelectedAlbum(null)} 
+                className="absolute top-5 right-5 sm:top-7 sm:right-7 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100/90 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition cursor-pointer z-20"
+                aria-label="Close modal"
               >
-                <Maximize2 size={13} />
-                <span>{isBn ? 'পূর্ণাঙ্গ' : 'Expand'}</span>
+                <X size={18} />
               </button>
 
-              {/* Prev Arrow Button */}
-              {currentPhotos.length > 1 && (
-                <button
-                  onClick={prevPhoto}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-slate-800 shadow-lg flex items-center justify-center hover:bg-slate-50 hover:scale-105 transition cursor-pointer"
-                  aria-label="Previous photo"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-              )}
+              <div className="pr-12">
+                <div className="flex items-center gap-2.5">
+                  <span className="bg-emerald-100/80 text-emerald-800 border border-emerald-200/80 px-2.5 py-0.5 rounded-md text-[11px] font-black uppercase tracking-wider">
+                    {(selectedAlbum.category || 'ACADEMIC').toUpperCase()}
+                  </span>
+                  <span className="text-xs font-semibold text-slate-500">
+                    {isBn 
+                      ? `ছবি ${toBanglaNum(activePhotoIndex + 1)} / ${toBanglaNum(getAlbumPhotos(selectedAlbum).length)}` 
+                      : `Photo ${activePhotoIndex + 1} of ${getAlbumPhotos(selectedAlbum).length}`}
+                  </span>
+                </div>
 
-              {/* Next Arrow Button */}
-              {currentPhotos.length > 1 && (
-                <button
-                  onClick={nextPhoto}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-slate-800 shadow-lg flex items-center justify-center hover:bg-slate-50 hover:scale-105 transition cursor-pointer"
-                  aria-label="Next photo"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              )}
-            </div>
+                <h2 className="text-xl sm:text-2xl font-black text-slate-900 mt-2 tracking-tight">
+                  {isBn ? selectedAlbum.caption : (selectedAlbum.captionEn || selectedAlbum.caption)}
+                </h2>
 
-            {/* Bottom Thumbnails Strip */}
-            {currentPhotos.length > 1 && (
-              <div className="mt-5 flex items-center justify-center gap-3 overflow-x-auto pb-1 scrollbar-none">
-                {currentPhotos.map((photoUrl, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActivePhotoIndex(idx)}
-                    className={`relative w-16 h-12 sm:w-20 sm:h-14 rounded-xl overflow-hidden cursor-pointer transition flex-shrink-0 border-2 ${
-                      idx === activePhotoIndex
-                        ? 'border-emerald-700 ring-2 ring-emerald-700/20 scale-105 shadow-sm opacity-100'
-                        : 'border-transparent opacity-60 hover:opacity-100 hover:border-slate-300'
-                    }`}
-                  >
-                    <img src={photoUrl} alt="" className="w-full h-full object-cover" />
-                  </button>
-                ))}
+                <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1 leading-relaxed">
+                  {isBn 
+                    ? 'আমাদের শিক্ষার্থীদের মেধা বিকাশ, উদ্ভাবনী কার্যক্রম ও প্রাতিষ্ঠানিক স্মরণীয় মুহূর্ত।'
+                    : 'Students collaborating and learning together in the campus activities.'}
+                </p>
               </div>
-            )}
 
-          </div>
-        </div>
-      )}
+              {/* Main Photo View with Expand & Arrows */}
+              <div className="relative mt-5 aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-950 shadow-sm flex items-center justify-center">
+                <img 
+                  src={getAlbumPhotos(selectedAlbum)[activePhotoIndex]} 
+                  alt={selectedAlbum.caption} 
+                  className="w-full h-full object-cover select-none transition-all duration-300"
+                />
+
+                {/* Expand Button */}
+                <button
+                  onClick={() => {
+                    window.open(getAlbumPhotos(selectedAlbum)[activePhotoIndex], '_blank');
+                  }}
+                  className="absolute top-3.5 right-3.5 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-md border border-white/20 transition cursor-pointer"
+                >
+                  <Maximize2 size={13} />
+                  <span>{isBn ? 'পূর্ণাঙ্গ' : 'Expand'}</span>
+                </button>
+
+                {/* Prev Arrow Button */}
+                {getAlbumPhotos(selectedAlbum).length > 1 && (
+                  <button
+                    onClick={() => setActivePhotoIndex(prev => (prev === 0 ? getAlbumPhotos(selectedAlbum).length - 1 : prev - 1))}
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-slate-800 shadow-lg flex items-center justify-center hover:bg-slate-50 hover:scale-105 transition cursor-pointer"
+                    aria-label="Previous photo"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                )}
+
+                {/* Next Arrow Button */}
+                {getAlbumPhotos(selectedAlbum).length > 1 && (
+                  <button
+                    onClick={() => setActivePhotoIndex(prev => (prev === getAlbumPhotos(selectedAlbum).length - 1 ? 0 : prev + 1))}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-slate-800 shadow-lg flex items-center justify-center hover:bg-slate-50 hover:scale-105 transition cursor-pointer"
+                    aria-label="Next photo"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                )}
+              </div>
+
+              {/* Bottom Thumbnails Strip */}
+              {getAlbumPhotos(selectedAlbum).length > 1 && (
+                <div className="mt-5 flex items-center justify-center gap-3 overflow-x-auto pb-1 scrollbar-none">
+                  {getAlbumPhotos(selectedAlbum).map((photoUrl, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setActivePhotoIndex(idx)}
+                      className={`relative w-16 h-12 sm:w-20 sm:h-14 rounded-xl overflow-hidden cursor-pointer transition flex-shrink-0 border-2 ${
+                        idx === activePhotoIndex
+                          ? 'border-emerald-700 ring-2 ring-emerald-700/20 scale-105 shadow-sm opacity-100'
+                          : 'border-transparent opacity-60 hover:opacity-100 hover:border-slate-300'
+                      }`}
+                    >
+                      <img src={photoUrl} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              )}
+
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { 
@@ -579,8 +580,14 @@ const Students: React.FC = () => {
                     </td>
                   </tr>
                 ) : (
-                  filteredStudents.map((s) => (
-                    <tr key={s.id} className="hover:bg-slate-50/70 transition-colors">
+                  filteredStudents.map((s, idx) => (
+                    <motion.tr 
+                      key={s.id}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.28, delay: idx * 0.03, ease: [0.22, 1, 0.36, 1] }}
+                      className="hover:bg-slate-50/70 transition-colors"
+                    >
                       
                       {/* Roll Column with Green font */}
                       <td className="p-4 sm:p-5 pl-6 font-bold text-emerald-700 text-xs sm:text-sm">
@@ -624,13 +631,13 @@ const Students: React.FC = () => {
                           onClick={() => setSelectedStudent(s)}
                           title={language === 'bn' ? 'প্রোফাইল দেখুন' : 'View Profile'}
                           aria-label={language === 'bn' ? 'প্রোফাইল দেখুন' : 'View Profile'}
-                          className="w-8 h-8 rounded-full inline-flex items-center justify-center bg-white hover:bg-emerald-50 text-slate-600 hover:text-emerald-700 transition border border-slate-200/90 hover:border-emerald-300 shadow-2xs cursor-pointer"
+                          className="w-8 h-8 rounded-full inline-flex items-center justify-center bg-white hover:bg-emerald-50 text-slate-600 hover:text-emerald-700 transition border border-slate-200/90 hover:border-emerald-300 shadow-2xs cursor-pointer active:scale-95"
                         >
                           <Eye size={15} />
                         </button>
                       </td>
 
-                    </tr>
+                    </motion.tr>
                   ))
                 )}
               </tbody>
@@ -640,116 +647,125 @@ const Students: React.FC = () => {
 
       </div>
 
-      {/* 4. STUDENT DETAIL MODAL */}
-      {selectedStudent && (
-        <div 
-          className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs p-4 flex min-h-full items-center justify-center animate-fade-in"
-          onClick={() => setSelectedStudent(null)}
-        >
-          <div 
-            className="bg-white rounded-[32px] max-w-md w-full overflow-hidden shadow-2xl relative border border-slate-100 my-auto transform transition-all animate-scale-up"
-            onClick={e => e.stopPropagation()}
+      {/* 4. STUDENT DETAIL MODAL (ANIMATED WITH FRAMER MOTION) */}
+      <AnimatePresence>
+        {selectedStudent && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs p-4 flex min-h-full items-center justify-center"
+            onClick={() => setSelectedStudent(null)}
           >
-            {/* Top Close Button */}
-            <button 
-              onClick={() => setSelectedStudent(null)} 
-              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-800 flex items-center justify-center transition cursor-pointer"
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-white rounded-[32px] max-w-md w-full overflow-hidden shadow-2xl relative border border-slate-100 my-auto transform"
+              onClick={e => e.stopPropagation()}
             >
-              <X size={16} />
-            </button>
-
-            {/* Header Banner */}
-            <div className="bg-gradient-to-r from-emerald-800 to-teal-900 h-24 relative">
-              <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
-                <img 
-                  src={selectedStudent.image} 
-                  alt={selectedStudent.name} 
-                  className="w-20 h-20 rounded-2xl border-4 border-white shadow-md object-cover bg-white"
-                />
-              </div>
-            </div>
-
-            {/* Modal Body */}
-            <div className="px-6 pb-6 pt-12 text-center space-y-4">
-              <div>
-                <h2 className="text-xl font-black text-slate-900">{selectedStudent.name}</h2>
-                <p className="text-xs text-emerald-700 font-bold mt-0.5">
-                  {language === 'bn' ? 'রোল নং' : 'Roll'}: #{toBanglaNum(selectedStudent.roll)} • ID: SB-{toBanglaNum(selectedStudent.id)}
-                </p>
-                <p className="text-[11px] text-slate-400 font-medium">
-                  {language === 'bn' ? 'এস ও এস হারম্যান মেইনার স্কুল খুলনা' : 'SOS Hermann Gmeiner School Khulna'}
-                </p>
-              </div>
-              
-              {/* Info Grid */}
-              <div className="grid grid-cols-2 gap-2.5 text-left text-xs">
-                <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
-                  <p className="text-[9px] text-slate-400 uppercase font-bold tracking-wider mb-0.5 flex items-center gap-1">
-                    <GraduationCap size={11} className="text-emerald-700" /> {language === 'bn' ? 'শ্রেণি' : 'Class'}
-                  </p>
-                  <p className="font-bold text-slate-800 text-xs">
-                    {toBanglaNum(selectedStudent.class)} {language === 'bn' ? 'শ্রেণি' : 'Class'}
-                  </p>
-                </div>
-
-                <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
-                  <p className="text-[9px] text-slate-400 uppercase font-bold tracking-wider mb-0.5 flex items-center gap-1">
-                    <Layers size={11} className="text-emerald-700" /> {language === 'bn' ? 'শাখা' : 'Section'}
-                  </p>
-                  <p className="font-bold text-slate-800 text-xs">
-                    {selectedStudent.section}
-                  </p>
-                </div>
-
-                <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
-                  <p className="text-[9px] text-slate-400 uppercase font-bold tracking-wider mb-0.5 flex items-center gap-1">
-                    <Briefcase size={11} className="text-emerald-700" /> {language === 'bn' ? 'বিভাগ' : 'Group'}
-                  </p>
-                  <p className="font-bold text-slate-800 text-xs">
-                    {selectedStudent.group || '-'}
-                  </p>
-                </div>
-
-                <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
-                  <p className="text-[9px] text-slate-400 uppercase font-bold tracking-wider mb-0.5 flex items-center gap-1">
-                    <Droplet size={11} className="text-emerald-700" /> {language === 'bn' ? 'রক্তের গ্রুপ' : 'Blood Group'}
-                  </p>
-                  <p className="font-bold text-slate-800 text-xs">
-                    {selectedStudent.bloodGroup || 'N/A'}
-                  </p>
-                </div>
-              </div>
-              
-              {/* Guardian Info */}
-              <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-100 text-left text-xs space-y-1.5">
-                <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-200/80 pb-1">
-                  {language === 'bn' ? 'অভিভাবকের তথ্য ও যোগাযোগ' : 'Guardian & Contact Details'}
-                </h3>
-                <div className="flex justify-between text-[11px]">
-                  <span className="text-slate-500">{language === 'bn' ? 'পিতার নাম' : "Father's Name"}:</span>
-                  <span className="font-bold text-slate-800">{selectedStudent.fatherName || '-'}</span>
-                </div>
-                <div className="flex justify-between text-[11px]">
-                  <span className="text-slate-500">{language === 'bn' ? 'মাতার নাম' : "Mother's Name"}:</span>
-                  <span className="font-bold text-slate-800">{selectedStudent.motherName || '-'}</span>
-                </div>
-                <div className="flex justify-between text-[11px]">
-                  <span className="text-slate-500">{language === 'bn' ? 'ফোন নম্বর' : 'Phone'}:</span>
-                  <span className="font-bold text-emerald-800 font-mono">{toBanglaNum(selectedStudent.guardianPhone || '-')}</span>
-                </div>
-              </div>
-
-              {/* Close Button */}
+              {/* Top Close Button */}
               <button 
-                onClick={() => setSelectedStudent(null)}
-                className="w-full bg-[#00704A] hover:bg-[#005a3c] text-white py-2.5 rounded-2xl font-bold text-xs transition shadow-sm cursor-pointer"
+                onClick={() => setSelectedStudent(null)} 
+                className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-800 flex items-center justify-center transition cursor-pointer"
               >
-                {language === 'bn' ? 'বন্ধ করুন' : 'Close Profile'}
+                <X size={16} />
               </button>
-            </div>
-          </div>
-        </div>
-      )}
+
+              {/* Header Banner */}
+              <div className="bg-gradient-to-r from-emerald-800 to-teal-900 h-24 relative">
+                <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
+                  <img 
+                    src={selectedStudent.image} 
+                    alt={selectedStudent.name} 
+                    className="w-20 h-20 rounded-2xl border-4 border-white shadow-md object-cover bg-white"
+                  />
+                </div>
+              </div>
+
+              {/* Modal Body */}
+              <div className="px-6 pb-6 pt-12 text-center space-y-4">
+                <div>
+                  <h2 className="text-xl font-black text-slate-900">{selectedStudent.name}</h2>
+                  <p className="text-xs text-emerald-700 font-bold mt-0.5">
+                    {language === 'bn' ? 'রোল নং' : 'Roll'}: #{toBanglaNum(selectedStudent.roll)} • ID: SB-{toBanglaNum(selectedStudent.id)}
+                  </p>
+                  <p className="text-[11px] text-slate-400 font-medium">
+                    {language === 'bn' ? 'এস ও এস হারম্যান মেইনার স্কুল খুলনা' : 'SOS Hermann Gmeiner School Khulna'}
+                  </p>
+                </div>
+                
+                {/* Info Grid */}
+                <div className="grid grid-cols-2 gap-2.5 text-left text-xs">
+                  <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                    <p className="text-[9px] text-slate-400 uppercase font-bold tracking-wider mb-0.5 flex items-center gap-1">
+                      <GraduationCap size={11} className="text-emerald-700" /> {language === 'bn' ? 'শ্রেণি' : 'Class'}
+                    </p>
+                    <p className="font-bold text-slate-800 text-xs">
+                      {toBanglaNum(selectedStudent.class)} {language === 'bn' ? 'শ্রেণি' : 'Class'}
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                    <p className="text-[9px] text-slate-400 uppercase font-bold tracking-wider mb-0.5 flex items-center gap-1">
+                      <Layers size={11} className="text-emerald-700" /> {language === 'bn' ? 'শাখা' : 'Section'}
+                    </p>
+                    <p className="font-bold text-slate-800 text-xs">
+                      {selectedStudent.section}
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                    <p className="text-[9px] text-slate-400 uppercase font-bold tracking-wider mb-0.5 flex items-center gap-1">
+                      <Briefcase size={11} className="text-emerald-700" /> {language === 'bn' ? 'বিভাগ' : 'Group'}
+                    </p>
+                    <p className="font-bold text-slate-800 text-xs">
+                      {selectedStudent.group || '-'}
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                    <p className="text-[9px] text-slate-400 uppercase font-bold tracking-wider mb-0.5 flex items-center gap-1">
+                      <Droplet size={11} className="text-emerald-700" /> {language === 'bn' ? 'রক্তের গ্রুপ' : 'Blood Group'}
+                    </p>
+                    <p className="font-bold text-slate-800 text-xs">
+                      {selectedStudent.bloodGroup || 'N/A'}
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Guardian Info */}
+                <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-100 text-left text-xs space-y-1.5">
+                  <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-200/80 pb-1">
+                    {language === 'bn' ? 'অভিভাবকের তথ্য ও যোগাযোগ' : 'Guardian & Contact Details'}
+                  </h3>
+                  <div className="flex justify-between text-[11px]">
+                    <span className="text-slate-500">{language === 'bn' ? 'পিতার নাম' : "Father's Name"}:</span>
+                    <span className="font-bold text-slate-800">{selectedStudent.fatherName || '-'}</span>
+                  </div>
+                  <div className="flex justify-between text-[11px]">
+                    <span className="text-slate-500">{language === 'bn' ? 'মাতার নাম' : "Mother's Name"}:</span>
+                    <span className="font-bold text-slate-800">{selectedStudent.motherName || '-'}</span>
+                  </div>
+                  <div className="flex justify-between text-[11px]">
+                    <span className="text-slate-500">{language === 'bn' ? 'ফোন নম্বর' : 'Phone'}:</span>
+                    <span className="font-bold text-emerald-800 font-mono">{toBanglaNum(selectedStudent.guardianPhone || '-')}</span>
+                  </div>
+                </div>
+
+                {/* Close Button */}
+                <button 
+                  onClick={() => setSelectedStudent(null)}
+                  className="w-full bg-[#00704A] hover:bg-[#005a3c] text-white py-2.5 rounded-2xl font-bold text-xs transition shadow-sm cursor-pointer"
+                >
+                  {language === 'bn' ? 'বন্ধ করুন' : 'Close Profile'}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

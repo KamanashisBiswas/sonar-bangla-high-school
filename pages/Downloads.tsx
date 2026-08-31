@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Download, Search, FileText, Calendar, HardDrive, 
   Home, LayoutGrid, BookOpen, CalendarDays, MoreHorizontal, 
@@ -689,7 +690,7 @@ const Downloads: React.FC = () => {
                     </td>
                   </tr>
                 ) : (
-                  filteredDownloads.map((item) => {
+                  filteredDownloads.map((item, idx) => {
                     const categoryLower = (item.category || 'General').toLowerCase();
                     
                     let badgeClass = 'bg-slate-100 text-slate-700 border-slate-200';
@@ -702,7 +703,13 @@ const Downloads: React.FC = () => {
                     const secondaryTitle = isBn ? (item.titleEn || item.title) : item.title;
 
                     return (
-                      <tr key={item.id} className="hover:bg-slate-50/80 transition-colors group">
+                      <motion.tr 
+                        key={item.id} 
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.28, delay: idx * 0.03, ease: [0.22, 1, 0.36, 1] }}
+                        className="hover:bg-slate-50/80 transition-colors group"
+                      >
                         
                         {/* File Title */}
                         <td className="py-4 px-5 sm:px-6">
@@ -753,7 +760,7 @@ const Downloads: React.FC = () => {
                           </button>
                         </td>
 
-                      </tr>
+                      </motion.tr>
                     );
                   })
                 )}

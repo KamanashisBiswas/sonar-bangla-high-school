@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, Printer, AlertCircle, CheckCircle, XCircle, 
   GraduationCap, Award, FileText, ChevronRight, Home, 
@@ -9,6 +10,9 @@ import {
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Result as ResultType } from '../types';
+import { 
+  ScrollReveal, ScrollStaggerContainer, ScrollStaggerItem 
+} from '../components/ui/MotionComponents';
 import { 
   SCHOOL_NAME, SCHOOL_NAME_EN, SCHOOL_LOGO, SCHOOL_ADDRESS, 
   EIIN_CODE, ESTABLISHED_YEAR 
@@ -848,8 +852,9 @@ const Result: React.FC = () => {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
-        {/* 2. MAIN SEARCH CARD WITH TABS (MATCHING REFERENCE IMAGE 100%) */}
-        <div className="bg-white rounded-[32px] p-6 sm:p-8 border border-slate-100 shadow-sm space-y-6">
+        {/* 2. MAIN SEARCH CARD WITH TABS (ANIMATED WITH SCROLLREVEAL) */}
+        <ScrollReveal duration={0.6} distance={25}>
+          <div className="bg-white rounded-[32px] p-6 sm:p-8 border border-slate-100 shadow-sm space-y-6">
           
           {/* Dual Tabs Header */}
           <div className="flex items-center border-b border-slate-100 pb-0 gap-8">
@@ -1049,6 +1054,7 @@ const Result: React.FC = () => {
           </form>
 
         </div>
+      </ScrollReveal>
 
         {/* Error Notification */}
         {error && (
@@ -1239,61 +1245,63 @@ const Result: React.FC = () => {
         )}
 
         {/* 4. TWO QUICK ACTION CARDS (MATCHING REFERENCE IMAGE 100%) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* Institute Result Card */}
-          <div 
-            onClick={() => { setActiveTab('institute'); setError(''); }}
-            className="bg-white rounded-[28px] p-6 sm:p-8 border border-slate-100 shadow-2xs hover:shadow-md transition-all group cursor-pointer space-y-4"
-          >
-            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">
-              <Building size={22} />
-            </div>
+        <ScrollReveal duration={0.6} distance={25}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <div>
-              <h3 className="text-base sm:text-lg font-black text-slate-900 group-hover:text-emerald-800 transition">
-                {isBn ? 'প্রতিষ্ঠান ফলাফল' : 'Institute Result'}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed mt-1">
-                {isBn 
-                  ? 'শ্রেণি ও গ্রেডভিত্তিক ফলাফল, পাসের হার ও বার্ষিক পারফরম্যান্স সারসংক্ষেপ দেখুন।' 
-                  : 'View class-wise or grade-wise results, statistics, pass rates and academic performance summary.'}
-              </p>
+            {/* Institute Result Card */}
+            <div 
+              onClick={() => { setActiveTab('institute'); setError(''); }}
+              className="bg-white rounded-[28px] p-6 sm:p-8 border border-slate-100 shadow-2xs hover:shadow-md transition-all group cursor-pointer space-y-4"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">
+                <Building size={22} />
+              </div>
+              
+              <div>
+                <h3 className="text-base sm:text-lg font-black text-slate-900 group-hover:text-emerald-800 transition">
+                  {isBn ? 'প্রতিষ্ঠান ফলাফল' : 'Institute Result'}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed mt-1">
+                  {isBn 
+                    ? 'শ্রেণি ও গ্রেডভিত্তিক ফলাফল, পাসের হার ও বার্ষিক পারফরম্যান্স সারসংক্ষেপ দেখুন।' 
+                    : 'View class-wise or grade-wise results, statistics, pass rates and academic performance summary.'}
+                </p>
+              </div>
+
+              <div className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-emerald-700 group-hover:text-emerald-800 transition pt-1">
+                <span>{isBn ? 'প্রতিষ্ঠান ফলাফল দেখুন' : 'View Institute Result'}</span>
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </div>
             </div>
 
-            <div className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-emerald-700 group-hover:text-emerald-800 transition pt-1">
-              <span>{isBn ? 'প্রতিষ্ঠান ফলাফল দেখুন' : 'View Institute Result'}</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            {/* Individual Student Result Card */}
+            <div 
+              onClick={() => { setActiveTab('individual'); setError(''); }}
+              className="bg-white rounded-[28px] p-6 sm:p-8 border border-slate-100 shadow-2xs hover:shadow-md transition-all group cursor-pointer space-y-4"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-800 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">
+                <User size={22} />
+              </div>
+              
+              <div>
+                <h3 className="text-base sm:text-lg font-black text-slate-900 group-hover:text-blue-800 transition">
+                  {isBn ? 'একক শিক্ষার্থী ফলাফল' : 'Individual Student Result'}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed mt-1">
+                  {isBn 
+                    ? 'একক শিক্ষার্থীর বিস্তারিত মার্কশিট ও একাডেমিক ট্রান্সক্রিপ্ট অনুসন্ধান ও ডাউনলোড করুন।' 
+                    : 'Search and view individual student marksheet and academic transcript.'}
+                </p>
+              </div>
+
+              <div className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-blue-700 group-hover:text-blue-800 transition pt-1">
+                <span>{isBn ? 'শিক্ষার্থী ফলাফল দেখুন' : 'View Student Result'}</span>
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </div>
             </div>
+
           </div>
-
-          {/* Individual Student Result Card */}
-          <div 
-            onClick={() => { setActiveTab('individual'); setError(''); }}
-            className="bg-white rounded-[28px] p-6 sm:p-8 border border-slate-100 shadow-2xs hover:shadow-md transition-all group cursor-pointer space-y-4"
-          >
-            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-800 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">
-              <User size={22} />
-            </div>
-            
-            <div>
-              <h3 className="text-base sm:text-lg font-black text-slate-900 group-hover:text-blue-800 transition">
-                {isBn ? 'একক শিক্ষার্থী ফলাফল' : 'Individual Student Result'}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed mt-1">
-                {isBn 
-                  ? 'একক শিক্ষার্থীর বিস্তারিত মার্কশিট ও একাডেমিক ট্রান্সক্রিপ্ট অনুসন্ধান ও ডাউনলোড করুন।' 
-                  : 'Search and view individual student marksheet and academic transcript.'}
-              </p>
-            </div>
-
-            <div className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-blue-700 group-hover:text-blue-800 transition pt-1">
-              <span>{isBn ? 'শিক্ষার্থী ফলাফল দেখুন' : 'View Student Result'}</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
-
-        </div>
+        </ScrollReveal>
 
       </div>
 
