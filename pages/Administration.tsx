@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Users, GraduationCap, ShieldCheck, Award } from 'lucide-react';
+import { Users, GraduationCap, ShieldCheck, Award, Home } from 'lucide-react';
 
 const Administration: React.FC = () => {
   const { committee, settings } = useData();
@@ -101,6 +102,19 @@ const Administration: React.FC = () => {
 
         {/* Hero Left Content Container */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          {/* Breadcrumb Navigation */}
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-6">
+            <Link to="/" className="hover:text-emerald-700 flex items-center gap-1">
+              <Home size={14} className="text-emerald-700" />
+              <span>{language === 'bn' ? 'হোম' : 'Home'}</span>
+            </Link>
+            <span>&gt;</span>
+            <span className="text-slate-800 font-bold">
+              {language === 'bn' ? 'প্রশাসনিক তথ্য' : 'Administration'}
+            </span>
+          </div>
+
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-1.5 bg-emerald-100/90 text-emerald-800 border border-emerald-200/80 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-4 shadow-2xs">
               <Users size={13} className="text-emerald-700" />

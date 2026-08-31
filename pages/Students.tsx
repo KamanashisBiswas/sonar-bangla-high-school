@@ -5,7 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { 
   Search, GraduationCap, Eye, X, Droplet, Layers, 
   Briefcase, ArrowLeft, ChevronDown, UserCheck, Phone, 
-  Calendar, CheckCircle2, Award
+  Calendar, CheckCircle2, Award, Home
 } from 'lucide-react';
 
 const Students: React.FC = () => {
@@ -492,15 +492,16 @@ const Students: React.FC = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
-          {/* Top Back Navigation Pill (Matching reference image) */}
-          <div className="mb-4">
-            <Link
-              to="/teachers"
-              className="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-emerald-800 border border-emerald-200/90 px-4 py-2 rounded-full text-xs font-bold shadow-2xs transition cursor-pointer"
-            >
-              <ArrowLeft size={14} className="text-emerald-700" />
-              <span>{language === 'bn' ? 'ব্যাক: শিক্ষক ও কর্মচারী নির্দেশিকা' : 'Back: Faculty & Staff Directory'}</span>
+          {/* Breadcrumb Navigation */}
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-6">
+            <Link to="/" className="hover:text-emerald-700 flex items-center gap-1">
+              <Home size={14} className="text-emerald-700" />
+              <span>{language === 'bn' ? 'হোম' : 'Home'}</span>
             </Link>
+            <span>&gt;</span>
+            <span className="text-slate-800 font-bold">
+              {language === 'bn' ? 'শিক্ষার্থী' : 'Students'}
+            </span>
           </div>
 
           {/* Center Hero Heading & Subtitle */}

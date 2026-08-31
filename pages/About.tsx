@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { 
   BookOpen, Award, Trophy, Target, Compass, Sparkles, 
   Building, Clock, Users, ShieldCheck, Eye, Laptop, 
-  FlaskConical, TreePine, Calendar, Quote, ExternalLink, School
+  FlaskConical, TreePine, Calendar, Quote, ExternalLink, School, Home
 } from 'lucide-react';
 
 const About: React.FC = () => {
@@ -15,7 +16,7 @@ const About: React.FC = () => {
     <div className="bg-[#edf9f3] min-h-screen pb-16 text-slate-800">
       
       {/* 1. HERO SECTION (100% SEAMLESS WITH MINT BACKGROUND) */}
-      <div className="relative overflow-hidden pt-8 pb-10 sm:pt-12 sm:pb-14 mb-8">
+      <div className="relative overflow-hidden pt-8 pb-10 sm:pt-10 sm:pb-12 mb-8">
         {/* Background School Linework Illustration on Right Side (Hidden on Mobile) */}
         <div className="hidden md:flex absolute right-0 top-0 bottom-0 md:w-3/5 lg:w-1/2 pointer-events-none overflow-hidden select-none items-center justify-end">
           <img 
@@ -27,6 +28,19 @@ const About: React.FC = () => {
 
         {/* Hero Left Content Container */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          {/* Breadcrumb Navigation */}
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-6">
+            <Link to="/" className="hover:text-emerald-700 flex items-center gap-1">
+              <Home size={14} className="text-emerald-700" />
+              <span>{language === 'bn' ? 'হোম' : 'Home'}</span>
+            </Link>
+            <span>&gt;</span>
+            <span className="text-slate-800 font-bold">
+              {language === 'bn' ? 'আমাদের কথা' : 'About Us'}
+            </span>
+          </div>
+
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-1.5 bg-emerald-100/90 text-emerald-800 border border-emerald-200/80 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-4 shadow-2xs">
               <span>{language === 'bn' ? 'ঐতিহ্য ও ইতিহাস' : 'HERITAGE & HISTORY'}</span>
