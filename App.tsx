@@ -11,6 +11,7 @@ import AdminLayout from './components/AdminLayout';
 // Public Pages
 import Home from './pages/Home';
 import Teachers from './pages/Teachers';
+import TeacherProfile from './pages/TeacherProfile';
 import Students from './pages/Students';
 import Admission from './pages/Admission';
 import Result from './pages/Result';
@@ -52,6 +53,8 @@ const App: React.FC = () => {
                 <Route index element={<Home />} />
                 <Route path="administration" element={<Administration />} />
                 <Route path="teachers" element={<Teachers />} />
+                <Route path="teachers/:id" element={<TeacherProfile />} />
+                <Route path="faculty/:id" element={<TeacherProfile />} />
                 <Route path="students" element={<Students />} />
                 <Route path="academic" element={<Academic />} />
                 <Route path="downloads" element={<Downloads />} />

@@ -16,10 +16,10 @@ const About: React.FC = () => {
       
       {/* 1. HERO SECTION (100% SEAMLESS WITH MINT BACKGROUND) */}
       <div className="relative overflow-hidden pt-8 pb-10 sm:pt-12 sm:pb-14 mb-8">
-        {/* Background School Linework Illustration on Right Side */}
-        <div className="absolute right-0 top-0 bottom-0 w-full md:w-3/5 lg:w-1/2 pointer-events-none overflow-hidden select-none flex items-center justify-end">
+        {/* Background School Linework Illustration on Right Side (Hidden on Mobile) */}
+        <div className="hidden md:flex absolute right-0 top-0 bottom-0 md:w-3/5 lg:w-1/2 pointer-events-none overflow-hidden select-none items-center justify-end">
           <img 
-            src="/school_illustration.jpg" 
+            src="/campus_illustration.jpg" 
             alt="School Campus Architectural Linework Illustration"
             className="w-full h-full object-cover object-right [mask-image:linear-gradient(to_right,transparent_0%,rgba(0,0,0,0.25)_20%,rgba(0,0,0,0.95)_45%,black_100%)] opacity-85 mix-blend-multiply"
           />
@@ -171,9 +171,10 @@ const About: React.FC = () => {
 
                 {/* Quote Bubble Card */}
                 <div className="flex-1 bg-slate-50/80 p-4 sm:p-5 rounded-2xl border border-slate-100/90 text-xs sm:text-sm text-slate-700 leading-relaxed italic relative">
-                  "{settings.chairmanMessage || (language === 'bn' 
-                    ? 'এস ও এস হারম্যান মেইনার স্কুল খুলনা অঞ্চলের সুবিধাবঞ্চিত ও সাধারণ শিক্ষার্থীদের মাঝে মানবসেবামূলক শিক্ষা ও নৈতিক চরিত্র গঠনের এক অনন্য প্রতিষ্ঠান।' 
-                    : 'SOS Hermann Gmeiner School Khulna is committed to nurturing enlightened, disciplined, and morally sound future citizens through modern educational excellence.')}"
+                  "{language === 'bn' 
+                    ? (settings.chairmanMessage || 'এস ও এস হারম্যান মেইনার স্কুল খুলনা এস ও এস চিলড্রেন্স ভিলেজ খুলনার সবুজ আঙিনায় প্রতিষ্ঠিত। মানসম্মত শিক্ষা ও শিক্ষার পরিবেশ নিশ্চিত করার লক্ষ্যে বিদ্যালয়টি প্রতিষ্ঠিত। বিদ্যালয়ের সার্বিক কার্যক্রম পরিচালিত হচ্ছে সেই অভিলক্ষ্যে। শিক্ষার্থীদের মানবিক চেতনায় উদ্বুদ্ধ করতে সহপাঠ্যক্রম চর্চার প্রতি বিশেষ গুরুত্বারোপ করা হয়। দক্ষ শিক্ষকমণ্ডলী, শিক্ষার্থীবান্ধব পরিবেশ ও শিশু সুরক্ষা নীতিমালা অনুসরণের মাধ্যমে শিক্ষার্থী ও শিক্ষকের প্রীতিমধুর সম্পর্ক বিদ্যালয়ের ঐতিহ্য।')
+                    : "SOS Hermann Gmeiner School Khulna is established within the verdant campus of SOS Children's Village Khulna with a steadfast mission to ensure quality education and a wholesome learning atmosphere. All institutional initiatives are driven toward that goal. We lay special emphasis on co-curricular activities to awaken humanistic and moral values in learners. Guided by qualified faculty, a child-friendly environment, and comprehensive safeguarding policies, cordial teacher-student harmony remains the enduring hallmark of our institution."
+                  }"
                 </div>
               </div>
             </div>
@@ -213,9 +214,10 @@ const About: React.FC = () => {
 
                 {/* Quote Bubble Card */}
                 <div className="flex-1 bg-slate-50/80 p-4 sm:p-5 rounded-2xl border border-slate-100/90 text-xs sm:text-sm text-slate-700 leading-relaxed italic relative">
-                  "{settings.headmasterMessage || (language === 'bn'
-                    ? 'Honesty is education, education is peace and peace is progress — সততা, শিক্ষা ও শান্তি আমাদের প্রতিষ্ঠানের শক্তিশালী ভিত্তি।'
-                    : 'Honesty is education, education is peace and peace is progress — this core philosophy guides every student at SOS Hermann Gmeiner School Khulna.')}"
+                  "{language === 'bn'
+                    ? (settings.headmasterMessage || 'এস ও এস হারম্যান মেইনার স্কুল খুলনা মানসম্মত শিক্ষা নিশ্চিতকরণের প্রতিশ্রুতি নিয়ে ১৯৮৭ সালে প্রতিষ্ঠিত হয়। বিদ্যালয়টি পরিচালনায় রয়েছে দক্ষ গভর্নিং বডি ও প্রশিক্ষণপ্রাপ্ত নিবেদিতপ্রাণ শিক্ষকবৃন্দ। বিদ্যালয়ে শিক্ষার্থীবান্ধব ও আনন্দময় পাঠদান উপযোগী পরিবেশ নিশ্চিত করা হয়েছে। শিক্ষক, শিক্ষার্থী, অভিভাবক ও শুভানুধ্যায়ীদের সহযোগিতায় নৈতিক মূল্যবোধসম্পন্ন, সৎ, যোগ্য, দক্ষ ও দেশপ্রেমিক মানবসম্পদ সৃষ্টিই আমাদের মূল লক্ষ্য।')
+                    : 'SOS Hermann Gmeiner School Khulna was founded in 1987 with an uncompromising commitment to educational excellence. The institution is guided by a visionary Governing Body and a team of professionally trained, devoted educators. We have fostered an inspiring, joyful, and child-centered learning environment. With collective support from teachers, students, guardians, and patrons, our paramount mission is nurturing morally upright, honest, accomplished, and patriotic global citizens.'
+                  }"
                 </div>
               </div>
             </div>
