@@ -126,6 +126,7 @@ export interface EventImage {
   id: string;
   url: string;
   caption: string;
+  captionEn?: string;
   date?: string;
   category?: string;
   photos?: string[];

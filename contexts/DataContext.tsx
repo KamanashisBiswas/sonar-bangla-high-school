@@ -52,7 +52,7 @@ interface DataContextType {
 
 const DataContext = createContext<DataContextType>(null!);
 
-const CURRENT_DATA_VERSION = 'v11_soshgs_downloads_page';
+const CURRENT_DATA_VERSION = 'v14_soshgs_gallery_stack_fix';
 
 // Clean outdated localStorage data on version mismatch
 if (typeof window !== 'undefined') {

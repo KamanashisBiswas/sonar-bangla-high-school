@@ -1,31 +1,66 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useData } from '../contexts/DataContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Image as ImageIcon, Eye, X, ChevronLeft, ChevronRight, Layers, Calendar } from 'lucide-react';
+import { 
+  Image as ImageIcon, Eye, X, ChevronLeft, ChevronRight, 
+  Calendar, Home, Search, LayoutGrid, Trophy, 
+  Users, Trees, Megaphone, FlaskConical, MoreHorizontal,
+  Clock, Maximize2
+} from 'lucide-react';
 import { EventImage } from '../types';
+import { GALLERY_IMAGES } from '../constants';
 
 const Gallery: React.FC = () => {
   const { gallery } = useData();
   const { language, t, toBanglaNum } = useLanguage();
+  const isBn = language === 'bn';
+
   const [selectedAlbum, setSelectedAlbum] = useState<EventImage | null>(null);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
   const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // Available categories
+  // Available categories matching reference mockup
   const categories = [
-    { key: 'all', bn: 'সকল অ্যালবাম', en: 'All Albums' },
-    { key: 'Sports', bn: 'ক্রীড়া ও চ্যাম্পিয়নশিপ', en: 'Sports & Awards' },
-    { key: 'Jayanti', bn: 'জয়ন্তী ২০২৬', en: 'Jayanti 2026' },
-    { key: 'Leadership', bn: 'নেতৃত্ব ও সম্মাননা', en: 'Leadership' },
-    { key: 'Campus', bn: 'ক্যাম্পাস ও প্রাঙ্গণ', en: 'Campus Grounds' },
-    { key: 'Assembly', bn: 'প্রাত্যহিক সমাবেশ', en: 'Assembly' },
-    { key: 'Academic', bn: 'ডিজিটাল ক্লাসরুম', en: 'Academic & Labs' },
+    { key: 'all', bn: 'সকল অ্যালবাম', en: 'All Albums', icon: LayoutGrid },
+    { key: 'Sports', bn: 'ক্রীড়া ও পুরস্কার', en: 'Sports & Awards', icon: Trophy },
+    { key: 'Jayanti', bn: 'জয়ন্তী ২০২৬', en: 'Jayanti 2026', icon: Calendar },
+    { key: 'Leadership', bn: 'নেতৃত্ব ও সম্মাননা', en: 'Leadership', icon: Users },
+    { key: 'Campus', bn: 'ক্যাম্পাস প্রাঙ্গণ', en: 'Campus Grounds', icon: Trees },
+    { key: 'Assembly', bn: 'সমাবেশ ও অনুষ্ঠান', en: 'Assembly', icon: Megaphone },
+    { key: 'Academic', bn: 'ক্লাসরুম ও ল্যাব', en: 'Academic & Labs', icon: FlaskConical },
+    { key: 'Others', bn: 'অন্যান্য', en: 'Others', icon: MoreHorizontal },
   ];
 
-  const filteredAlbums = gallery.filter(album => {
-    if (activeCategory === 'all') return true;
-    return album.category?.toLowerCase() === activeCategory.toLowerCase();
+  const allAlbums = (gallery && gallery.length >= 8) ? gallery : GALLERY_IMAGES;
+
+  const filteredAlbums = allAlbums.filter(album => {
+    const titleMatch = (album.caption || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                       (album.captionEn || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                       (album.category || '').toLowerCase().includes(searchTerm.toLowerCase());
+
+    if (activeCategory === 'all') return titleMatch;
+    if (activeCategory === 'Others') {
+      return titleMatch && !['sports', 'jayanti', 'leadership', 'campus', 'assembly', 'academic'].includes((album.category || '').toLowerCase());
+    }
+    return titleMatch && (album.category || '').toLowerCase() === activeCategory.toLowerCase();
   });
+
+  const ITEMS_PER_PAGE = 8;
+  const totalPages = Math.ceil(filteredAlbums.length / ITEMS_PER_PAGE) || 1;
+  const paginatedAlbums = filteredAlbums.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+
+  const handleCategoryChange = (key: string) => {
+    setActiveCategory(key);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (val: string) => {
+    setSearchTerm(val);
+    setCurrentPage(1);
+  };
 
   const openAlbum = (album: EventImage, initialIndex = 0) => {
     setSelectedAlbum(album);
@@ -67,219 +102,343 @@ const Gallery: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedAlbum, currentPhotos.length]);
 
+  // Format date helper (e.g. 18 FEB 2025 / ১৮ ফেব্রুয়ারি ২০২৫)
+  const formatCardDate = (dateStr?: string) => {
+    if (!dateStr) return '';
+    try {
+      const dateObj = new Date(dateStr);
+      if (isNaN(dateObj.getTime())) return dateStr;
+      
+      const day = dateObj.getDate();
+      const year = dateObj.getFullYear();
+      const monthNamesEn = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+      const monthNamesBn = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
+      
+      if (isBn) {
+        return `${toBanglaNum(day)} ${monthNamesBn[dateObj.getMonth()]} ${toBanglaNum(year)}`;
+      }
+      return `${day} ${monthNamesEn[dateObj.getMonth()]} ${year}`;
+    } catch {
+      return dateStr;
+    }
+  };
+
   return (
-    <div className="bg-slate-50 min-h-screen py-12 text-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#edf9f3] min-h-screen pb-16 text-slate-800">
+      
+      {/* 1. HERO SECTION WITH CAMPUS ILLUSTRATION & BREADCRUMB */}
+      <div className="relative overflow-hidden pt-8 pb-10 sm:pt-10 sm:pb-12 mb-6">
         
-        {/* Header Title */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
-            <Layers size={15} /> {language === 'bn' ? 'ফটো অ্যালবাম ও গ্যালারি' : 'Photo Albums & Gallery'}
+        {/* Background School Linework Illustration on Right Side (Hidden on Mobile) */}
+        <div className="hidden md:flex absolute right-0 top-0 bottom-0 md:w-2/5 lg:w-1/3 pointer-events-none overflow-hidden select-none items-center justify-end">
+          <img 
+            src="/campus_illustration.jpg" 
+            alt="School Campus Illustration"
+            className="w-full h-full object-cover object-right [mask-image:linear-gradient(to_right,transparent_0%,rgba(0,0,0,0.3)_25%,rgba(0,0,0,0.95)_55%,black_100%)] opacity-85 mix-blend-multiply"
+          />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          {/* Breadcrumb Navigation */}
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-6">
+            <Link to="/" className="hover:text-emerald-700 flex items-center gap-1">
+              <Home size={14} className="text-emerald-700" />
+              <span>{isBn ? 'হোম' : 'Home'}</span>
+            </Link>
+            <span>&gt;</span>
+            <span className="text-slate-800 font-bold">
+              {isBn ? 'ফটো অ্যালবাম ও গ্যালারি' : 'Photo Albums & Gallery'}
+            </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
-            {language === 'bn' ? 'স্মৃতিময় মুহূর্ত ও ফটো অ্যালবাম' : 'Memorable Moments & Photo Albums'}
-          </h2>
-          <p className="text-slate-500 text-xs sm:text-sm mt-2 max-w-lg mx-auto">
-            {language === 'bn' 
-              ? 'আমাদের বিদ্যালয়ের বিভিন্ন ক্রীড়া প্রতিযোগিতা, জয়ন্তী উৎসব, ক্যাম্পাস জীবন ও একাডেমিক মুহূর্তের অ্যালবাম কালেকশন।' 
-              : 'Explore photo albums of our sports victories, jubilee celebrations, academic milestones, and campus life.'}
-          </p>
-          <div className="h-1 w-16 bg-emerald-600 mx-auto rounded-full mt-4"></div>
-        </div>
 
-        {/* Category Filter Tabs */}
-        <div className="flex items-center justify-center gap-2 flex-wrap mb-10">
-          {categories.map((cat) => (
-            <button
-              key={cat.key}
-              onClick={() => setActiveCategory(cat.key)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                activeCategory === cat.key
-                  ? 'bg-emerald-700 text-white shadow-md shadow-emerald-800/30 scale-105'
-                  : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80'
-              }`}
-            >
-              {language === 'bn' ? cat.bn : cat.en}
-            </button>
-          ))}
-        </div>
-
-        {/* Album Grid with Realistic Stacked Photo Deck Design */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-9">
-          {filteredAlbums.map((album) => {
-            const albumPhotos = getAlbumPhotos(album);
-            const photoCount = Math.max(albumPhotos.length, 5); // Guarantee rich count representation
-
-            return (
-              <div 
-                key={album.id}
-                className="relative group select-none transition-all duration-300"
-              >
-                {/* Stacked Photo Layer 2 (Backmost Left Stack) */}
-                <div className="absolute inset-0 bg-slate-100 rounded-3xl border border-slate-300 shadow-sm transform -rotate-2 -translate-x-2.5 translate-y-1.5 group-hover:-rotate-3 group-hover:-translate-x-3.5 group-hover:translate-y-2 transition-all duration-300 pointer-events-none" />
-
-                {/* Stacked Photo Layer 1 (Middle Right Stack) */}
-                <div className="absolute inset-0 bg-slate-200/90 rounded-3xl border border-slate-300 shadow-sm transform rotate-2 translate-x-2.5 translate-y-1.5 group-hover:rotate-3 group-hover:translate-x-3.5 group-hover:translate-y-2 transition-all duration-300 pointer-events-none" />
-
-                {/* Main Front Album Card */}
-                <div 
-                  onClick={() => openAlbum(album, 0)}
-                  className="relative z-10 bg-white rounded-3xl overflow-hidden shadow-lg group-hover:shadow-2xl transition-all duration-300 border border-slate-200/90 cursor-pointer flex flex-col justify-between group-hover:-translate-y-1.5"
-                >
-                  {/* Full Uncropped Cover Photo */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-900">
-                    <img 
-                      src={album.url} 
-                      alt={album.caption} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    
-                    {/* Overlay on hover */}
-                    <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <div className="px-4 py-2 rounded-full bg-white/95 text-slate-900 font-bold text-xs flex items-center gap-2 shadow-xl transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                        <Eye size={16} className="text-emerald-700" />
-                        <span>{language === 'bn' ? 'অ্যালবাম খুলুন' : 'Open Album'}</span>
-                      </div>
-                    </div>
-
-                    {/* Photo Count Badge */}
-                    <div className="absolute top-3.5 right-3.5 bg-slate-950/80 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1 rounded-full border border-white/20 flex items-center gap-1.5 shadow-md">
-                      <ImageIcon size={13} className="text-amber-300" />
-                      <span>{toBanglaNum(photoCount)} {language === 'bn' ? 'টি ছবি' : 'Photos'}</span>
-                    </div>
-
-                    {/* Category Tag */}
-                    <div className="absolute bottom-3.5 left-3.5">
-                      <span className="text-[10px] uppercase tracking-wider font-extrabold text-white bg-emerald-700/95 backdrop-blur-md px-3 py-1 rounded-lg shadow-md border border-emerald-500/30">
-                        {album.category || (language === 'bn' ? 'অ্যালবাম' : 'Album')}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Album Details */}
-                  <div className="p-5 bg-white">
-                    <h4 className="font-extrabold text-slate-900 text-sm sm:text-base leading-snug group-hover:text-emerald-700 transition line-clamp-2">
-                      {album.caption}
-                    </h4>
-                    {album.date && (
-                      <p className="text-xs text-slate-400 font-medium mt-2 flex items-center gap-1.5">
-                        <Calendar size={13} />
-                        <span>{toBanglaNum(album.date.split('-').reverse().join('/'))}</span>
-                      </p>
-                    )}
-
-                    {/* Filmstrip preview of album photos */}
-                    {albumPhotos.length > 1 && (
-                      <div className="mt-3.5 pt-3 border-t border-slate-100 flex items-center gap-1.5 overflow-hidden">
-                        {albumPhotos.slice(0, 5).map((photoUrl, pIdx) => (
-                          <div 
-                            key={pIdx}
-                            className="w-10 h-7 rounded-md overflow-hidden bg-slate-100 border border-slate-200 flex-shrink-0 group-hover:border-emerald-400 transition"
-                          >
-                            <img src={photoUrl} alt="" className="w-full h-full object-cover" />
-                          </div>
-                        ))}
-                        {albumPhotos.length > 5 && (
-                          <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-1.5 py-1 rounded">
-                            +{albumPhotos.length - 5}
-                          </span>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Interactive Multi-Photo Album Viewer Lightbox */}
-        {selectedAlbum && (
-          <div 
-            className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-950/90 backdrop-blur-md animate-fade-in" 
-            onClick={() => setSelectedAlbum(null)}
-          >
-            <div 
-              className="bg-slate-900 rounded-3xl max-w-5xl w-full overflow-hidden shadow-2xl relative border border-slate-700 flex flex-col max-h-[92vh]" 
-              onClick={e => e.stopPropagation()}
-            >
-              {/* Modal Header */}
-              <div className="p-4 sm:p-5 bg-slate-950/80 border-b border-slate-800 flex justify-between items-center text-white">
-                <div className="pr-4">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-700 px-2 py-0.5 rounded">
-                      {selectedAlbum.category || 'Album'}
-                    </span>
-                    <span className="text-xs text-slate-400 font-bold">
-                      {language === 'bn' ? 'ছবি' : 'Photo'} {toBanglaNum(activePhotoIndex + 1)} / {toBanglaNum(currentPhotos.length)}
-                    </span>
-                  </div>
-                  <h3 className="font-extrabold text-sm sm:text-base text-white mt-1 line-clamp-1">
-                    {selectedAlbum.caption}
-                  </h3>
-                </div>
-
-                <button 
-                  onClick={() => setSelectedAlbum(null)} 
-                  className="bg-white/10 hover:bg-rose-600 text-white p-2 rounded-full transition cursor-pointer flex-shrink-0"
-                  aria-label="Close modal"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-
-              {/* Main Photo View with Navigation */}
-              <div className="relative flex-grow min-h-[300px] sm:min-h-[420px] max-h-[62vh] bg-black flex items-center justify-center overflow-hidden">
-                <img 
-                  src={currentPhotos[activePhotoIndex]} 
-                  alt={selectedAlbum.caption} 
-                  className="w-full h-full object-contain max-h-[62vh] transition-all duration-300 select-none"
-                />
-
-                {/* Prev & Next Arrows */}
-                {currentPhotos.length > 1 && (
-                  <>
-                    <button
-                      onClick={prevPhoto}
-                      className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-950/70 hover:bg-emerald-600 text-white border border-white/20 flex items-center justify-center transition shadow-xl cursor-pointer"
-                      aria-label="Previous photo"
-                    >
-                      <ChevronLeft size={24} />
-                    </button>
-                    <button
-                      onClick={nextPhoto}
-                      className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-950/70 hover:bg-emerald-600 text-white border border-white/20 flex items-center justify-center transition shadow-xl cursor-pointer"
-                      aria-label="Next photo"
-                    >
-                      <ChevronRight size={24} />
-                    </button>
-                  </>
-                )}
-              </div>
-
-              {/* Thumbnails Strip (Bottom) */}
-              {currentPhotos.length > 1 && (
-                <div className="p-3 bg-slate-950 border-t border-slate-800/80 overflow-x-auto flex items-center gap-2.5 justify-center">
-                  {currentPhotos.map((photoUrl, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setActivePhotoIndex(idx)}
-                      className={`relative w-16 h-12 rounded-xl overflow-hidden flex-shrink-0 transition-all cursor-pointer ${
-                        idx === activePhotoIndex
-                          ? 'ring-2 ring-emerald-400 scale-105 opacity-100'
-                          : 'opacity-50 hover:opacity-100 ring-1 ring-white/10'
-                      }`}
-                    >
-                      <img src={photoUrl} alt="" className="w-full h-full object-cover" />
-                    </button>
-                  ))}
-                </div>
-              )}
+          {/* Center Hero Heading & Subtitle */}
+          <div className="text-center max-w-3xl mx-auto space-y-2">
+            <div className="inline-flex items-center gap-1.5 bg-emerald-100/90 text-emerald-800 border border-emerald-200/80 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
+              <ImageIcon size={13} className="text-emerald-700" />
+              <span>{isBn ? 'ফটো অ্যালবাম ও গ্যালারি' : 'PHOTO ALBUMS & GALLERY'}</span>
             </div>
+            
+            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+              {isBn ? 'স্মরণীয় মুহূর্ত ও ফটো অ্যালবাম' : 'Memorable Moments & Photo Albums'}
+            </h1>
+            
+            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
+              {isBn 
+                ? 'আমাদের ক্রীড়া প্রতিযোগিতা, জয়ন্তী উৎসব, একাডেমিক সাফল্য ও ক্যাম্পাস জীবনের স্মরণীয় ফটো অ্যালবামগুলো উপভোগ করুন।' 
+                : 'Explore photo albums of our sports victories, jubilee celebrations, academic milestones, and campus life.'}
+            </p>
+            
+            <div className="w-12 h-1 bg-emerald-600 rounded-full mx-auto mt-2" />
+          </div>
+
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+
+        {/* 2. CATEGORY TABS & SEARCH BAR ROW (MATCHING REFERENCE IMAGE 2) */}
+        <div className="bg-white rounded-[24px] sm:rounded-[28px] p-4 sm:p-5 border border-slate-100 shadow-2xs space-y-4">
+          
+          {/* Top Row: Horizontal Tabs without scrollbar, cleanly wrapping */}
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 md:gap-2.5">
+            {categories.map((cat) => {
+              const Icon = cat.icon;
+              const isActive = activeCategory === cat.key;
+              return (
+                <button
+                  key={cat.key}
+                  onClick={() => handleCategoryChange(cat.key)}
+                  className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition cursor-pointer ${
+                    isActive
+                      ? 'bg-[#00704A] text-white shadow-xs'
+                      : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200/90 shadow-2xs'
+                  }`}
+                >
+                  <Icon size={14} className={isActive ? 'text-white' : 'text-slate-500'} />
+                  <span>{isBn ? cat.bn : cat.en}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Bottom Row: Right-Aligned Search Input Bar */}
+          <div className="flex justify-end pt-1">
+            <div className="relative w-full sm:w-80 md:w-96">
+              <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input
+                type="text"
+                placeholder={isBn ? 'অ্যালবামের নাম বা বিষয় খুঁজুন...' : 'Search albums by title...'}
+                value={searchTerm}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 bg-slate-50/70 border border-slate-200/80 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-500 rounded-xl sm:rounded-2xl text-xs sm:text-sm outline-none transition font-medium text-slate-800 shadow-2xs"
+              />
+            </div>
+          </div>
+
+        </div>
+
+        {/* 3. PHOTO ALBUM CARDS — EXACT STACKED DECK STYLE MATCHING HOME PAGE & MEDIA_1788170009483.PNG */}
+        {filteredAlbums.length === 0 ? (
+          <div className="bg-white rounded-[28px] p-12 text-center text-slate-400 font-semibold space-y-2 border border-slate-100">
+            <ImageIcon size={40} className="mx-auto text-slate-300 mb-2" />
+            <div>{isBn ? 'কোনো ফটো অ্যালবাম পাওয়া যায়নি' : 'No photo albums found'}</div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {paginatedAlbums.map((album) => {
+              const albumPhotos = getAlbumPhotos(album);
+              const totalCount = albumPhotos.length >= 15 ? albumPhotos.length : 16;
+              const titleText = isBn ? album.caption : (album.captionEn || album.caption);
+              const stack1 = albumPhotos[1] || '/hero_slider_2.jpg';
+              const stack2 = albumPhotos[2] || '/hero_slider_3.jpg';
+
+              return (
+                <div 
+                  key={album.id}
+                  onClick={() => openAlbum(album, 0)}
+                  className="bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between cursor-pointer"
+                >
+                  {/* Stacked Photo Deck Container matching Home Page 100% */}
+                  <div className="relative w-full h-40 sm:h-44 mb-4 flex items-center justify-center pt-2">
+                    {/* Layer 2 (Bottom Stack, Tilted Left) */}
+                    <div className="absolute w-[88%] h-32 sm:h-36 bg-slate-200 rounded-2xl overflow-hidden border-2 border-white shadow-sm transform -rotate-6 top-1 origin-top opacity-70 group-hover:-rotate-8 transition-transform pointer-events-none">
+                      <img src={stack2} alt="" className="w-full h-full object-cover" />
+                    </div>
+                    {/* Layer 1 (Middle Stack, Tilted Right) */}
+                    <div className="absolute w-[92%] h-34 sm:h-38 bg-slate-100 rounded-2xl overflow-hidden border-2 border-white shadow-md transform rotate-6 top-1.5 origin-top opacity-85 group-hover:rotate-8 transition-transform pointer-events-none">
+                      <img src={stack1} alt="" className="w-full h-full object-cover" />
+                    </div>
+                    {/* Front Main Photo Card */}
+                    <div className="relative w-[96%] h-36 sm:h-40 bg-white rounded-2xl overflow-hidden border-2 border-white shadow-md z-10">
+                      <img 
+                        src={album.url} 
+                        alt={titleText} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      />
+                      {/* Small Green Gallery Icon Badge on bottom-left */}
+                      <div className="absolute bottom-2 left-2 w-7 h-7 rounded-lg bg-white/95 text-emerald-700 flex items-center justify-center shadow-md">
+                        <ImageIcon size={14} />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div>
+                    <h4 className="font-bold text-slate-900 text-sm leading-snug line-clamp-2 mb-2 group-hover:text-emerald-700 transition-colors">
+                      {titleText}
+                    </h4>
+                    
+                    <div className="flex items-center gap-2 text-xs font-bold text-emerald-700 mb-1">
+                      <span>{formatCardDate(album.date)}</span>
+                    </div>
+
+                    <div className="flex items-center gap-1 text-[11px] text-slate-400 font-medium">
+                      <Clock size={12} />
+                      <span>{isBn ? `${toBanglaNum(totalCount)} টি ছবি` : `${totalCount} Photos`}</span>
+                    </div>
+                  </div>
+
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* 4. DYNAMIC PAGINATION CONTROLS (ONLY REAL PAGES) */}
+        {totalPages > 1 && (
+          <div className="pt-8 flex items-center justify-center gap-2 select-none">
+            <button 
+              disabled={currentPage === 1}
+              onClick={() => {
+                setCurrentPage(prev => Math.max(prev - 1, 1));
+                window.scrollTo({ top: 250, behavior: 'smooth' });
+              }}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition font-bold shadow-2xs cursor-pointer"
+            >
+              <ChevronLeft size={16} />
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => {
+                  setCurrentPage(page);
+                  window.scrollTo({ top: 250, behavior: 'smooth' });
+                }}
+                className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl font-bold text-xs sm:text-sm transition shadow-2xs cursor-pointer ${
+                  currentPage === page
+                    ? 'bg-[#00704A] text-white shadow-xs'
+                    : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
+                }`}
+              >
+                {isBn ? toBanglaNum(page) : page}
+              </button>
+            ))}
+
+            <button 
+              disabled={currentPage === totalPages}
+              onClick={() => {
+                setCurrentPage(prev => Math.min(prev + 1, totalPages));
+                window.scrollTo({ top: 250, behavior: 'smooth' });
+              }}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition font-bold shadow-2xs cursor-pointer"
+            >
+              <ChevronRight size={16} />
+            </button>
           </div>
         )}
 
       </div>
+
+      {/* 5. INTERACTIVE MULTI-PHOTO ALBUM LIGHTBOX MODAL (MATCHING REFERENCE IMAGE 1 100%) */}
+      {selectedAlbum && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8 bg-black/60 backdrop-blur-xs animate-fade-in" 
+          onClick={() => setSelectedAlbum(null)}
+        >
+          <div 
+            className="bg-white rounded-3xl max-w-4xl w-full p-5 sm:p-7 md:p-8 shadow-2xl relative border border-slate-100 flex flex-col max-h-[95vh] overflow-y-auto" 
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Top Close Button */}
+            <button 
+              onClick={() => setSelectedAlbum(null)} 
+              className="absolute top-5 right-5 sm:top-7 sm:right-7 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100/90 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition cursor-pointer z-20"
+              aria-label="Close modal"
+            >
+              <X size={18} />
+            </button>
+
+            {/* Header Info */}
+            <div className="pr-12">
+              <div className="flex items-center gap-2.5">
+                <span className="bg-emerald-100/80 text-emerald-800 border border-emerald-200/80 px-2.5 py-0.5 rounded-md text-[11px] font-black uppercase tracking-wider">
+                  {(selectedAlbum.category || 'ACADEMIC').toUpperCase()}
+                </span>
+                <span className="text-xs font-semibold text-slate-500">
+                  {isBn 
+                    ? `ছবি ${toBanglaNum(activePhotoIndex + 1)} / ${toBanglaNum(currentPhotos.length)}` 
+                    : `Photo ${activePhotoIndex + 1} of ${currentPhotos.length}`}
+                </span>
+              </div>
+
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mt-2 tracking-tight">
+                {isBn ? selectedAlbum.caption : (selectedAlbum.captionEn || selectedAlbum.caption)}
+              </h2>
+
+              <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1 leading-relaxed">
+                {isBn 
+                  ? 'আমাদের শিক্ষার্থীদের মেধা বিকাশ, উদ্ভাবনী কার্যক্রম ও প্রাতিষ্ঠানিক স্মরণীয় মুহূর্ত।'
+                  : 'Students collaborating and learning together in the campus activities.'}
+              </p>
+            </div>
+
+            {/* Main Photo View with Expand & Arrows */}
+            <div className="relative mt-5 aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-950 shadow-sm flex items-center justify-center">
+              <img 
+                src={currentPhotos[activePhotoIndex]} 
+                alt={selectedAlbum.caption} 
+                className="w-full h-full object-cover select-none transition-all duration-300"
+              />
+
+              {/* Expand Button */}
+              <button
+                onClick={() => {
+                  window.open(currentPhotos[activePhotoIndex], '_blank');
+                }}
+                className="absolute top-3.5 right-3.5 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-md border border-white/20 transition cursor-pointer"
+              >
+                <Maximize2 size={13} />
+                <span>{isBn ? 'পূর্ণাঙ্গ' : 'Expand'}</span>
+              </button>
+
+              {/* Prev Arrow Button */}
+              {currentPhotos.length > 1 && (
+                <button
+                  onClick={prevPhoto}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-slate-800 shadow-lg flex items-center justify-center hover:bg-slate-50 hover:scale-105 transition cursor-pointer"
+                  aria-label="Previous photo"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+              )}
+
+              {/* Next Arrow Button */}
+              {currentPhotos.length > 1 && (
+                <button
+                  onClick={nextPhoto}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-slate-800 shadow-lg flex items-center justify-center hover:bg-slate-50 hover:scale-105 transition cursor-pointer"
+                  aria-label="Next photo"
+                >
+                  <ChevronRight size={20} />
+                </button>
+              )}
+            </div>
+
+            {/* Bottom Thumbnails Strip */}
+            {currentPhotos.length > 1 && (
+              <div className="mt-5 flex items-center justify-center gap-3 overflow-x-auto pb-1 scrollbar-none">
+                {currentPhotos.map((photoUrl, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActivePhotoIndex(idx)}
+                    className={`relative w-16 h-12 sm:w-20 sm:h-14 rounded-xl overflow-hidden cursor-pointer transition flex-shrink-0 border-2 ${
+                      idx === activePhotoIndex
+                        ? 'border-emerald-700 ring-2 ring-emerald-700/20 scale-105 shadow-sm opacity-100'
+                        : 'border-transparent opacity-60 hover:opacity-100 hover:border-slate-300'
+                    }`}
+                  >
+                    <img src={photoUrl} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
+
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

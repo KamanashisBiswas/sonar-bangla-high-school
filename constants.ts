@@ -334,7 +334,8 @@ export const GALLERY_IMAGES: EventImage[] = [
   { 
     id: '1', 
     url: '/hero_slider.jpg', 
-    caption: 'আন্তঃস্কুল ভলিবল ও বার্ষিক ক্রীড়া চ্যাম্পিয়নশিপ ২০২৫', 
+    caption: 'বার্ষিক ক্রীড়া ও সাংস্কৃতিক প্রতিযোগিতা ২০২৫', 
+    captionEn: 'Annual Sports & Cultural Program 2025', 
     date: '2025-02-18', 
     category: 'Sports',
     photos: [
@@ -342,44 +343,56 @@ export const GALLERY_IMAGES: EventImage[] = [
       '/hero_slider_2.jpg',
       'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg',
       'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=1600&fit=crop&q=85',
-      'https://images.unsplash.com/photo-1544717305-2782549b5136?w=1200&fit=crop&q=80'
+      'https://images.unsplash.com/photo-1544717305-2782549b5136?w=1200&fit=crop&q=80',
+      'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg',
+      'https://soshgskhulna.edu.bd/media/163/P.sir...jpg',
+      '/hero_slider_3.jpg'
     ]
   },
   { 
     id: '2', 
     url: '/hero_slider_2.jpg', 
-    caption: 'জয়ন্তী ২০২৬ — ক্রীড়া, সহশিক্ষা ও মেধা মূল্যায়ন উৎসব', 
-    date: '2026-01-20', 
-    category: 'Jayanti',
+    caption: 'বিজ্ঞান মেলা ও আইসিটি উদ্ভাবনী প্রদর্শনী ২০২৫', 
+    captionEn: 'Science Fair & Exhibition', 
+    date: '2025-01-20', 
+    category: 'Academic',
     photos: [
       '/hero_slider_2.jpg',
       '/hero_slider_3.jpg',
       '/hero_slider.jpg',
       'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg',
-      'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&fit=crop&q=80'
+      'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&fit=crop&q=80',
+      'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg',
+      'https://soshgskhulna.edu.bd/media/180/Picture_PP.jpg'
     ]
   },
   { 
     id: '3', 
     url: '/hero_slider_3.jpg', 
-    caption: 'জয়ন্তী ২০২৬ — শিক্ষা, মানবতা ও ভবিষ্যৎ সম্মাননা স্মারক প্রদান', 
-    date: '2026-01-22', 
+    caption: 'বার্ষিক পুরস্কার বিতরণ ও কৃতি শিক্ষার্থী সংবর্ধনা ২০২৫', 
+    captionEn: 'Prize Giving Ceremony 2025', 
+    date: '2025-01-22', 
     category: 'Leadership',
     photos: [
       '/hero_slider_3.jpg',
+      '/hero_slider_2.jpg',
+      '/hero_slider.jpg',
       'https://soshgskhulna.edu.bd/media/163/P.sir...jpg',
       'https://soshgskhulna.edu.bd/media/180/Picture_PP.jpg',
-      '/hero_slider_2.jpg',
-      'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=1200&fit=crop&q=80'
+      'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=1200&fit=crop&q=80',
+      'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg'
     ]
   },
   { 
     id: '4', 
-    url: 'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg', 
-    caption: 'এস ও এস হারম্যান মেইনার স্কুল খুলনা — সুদৃশ্য মূল একাডেমি ও সবুজ ক্যাম্পাস', 
-    date: '2025-01-10', 
-    category: 'Campus',
+    url: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=1600&fit=crop&q=85', 
+    caption: 'শ্রেণিকক্ষের নিয়মিত পাঠদান ও শিক্ষা কার্যক্রম', 
+    captionEn: 'Classroom Activities', 
+    date: '2025-01-15', 
+    category: 'Academic',
     photos: [
+      'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=1600&fit=crop&q=85',
+      '/hero_slider.jpg',
       'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg',
       'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg',
       'https://images.unsplash.com/photo-1562774053-701939374585?w=1200&fit=crop&q=80',
@@ -388,11 +401,13 @@ export const GALLERY_IMAGES: EventImage[] = [
   },
   { 
     id: '5', 
-    url: 'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg', 
-    caption: 'বিদ্যালয় প্রাঙ্গণ ও শিক্ষার্থীদের সুশৃঙ্খল প্রাত্যহিক সমাবেশ', 
+    url: 'https://soshgskhulna.edu.bd/media/180/Picture_PP.jpg', 
+    caption: 'প্রাত্যহিক সমাবেশ ও বিশেষ প্রাতিষ্ঠানিক আয়োজন', 
+    captionEn: 'Assembly Programs & Special Events', 
     date: '2025-01-15', 
     category: 'Assembly',
     photos: [
+      'https://soshgskhulna.edu.bd/media/180/Picture_PP.jpg',
       'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg',
       '/hero_slider.jpg',
       'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&fit=crop&q=80',
@@ -401,17 +416,45 @@ export const GALLERY_IMAGES: EventImage[] = [
   },
   { 
     id: '6', 
-    url: 'https://soshgskhulna.edu.bd/media/155/Slider-6.jpg', 
-    caption: 'স্মার্ট মাল্টিমিডিয়া ক্লাসরুম ও ব্যবহারিক বিজ্ঞান ল্যাব সেশন', 
-    date: '2025-02-21', 
-    category: 'Academic',
+    url: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=1200&fit=crop&q=80', 
+    caption: 'উন্মুক্ত প্রাঙ্গণে সাংস্কৃতিক উৎসব ও আনন্দমেলা', 
+    captionEn: 'Open Air Cultural Festival & Fair', 
+    date: '2025-01-18', 
+    category: 'Campus',
     photos: [
-      'https://soshgskhulna.edu.bd/media/155/Slider-6.jpg',
-      'https://images.unsplash.com/photo-1588072432836-e10032774350?w=1200&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&fit=crop&q=80'
+      'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=1200&fit=crop&q=80',
+      '/hero_slider.jpg',
+      '/hero_slider_2.jpg',
+      'https://soshgskhulna.edu.bd/media/158/Slider-3.jpeg'
     ]
   },
+  { 
+    id: '7', 
+    url: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&fit=crop&q=80', 
+    caption: 'কেন্দ্রীয় গ্রন্থাগার ও শিক্ষার্থীদের মুক্ত পাঠচক্র', 
+    captionEn: 'Central Library & Study Circles', 
+    date: '2025-01-12', 
+    category: 'Academic',
+    photos: [
+      'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&fit=crop&q=80',
+      'https://soshgskhulna.edu.bd/media/155/Slider-6.jpg',
+      'https://images.unsplash.com/photo-1588072432836-e10032774350?w=1200&fit=crop&q=80'
+    ]
+  },
+  { 
+    id: '8', 
+    url: 'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg', 
+    caption: 'ক্যাম্পাস জীবন — শিক্ষার্থীদের সহশিক্ষা ও দলগত সাফল্য', 
+    captionEn: "Campus Life – Students' Team Success", 
+    date: '2025-01-10', 
+    category: 'Campus',
+    photos: [
+      'https://soshgskhulna.edu.bd/media/157/Slider-4.jpeg',
+      '/hero_slider.jpg',
+      '/hero_slider_2.jpg',
+      '/hero_slider_3.jpg'
+    ]
+  }
 ];
 
 export const DOWNLOAD_ITEMS: DownloadItem[] = [

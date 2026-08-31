@@ -346,84 +346,49 @@ const Notices: React.FC = () => {
           )}
         </div>
 
-        {/* 4. PAGINATION CONTROLS (MATCHING REFERENCE IMAGE 100%) */}
-        <div className="flex items-center justify-center gap-1.5 sm:gap-2 pt-6">
-          <button 
-            disabled={currentPage === 1}
-            onClick={() => {
-              setCurrentPage(p => Math.max(1, p - 1));
-              window.scrollTo({ top: 250, behavior: 'smooth' });
-            }}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer text-xs font-bold transition shadow-2xs"
-          >
-            &lt;
-          </button>
+        {/* 4. DYNAMIC PAGINATION CONTROLS (ONLY REAL PAGES) */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-1.5 sm:gap-2 pt-6 select-none">
+            <button 
+              disabled={currentPage === 1}
+              onClick={() => {
+                setCurrentPage(p => Math.max(1, p - 1));
+                window.scrollTo({ top: 250, behavior: 'smooth' });
+              }}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer text-xs font-bold transition shadow-2xs"
+            >
+              &lt;
+            </button>
 
-          <button 
-            onClick={() => {
-              setCurrentPage(1);
-              window.scrollTo({ top: 250, behavior: 'smooth' });
-            }}
-            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-xs sm:text-sm font-bold cursor-pointer transition shadow-2xs ${
-              currentPage === 1
-                ? 'bg-[#00704A] text-white shadow-xs'
-                : 'bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-50'
-            }`}
-          >
-            {isBn ? '১' : '1'}
-          </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button 
+                key={page}
+                onClick={() => {
+                  setCurrentPage(page);
+                  window.scrollTo({ top: 250, behavior: 'smooth' });
+                }}
+                className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-xs sm:text-sm font-bold cursor-pointer transition shadow-2xs ${
+                  currentPage === page
+                    ? 'bg-[#00704A] text-white shadow-xs'
+                    : 'bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-50'
+                }`}
+              >
+                {isBn ? toBanglaNum(page) : page}
+              </button>
+            ))}
 
-          <button 
-            onClick={() => {
-              setCurrentPage(2);
-              window.scrollTo({ top: 250, behavior: 'smooth' });
-            }}
-            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-xs sm:text-sm font-bold cursor-pointer transition shadow-2xs ${
-              currentPage === 2
-                ? 'bg-[#00704A] text-white shadow-xs'
-                : 'bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-50'
-            }`}
-          >
-            {isBn ? '২' : '2'}
-          </button>
-
-          <button 
-            onClick={() => {
-              setCurrentPage(3);
-              window.scrollTo({ top: 250, behavior: 'smooth' });
-            }}
-            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-xs sm:text-sm font-bold cursor-pointer transition shadow-2xs ${
-              currentPage === 3
-                ? 'bg-[#00704A] text-white shadow-xs'
-                : 'bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-50'
-            }`}
-          >
-            {isBn ? '৩' : '3'}
-          </button>
-
-          <span className="px-1 text-slate-400 text-xs font-bold select-none">...</span>
-
-          <button 
-            onClick={() => {
-              setCurrentPage(2);
-              window.scrollTo({ top: 250, behavior: 'smooth' });
-            }}
-            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-700 hover:bg-slate-50 text-xs sm:text-sm font-bold cursor-pointer transition shadow-2xs`}
-          >
-            {isBn ? '১২' : '12'}
-          </button>
-
-          <button 
-            disabled={currentPage === 2 || currentPage === 12}
-            onClick={() => {
-              setCurrentPage(p => Math.min(2, p + 1));
-              window.scrollTo({ top: 250, behavior: 'smooth' });
-            }}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer text-xs font-bold transition shadow-2xs"
-          >
-            &gt;
-          </button>
-        </div>
+            <button 
+              disabled={currentPage === totalPages}
+              onClick={() => {
+                setCurrentPage(p => Math.min(totalPages, p + 1));
+                window.scrollTo({ top: 250, behavior: 'smooth' });
+              }}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer text-xs font-bold transition shadow-2xs"
+            >
+              &gt;
+            </button>
+          </div>
+        )}
 
       </div>
 
