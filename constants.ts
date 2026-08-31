@@ -415,9 +415,60 @@ export const GALLERY_IMAGES: EventImage[] = [
 ];
 
 export const DOWNLOAD_ITEMS: DownloadItem[] = [
-  { id: '1', title: 'ভর্তি ফরম ও আবেদন নির্দেশিকা ২০২৫', category: 'Form', date: '2025-01-05', size: '1.2 MB' },
-  { id: '2', title: 'একাডেমিক প্রসপেক্টাস ও কারিকুলাম', category: 'Prospectus', date: '2025-01-10', size: '3.5 MB' },
-  { id: '3', title: 'ক্লাস রুটিন ২০২৫ (Prep to Class X)', category: 'Routine', date: '2025-01-12', size: '500 KB' },
-  { id: '4', title: 'পাঠ্যসূচি (Syllabus) ও বুক লিস্ট', category: 'Syllabus', date: '2025-01-15', size: '2.1 MB' },
-  { id: '5', title: 'বার্ষিক ছুটির তালিকা ও একাডেমিক ক্যালেন্ডার ২০২৫', category: 'Routine', date: '2025-01-01', size: '250 KB' },
+  { 
+    id: '1', 
+    title: 'ভর্তি ফরম ও আবেদন নির্দেশিকা ২০২৫', 
+    titleEn: 'Admission Form & Guidelines 2025', 
+    category: 'Form', 
+    date: '2025-01-05', 
+    size: '1.2 MB' 
+  },
+  { 
+    id: '2', 
+    title: 'একাডেমিক প্রসপেক্টাস ও পাঠ্যক্রম', 
+    titleEn: 'Academic Prospectus & Curriculum', 
+    category: 'Prospectus', 
+    date: '2025-01-10', 
+    size: '3.5 MB' 
+  },
+  { 
+    id: '3', 
+    title: 'ক্লাস রুটিন ২০২৫ (Prep to Class X)', 
+    titleEn: 'Class Routine 2025 (Prep to Class X)', 
+    category: 'Routine', 
+    date: '2025-01-12', 
+    size: '500 KB' 
+  },
+  { 
+    id: '4', 
+    title: 'পাঠ্যসূচি (Syllabus) ও বুক লিস্ট', 
+    titleEn: 'Syllabus & Book List', 
+    category: 'Syllabus', 
+    date: '2025-01-15', 
+    size: '2.1 MB' 
+  },
+  { 
+    id: '5', 
+    title: 'বার্ষিক ছুটির তালিকা ও একাডেমিক ক্যালেন্ডার ২০২৫', 
+    titleEn: 'Holiday List & Academic Calendar 2025', 
+    category: 'Calendar', 
+    date: '2025-01-01', 
+    size: '250 KB' 
+  },
+  { 
+    id: '6', 
+    title: 'বার্ষিক বেতন ও পরীক্ষার ফি পরিশোধের সময়সূচী', 
+    titleEn: 'Annual Fee & Exam Fee Payment Schedule', 
+    category: 'General', 
+    date: '2025-01-08', 
+    size: '750 KB' 
+  },
+  { 
+    id: '7', 
+    title: 'নতুন শিক্ষার্থীদের ভর্তি তথ্য ও ইউনিফর্ম নির্দেশিকা', 
+    titleEn: 'New Student Admission Info & Uniform Guide', 
+    category: 'Form', 
+    date: '2025-01-03', 
+    size: '1.8 MB' 
+  }
 ];

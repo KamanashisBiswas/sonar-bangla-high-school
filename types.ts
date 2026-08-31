@@ -134,6 +134,7 @@ export interface EventImage {
 export interface DownloadItem {
   id: string;
   title: string;
+  titleEn?: string;
   category: string;
   date: string;
   size: string;
