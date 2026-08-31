@@ -478,18 +478,18 @@ const Students: React.FC = () => {
   return (
     <div className="bg-[#edf9f3] min-h-screen pb-16 text-slate-800">
       
-      {/* 1. HERO SECTION WITH CAMPUS ILLUSTRATION ON RIGHT */}
-      <div className="relative overflow-hidden pt-8 pb-10 sm:pt-10 sm:pb-12 mb-6">
-        
+      {/* 1. HERO SECTION (MATCHING ABOUT US / ADMINISTRATION STANDARD) */}
+      <div className="relative overflow-hidden pt-8 pb-10 sm:pt-10 sm:pb-12 mb-8">
         {/* Background School Linework Illustration on Right Side (Hidden on Mobile) */}
-        <div className="hidden md:flex absolute right-0 top-0 bottom-0 md:w-2/5 lg:w-1/3 pointer-events-none overflow-hidden select-none items-center justify-end">
+        <div className="hidden md:flex absolute right-0 top-0 bottom-0 md:w-3/5 lg:w-1/2 pointer-events-none overflow-hidden select-none items-center justify-end">
           <img 
             src="/campus_illustration.jpg" 
-            alt="School Campus Illustration"
-            className="w-full h-full object-cover object-right [mask-image:linear-gradient(to_right,transparent_0%,rgba(0,0,0,0.3)_25%,rgba(0,0,0,0.95)_55%,black_100%)] opacity-85 mix-blend-multiply"
+            alt="School Campus Architectural Linework Illustration"
+            className="w-full h-full object-cover object-right [mask-image:linear-gradient(to_right,transparent_0%,rgba(0,0,0,0.25)_20%,rgba(0,0,0,0.95)_45%,black_100%)] opacity-85 mix-blend-multiply"
           />
         </div>
 
+        {/* Hero Left Content Container */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Breadcrumb Navigation */}
@@ -504,24 +504,20 @@ const Students: React.FC = () => {
             </span>
           </div>
 
-          {/* Center Hero Heading & Subtitle */}
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <div className="inline-flex items-center gap-1.5 bg-emerald-100/90 text-emerald-800 border border-emerald-200/80 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
+          <div className="max-w-xl">
+            <div className="inline-flex items-center gap-1.5 bg-emerald-100/90 text-emerald-800 border border-emerald-200/80 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-4 shadow-2xs">
               <GraduationCap size={13} className="text-emerald-700" />
               <span>{language === 'bn' ? 'শিক্ষার্থী ডাটাবেস' : 'STUDENT DIRECTORY'}</span>
             </div>
-            
-            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-              {language === 'bn' ? 'শিক্ষার্থী ডাটাবেস' : 'Student Database & Directory'}
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight mb-2">
+              {language === 'bn' ? 'শিক্ষার্থী ডাটাবেস ও প্রোফাইল' : 'Student Database & Directory'}
             </h1>
-            
-            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-lg mx-auto">
+            <div className="w-12 h-1 bg-emerald-600 rounded-full mb-4" />
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-normal">
               {language === 'bn' 
-                ? 'এস ও এস হারম্যান মেইনার স্কুল খুলনার শিক্ষার্থীদের তালিকা ও তথ্য।' 
+                ? 'এস ও এস হারম্যান মেইনার স্কুল খুলনার শিক্ষার্থীদের পূর্ণাঙ্গ তথ্য ও একাডেমিক প্রোফাইল।' 
                 : 'Complete academic database and student records of SOS Hermann Gmeiner School Khulna.'}
             </p>
-            
-            <div className="w-12 h-1 bg-emerald-600 rounded-full mx-auto mt-2" />
           </div>
 
         </div>
