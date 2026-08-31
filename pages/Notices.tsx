@@ -427,75 +427,141 @@ const Notices: React.FC = () => {
 
       </div>
 
-      {/* 5. NOTICE DETAILS MODAL WITH OFFICIAL PRINT BUTTON */}
-      {selectedNotice && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200"
-          onClick={() => setSelectedNotice(null)}
-        >
+      {/* 5. NOTICE DETAILS MODAL (100% MOBILE RESPONSIVE & MATCHING REFERENCE IMAGE) */}
+      {selectedNotice && (() => {
+        const titleText = isBn ? selectedNotice.title : (selectedNotice.titleEn || NOTICE_EN_MAP[selectedNotice.title] || selectedNotice.title);
+        const day = selectedNotice.date.split('-')[2] || '28';
+        const monthNum = parseInt(selectedNotice.date.split('-')[1] || '07', 10);
+        const year = selectedNotice.date.split('-')[0] || '2025';
+        const fullBnMonths = ['', 'জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
+        const fullEnMonths = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const formattedDate = isBn 
+          ? `${toBanglaNum(day)} ${fullBnMonths[monthNum]} ${toBanglaNum(year)}`
+          : `${day} ${fullEnMonths[monthNum]} ${year}`;
+
+        const isHolidayNotice = selectedNotice.id === '1' || selectedNotice.title.includes('গ্রীষ্মকালীন') || selectedNotice.title.includes('ছুটি');
+
+        return (
           <div 
-            className="bg-white rounded-[32px] max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative space-y-5"
-            onClick={e => e.stopPropagation()}
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto"
+            onClick={() => setSelectedNotice(null)}
           >
-            {/* Modal Close Button */}
-            <button 
-              onClick={() => setSelectedNotice(null)} 
-              className="absolute top-6 right-6 p-2 rounded-xl bg-slate-100 text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition cursor-pointer"
+            <div 
+              className="bg-white rounded-[28px] sm:rounded-[36px] max-w-2xl w-full p-5 sm:p-8 md:p-9 shadow-2xl border border-slate-100 relative space-y-4 my-auto animate-in zoom-in-95 duration-200"
+              onClick={e => e.stopPropagation()}
             >
-              <X size={18} />
-            </button>
+              {/* Circular Close Button Pinned to Top Right */}
+              <button 
+                onClick={() => setSelectedNotice(null)} 
+                className="absolute top-4 right-4 sm:top-7 sm:right-7 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition flex items-center justify-center cursor-pointer z-10"
+              >
+                <X size={18} />
+              </button>
 
-            {/* Header / Type / Date */}
-            <div className="flex items-center gap-3">
-              <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-xl text-xs font-black uppercase">
-                {selectedNotice.type}
-              </span>
-              <span className="text-xs text-slate-400 font-bold flex items-center gap-1">
-                <Calendar size={13} />
-                <span>{toBanglaNum(selectedNotice.date.split('-').reverse().join('/'))}</span>
-              </span>
-            </div>
+              {/* Top Header Row: Icon + Pill Tag + Date */}
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 pr-10 sm:pr-12">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#eaf7f0] text-[#00704A] border border-[#c6f0dc] flex items-center justify-center flex-shrink-0 shadow-2xs">
+                  {selectedNotice.type === 'Exam' ? <FileText size={18} /> :
+                   selectedNotice.type === 'Admission' ? <GraduationCap size={18} /> :
+                   selectedNotice.type === 'Event' ? <Calendar size={18} /> :
+                   <Megaphone size={18} />}
+                </div>
 
-            {/* Notice Title */}
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 leading-snug">
-              {isBn ? selectedNotice.title : (selectedNotice.titleEn || NOTICE_EN_MAP[selectedNotice.title] || selectedNotice.title)}
-            </h2>
+                <span className="bg-[#eaf7f0] text-[#00704A] border border-[#c6f0dc] px-3 py-1 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider">
+                  {selectedNotice.type}
+                </span>
 
-            {/* Notice Content */}
-            <div className="bg-slate-50/80 p-5 sm:p-6 rounded-2xl border border-slate-100 text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line max-h-80 overflow-y-auto">
-              {isBn 
-                ? (selectedNotice.content || 'উক্ত নোটিশের সকল শিক্ষক, শিক্ষার্থী ও অভিভাবকবৃন্দকে যথাযথ নির্দেশনা অনুসরণের জন্য অনুরোধ জানানো যাচ্ছে।')
-                : (selectedNotice.contentEn || selectedNotice.content || 'All concerned teachers, students, and guardians are requested to follow the circular accordingly.')
-              }
-            </div>
-
-            {/* Actions Footer */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-slate-100">
-              <div className="text-[11px] text-slate-400 font-medium">
-                {isBn ? `স্মারক: এসওএস/খুলনা/বিজ্ঞপ্তি/${selectedNotice.id}` : `Memo: SOS/KHULNA/NOTICE/${selectedNotice.id}`}
+                <span className="text-[11px] sm:text-sm font-semibold text-slate-500 flex items-center gap-1.5 whitespace-nowrap">
+                  <Calendar size={13} className="text-slate-400" />
+                  <span>{formattedDate}</span>
+                </span>
               </div>
 
-              <div className="flex items-center gap-2">
-                <button 
-                  onClick={() => handlePrintNotice(selectedNotice)}
-                  className="bg-[#00704A] hover:bg-[#005a3c] text-white px-5 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95"
-                >
-                  <Printer size={14} />
-                  <span>{isBn ? 'নোটিশ প্রিন্ট / পিডিএফ' : 'Print Official Notice'}</span>
-                </button>
-
-                <button 
-                  onClick={() => setSelectedNotice(null)} 
-                  className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs transition cursor-pointer"
-                >
-                  {isBn ? 'বন্ধ করুন' : 'Close'}
-                </button>
+              {/* Title & Green Accent Underline */}
+              <div className="pt-1">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 leading-snug tracking-tight">
+                  {titleText}
+                </h2>
+                <div className="w-12 sm:w-14 h-1 bg-[#00704A] rounded-full mt-2 sm:mt-2.5" />
               </div>
-            </div>
 
+              {/* Notice Body Box */}
+              <div className="bg-slate-50/80 border border-slate-200/70 rounded-2xl sm:rounded-3xl p-4 sm:p-6 space-y-3 sm:space-y-4">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#eaf7f0] text-[#00704A] border border-[#c6f0dc] flex items-center justify-center flex-shrink-0 shadow-2xs mt-0.5">
+                    <FileText size={18} />
+                  </div>
+
+                  <div className="space-y-2.5 sm:space-y-3 flex-1 text-xs sm:text-sm md:text-base text-slate-700 leading-relaxed">
+                    <p>
+                      {isBn ? (
+                        <>
+                          এতদ্বারা <strong className="font-extrabold text-[#00704A]">এস ও এস হারম্যান মেইনার স্কুল খুলনা</strong> এর সকল শিক্ষক, শিক্ষার্থী ও অভিভাবকদের অবগতির জন্য জানানো যাচ্ছে যে,
+                        </>
+                      ) : (
+                        <>
+                          This is to inform all teachers, students, and guardians of <strong className="font-extrabold text-[#00704A]">SOS Hermann Gmeiner School Khulna</strong> that
+                        </>
+                      )}
+                    </p>
+
+                    {isHolidayNotice ? (
+                      <>
+                        <p>{isBn ? 'বিদ্যালয়ের সকল শ্রেণি কার্যক্রম বন্ধ থাকবে:' : 'all academic classes will remain closed from'}</p>
+                        
+                        <div className="py-1">
+                          <div className="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 py-2.5 sm:py-3 px-3.5 sm:px-6 bg-[#eaf7f0] border border-[#bbf7d0] rounded-xl sm:rounded-2xl text-slate-900 font-extrabold text-xs sm:text-sm md:text-base shadow-2xs whitespace-nowrap">
+                            <Calendar size={16} className="text-[#00704A] flex-shrink-0" />
+                            <span className="font-mono">{isBn ? '২৯-০৭-২০২৫' : '29-07-2025'}</span>
+                            <span className="text-slate-400 font-normal">—</span>
+                            <span className="font-mono">{isBn ? '০৭-০৮-২০২৫' : '07-08-2025'}</span>
+                          </div>
+                        </div>
+
+                        <p>{isBn ? 'গ্রীষ্মকালীন অবকাশ ও ছুটির জন্য।' : 'for summer vacation.'}</p>
+                      </>
+                    ) : (
+                      <p className="whitespace-pre-line text-slate-700">
+                        {isBn 
+                          ? (selectedNotice.content || 'উক্ত নোটিশের সকল শিক্ষক, শিক্ষার্থী ও অভিভাবকবৃন্দকে যথাযথ নির্দেশনা অনুসরণের জন্য অনুরোধ জানানো যাচ্ছে।')
+                          : (selectedNotice.contentEn || selectedNotice.content || 'All concerned teachers, students, and guardians are requested to follow the circular accordingly.')}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 sm:pt-3">
+                <div className="text-[11px] sm:text-sm text-slate-500 font-medium flex items-center gap-1.5">
+                  <FileText size={14} className="text-slate-400" />
+                  <span>
+                    {isBn ? `স্মারক: এসওএস/খুলনা/বিজ্ঞপ্তি/${selectedNotice.id}` : `Memo: SOS/KHULNA/NOTICE/${selectedNotice.id}`}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2 w-full sm:w-auto">
+                  <button 
+                    onClick={() => handlePrintNotice(selectedNotice)}
+                    className="flex-1 sm:flex-initial bg-[#00704A] hover:bg-[#005a3c] text-white px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition active:scale-95 cursor-pointer"
+                  >
+                    <Printer size={15} />
+                    <span>{isBn ? 'নোটিশ প্রিন্ট করুন' : 'Print Official Notice'}</span>
+                  </button>
+
+                  <button 
+                    onClick={() => setSelectedNotice(null)} 
+                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition cursor-pointer"
+                  >
+                    {isBn ? 'বন্ধ করুন' : 'Close'}
+                  </button>
+                </div>
+              </div>
+
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
     </div>
   );
