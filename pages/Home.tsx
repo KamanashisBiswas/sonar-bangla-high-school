@@ -57,8 +57,6 @@ import {
   School,
 } from "lucide-react";
 
-import head_teacher from "../public/head_teacher.jpeg";
-
 const NOTICE_EN_MAP: Record<string, string> = {
   "গ্রীষ্মকালীন অবকাশ ও ছুটির বিজ্ঞপ্তি ২০২৫":
     "Summer Vacation & Holiday Notice 2025",
@@ -889,7 +887,7 @@ const Home: React.FC = () => {
                   <div className="flex flex-col items-center flex-shrink-0 text-center">
                     <div className="w-28 h-34 sm:w-32 sm:h-40 rounded-2xl overflow-hidden shadow-sm border-2 border-slate-100 mb-2.5 bg-slate-100">
                       <img
-                        src={head_teacher}
+                        src={"/head_teacher.jpeg"}
                         alt={settings.headmasterName || "ইন্দ্রজিৎ কুমার মন্ডল"}
                         className="w-full h-full object-cover"
                       />
