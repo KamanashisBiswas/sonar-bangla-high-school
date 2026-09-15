@@ -476,7 +476,7 @@ export const DOWNLOAD_ITEMS: DownloadItem[] = [
   },
   { 
     id: '3', 
-    title: 'ক্লাস রুটিন ২০২৫ (Prep to Class X)', 
+    title: 'ক্লাস রুটিন ২০২৫ (প্রেপ হতে ১০ম শ্রেণি)', 
     titleEn: 'Class Routine 2025 (Prep to Class X)', 
     category: 'Routine', 
     date: '2025-01-12', 
@@ -484,7 +484,7 @@ export const DOWNLOAD_ITEMS: DownloadItem[] = [
   },
   { 
     id: '4', 
-    title: 'পাঠ্যসূচি (Syllabus) ও বুক লিস্ট', 
+    title: 'পাঠ্যসূচি ও অনুমোদিত বইয়ের তালিকা', 
     titleEn: 'Syllabus & Book List', 
     category: 'Syllabus', 
     date: '2025-01-15', 
@@ -508,7 +508,7 @@ export const DOWNLOAD_ITEMS: DownloadItem[] = [
   },
   { 
     id: '7', 
-    title: 'নতুন শিক্ষার্থীদের ভর্তি তথ্য ও ইউনিফর্ম নির্দেশিকা', 
+    title: 'নতুন শিক্ষার্থীদের ভর্তি তথ্য ও পোশাক নির্দেশিকা', 
     titleEn: 'New Student Admission Info & Uniform Guide', 
     category: 'Form', 
     date: '2025-01-03', 

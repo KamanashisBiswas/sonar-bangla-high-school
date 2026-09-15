@@ -39,12 +39,20 @@ const Downloads: React.FC = () => {
 
   // Get localized category label
   const getCategoryLabel = (category: string) => {
-    const catLower = category.toLowerCase();
-    if (!isBn) return category;
+    const catLower = (category || '').toLowerCase();
+    if (!isBn) {
+      if (catLower === 'form') return 'Form';
+      if (catLower === 'prospectus') return 'Prospectus';
+      if (catLower === 'routine') return 'Routine';
+      if (catLower === 'syllabus') return 'Syllabus';
+      if (catLower === 'calendar') return 'Calendar';
+      if (catLower === 'general') return 'General';
+      return category;
+    }
     if (catLower === 'form') return 'ফরম';
     if (catLower === 'prospectus') return 'প্রসপেক্টাস';
     if (catLower === 'routine') return 'রুটিন';
-    if (catLower === 'syllabus') return 'সিলেবাস';
+    if (catLower === 'syllabus') return 'পাঠ্যসূচি';
     if (catLower === 'calendar') return 'ক্যালেন্ডার';
     if (catLower === 'general') return 'সাধারণ';
     return category;
@@ -674,7 +682,7 @@ const Downloads: React.FC = () => {
               <thead>
                 <tr className="bg-slate-50/70 border-b border-slate-100 text-[11px] font-black text-slate-400 uppercase tracking-wider">
                   <th className="py-4 px-5 sm:px-6">{isBn ? 'ফাইলের শিরোনাম' : 'FILE TITLE'}</th>
-                  <th className="py-4 px-4 text-center">{isBn ? 'বিভাগ' : 'CATEGORY'}</th>
+                  <th className="py-4 px-4 text-center">{isBn ? 'ক্যাটাগরি' : 'CATEGORY'}</th>
                   <th className="py-4 px-4 text-center">{isBn ? 'তারিখ' : 'DATE'}</th>
                   <th className="py-4 px-4 text-center">{isBn ? 'সাইজ' : 'SIZE'}</th>
                   <th className="py-4 px-5 sm:px-6 text-right">{isBn ? 'অ্যাকশন' : 'ACTION'}</th>
@@ -699,8 +707,7 @@ const Downloads: React.FC = () => {
                     if (categoryLower === 'routine' || categoryLower === 'calendar') badgeClass = 'bg-[#fef3c7] text-[#92400e] border-[#fde68a]';
                     if (categoryLower === 'syllabus') badgeClass = 'bg-[#f3e8ff] text-[#7e22ce] border-[#e9d5ff]';
 
-                    const primaryTitle = isBn ? item.title : (item.titleEn || item.title);
-                    const secondaryTitle = isBn ? (item.titleEn || item.title) : item.title;
+                    const itemTitle = isBn ? item.title : (item.titleEn || item.title);
 
                     return (
                       <motion.tr 
@@ -720,10 +727,7 @@ const Downloads: React.FC = () => {
 
                             <div>
                               <div className="font-extrabold text-slate-900 text-xs sm:text-sm group-hover:text-[#00704A] transition leading-snug">
-                                {primaryTitle}
-                              </div>
-                              <div className="text-[11px] text-slate-400 font-medium mt-0.5">
-                                {secondaryTitle}
+                                {itemTitle}
                               </div>
                             </div>
                           </div>
