@@ -95,7 +95,7 @@ const Home: React.FC = () => {
   const heroSlides = useMemo(
     () => [
       {
-        image: "/campus_illustration.jpg",
+        image: "/campus_main.png",
         title:
           language === "bn"
             ? "ভবিষ্যতের জন্য নির্মিত আমাদের আধুনিক ক্যাম্পাস"
@@ -109,7 +109,7 @@ const Home: React.FC = () => {
         link: "/gallery",
       },
       {
-        image: "/hero_slider_2.jpg",
+        image: "/campus_main2.png",
         title:
           language === "bn"
             ? "জয়ন্তী ২০২৬ — ক্রীড়া ও সহশিক্ষা কার্যক্রমে শিক্ষার্থীদের গৌরবময় অর্জন"
@@ -121,7 +121,7 @@ const Home: React.FC = () => {
         link: "/gallery",
       },
       {
-        image: "/hero_slider_4.jpg",
+        image: "/campus_main3.png",
         title:
           language === "bn"
             ? "জয়ন্তী ২০২৬ — শিক্ষা, মানবতা ও ভবিষ্যৎ গড়ার প্রত্যয়"
@@ -269,37 +269,25 @@ const Home: React.FC = () => {
               className="w-full h-full object-fill"
             />
 
-            {/* Text & Button Layer (Zero Dark Gradient Overlay) */}
+            {/* Bottom Gradient Scrim for crisp text legibility */}
+            <div className="absolute inset-x-0 bottom-0 h-44 sm:h-52 md:h-60 bg-gradient-to-t from-black/95 via-black/65 to-transparent pointer-events-none z-15" />
+
+            {/* Text Layer */}
             <div className="absolute inset-0 z-20 flex items-end pointer-events-none">
-              {/* Photo Description & Read More Button (No Card Box, Clean Typography with Text Shadow) */}
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-16 sm:pb-20 md:pb-24 lg:pb-28 pointer-events-auto">
-                <div className="max-w-2xl space-y-1.5 sm:space-y-2 animate-fade-in">
-                  {/* <span className="inline-block text-[11px] sm:text-xs font-bold text-emerald-300 uppercase tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
-                    {slide.category}
-                  </span> */}
-                  <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-snug text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] max-w-xl">
+              {/* Photo Title (Lowered comfortably with deep high-contrast text shadow) */}
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-10 sm:pb-12 md:pb-14 lg:pb-16 pointer-events-auto">
+                <div className="max-w-4xl sm:max-w-5xl pr-28 sm:pr-36 space-y-1.5 sm:space-y-2 animate-fade-in">
+                  <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-extrabold leading-snug text-white drop-shadow-[0_4px_16px_rgba(0,0,0,1)] [text-shadow:_0_2px_4px_rgba(0,0,0,1),_0_4px_12px_rgba(0,0,0,1),_0_6px_20px_rgba(0,0,0,1),_0_10px_32px_rgba(0,0,0,1)] truncate whitespace-nowrap">
                     {slide.title}
                   </h2>
-                  <div className="pt-1.5">
-                    <Link
-                      to="/gallery"
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold transition shadow-lg shadow-slate-950/60 hover:scale-105 transform inline-flex items-center gap-1.5 text-xs sm:text-sm cursor-pointer"
-                    >
-                      <ImageIcon size={16} />
-                      <span>
-                        {language === "bn" ? "ফটো গ্যালারি দেখুন" : "Read More"}
-                      </span>
-                      <ArrowRight size={15} />
-                    </Link>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         ))}
 
-        {/* Carousel Active Panel Indicators (Lifted Comfortably Above Floating Action Cards) */}
-        <div className="absolute bottom-16 sm:bottom-20 md:bottom-24 right-4 sm:right-6 lg:right-8 z-20 flex items-center gap-2 bg-slate-950/70 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/20 shadow-xl">
+        {/* Carousel Active Panel Indicators */}
+        <div className="absolute bottom-9 sm:bottom-11 md:bottom-12 lg:bottom-14 right-4 sm:right-6 lg:right-8 z-20 flex items-center gap-2 bg-slate-950/75 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/20 shadow-xl">
           {heroSlides.map((_, index) => (
             <button
               key={index}
@@ -321,7 +309,7 @@ const Home: React.FC = () => {
           {/* Card 1: Online Admission */}
           <Link
             to="/admission"
-            className="flex items-center gap-4 group p-3.5 sm:p-4 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-slate-200/90 hover:-translate-y-0.5 border border-transparent hover:border-slate-100 transition-all duration-300 cursor-pointer"
+            className="flex items-center gap-4 group p-3.5 sm:p-4 rounded-2xl border border-green-100 hover:bg-white hover:shadow-xl hover:shadow-slate-200/90 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
           >
             <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 shadow-xs">
               <Laptop size={24} />
@@ -341,7 +329,7 @@ const Home: React.FC = () => {
           {/* Card 2: Daily Class Schedule */}
           <Link
             to="/academic"
-            className="flex items-center gap-4 group p-3.5 sm:p-4 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-slate-200/90 hover:-translate-y-0.5 border border-transparent hover:border-slate-100 transition-all duration-300 md:pl-6 cursor-pointer"
+            className="flex items-center gap-4 group p-3.5 sm:p-4 rounded-2xl border border-green-100 hover:bg-white hover:shadow-xl hover:shadow-slate-200/90 hover:-translate-y-0.5 transition-all duration-300 md:pl-6 cursor-pointer"
           >
             <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 shadow-xs">
               <Calendar size={24} />
@@ -363,7 +351,7 @@ const Home: React.FC = () => {
           {/* Card 3: Contact & Help Desk */}
           <Link
             to="/contact"
-            className="flex items-center gap-4 group p-3.5 sm:p-4 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-slate-200/90 hover:-translate-y-0.5 border border-transparent hover:border-slate-100 transition-all duration-300 md:pl-6 cursor-pointer"
+            className="flex items-center gap-4 group p-3.5 sm:p-4 rounded-2xl border border-green-100 hover:bg-white hover:shadow-xl hover:shadow-slate-200/90 hover:-translate-y-0.5 transition-all duration-300 md:pl-6 cursor-pointer"
           >
             <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0 shadow-xs">
               <Headphones size={24} />
