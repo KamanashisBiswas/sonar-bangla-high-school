@@ -173,7 +173,7 @@ export const Faculty: React.FC = () => {
         </div>
 
         {/* Hero Content Container */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-5 sm:pt-6 pb-16 sm:pb-20 flex-1 flex flex-col justify-between">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-5 sm:pt-6 pb-20 sm:pb-24 flex-1 flex flex-col">
           {/* Breadcrumb Navigation */}
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
             <Link to="/" className="hover:text-emerald-800 flex items-center gap-1 transition-colors text-emerald-700">
@@ -185,20 +185,24 @@ export const Faculty: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-4 pt-6 sm:pt-8">
+          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
             {/* Pill Tag Badge */}
-            <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider shadow-2xs">
+            <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
+              <Users size={14} className="text-[#059669]" />
               <span>OUR EDUCATORS, OUR STRENGTH</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.06]">
+            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
               Faculty & Staff <br />
               Directory
             </h1>
 
+            {/* Short Green Accent Line Under Title */}
+            <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
+
             {/* Subtitle */}
-            <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-normal max-w-lg">
+            <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
               Meet our dedicated and experienced faculty and staff who inspire, guide and support our students towards a brighter future.
             </p>
 
@@ -236,16 +240,18 @@ export const Faculty: React.FC = () => {
             </div>
           </div>
 
-          {/* Floating Dark Green Quote Box on Bottom-Right of Hero Banner */}
-          <div className="hidden lg:block absolute bottom-12 right-6 sm:right-10 xl:right-16 max-w-[340px] bg-[#004d34]/95 backdrop-blur-md text-white p-4 sm:p-5 rounded-2xl shadow-2xl border border-emerald-500/30">
-            <div className="flex items-start gap-2.5">
-              <span className="text-2xl font-serif text-white/90 leading-none select-none">“</span>
+          {/* Floating White Quote Card on Bottom-Right */}
+          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
+            <div className="flex items-start gap-3">
+              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                “
+              </span>
               <div>
-                <p className="text-xs font-medium leading-snug text-emerald-50">
-                  “Great teachers inspire great minds.”
-                </p>
-                <p className="text-[11px] text-emerald-300 font-semibold mt-1.5">
-                  — SOS Hermann Gmeiner School Khulna
+                <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
+                  Education today for a brighter tomorrow
+                </h4>
+                <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
+                  — SOS Hermann Gmeiner School
                 </p>
               </div>
             </div>

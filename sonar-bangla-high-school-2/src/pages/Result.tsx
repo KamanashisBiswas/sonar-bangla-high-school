@@ -303,7 +303,7 @@ export const Result: React.FC = () => {
         </div>
 
         {/* Hero Content Container */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-5 sm:pt-6 pb-20 sm:pb-24 flex-1 flex flex-col justify-between">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-5 sm:pt-6 pb-20 sm:pb-24 flex-1 flex flex-col">
           {/* Breadcrumb Navigation */}
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
             <Link
@@ -325,7 +325,7 @@ export const Result: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3 pt-6 sm:pt-8">
+          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <BarChart3 size={15} />
@@ -347,7 +347,7 @@ export const Result: React.FC = () => {
             </p>
           </div>
 
-          {/* Floating White Quote Card on the Right (Matching reference mockup) */}
+          {/* Floating White Quote Card on the Right (Common across all pages) */}
           <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
             <div className="flex items-start gap-3">
               <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
@@ -355,9 +355,7 @@ export const Result: React.FC = () => {
               </span>
               <div>
                 <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  {activeTab === 'institute'
-                    ? 'Education today for a brighter tomorrow'
-                    : 'Education is the foundation of a brighter tomorrow.'}
+                  Education today for a brighter tomorrow
                 </h4>
                 <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
                   — SOS Hermann Gmeiner School

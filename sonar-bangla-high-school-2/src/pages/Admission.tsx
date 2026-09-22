@@ -113,7 +113,7 @@ export const Admission: React.FC = () => {
         </div>
 
         {/* Hero Content Container */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-5 sm:pt-6 pb-20 sm:pb-24 flex-1 flex flex-col justify-between">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-5 sm:pt-6 pb-20 sm:pb-24 flex-1 flex flex-col">
           {/* Breadcrumb Navigation */}
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
             <Link
@@ -134,8 +134,8 @@ export const Admission: React.FC = () => {
             <span className="text-slate-800 font-bold">Online Admission Portal</span>
           </div>
 
-          {/* Left Narrative Block (Pushed Down) */}
-          <div className="max-w-xl space-y-3 pt-10 sm:pt-14 lg:pt-16">
+          {/* Left Narrative Block */}
+          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <GraduationCap size={15} />

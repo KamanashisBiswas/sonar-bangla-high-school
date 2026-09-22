@@ -968,7 +968,7 @@ export const Students: React.FC = () => {
         </div>
 
         {/* Hero Content Container */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-5 sm:pt-6 pb-20 sm:pb-24 flex-1 flex flex-col justify-between">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-5 sm:pt-6 pb-20 sm:pb-24 flex-1 flex flex-col">
           {/* Breadcrumb Navigation */}
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
             <Link
@@ -983,7 +983,7 @@ export const Students: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3.5 pt-6 sm:pt-8">
+          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <GraduationCap size={15} />
@@ -997,15 +997,30 @@ export const Students: React.FC = () => {
             </h1>
 
             {/* Short Green Accent Line Under Title */}
-            <div className="w-12 h-1 bg-[#059669] rounded-full" />
+            <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
 
             {/* Subtitle */}
-            <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-normal max-w-lg">
-              Explore our students and their academic information. <br className="hidden sm:inline" />
-              Building bright minds for a better tomorrow.
+            <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
+              Explore our students and their academic information. Building bright minds for a better tomorrow.
             </p>
           </div>
 
+          {/* Floating White Quote Card on Bottom-Right */}
+          <div className="hidden lg:block absolute bottom-16 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
+            <div className="flex items-start gap-3">
+              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                “
+              </span>
+              <div>
+                <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
+                  Education today for a brighter tomorrow
+                </h4>
+                <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
+                  — SOS Hermann Gmeiner School
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
