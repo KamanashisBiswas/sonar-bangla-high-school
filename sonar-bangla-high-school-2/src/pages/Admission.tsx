@@ -77,11 +77,11 @@ export const Admission: React.FC = () => {
         {/* Full-bleed Two-Story Campus Background Photo */}
         <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
           <img
-            src="/campus_admission.png"
-            alt="SOS Hermann Gmeiner School Khulna Campus Building"
+            src="/campus_main.png"
+            alt="SOS Hermann Gmeiner School Khulna Campus"
             className="w-full h-full object-cover object-right"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = '/campus_main.png';
+              (e.target as HTMLImageElement).src = '/campus_main2.png';
             }}
           />
 
@@ -104,7 +104,7 @@ export const Admission: React.FC = () => {
           </div>
 
           {/* Decorative Subtle Botanical Watermark on Far Right */}
-          <div className="absolute right-0 bottom-6 w-48 h-72 opacity-[0.07] pointer-events-none text-emerald-800 rotate-45">
+          <div className="absolute right-0 bottom-10 w-44 h-72 opacity-[0.06] pointer-events-none text-emerald-800 rotate-45">
             <svg viewBox="0 0 200 350" fill="currentColor">
               <path d="M50 300 C20 220 30 140 100 80 C110 140 100 220 50 300 Z" />
               <path d="M120 250 C160 190 150 120 90 70 C100 130 110 190 120 250 Z" />
@@ -144,7 +144,8 @@ export const Admission: React.FC = () => {
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              Online Admission Portal
+              Online Admission <br />
+              Portal
             </h1>
 
             {/* Short Green Accent Line Under Title */}
@@ -155,48 +156,6 @@ export const Admission: React.FC = () => {
               Take the next step towards a brighter future. Complete your admission application easily,
               securely and from the comfort of your home.
             </p>
-
-            {/* 3 Value Chips underneath the subtitle (Matching media_1790107723010.jpg) */}
-            <div className="pt-3 flex flex-wrap items-center gap-4 sm:gap-6">
-              {/* Chip 1 */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100/90">
-                  <Users size={18} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-extrabold text-slate-900 leading-tight">
-                    Simple Process
-                  </h4>
-                  <p className="text-[11px] text-slate-500 font-medium">Fill up the form in minutes</p>
-                </div>
-              </div>
-
-              {/* Chip 2 */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100/90">
-                  <ShieldCheck size={18} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-extrabold text-slate-900 leading-tight">
-                    Secure & Confidential
-                  </h4>
-                  <p className="text-[11px] text-slate-500 font-medium">Your data is always protected</p>
-                </div>
-              </div>
-
-              {/* Chip 3 */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100/90">
-                  <Clock size={18} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-extrabold text-slate-900 leading-tight">
-                    Apply from Anywhere
-                  </h4>
-                  <p className="text-[11px] text-slate-500 font-medium">Anytime, anywhere</p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Floating White Quote Card on the Right (Matching media_1790107723010.jpg) */}

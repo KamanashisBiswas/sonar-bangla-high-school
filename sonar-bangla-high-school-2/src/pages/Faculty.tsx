@@ -205,39 +205,6 @@ export const Faculty: React.FC = () => {
             <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
               Meet our dedicated and experienced faculty and staff who inspire, guide and support our students towards a brighter future.
             </p>
-
-            {/* 3 Value Chips underneath the subtitle */}
-            <div className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4">
-              <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100/80">
-                  <Users size={18} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-black text-slate-900 leading-tight">Dedicated</h4>
-                  <p className="text-[11px] text-slate-500 font-medium">Educators</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100/80">
-                  <Award size={18} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-black text-slate-900 leading-tight">Student</h4>
-                  <p className="text-[11px] text-slate-500 font-medium">Centered Approach</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100/80">
-                  <GraduationCap size={18} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-black text-slate-900 leading-tight">Excellence</h4>
-                  <p className="text-[11px] text-slate-500 font-medium">in Education</p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Floating White Quote Card on Bottom-Right */}
