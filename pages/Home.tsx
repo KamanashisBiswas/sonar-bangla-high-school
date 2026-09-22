@@ -275,7 +275,7 @@ const Home: React.FC = () => {
             {/* Text Layer */}
             <div className="absolute inset-0 z-20 flex items-end pointer-events-none">
               {/* Photo Title (Lowered comfortably with deep high-contrast text shadow) */}
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-10 sm:pb-12 md:pb-14 lg:pb-16 pointer-events-auto">
+              <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full pb-10 sm:pb-12 md:pb-14 lg:pb-16 pointer-events-auto">
                 <div className="max-w-4xl sm:max-w-5xl pr-28 sm:pr-36 space-y-1.5 sm:space-y-2 animate-fade-in">
                   <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-extrabold leading-snug text-white drop-shadow-[0_4px_16px_rgba(0,0,0,1)] [text-shadow:_0_2px_4px_rgba(0,0,0,1),_0_4px_12px_rgba(0,0,0,1),_0_6px_20px_rgba(0,0,0,1),_0_10px_32px_rgba(0,0,0,1)] truncate whitespace-nowrap">
                     {slide.title}
@@ -304,7 +304,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* 3-Column Floating Quick Action Cards (Directly Below Carousel) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-8 md:-mt-10 relative z-30 mb-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-8 md:-mt-10 relative z-30 mb-6">
         <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl shadow-slate-200/70 border border-slate-100/90 p-3 sm:p-4 grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 md:divide-x md:divide-slate-200/70">
           {/* Card 1: Online Admission */}
           <Link
@@ -373,7 +373,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Main Content Body */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         {/* OUR CORE PILLARS & CAMPUS EXCELLENCE (Matching Latest Reference Mockup) */}
         <section className="mb-16 -mt-2 sm:-mt-4 relative z-10">
           {/* Section Header */}
@@ -1132,6 +1132,174 @@ const Home: React.FC = () => {
           </div>
         </ScrollReveal>
 
+        {/* INSTITUTIONAL CREDENTIALS & IMPACT DASHBOARD (Smart Modern Redesign) */}
+        <ScrollReveal duration={0.65} distance={25} className="mb-16">
+          <div className="relative overflow-hidden bg-gradient-to-br from-[#022c22] via-[#044e3a] to-[#033a2c] rounded-3xl p-6 sm:p-8 lg:p-9 shadow-2xl shadow-emerald-950/25 border border-emerald-600/30">
+            {/* Ambient Background Accents */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400/90 to-transparent" />
+            <div className="absolute -right-24 -top-24 w-80 h-80 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -left-24 -bottom-24 w-80 h-80 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
+
+            {/* Smart Dashboard Header */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-7 border-b border-white/10 relative z-10">
+              <div className="flex items-start sm:items-center gap-3.5">
+                <div className="w-11 h-11 rounded-2xl bg-amber-400 text-emerald-950 flex items-center justify-center flex-shrink-0 shadow-md shadow-amber-400/20 font-black">
+                  <Sparkles size={22} />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="inline-flex items-center gap-1.5 bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      {language === "bn" ? "প্রাতিষ্ঠানিক পরিসংখ্যান" : "INSTITUTIONAL METRICS"}
+                    </span>
+                    <span className="hidden sm:inline-block text-[11px] text-emerald-200/60 font-medium">
+                      • {language === "bn" ? "খুলনা" : "Khulna, BD"}
+                    </span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-black text-white tracking-tight">
+                    {language === "bn"
+                      ? "আমাদের গৌরবময় ঐতিহ্য ও প্রাতিষ্ঠানিক পরিসংখ্যান"
+                      : "Institutional Legacy & Key Milestones"}
+                  </h3>
+                </div>
+              </div>
+
+              {/* Verified Board Affiliation Tag */}
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 px-3.5 py-2 rounded-xl text-xs font-bold text-emerald-100 shadow-sm self-start md:self-auto">
+                <Award size={16} className="text-amber-300 flex-shrink-0" />
+                <span>
+                  {language === "bn"
+                    ? "যশোর শিক্ষা বোর্ড নিবন্ধিত কোড: ১১৭১৮৮"
+                    : "Jessore Board Affiliated • EIIN: 117188"}
+                </span>
+              </div>
+            </div>
+
+            {/* 5 Smart Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-4.5 relative z-10">
+              {/* 1. Established */}
+              <div className="group relative bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md border border-white/10 hover:border-amber-400/50 rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-xl hover:shadow-black/20">
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <div className="w-11 h-11 rounded-xl bg-amber-400/15 border border-amber-400/30 text-amber-300 flex items-center justify-center group-hover:scale-110 group-hover:bg-amber-400 group-hover:text-emerald-950 transition-all duration-300">
+                      <School size={22} />
+                    </div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                      {language === "bn" ? "৩৭+ বছর" : "37+ Years"}
+                    </span>
+                  </div>
+                  <h4 className="text-3xl sm:text-4xl font-black text-white tracking-tight group-hover:text-amber-300 transition-colors">
+                    {toBanglaNum(1987)}
+                  </h4>
+                  <p className="text-sm font-bold text-emerald-100 tracking-tight mt-1">
+                    {language === "bn" ? "প্রতিষ্ঠাকাল" : "Established"}
+                  </p>
+                  <p className="text-[11px] text-emerald-200/70 font-medium leading-tight mt-1">
+                    {language === "bn" ? "দীর্ঘ পথচলায় আস্থার প্রতীক" : "Legacy of academic trust"}
+                  </p>
+                </div>
+                <div className="h-1 w-0 group-hover:w-full bg-gradient-to-r from-amber-400 to-emerald-400 transition-all duration-500 rounded-full mt-4" />
+              </div>
+
+              {/* 2. EIIN Number */}
+              <div className="group relative bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md border border-white/10 hover:border-emerald-400/50 rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-xl hover:shadow-black/20">
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <div className="w-11 h-11 rounded-xl bg-emerald-400/15 border border-emerald-400/30 text-emerald-300 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-400 group-hover:text-emerald-950 transition-all duration-300">
+                      <Building2 size={22} />
+                    </div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full">
+                      {language === "bn" ? "সরকারি কোড" : "Govt Code"}
+                    </span>
+                  </div>
+                  <h4 className="text-3xl sm:text-4xl font-black text-white tracking-tight group-hover:text-emerald-300 transition-colors">
+                    {toBanglaNum(117188)}
+                  </h4>
+                  <p className="text-sm font-bold text-emerald-100 tracking-tight mt-1">
+                    {language === "bn" ? "ইআইআইএন নম্বর" : "EIIN Number"}
+                  </p>
+                  <p className="text-[11px] text-emerald-200/70 font-medium leading-tight mt-1">
+                    {language === "bn" ? "মাধ্যমিক ও উচ্চশিক্ষা বিভাগ" : "Official Board Registered"}
+                  </p>
+                </div>
+                <div className="h-1 w-0 group-hover:w-full bg-gradient-to-r from-emerald-400 to-cyan-400 transition-all duration-500 rounded-full mt-4" />
+              </div>
+
+              {/* 3. Qualified Teachers */}
+              <div className="group relative bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md border border-white/10 hover:border-cyan-400/50 rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-xl hover:shadow-black/20">
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <div className="w-11 h-11 rounded-xl bg-cyan-400/15 border border-cyan-400/30 text-cyan-300 flex items-center justify-center group-hover:scale-110 group-hover:bg-cyan-400 group-hover:text-emerald-950 transition-all duration-300">
+                      <GraduationCap size={22} />
+                    </div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider bg-cyan-400/20 text-cyan-300 border border-cyan-400/30 px-2 py-0.5 rounded-full">
+                      {language === "bn" ? "প্রশিক্ষিত" : "Trained"}
+                    </span>
+                  </div>
+                  <h4 className="text-3xl sm:text-4xl font-black text-white tracking-tight group-hover:text-cyan-300 transition-colors">
+                    {toBanglaNum("25+")}
+                  </h4>
+                  <p className="text-sm font-bold text-emerald-100 tracking-tight mt-1">
+                    {language === "bn" ? "দক্ষ শিক্ষক" : "Qualified Teachers"}
+                  </p>
+                  <p className="text-[11px] text-emerald-200/70 font-medium leading-tight mt-1">
+                    {language === "bn" ? "অভিজ্ঞ ও নিবেদিতপ্রাণ শিক্ষক" : "Dedicated & Caring Faculty"}
+                  </p>
+                </div>
+                <div className="h-1 w-0 group-hover:w-full bg-gradient-to-r from-cyan-400 to-emerald-400 transition-all duration-500 rounded-full mt-4" />
+              </div>
+
+              {/* 4. Students */}
+              <div className="group relative bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md border border-white/10 hover:border-emerald-400/50 rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-xl hover:shadow-black/20">
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <div className="w-11 h-11 rounded-xl bg-emerald-400/15 border border-emerald-400/30 text-emerald-300 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-400 group-hover:text-emerald-950 transition-all duration-300">
+                      <Users size={22} />
+                    </div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full">
+                      {language === "bn" ? "প্লে - ১০ম" : "Play - X"}
+                    </span>
+                  </div>
+                  <h4 className="text-3xl sm:text-4xl font-black text-white tracking-tight group-hover:text-emerald-300 transition-colors">
+                    {toBanglaNum("1200+")}
+                  </h4>
+                  <p className="text-sm font-bold text-emerald-100 tracking-tight mt-1">
+                    {language === "bn" ? "শিক্ষার্থী" : "Active Students"}
+                  </p>
+                  <p className="text-[11px] text-emerald-200/70 font-medium leading-tight mt-1">
+                    {language === "bn" ? "সুশৃঙ্খল সহশিক্ষা কার্যক্রম" : "Co-educational community"}
+                  </p>
+                </div>
+                <div className="h-1 w-0 group-hover:w-full bg-gradient-to-r from-emerald-400 to-amber-400 transition-all duration-500 rounded-full mt-4" />
+              </div>
+
+              {/* 5. Pass Tradition */}
+              <div className="group relative bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md border border-white/10 hover:border-amber-400/50 rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-xl hover:shadow-black/20">
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <div className="w-11 h-11 rounded-xl bg-amber-400/15 border border-amber-400/30 text-amber-300 flex items-center justify-center group-hover:scale-110 group-hover:bg-amber-400 group-hover:text-emerald-950 transition-all duration-300">
+                      <ShieldCheck size={22} />
+                    </div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                      {language === "bn" ? "ধারাবাহিক" : "Top Tier"}
+                    </span>
+                  </div>
+                  <h4 className="text-3xl sm:text-4xl font-black text-white tracking-tight group-hover:text-amber-300 transition-colors">
+                    {toBanglaNum("100%")}
+                  </h4>
+                  <p className="text-sm font-bold text-emerald-100 tracking-tight mt-1">
+                    {language === "bn" ? "পাস ঐতিহ্য" : "Pass Tradition"}
+                  </p>
+                  <p className="text-[11px] text-emerald-200/70 font-medium leading-tight mt-1">
+                    {language === "bn" ? "জেএসসি ও এসএসসি পরীক্ষায়" : "Consistent board success"}
+                  </p>
+                </div>
+                <div className="h-1 w-0 group-hover:w-full bg-gradient-to-r from-amber-400 to-emerald-400 transition-all duration-500 rounded-full mt-4" />
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
+
         {/* 4. AIMS & KEY OBJECTIVES (Animated with ScrollStagger) */}
         <ScrollReveal duration={0.6} distance={25} className="mb-20 relative">
           {/* Subtle Background Target Watermark on Top-Right */}
@@ -1535,90 +1703,6 @@ const Home: React.FC = () => {
                   </div>
                 </Link>
               ))}
-            </div>
-          </div>
-        </ScrollReveal>
-
-        {/* 8. SOLID RICH GREEN INSTITUTIONAL STATS COUNTER STRIP (Animated with ScrollReveal) */}
-        <ScrollReveal duration={0.65} distance={25}>
-          <div className="bg-[#044e3a] text-white rounded-3xl p-6 sm:p-8 mb-12 shadow-sm">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-between">
-              {/* 1. Established */}
-              <div className="flex items-center gap-3.5 justify-center sm:justify-start">
-                <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
-                  <School size={22} />
-                </div>
-                <div>
-                  <h4 className="text-2xl sm:text-3xl font-black text-white">
-                    {toBanglaNum(1987)}
-                  </h4>
-                  <p className="text-xs text-emerald-200/90 font-medium">
-                    {language === "bn" ? "স্থাপিত" : "Established"}
-                  </p>
-                </div>
-              </div>
-
-              {/* 2. EIIN Number */}
-              <div className="flex items-center gap-3.5 justify-center sm:justify-start">
-                <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
-                  <Building2 size={22} />
-                </div>
-                <div>
-                  <h4 className="text-2xl sm:text-3xl font-black text-white">
-                    {toBanglaNum(117188)}
-                  </h4>
-                  <p className="text-xs text-emerald-200/90 font-medium">
-                    {language === "bn" ? "ইআইআইএন নম্বর" : "EIIN Number"}
-                  </p>
-                </div>
-              </div>
-
-              {/* 3. Qualified Teachers */}
-              <div className="flex items-center gap-3.5 justify-center sm:justify-start">
-                <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
-                  <GraduationCap size={22} />
-                </div>
-                <div>
-                  <h4 className="text-2xl sm:text-3xl font-black text-white">
-                    {toBanglaNum("25+")}
-                  </h4>
-                  <p className="text-xs text-emerald-200/90 font-medium">
-                    {language === "bn"
-                      ? "দক্ষ শিক্ষক-শিক্ষিকা"
-                      : "Qualified Teachers"}
-                  </p>
-                </div>
-              </div>
-
-              {/* 4. Students */}
-              <div className="flex items-center gap-3.5 justify-center sm:justify-start">
-                <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
-                  <Users size={22} />
-                </div>
-                <div>
-                  <h4 className="text-2xl sm:text-3xl font-black text-white">
-                    {toBanglaNum("1200+")}
-                  </h4>
-                  <p className="text-xs text-emerald-200/90 font-medium">
-                    {language === "bn" ? "শিক্ষার্থী" : "Students"}
-                  </p>
-                </div>
-              </div>
-
-              {/* 5. Pass Tradition */}
-              <div className="flex items-center gap-3.5 justify-center sm:justify-start">
-                <div className="w-12 h-12 rounded-full bg-white/10 text-emerald-200 flex items-center justify-center flex-shrink-0">
-                  <ShieldCheck size={22} />
-                </div>
-                <div>
-                  <h4 className="text-2xl sm:text-3xl font-black text-white">
-                    {toBanglaNum("100%")}
-                  </h4>
-                  <p className="text-xs text-emerald-200/90 font-medium">
-                    {language === "bn" ? "পাস ঐতিহ্য" : "Pass Tradition"}
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </ScrollReveal>

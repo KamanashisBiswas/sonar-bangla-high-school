@@ -83,7 +83,7 @@ const Layout: React.FC = () => {
       >
         {/* Top Utility Bar */}
         <div className="bg-emerald-900 text-emerald-50 text-xs py-1.5 2xl:py-2 border-b border-emerald-800/80 shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
             <div className="flex items-center gap-6">
               <span className="flex items-center gap-1.5 hover:text-white transition">
                 <Phone size={13} className="text-emerald-400" />{" "}
@@ -106,7 +106,7 @@ const Layout: React.FC = () => {
 
         {/* Main Institution Header (white logo area) */}
         <div className="bg-white border-b border-slate-200/90 shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 lg:py-2 xl:py-2.5 2xl:py-3.5 flex justify-between items-center">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-2.5 lg:py-2 xl:py-2.5 2xl:py-3.5 flex justify-between items-center">
             <Link to="/" className="flex items-center gap-3 sm:gap-4 group">
               <img
                 src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png"
@@ -147,7 +147,7 @@ const Layout: React.FC = () => {
 
       {/* ── Mobile Logo Header (always visible on mobile) ── */}
       <header className="bg-white border-b border-slate-200/90 shadow-sm sticky top-0 z-40 md:hidden">
-        <div className="max-w-7xl mx-auto px-4 py-2.5 flex justify-between items-center">
+        <div className="container mx-auto px-4 py-2.5 flex justify-between items-center">
           <Link to="/" className="flex items-center gap-3 group">
             <img
               src="https://soshgskhulna.edu.bd/media/logos/pwBMbDcPDZICD8s6Qth6PeVgtctkHPIXssgMRyZf.png"
@@ -203,7 +203,7 @@ const Layout: React.FC = () => {
       <nav
         className={`bg-emerald-800 text-white border-b border-emerald-700/50 hidden md:block sticky top-0 z-40 transition-shadow duration-300 ${isScrolled ? "shadow-lg" : ""}`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Mini logo — slides in when scrolled */}
             <div
@@ -416,7 +416,7 @@ const Layout: React.FC = () => {
 
       {/* Solid Rich Deep Green Institutional Footer (4-Column Layout - Pixel Perfect) */}
       <footer className="bg-[#064e3b] text-white pt-14 pb-6 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 pb-12">
             {/* Column 1: School Identity & Social */}
             <div className="space-y-4">

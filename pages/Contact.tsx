@@ -49,7 +49,7 @@ const Contact: React.FC = () => {
         </div>
 
         {/* Hero Left Content Container */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Breadcrumb Navigation */}
           <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-6">
@@ -83,7 +83,7 @@ const Contact: React.FC = () => {
       </div>
 
       {/* 2. MAIN CONTENT GRID (2 COLUMNS: LEFT 4 INFO CARDS | RIGHT SEND MESSAGE FORM) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
           
           {/* Left Column: 4 Information Cards (4 Spans) */}

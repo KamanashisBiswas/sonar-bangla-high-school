@@ -491,7 +491,7 @@ const Students: React.FC = () => {
         </div>
 
         {/* Hero Left Content Container */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Breadcrumb Navigation */}
           <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-6">
@@ -524,7 +524,7 @@ const Students: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
         {/* 2. FILTER & SEARCH BAR ROW (MATCHING REFERENCE IMAGE) */}
         <div className="bg-white p-4 sm:p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4">

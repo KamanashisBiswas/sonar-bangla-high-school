@@ -192,7 +192,7 @@ const AdminLayout: React.FC = () => {
 
         {/* Content Area */}
         <main className="flex-grow p-4 sm:p-6 md:p-8 overflow-y-auto bg-slate-50">
-          <div className="max-w-7xl mx-auto">
+          <div className="container mx-auto">
             {!isLoading && <Outlet />}
           </div>
         </main>
