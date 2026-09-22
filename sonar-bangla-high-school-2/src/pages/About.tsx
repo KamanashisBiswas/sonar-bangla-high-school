@@ -16,6 +16,7 @@ import {
   Briefcase,
   Award,
   CheckCircle2,
+  Sparkles,
 } from 'lucide-react';
 import {
   LEADERSHIP,
@@ -70,9 +71,9 @@ export const About: React.FC = () => {
 
           {/* Left Narrative Block */}
           <div className="max-w-xl space-y-4 pt-6 sm:pt-8">
-            {/* Top Tag with Dash Line */}
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#059669]">
-              <span className="w-5 h-0.5 bg-[#059669]" />
+            {/* Pill Tag Badge (Matching other pages) */}
+            <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
+              <Sparkles size={14} />
               <span>OUR STORY, OUR COMMITMENT</span>
             </div>
 
@@ -81,6 +82,9 @@ export const About: React.FC = () => {
               About Our <br />
               Institution
             </h1>
+
+            {/* Short Green Accent Line Under Title */}
+            <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
 
             {/* Subtitle */}
             <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-normal max-w-lg">

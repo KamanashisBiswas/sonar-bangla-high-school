@@ -306,121 +306,157 @@ export const Notices: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#f3f9f6] text-slate-800">
-      {/* Top Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-[#eef8f3] via-[#f1f9f5] to-[#f7fcf9] border-b border-emerald-900/10">
-        {/* Campus Illustration Background */}
-        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-1/2 pointer-events-none opacity-40 lg:opacity-60 overflow-hidden mix-blend-multiply">
+      {/* Top Hero Section: Full-Width Real Campus Background with Left-to-Right White Fade */}
+      <section className="relative w-full bg-white overflow-hidden min-h-[460px] sm:min-h-[500px] lg:min-h-[520px] flex flex-col justify-between border-b border-slate-100">
+        {/* Full-bleed Real Campus Photo Background */}
+        <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
           <img
-            src="/campus_illustration.jpg"
-            alt="Campus Architecture Sketch"
-            className="w-full h-full object-cover object-left lg:object-center"
+            src="/campus_main.png"
+            alt="SOS Hermann Gmeiner School Khulna Campus"
+            className="w-full h-full object-cover object-right"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = '/campus_main2.png';
+            }}
           />
-          {/* Subtle gradient to blend smoothly */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#eef8f3] via-[#eef8f3]/60 to-transparent" />
-        </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 relative z-10">
-          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-            {/* Left Content */}
-            <div className="max-w-2xl">
-              {/* Breadcrumb */}
-              <nav className="flex items-center gap-1.5 text-xs text-slate-600 mb-4 font-medium">
-                <Link
-                  to="/"
-                  className="flex items-center gap-1 hover:text-[#004d34] transition-colors"
-                >
-                  <Home size={13} className="text-emerald-700" />
-                  <span>Home</span>
-                </Link>
-                <span className="text-slate-400">›</span>
-                <span className="hover:text-[#004d34] transition-colors">Notices</span>
-                <span className="text-slate-400">›</span>
-                <span className="font-bold text-slate-900">Official Notice Board</span>
-              </nav>
+          {/* Precision Left-to-Right White Gradient Overlay */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                'linear-gradient(to right, #ffffff 0%, #ffffff 38%, rgba(255, 255, 255, 0.96) 48%, rgba(255, 255, 255, 0.45) 66%, rgba(255, 255, 255, 0) 84%)',
+            }}
+          />
 
-              {/* Tag Pill */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#dcf4e8] border border-[#b8e8d1] text-[#006644] text-[11px] font-extrabold tracking-wider uppercase mb-3">
-                <Megaphone size={12} className="text-[#006644]" />
-                <span>OFFICIAL NOTICES</span>
-              </div>
-
-              {/* Main Headline */}
-              <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-black tracking-tight text-slate-950 leading-tight">
-                Official Notice Board
-              </h1>
-
-              {/* Green Underline Accent */}
-              <div className="w-12 h-1 bg-[#00875a] rounded-full mt-2.5 mb-3" />
-
-              {/* Subtitle */}
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl">
-                Stay informed with the latest announcements, official circulars, exam schedules and
-                important updates from SOS Hermann Gmeiner School Khulna.
-              </p>
-            </div>
-
-            {/* Top Right Cursive Quote */}
-            <div className="hidden lg:flex flex-col items-end pt-2 pr-6">
-              <span
-                className="text-xl lg:text-2xl text-emerald-800 font-serif italic tracking-wide"
-                style={{ fontFamily: "'Brush Script MT', 'Dancing Script', 'Caveat', cursive, serif" }}
-              >
-                “Knowledge Brightens Futures”
-              </span>
-              <div className="w-10 h-0.5 bg-emerald-600 mt-1 rounded-full" />
-            </div>
+          {/* Decorative Subtle Botanical / Leaf Watermark on Far Left */}
+          <div className="absolute left-0 top-1/4 -translate-y-1/2 w-48 h-80 opacity-[0.07] pointer-events-none text-emerald-700">
+            <svg viewBox="0 0 200 350" fill="currentColor">
+              <path d="M50 300 C20 220 30 140 100 80 C110 140 100 220 50 300 Z" />
+              <path d="M120 250 C160 190 150 120 90 70 C100 130 110 190 120 250 Z" />
+              <path d="M30 170 C10 120 20 60 70 20 C75 60 70 120 30 170 Z" />
+            </svg>
           </div>
 
-          {/* Interactive Filter Pills & Search Bar Row */}
-          <div className="mt-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-            {/* Filter Pills */}
-            <div className="flex flex-wrap items-center gap-2">
-              {categories.map((cat) => {
-                const Icon = cat.icon;
-                const isActive = selectedCategory === cat.label;
-                return (
-                  <button
-                    key={cat.label}
-                    onClick={() => {
-                      setSelectedCategory(cat.label);
-                      setCurrentPage(1);
-                    }}
-                    className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs ${
-                      isActive
-                        ? 'bg-[#004d34] text-white shadow-emerald-900/20'
-                        : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
-                    }`}
-                  >
-                    <Icon size={13} className={isActive ? 'text-white' : 'text-slate-500'} />
-                    <span>{cat.label}</span>
-                  </button>
-                );
-              })}
+          {/* Decorative Subtle Botanical Watermark on Far Right */}
+          <div className="absolute right-0 bottom-10 w-44 h-72 opacity-[0.06] pointer-events-none text-emerald-800 rotate-45">
+            <svg viewBox="0 0 200 350" fill="currentColor">
+              <path d="M50 300 C20 220 30 140 100 80 C110 140 100 220 50 300 Z" />
+              <path d="M120 250 C160 190 150 120 90 70 C100 130 110 190 120 250 Z" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Hero Content Container */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-5 sm:pt-6 pb-20 sm:pb-24 flex-1 flex flex-col justify-between">
+          {/* Breadcrumb Navigation (Top) */}
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
+            <Link
+              to="/"
+              className="hover:text-emerald-800 flex items-center gap-1 transition-colors text-emerald-700"
+            >
+              <Home size={14} />
+              <span>Home</span>
+            </Link>
+            <span className="text-slate-400">›</span>
+            <Link
+              to="/notices"
+              className="hover:text-emerald-800 transition-colors text-slate-600"
+            >
+              Notices
+            </Link>
+            <span className="text-slate-400">›</span>
+            <span className="text-slate-800 font-bold">Official Notice Board</span>
+          </div>
+
+          {/* Left Narrative Block (Pushed Down) */}
+          <div className="max-w-xl space-y-3 pt-10 sm:pt-14 lg:pt-16">
+            {/* Pill Tag Badge */}
+            <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
+              <Megaphone size={14} />
+              <span>OFFICIAL NOTICES</span>
             </div>
 
-            {/* Search Input Bar */}
-            <div className="relative w-full md:w-80">
-              <Search
-                size={15}
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
-              />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setCurrentPage(1);
-                }}
-                placeholder="Search notice title or topic..."
-                className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#004d34] focus:ring-1 focus:ring-[#004d34] transition shadow-xs"
-              />
+            {/* Main Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
+              Official Notice Board
+            </h1>
+
+            {/* Short Green Accent Line Under Title */}
+            <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
+
+            {/* Subtitle */}
+            <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
+              Stay informed with the latest announcements, official circulars, exam schedules and
+              important updates from SOS Hermann Gmeiner School Khulna.
+            </p>
+          </div>
+
+          {/* Floating White Quote Card on the Right (Matching media_1790110070973.png) */}
+          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
+            <div className="flex items-start gap-3">
+              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                “
+              </span>
+              <div>
+                <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
+                  Education today for a brighter tomorrow
+                </h4>
+                <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
+                  — SOS Hermann Gmeiner School
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Main Notice List Section */}
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+        {/* Interactive Filter Pills & Search Bar Card */}
+        <div className="bg-white rounded-2xl p-2.5 sm:p-3 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+          {/* Filter Pills */}
+          <div className="flex flex-wrap items-center gap-2">
+            {categories.map((cat) => {
+              const Icon = cat.icon;
+              const isActive = selectedCategory === cat.label;
+              return (
+                <button
+                  key={cat.label}
+                  onClick={() => {
+                    setSelectedCategory(cat.label);
+                    setCurrentPage(1);
+                  }}
+                  className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs ${
+                    isActive
+                      ? 'bg-[#004d34] text-white shadow-emerald-900/20'
+                      : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
+                  }`}
+                >
+                  <Icon size={13} className={isActive ? 'text-white' : 'text-slate-500'} />
+                  <span>{cat.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Search Input Bar */}
+          <div className="relative w-full md:w-80">
+            <Search
+              size={15}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+            />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setCurrentPage(1);
+              }}
+              placeholder="Search notice title or topic..."
+              className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#004d34] focus:ring-1 focus:ring-[#004d34] transition shadow-xs"
+            />
+          </div>
+        </div>
         <div className="space-y-3.5">
           {currentNotices.length > 0 ? (
             currentNotices.map((notice) => {

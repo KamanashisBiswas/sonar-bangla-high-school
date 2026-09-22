@@ -262,14 +262,17 @@ export const Result: React.FC = () => {
 
   return (
     <div className="bg-[#fcfdfd] pb-20 overflow-hidden">
-      {/* 1. Hero Section: Architectural Campus Illustration with Left-to-Right White Fade */}
+      {/* 1. Hero Section: Full-Width Real Campus Background with Left-to-Right White Fade */}
       <div className="relative w-full bg-white overflow-hidden min-h-[460px] sm:min-h-[500px] lg:min-h-[520px] flex flex-col justify-between border-b border-slate-100">
-        {/* Full-bleed Campus Architectural Drawing Background */}
+        {/* Full-bleed Real Campus Photo Background */}
         <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
           <img
-            src="/campus_illustration.jpg"
-            alt="SOS Hermann Gmeiner School Khulna Campus Illustration"
-            className="w-full h-full object-cover object-right opacity-80"
+            src="/campus_main.png"
+            alt="SOS Hermann Gmeiner School Khulna Campus"
+            className="w-full h-full object-cover object-right"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = '/campus_main2.png';
+            }}
           />
 
           {/* Precision Left-to-Right White Gradient Overlay */}
@@ -287,6 +290,14 @@ export const Result: React.FC = () => {
               <path d="M50 300 C20 220 30 140 100 80 C110 140 100 220 50 300 Z" />
               <path d="M120 250 C160 190 150 120 90 70 C100 130 110 190 120 250 Z" />
               <path d="M30 170 C10 120 20 60 70 20 C75 60 70 120 30 170 Z" />
+            </svg>
+          </div>
+
+          {/* Decorative Subtle Botanical Watermark on Far Right */}
+          <div className="absolute right-0 bottom-10 w-44 h-72 opacity-[0.06] pointer-events-none text-emerald-800 rotate-45">
+            <svg viewBox="0 0 200 350" fill="currentColor">
+              <path d="M50 300 C20 220 30 140 100 80 C110 140 100 220 50 300 Z" />
+              <path d="M120 250 C160 190 150 120 90 70 C100 130 110 190 120 250 Z" />
             </svg>
           </div>
         </div>

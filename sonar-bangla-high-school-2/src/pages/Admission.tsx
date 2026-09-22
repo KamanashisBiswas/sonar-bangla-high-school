@@ -113,7 +113,7 @@ export const Admission: React.FC = () => {
         </div>
 
         {/* Hero Content Container */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-5 sm:pt-6 pb-16 sm:pb-20 flex-1 flex flex-col justify-between">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-5 sm:pt-6 pb-20 sm:pb-24 flex-1 flex flex-col justify-between">
           {/* Breadcrumb Navigation */}
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
             <Link
@@ -131,11 +131,11 @@ export const Admission: React.FC = () => {
               Admission
             </Link>
             <span className="text-slate-400">›</span>
-            <span className="text-slate-800 font-bold">Online Admission Application</span>
+            <span className="text-slate-800 font-bold">Online Admission Portal</span>
           </div>
 
-          {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3.5 pt-6 sm:pt-8">
+          {/* Left Narrative Block (Pushed Down) */}
+          <div className="max-w-xl space-y-3 pt-10 sm:pt-14 lg:pt-16">
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <GraduationCap size={15} />
@@ -151,7 +151,7 @@ export const Admission: React.FC = () => {
             <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
 
             {/* Subtitle */}
-            <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed font-normal max-w-lg">
+            <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
               Take the next step towards a brighter future. Complete your admission application easily,
               securely and from the comfort of your home.
             </p>
@@ -207,11 +207,10 @@ export const Admission: React.FC = () => {
               </span>
               <div>
                 <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  Education builds <br />
-                  <span className="text-[#0284c7]">brighter tomorrows</span>
+                  Education today for a brighter tomorrow
                 </h4>
                 <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — SOS Hermann Gmeiner
+                  — SOS Hermann Gmeiner School
                 </p>
               </div>
             </div>
