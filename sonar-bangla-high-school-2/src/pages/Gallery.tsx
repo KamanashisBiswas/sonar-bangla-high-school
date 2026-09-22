@@ -437,16 +437,16 @@ export const Gallery: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
+          <div className="max-w-xl lg:max-w-2xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
             {/* Tag Pill Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <Camera size={14} />
               <span>PHOTO GALLERY</span>
             </div>
 
-            {/* Main Headline (2-line as in media_1790109401328.jpg & media_1790110070973.png) */}
+            {/* Main Headline (2 lines matching Academic Results & Marksheet) */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              Memorable Moments & <br />
+              <span className="whitespace-nowrap">Memorable Moments &</span> <br />
               Albums
             </h1>
 

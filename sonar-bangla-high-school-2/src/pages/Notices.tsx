@@ -22,8 +22,10 @@ import {
   CheckCircle2,
   Clock,
   Building2,
-  AlertCircle
+  AlertCircle,
+  Info
 } from 'lucide-react';
+import { SCHOOL_INFO } from '../data/schoolData';
 
 interface NoticeItem {
   id: string;
@@ -304,6 +306,267 @@ export const Notices: React.FC = () => {
     }
   };
 
+  const handlePrintNotice = (notice: NoticeItem) => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert('Please allow popups to print or download this notice.');
+      return;
+    }
+
+    const monthMap: Record<string, string> = {
+      Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
+      Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
+    };
+    const monthNum = monthMap[notice.month] || '05';
+    const formattedDate = `${notice.day.padStart(2, '0')}/${monthNum}/${notice.year}`;
+    const memoNo = `SOS/KHULNA/NOTICE/${notice.id}`;
+
+    const bodyHtml = notice.id === '1'
+      ? `<p style="margin: 0; line-height: 1.85;">This is to inform all teachers, students, and guardians of SOS Hermann Gmeiner School Khulna that all academic classes will remain closed from 29-05-2025 to 07-06-2025 for summer vacation.</p>`
+      : notice.fullBody.map((p) => `<p style="margin: 0 0 14px 0; line-height: 1.85;">${p}</p>`).join('');
+
+    const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>${notice.title} - ${SCHOOL_INFO.name}</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 10mm 15mm;
+    }
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    body {
+      padding: 24px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .print-frame {
+      border: 2px solid #005a3c;
+      border-radius: 12px;
+      padding: 28px 36px;
+      min-height: calc(100vh - 48px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+    }
+    .header-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-bottom: 2px solid #005a3c;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+    }
+    .logo-td {
+      width: 65px;
+      vertical-align: middle;
+    }
+    .logo-img {
+      width: 55px;
+      height: 55px;
+      object-fit: contain;
+      display: block;
+    }
+    .info-td {
+      vertical-align: middle;
+      padding-left: 14px;
+    }
+    .school-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #005a3c;
+      margin: 0;
+      letter-spacing: -0.2px;
+      text-transform: uppercase;
+    }
+    .school-sub {
+      font-size: 11px;
+      color: #475569;
+      margin-top: 3px;
+    }
+    .eiin-td {
+      vertical-align: middle;
+      text-align: right;
+      width: 140px;
+    }
+    .eiin-badge {
+      display: inline-block;
+      background: #e8f7ee;
+      color: #059669;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 6px;
+    }
+    .est-text {
+      font-size: 10px;
+      color: #64748b;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+      padding: 8px 0;
+      border-bottom: 1px dashed #94a3b8;
+      margin-bottom: 26px;
+    }
+    .category-box {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .category-pill {
+      display: inline-block;
+      background: #e8f7ee;
+      color: #059669;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 3px 16px;
+      border-radius: 9999px;
+    }
+    .notice-heading {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      text-align: center;
+      margin: 0 0 24px 0;
+      line-height: 1.35;
+    }
+    .notice-content {
+      font-size: 13px;
+      line-height: 1.85;
+      color: #1e293b;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .signatures-box {
+      margin-top: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-top: 20px;
+    }
+    .sig-incharge {
+      text-align: center;
+      min-width: 140px;
+    }
+    .sig-principal {
+      text-align: center;
+      min-width: 180px;
+    }
+    .sig-line {
+      border-top: 1.5px solid #0f172a;
+      width: 100%;
+      margin-bottom: 6px;
+    }
+    .sig-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0;
+    }
+    .sig-sub {
+      font-size: 9.5px;
+      font-weight: 600;
+      color: #64748b;
+      margin: 2px 0 0 0;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+    @media print {
+      body {
+        padding: 0;
+      }
+      .print-frame {
+        min-height: 98vh;
+        border: 2px solid #005a3c !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="print-frame">
+    <div>
+      <table class="header-table">
+        <tr>
+          <td class="logo-td">
+            <img class="logo-img" src="${SCHOOL_INFO.logo}" alt="SOS Logo" />
+          </td>
+          <td class="info-td">
+            <h1 class="school-title">${SCHOOL_INFO.name}</h1>
+            <div class="school-sub">${SCHOOL_INFO.address} | Phone: ${SCHOOL_INFO.phone} | Email: ${SCHOOL_INFO.email}</div>
+          </td>
+          <td class="eiin-td">
+            <div class="eiin-badge">EIIN: ${SCHOOL_INFO.eiin}</div>
+            <div class="est-text">Established: ${SCHOOL_INFO.established}</div>
+          </td>
+        </tr>
+      </table>
+
+      <div class="meta-bar">
+        <div><strong>Memo No:</strong> ${memoNo}</div>
+        <div><strong>Date:</strong> ${formattedDate}</div>
+      </div>
+
+      <div class="category-box">
+        <span class="category-pill">${notice.category}</span>
+      </div>
+
+      <h2 class="notice-heading">${notice.title}</h2>
+
+      <div class="notice-content">
+        ${bodyHtml}
+      </div>
+    </div>
+
+    <div class="signatures-box">
+      <div class="sig-incharge">
+        <div class="sig-line"></div>
+        <p class="sig-label">Notice In-Charge</p>
+      </div>
+      <div class="sig-principal">
+        <div class="sig-line"></div>
+        <p class="sig-label">Principal / Headmaster</p>
+        <p class="sig-sub">SOS HERMANN GMEINER SCHOOL<br/>KHULNA</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        window.focus();
+        window.print();
+      }, 300);
+    });
+  </script>
+</body>
+</html>`;
+
+    printWindow.document.open();
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+  };
+
   return (
     <div className="min-h-screen bg-[#f3f9f6] text-slate-800">
       {/* Top Hero Section: Full-Width Real Campus Background with Left-to-Right White Fade */}
@@ -543,8 +806,8 @@ export const Notices: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Right: View Details & Attachments Badge */}
-                    <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2.5 shrink-0 self-stretch sm:self-auto border-t sm:border-t-0 pt-3 sm:pt-0 border-slate-100">
+                    {/* Right: View Details Link */}
+                    <div className="flex items-center justify-end shrink-0 self-stretch sm:self-auto border-t sm:border-t-0 pt-3 sm:pt-0 border-slate-100">
                       {/* View Details Link */}
                       <button
                         type="button"
@@ -557,18 +820,6 @@ export const Notices: React.FC = () => {
                           className="transition-transform group-hover/link:translate-x-0.5"
                         />
                       </button>
-
-                      {/* Attachments Badge */}
-                      {notice.attachments && (
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs font-semibold">
-                          {notice.attachments.type === 'file' ? (
-                            <Paperclip size={12} className="text-slate-500" />
-                          ) : (
-                            <ImageIcon size={12} className="text-slate-500" />
-                          )}
-                          <span>{notice.attachments.label}</span>
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>
@@ -658,119 +909,117 @@ export const Notices: React.FC = () => {
       {/* Notice Detail Modal */}
       {activeNotice && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs animate-in fade-in duration-150"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-150"
           onClick={() => setActiveNotice(null)}
         >
           <div
-            className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200"
+            className="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-7 shadow-2xl relative border border-slate-100 animate-in zoom-in-95 duration-150 max-h-[92vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal Header */}
-            <div className="bg-[#004d34] text-white p-6 rounded-t-3xl relative">
-              <button
-                onClick={() => setActiveNotice(null)}
-                className="absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition cursor-pointer"
-                title="Close"
-              >
-                <X size={18} />
-              </button>
-
-              <div className="flex items-center gap-2 mb-2">
-                <span
-                  className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-md uppercase tracking-wider ${getCategoryBadgeClass(
-                    activeNotice.category
-                  )}`}
-                >
+            {/* Header: Icon + Category Badge + Date + Close */}
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <div className="w-10 h-10 rounded-2xl bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100">
+                  <Megaphone size={18} />
+                </div>
+                <span className="bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider">
                   {activeNotice.category}
                 </span>
-                <span className="text-xs text-emerald-100 font-mono">
-                  {activeNotice.memoNo}
-                </span>
-              </div>
-
-              <h3 className="text-lg sm:text-xl font-black text-white leading-snug pr-8">
-                {activeNotice.title}
-              </h3>
-
-              <div className="flex items-center gap-4 text-xs text-emerald-100/90 mt-3 font-medium">
-                <span>Published by: {activeNotice.publishedBy}</span>
-                <span>•</span>
-                <span>Date: {activeNotice.dateStr}</span>
-              </div>
-            </div>
-
-            {/* Modal Body */}
-            <div className="p-6 sm:p-8 space-y-5">
-              {/* Formal Institution Header in Circular */}
-              <div className="border-b border-slate-200 pb-4 text-center">
-                <p className="text-[11px] font-bold text-emerald-800 tracking-wider uppercase">
-                  SOS Hermann Gmeiner School Khulna
-                </p>
-                <p className="text-xs text-slate-500">
-                  Established 1986 • EIIN: 117195 • Khulna, Bangladesh
-                </p>
-                <div className="w-16 h-0.5 bg-emerald-600 mx-auto mt-2" />
-              </div>
-
-              {/* Text Paragraphs */}
-              <div className="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
-                {activeNotice.fullBody.map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
-              </div>
-
-              {/* Attachments Section if any */}
-              {activeNotice.attachments && (
-                <div className="bg-[#f0faf5] rounded-2xl p-4 border border-[#d7f1e5] space-y-2">
-                  <span className="text-xs font-bold text-[#004d34] flex items-center gap-1.5">
-                    <Paperclip size={14} /> Official Attachments
-                  </span>
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <button
-                      type="button"
-                      onClick={() => alert('Downloading official circular attachment (PDF)...')}
-                      className="flex-1 flex items-center justify-between p-2.5 rounded-xl bg-white border border-emerald-200 text-xs font-semibold text-slate-800 hover:border-emerald-600 transition cursor-pointer"
-                    >
-                      <span className="flex items-center gap-2">
-                        <FileText size={14} className="text-emerald-700" />
-                        {activeNotice.title.slice(0, 30)}...pdf
-                      </span>
-                      <Download size={14} className="text-[#004d34]" />
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Authority Seal / Signature */}
-              <div className="pt-4 flex items-center justify-between border-t border-slate-100 text-xs text-slate-500">
-                <div>
-                  <p className="font-bold text-slate-900">Signed & Approved by:</p>
-                  <p className="text-emerald-800 font-semibold">{activeNotice.publishedBy}</p>
-                  <p className="text-[11px] text-slate-400">SOS Hermann Gmeiner School Khulna</p>
-                </div>
-                <div className="w-20 h-20 rounded-full border-2 border-dashed border-emerald-600/40 flex items-center justify-center text-center p-1 text-[9px] font-bold text-emerald-800 uppercase tracking-tighter rotate-[-12deg]">
-                  Official Seal Verified
+                <div className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold ml-1">
+                  <Calendar size={14} className="text-slate-400" />
+                  <span>{activeNotice.dateStr}</span>
                 </div>
               </div>
-            </div>
 
-            {/* Modal Footer Actions */}
-            <div className="bg-slate-50 px-6 py-4 rounded-b-3xl border-t border-slate-200 flex items-center justify-between">
+              {/* Close Button */}
               <button
-                type="button"
-                onClick={() => window.print()}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 bg-white border border-slate-200 hover:bg-slate-100 transition cursor-pointer"
-              >
-                <Printer size={14} />
-                <span>Print Notice</span>
-              </button>
-              <button
-                type="button"
                 onClick={() => setActiveNotice(null)}
-                className="px-5 py-2 rounded-xl bg-[#004d34] text-white text-xs font-bold hover:bg-[#003b28] transition cursor-pointer shadow-xs"
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 flex items-center justify-center transition cursor-pointer shrink-0"
+                title="Close"
               >
-                Close
+                <X size={16} />
               </button>
+            </div>
+
+            {/* Title & Subtitle */}
+            <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-4 leading-tight">
+              {activeNotice.title}
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1 mb-4">
+              Notice for all teachers, students and guardians
+            </p>
+
+            {/* Notice Body Card */}
+            <div className="bg-[#f0faf5] border border-[#d7f1e5] rounded-2xl p-4 sm:p-5 flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 shadow-2xs border border-emerald-100">
+                <FileText size={20} />
+              </div>
+              <div className="flex-1 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                {activeNotice.id === '1' ? (
+                  <>
+                    <p>
+                      This is to inform all teachers, students, and guardians of{' '}
+                      <span className="font-bold text-[#059669]">
+                        SOS Hermann Gmeiner School Khulna
+                      </span>{' '}
+                      that all academic classes will remain closed from:
+                    </p>
+                    <div className="my-3 bg-white rounded-xl py-2.5 px-4 border border-emerald-100/90 flex items-center justify-center gap-3 text-xs sm:text-sm font-black text-slate-800 shadow-2xs">
+                      <Calendar size={15} className="text-[#059669]" />
+                      <span>29 July 2025</span>
+                      <span className="text-slate-400 font-normal">—</span>
+                      <span>07 August 2025</span>
+                    </div>
+                    <p>for summer vacation.</p>
+                  </>
+                ) : (
+                  <div className="space-y-2">
+                    {activeNotice.fullBody.map((paragraph, idx) => (
+                      <p key={idx}>{paragraph}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Additional Information Card */}
+            <div className="bg-[#f0f7ff] border border-blue-100 rounded-2xl p-4 sm:p-5 mt-4">
+              <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-900 mb-2">
+                <Info size={16} className="text-[#0065ff]" />
+                <span>Additional Information</span>
+              </div>
+              <ul className="space-y-1.5 text-xs text-slate-600 pl-5 list-disc marker:text-slate-400">
+                <li>Regular classes will resume on 10 August 2025 (Sunday).</li>
+                <li>School office will remain open during vacation hours.</li>
+                <li>For any urgent matter, please contact the administration office.</li>
+              </ul>
+            </div>
+
+            {/* Footer Row */}
+            <div className="mt-5 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-xs text-slate-500 font-mono">
+                <FileText size={14} className="text-slate-400 shrink-0" />
+                <span>Memo: SOS/KHULNA/NOTICE/{activeNotice.id}</span>
+              </div>
+
+              <div className="flex items-center gap-2 self-end sm:self-auto">
+                <button
+                  type="button"
+                  onClick={() => handlePrintNotice(activeNotice)}
+                  className="px-4 py-2 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold flex items-center gap-1.5 shadow-2xs transition cursor-pointer"
+                >
+                  <Printer size={14} />
+                  <span>Print Notice</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handlePrintNotice(activeNotice)}
+                  className="px-4 py-2 rounded-xl bg-[#006644] hover:bg-[#004d34] text-white text-xs font-bold flex items-center gap-1.5 shadow-xs transition cursor-pointer"
+                >
+                  <Download size={14} />
+                  <span>Download PDF</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
