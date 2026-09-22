@@ -19,6 +19,10 @@ import { Notices } from './pages/Notices';
 import { Downloads } from './pages/Downloads';
 import { Gallery } from './pages/Gallery';
 import { Contact } from './pages/Contact';
+import { AcademicPrograms } from './pages/AcademicPrograms';
+import { SportsAthletics } from './pages/SportsAthletics';
+import { CulturalActivities } from './pages/CulturalActivities';
+import { ClubsSocieties } from './pages/ClubsSocieties';
 
 // Scroll to top on page navigation
 const ScrollToTop: React.FC = () => {
@@ -59,6 +63,17 @@ export const AppContent: React.FC = () => {
           <Route path="/downloads" element={<Downloads />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
+
+          {/* Program Pages */}
+          <Route path="/academic-programs" element={<AcademicPrograms />} />
+          <Route path="/programs/academic" element={<AcademicPrograms />} />
+          <Route path="/sports-athletics" element={<SportsAthletics />} />
+          <Route path="/programs/sports" element={<SportsAthletics />} />
+          <Route path="/cultural-activities" element={<CulturalActivities />} />
+          <Route path="/programs/cultural" element={<CulturalActivities />} />
+          <Route path="/clubs-societies" element={<ClubsSocieties />} />
+          <Route path="/programs/clubs" element={<ClubsSocieties />} />
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

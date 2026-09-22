@@ -571,7 +571,7 @@ export const Home: React.FC = () => {
               {/* Action Link */}
               <div className="px-2 pt-5">
                 <Link
-                  to="/academic"
+                  to="/academic-programs"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-[#064e3b] group/link"
                 >
                   <span>Learn More</span>
@@ -615,7 +615,7 @@ export const Home: React.FC = () => {
               {/* Action Link */}
               <div className="px-2 pt-5">
                 <Link
-                  to="/academic"
+                  to="/sports-athletics"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-[#064e3b] group/link"
                 >
                   <span>Learn More</span>
@@ -659,7 +659,7 @@ export const Home: React.FC = () => {
               {/* Action Link */}
               <div className="px-2 pt-5">
                 <Link
-                  to="/academic"
+                  to="/cultural-activities"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-[#064e3b] group/link"
                 >
                   <span>Learn More</span>
@@ -698,7 +698,7 @@ export const Home: React.FC = () => {
               {/* Action Link */}
               <div className="px-2 pt-5">
                 <Link
-                  to="/students"
+                  to="/clubs-societies"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-[#064e3b] group/link"
                 >
                   <span>Learn More</span>
@@ -787,41 +787,27 @@ export const Home: React.FC = () => {
             </Link>
           </div>
 
-          {/* 6-Photo Carousel Grid */}
-          <div className="relative group/carousel">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-              {CAMPUS_LIFE_PHOTOS.map((photo, index) => (
+          {/* Smooth Auto-sliding Infinite Photo Track */}
+          <div className="relative overflow-hidden w-full py-2 [mask-image:linear-gradient(to_right,transparent,black_2%,black_98%,transparent)]">
+            <div className="campus-slider-track flex gap-4 w-max">
+              {[...CAMPUS_LIFE_PHOTOS, ...CAMPUS_LIFE_PHOTOS].map((photo, index) => (
                 <div
                   key={index}
-                  className="aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/80 shadow-2xs group relative cursor-pointer"
+                  className="w-48 sm:w-56 md:w-60 lg:w-64 aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/80 shadow-2xs group relative shrink-0 cursor-pointer"
                 >
                   <img
                     src={photo.url}
                     alt={photo.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition flex items-end p-2.5">
-                    <p className="text-[11px] font-bold text-white leading-tight">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3.5">
+                    <p className="text-xs font-bold text-white leading-tight">
                       {photo.title}
                     </p>
                   </div>
                 </div>
               ))}
             </div>
-
-            {/* Left/Right Carousel indicators */}
-            <button
-              aria-label="Previous photos"
-              className="absolute -left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200 text-slate-600 flex items-center justify-center hover:bg-emerald-50 hover:text-[#004d34] transition cursor-pointer hidden lg:flex"
-            >
-              <ChevronLeft size={16} />
-            </button>
-            <button
-              aria-label="Next photos"
-              className="absolute -right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200 text-slate-600 flex items-center justify-center hover:bg-emerald-50 hover:text-[#004d34] transition cursor-pointer hidden lg:flex"
-            >
-              <ChevronRight size={16} />
-            </button>
           </div>
         </section>
       </div>

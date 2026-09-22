@@ -7,3 +7,24 @@ body {
   margin: 0;
   padding: 0;
 }
+
+@keyframes campusSlide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.campus-slider-track {
+  display: flex;
+  width: max-content;
+  animation: campusSlide 32s linear infinite;
+  will-change: transform;
+}
+
+.campus-slider-track:hover {
+  animation-play-state: paused;
+}
+

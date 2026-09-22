@@ -101,11 +101,11 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2 text-xs text-emerald-100/90 font-medium">
               {[
                 { label: 'About Our Institution', path: '/about' },
-                { label: 'Academic Programs', path: '/academic' },
+                { label: 'Academic Programs', path: '/academic-programs' },
+                { label: 'Sports & Athletics', path: '/sports-athletics' },
                 { label: 'Admission', path: '/admission' },
-                { label: 'Campus Life', path: '/gallery' },
                 { label: 'Notice Board', path: '/notices' },
-                { label: 'Gallery', path: '/gallery' },
+                { label: 'Photo Gallery', path: '/gallery' },
               ].map((link) => (
                 <li key={link.label}>
                   <Link

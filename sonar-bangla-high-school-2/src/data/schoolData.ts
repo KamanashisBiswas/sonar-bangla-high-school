@@ -282,6 +282,8 @@ export const CAMPUS_LIFE_PHOTOS = [
   { url: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=600&fit=crop&q=80", title: "Library Reading" },
   { url: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&fit=crop&q=80", title: "Science Experiment" },
   { url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&fit=crop&q=80", title: "Award Ceremony" },
+  { url: "/gallery/album_sports.jpg", title: "Annual Athletic Meet" },
+  { url: "/gallery/album_fair.jpg", title: "Cultural Festival & Fair" },
 ];
 
 export const NEWS_EVENTS = [
