@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, Mail, ChevronDown } from 'lucide-react';
+import { Phone, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface TopUtilityBarProps {
@@ -7,12 +7,12 @@ interface TopUtilityBarProps {
   setLanguage: (lang: 'en' | 'bn') => void;
 }
 
-export const TopUtilityBar: React.FC<TopUtilityBarProps> = ({ language, setLanguage }) => {
+export const TopUtilityBar: React.FC<TopUtilityBarProps> = () => {
   return (
     <div className="bg-[#004d34] text-white text-[11px] sm:text-xs py-1.5 border-b border-emerald-800/60 select-none">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-between items-center gap-2">
-        {/* Left: Phone & Email (Matches reference mockup) */}
-        <div className="flex items-center gap-3 sm:gap-4 text-emerald-100">
+        {/* Left: Phone & Email (Exact match to reference mockup) */}
+        <div className="flex items-center gap-3 sm:gap-4 text-emerald-100 font-medium">
           <a
             href="tel:02477726775"
             className="flex items-center gap-1.5 hover:text-white transition-colors"
@@ -22,15 +22,15 @@ export const TopUtilityBar: React.FC<TopUtilityBarProps> = ({ language, setLangu
           </a>
           <span className="text-emerald-600/80">|</span>
           <a
-            href="mailto:soskhulna@sos-bangladesh.org"
+            href="mailto:soshgskhu@sos-bangladesh.org"
             className="flex items-center gap-1.5 hover:text-white transition-colors"
           >
             <Mail size={12} className="text-emerald-300" />
-            <span>soskhulna@sos-bangladesh.org</span>
+            <span>soshgskhu@sos-bangladesh.org</span>
           </a>
         </div>
 
-        {/* Right: Quick Portals & Language */}
+        {/* Right: Quick Portals & EIIN Badge (Exact match to reference mockup) */}
         <div className="flex items-center gap-3 sm:gap-4 text-emerald-100 font-medium">
           <Link to="/students" className="hover:text-white transition-colors">
             Student Portal
@@ -44,14 +44,9 @@ export const TopUtilityBar: React.FC<TopUtilityBarProps> = ({ language, setLangu
             Alumni
           </Link>
           <span className="text-emerald-600/80">|</span>
-          <button
-            type="button"
-            onClick={() => setLanguage(language === 'bn' ? 'en' : 'bn')}
-            className="flex items-center gap-1 hover:text-amber-300 font-bold transition-colors cursor-pointer"
-          >
-            <span>{language === 'bn' ? 'BN' : 'EN'}</span>
-            <ChevronDown size={11} className="text-emerald-300" />
-          </button>
+          <span className="inline-flex items-center px-2 py-0.5 rounded bg-emerald-800/80 border border-emerald-500/40 text-emerald-200 text-[10px] font-bold tracking-wider">
+            EIIN: 117188
+          </span>
         </div>
       </div>
     </div>
