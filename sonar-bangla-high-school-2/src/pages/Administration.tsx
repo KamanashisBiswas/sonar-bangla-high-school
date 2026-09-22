@@ -19,7 +19,7 @@ import { LEADERSHIP } from '../data/schoolData';
 export const Administration: React.FC = () => {
   const [sliderIndex, setSliderIndex] = useState(0);
 
-  // Governing Body Members (Matching media_1790103321289.jpg)
+  // Governing Body Members (Full committee displayed in responsive grid)
   const governingMembers = [
     {
       id: '1',
@@ -29,6 +29,7 @@ export const Administration: React.FC = () => {
       tagColor: 'bg-[#e8f7ee] text-[#004d34] border-emerald-100',
       image: LEADERSHIP.chairman.image,
       fallback: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&fit=crop&q=80',
+      profileLink: '/profile/chairman',
     },
     {
       id: '2',
@@ -38,6 +39,7 @@ export const Administration: React.FC = () => {
       tagColor: 'bg-[#eff6ff] text-[#1d4ed8] border-blue-100',
       image: LEADERSHIP.principal.image,
       fallback: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80',
+      profileLink: '/profile/principal',
     },
     {
       id: '3',
@@ -57,6 +59,43 @@ export const Administration: React.FC = () => {
       tagColor: 'bg-[#eff6ff] text-[#1d4ed8] border-blue-100',
       isAvatar: true,
       avatarType: 'guardian',
+    },
+    {
+      id: '5',
+      name: 'Teacher Representative',
+      role: 'Elected Teacher Rep.',
+      tag: 'TEACHER REP.',
+      tagColor: 'bg-[#fef3c7] text-[#92400e] border-amber-100',
+      image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&fit=crop&q=80',
+      profileLink: '/faculty/2',
+    },
+    {
+      id: '6',
+      name: 'Female Guardian Member',
+      role: 'Elected Guardian Rep.',
+      tag: 'GUARDIAN REP.',
+      tagColor: 'bg-[#fce7f3] text-[#9d174d] border-pink-100',
+      isAvatar: true,
+      avatarType: 'guardian',
+    },
+    {
+      id: '7',
+      name: 'Educationist Member',
+      role: 'Nominated Education Specialist',
+      tag: 'SPECIAL MEMBER',
+      tagColor: 'bg-[#f3e8ff] text-[#6b21a8] border-purple-100',
+      isAvatar: true,
+      avatarType: 'executive',
+    },
+    {
+      id: '8',
+      name: 'Education Board Rep.',
+      subtitle: 'BISE Jessore',
+      role: 'Board Nominated Member',
+      tag: 'BOARD NOMINEE',
+      tagColor: 'bg-[#ecfdf5] text-[#065f46] border-emerald-100',
+      isAvatar: true,
+      avatarType: 'executive',
     },
   ];
 
@@ -251,7 +290,10 @@ export const Administration: React.FC = () => {
             {/* Card 1: Chairman */}
             <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs hover:shadow-card-hover transition-all duration-300 flex flex-col sm:flex-row gap-5 sm:gap-6 items-center sm:items-start group">
               {/* Photo Box */}
-              <div className="w-32 h-40 sm:w-36 sm:h-44 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-xs">
+              <Link
+                to="/profile/chairman"
+                className="w-32 h-40 sm:w-36 sm:h-44 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-xs block"
+              >
                 <img
                   src={LEADERSHIP.chairman.image}
                   alt={LEADERSHIP.chairman.name}
@@ -261,7 +303,7 @@ export const Administration: React.FC = () => {
                       'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&fit=crop&q=80';
                   }}
                 />
-              </div>
+              </Link>
 
               {/* Details */}
               <div className="flex-1 flex flex-col justify-between text-center sm:text-left min-w-0">
@@ -269,9 +311,11 @@ export const Administration: React.FC = () => {
                   <span className="inline-block bg-[#e8f7ee] text-[#004d34] border border-emerald-100 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md tracking-wider">
                     CHAIRMAN
                   </span>
-                  <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-2 leading-tight">
-                    {LEADERSHIP.chairman.name}
-                  </h3>
+                  <Link to="/profile/chairman" className="block hover:text-[#004d34] transition-colors">
+                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-2 leading-tight">
+                      {LEADERSHIP.chairman.name}
+                    </h3>
+                  </Link>
                   <p className="text-xs text-slate-500 font-semibold mt-1">
                     {LEADERSHIP.chairman.subtitle}
                   </p>
@@ -282,7 +326,7 @@ export const Administration: React.FC = () => {
 
                 <div className="pt-4">
                   <Link
-                    to="/about"
+                    to="/profile/chairman"
                     className="inline-flex items-center gap-1.5 bg-[#eefaf3] hover:bg-[#dcf5e7] text-[#004d34] px-4 py-2 rounded-xl text-xs font-bold transition shadow-2xs cursor-pointer"
                   >
                     <span>View Profile</span>
@@ -295,7 +339,10 @@ export const Administration: React.FC = () => {
             {/* Card 2: Principal */}
             <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs hover:shadow-card-hover transition-all duration-300 flex flex-col sm:flex-row gap-5 sm:gap-6 items-center sm:items-start group">
               {/* Photo Box */}
-              <div className="w-32 h-40 sm:w-36 sm:h-44 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-xs">
+              <Link
+                to="/profile/principal"
+                className="w-32 h-40 sm:w-36 sm:h-44 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-xs block"
+              >
                 <img
                   src={LEADERSHIP.principal.image}
                   alt={LEADERSHIP.principal.name}
@@ -305,7 +352,7 @@ export const Administration: React.FC = () => {
                       'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80';
                   }}
                 />
-              </div>
+              </Link>
 
               {/* Details */}
               <div className="flex-1 flex flex-col justify-between text-center sm:text-left min-w-0">
@@ -313,9 +360,11 @@ export const Administration: React.FC = () => {
                   <span className="inline-block bg-[#eff6ff] text-[#1d4ed8] border border-blue-100 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md tracking-wider">
                     PRINCIPAL
                   </span>
-                  <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-2 leading-tight">
-                    {LEADERSHIP.principal.name}
-                  </h3>
+                  <Link to="/profile/principal" className="block hover:text-[#1d4ed8] transition-colors">
+                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-2 leading-tight">
+                      {LEADERSHIP.principal.name}
+                    </h3>
+                  </Link>
                   <p className="text-xs text-slate-500 font-semibold mt-1">
                     {LEADERSHIP.principal.subtitle}
                   </p>
@@ -326,7 +375,7 @@ export const Administration: React.FC = () => {
 
                 <div className="pt-4">
                   <Link
-                    to="/about"
+                    to="/profile/principal"
                     className="inline-flex items-center gap-1.5 bg-[#eff6ff] hover:bg-[#dbeafe] text-[#1d4ed8] px-4 py-2 rounded-xl text-xs font-bold transition shadow-2xs cursor-pointer"
                   >
                     <span>View Profile</span>
@@ -356,24 +405,13 @@ export const Administration: React.FC = () => {
                 A committed team working together for the sustained growth and development of our school.
               </p>
             </div>
-
-            <button
-              type="button"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 border border-emerald-600/70 hover:border-emerald-700 bg-white hover:bg-emerald-50 px-4 py-2 rounded-xl transition shadow-2xs self-start sm:self-auto cursor-pointer"
-            >
-              <span>View All Members</span>
-              <ArrowRight size={13} />
-            </button>
           </div>
 
-          {/* 4 Governing Body Cards with Floating Next Arrow on Right */}
-          <div className="relative">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {governingMembers.map((member) => (
-                <div
-                  key={member.id}
-                  className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-xs hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
-                >
+          {/* Governing Body Cards Grid (Direct multi-row display) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {governingMembers.map((member) => {
+              const cardInner = (
+                <>
                   <div className="flex items-center gap-3.5 mb-4">
                     {/* Photo / Avatar */}
                     <div className="w-14 h-16 sm:w-16 sm:h-18 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 flex items-center justify-center">
@@ -403,7 +441,7 @@ export const Administration: React.FC = () => {
                         <img
                           src={member.image}
                           alt={member.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           onError={(e) => {
                             if (member.fallback) {
                               (e.target as HTMLImageElement).src = member.fallback;
@@ -415,7 +453,7 @@ export const Administration: React.FC = () => {
 
                     {/* Member Info */}
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-extrabold text-slate-900 text-xs sm:text-sm leading-tight">
+                      <h4 className="font-extrabold text-slate-900 text-xs sm:text-sm leading-tight group-hover:text-[#004d34] transition-colors">
                         {member.name}
                       </h4>
                       {member.subtitle && (
@@ -438,20 +476,26 @@ export const Administration: React.FC = () => {
                     </span>
                     <UserCheck size={14} className="text-emerald-600" />
                   </div>
-                </div>
-              ))}
-            </div>
+                </>
+              );
 
-            {/* Floating Next Circle Button on Right Edge */}
-            <div className="hidden lg:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10">
-              <button
-                type="button"
-                aria-label="Next members"
-                className="w-9 h-9 rounded-full bg-white border border-slate-200 text-slate-600 hover:text-slate-900 shadow-md flex items-center justify-center transition cursor-pointer hover:scale-105"
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
+              return member.profileLink ? (
+                <Link
+                  key={member.id}
+                  to={member.profileLink}
+                  className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-xs hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between cursor-pointer group"
+                >
+                  {cardInner}
+                </Link>
+              ) : (
+                <div
+                  key={member.id}
+                  className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-xs hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+                >
+                  {cardInner}
+                </div>
+              );
+            })}
           </div>
         </section>
       </div>

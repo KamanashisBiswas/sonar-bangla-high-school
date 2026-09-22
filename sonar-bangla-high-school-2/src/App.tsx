@@ -11,6 +11,7 @@ import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Administration } from './pages/Administration';
 import { Faculty } from './pages/Faculty';
+import { FacultyProfile } from './pages/FacultyProfile';
 import { Students } from './pages/Students';
 import { Academic } from './pages/Academic';
 import { Admission } from './pages/Admission';
@@ -55,6 +56,10 @@ export const AppContent: React.FC = () => {
           <Route path="/about" element={<About />} />
           <Route path="/administration" element={<Administration />} />
           <Route path="/faculty" element={<Faculty />} />
+          <Route path="/faculty/:id" element={<FacultyProfile />} />
+          <Route path="/faculty/profile/:id" element={<FacultyProfile />} />
+          <Route path="/profile/:id" element={<FacultyProfile />} />
+          <Route path="/administration/profile/:id" element={<FacultyProfile />} />
           <Route path="/students" element={<Students />} />
           <Route path="/academic" element={<Academic />} />
           <Route path="/admission" element={<Admission />} />

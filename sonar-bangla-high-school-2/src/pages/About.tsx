@@ -264,7 +264,10 @@ export const About: React.FC = () => {
 
               {/* Body: Photo & Quote */}
               <div className="flex items-start gap-4">
-                <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-emerald-600/30 shrink-0 shadow-md bg-white">
+                <Link
+                  to="/profile/chairman"
+                  className="w-18 h-18 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-emerald-600/30 shrink-0 shadow-md bg-white block hover:opacity-90 transition-opacity"
+                >
                   <img
                     src={LEADERSHIP.chairman.image}
                     alt={LEADERSHIP.chairman.name}
@@ -274,7 +277,7 @@ export const About: React.FC = () => {
                         'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&fit=crop&q=80';
                     }}
                   />
-                </div>
+                </Link>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start gap-1.5">
@@ -284,9 +287,11 @@ export const About: React.FC = () => {
                     </p>
                   </div>
                   <div className="mt-3">
-                    <h4 className="font-extrabold text-slate-900 text-xs sm:text-sm">
-                      {LEADERSHIP.chairman.name}
-                    </h4>
+                    <Link to="/profile/chairman" className="hover:text-emerald-800 transition-colors">
+                      <h4 className="font-extrabold text-slate-900 text-xs sm:text-sm">
+                        {LEADERSHIP.chairman.name}
+                      </h4>
+                    </Link>
                     <p className="text-[11px] text-[#b45309] font-bold mt-0.5">
                       Chairman, Governing Body
                     </p>
@@ -298,8 +303,8 @@ export const About: React.FC = () => {
             {/* Bottom-right Circle Arrow Button */}
             <div className="pt-3 flex justify-end">
               <Link
-                to="/administration"
-                aria-label="Read Chairman Message"
+                to="/profile/chairman"
+                aria-label="View Chairman Profile"
                 className="w-8 h-8 rounded-full bg-white border border-emerald-200 text-[#004d34] hover:bg-[#004d34] hover:text-white flex items-center justify-center transition shadow-2xs cursor-pointer"
               >
                 <ArrowRight size={13} />
@@ -320,7 +325,10 @@ export const About: React.FC = () => {
 
               {/* Body: Photo & Quote */}
               <div className="flex items-start gap-4">
-                <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-blue-600/30 shrink-0 shadow-md bg-white">
+                <Link
+                  to="/profile/principal"
+                  className="w-18 h-18 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-blue-600/30 shrink-0 shadow-md bg-white block hover:opacity-90 transition-opacity"
+                >
                   <img
                     src={LEADERSHIP.principal.image}
                     alt={LEADERSHIP.principal.name}
@@ -330,7 +338,7 @@ export const About: React.FC = () => {
                         'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80';
                     }}
                   />
-                </div>
+                </Link>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start gap-1.5">
@@ -340,9 +348,11 @@ export const About: React.FC = () => {
                     </p>
                   </div>
                   <div className="mt-3">
-                    <h4 className="font-extrabold text-slate-900 text-xs sm:text-sm">
-                      {LEADERSHIP.principal.name}
-                    </h4>
+                    <Link to="/profile/principal" className="hover:text-blue-800 transition-colors">
+                      <h4 className="font-extrabold text-slate-900 text-xs sm:text-sm">
+                        {LEADERSHIP.principal.name}
+                      </h4>
+                    </Link>
                     <p className="text-[11px] text-[#1d4ed8] font-bold mt-0.5">
                       Principal
                     </p>
@@ -354,8 +364,8 @@ export const About: React.FC = () => {
             {/* Bottom-right Circle Arrow Button */}
             <div className="pt-3 flex justify-end">
               <Link
-                to="/administration"
-                aria-label="Read Principal Message"
+                to="/profile/principal"
+                aria-label="View Principal Profile"
                 className="w-8 h-8 rounded-full bg-white border border-blue-200 text-blue-800 hover:bg-blue-800 hover:text-white flex items-center justify-center transition shadow-2xs cursor-pointer"
               >
                 <ArrowRight size={13} />

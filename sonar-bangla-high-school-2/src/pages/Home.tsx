@@ -826,7 +826,10 @@ export const Home: React.FC = () => {
               </div>
 
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-amber-400 shrink-0 shadow-sm">
+                <Link
+                  to="/profile/chairman"
+                  className="w-16 h-16 rounded-full overflow-hidden border-2 border-amber-400 shrink-0 shadow-sm block hover:opacity-90 transition-opacity"
+                >
                   <img
                     src={LEADERSHIP.chairman.image}
                     alt={LEADERSHIP.chairman.name}
@@ -836,15 +839,17 @@ export const Home: React.FC = () => {
                         'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&fit=crop&q=80';
                     }}
                   />
-                </div>
+                </Link>
                 <div className="flex-1">
                   <p className="text-xs text-slate-600 italic leading-relaxed">
                     "{LEADERSHIP.chairman.quote}"
                   </p>
                   <div className="mt-3">
-                    <h4 className="font-extrabold text-slate-900 text-sm">
-                      {LEADERSHIP.chairman.name}
-                    </h4>
+                    <Link to="/profile/chairman" className="hover:text-amber-800 transition-colors">
+                      <h4 className="font-extrabold text-slate-900 text-sm">
+                        {LEADERSHIP.chairman.name}
+                      </h4>
+                    </Link>
                     <p className="text-[11px] text-amber-700 font-bold">
                       Chairman, Governing Body
                     </p>
@@ -855,7 +860,8 @@ export const Home: React.FC = () => {
 
             <div className="pt-3 border-t border-slate-100 flex justify-end">
               <Link
-                to="/administration"
+                to="/profile/chairman"
+                aria-label="View Chairman Profile"
                 className="w-8 h-8 rounded-full bg-emerald-50 hover:bg-[#004d34] text-[#004d34] hover:text-white flex items-center justify-center transition cursor-pointer"
               >
                 <ArrowRight size={14} />
@@ -874,7 +880,10 @@ export const Home: React.FC = () => {
               </div>
 
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-emerald-600 shrink-0 shadow-sm">
+                <Link
+                  to="/profile/principal"
+                  className="w-16 h-16 rounded-full overflow-hidden border-2 border-emerald-600 shrink-0 shadow-sm block hover:opacity-90 transition-opacity"
+                >
                   <img
                     src={LEADERSHIP.principal.image}
                     alt={LEADERSHIP.principal.name}
@@ -884,15 +893,17 @@ export const Home: React.FC = () => {
                         'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80';
                     }}
                   />
-                </div>
+                </Link>
                 <div className="flex-1">
                   <p className="text-xs text-slate-600 italic leading-relaxed">
                     "{LEADERSHIP.principal.quote}"
                   </p>
                   <div className="mt-3">
-                    <h4 className="font-extrabold text-slate-900 text-sm">
-                      {LEADERSHIP.principal.name}
-                    </h4>
+                    <Link to="/profile/principal" className="hover:text-emerald-800 transition-colors">
+                      <h4 className="font-extrabold text-slate-900 text-sm">
+                        {LEADERSHIP.principal.name}
+                      </h4>
+                    </Link>
                     <p className="text-[11px] text-emerald-800 font-bold">
                       Principal
                     </p>
@@ -903,7 +914,8 @@ export const Home: React.FC = () => {
 
             <div className="pt-3 border-t border-slate-100 flex justify-end">
               <Link
-                to="/administration"
+                to="/profile/principal"
+                aria-label="View Principal Profile"
                 className="w-8 h-8 rounded-full bg-emerald-50 hover:bg-[#004d34] text-[#004d34] hover:text-white flex items-center justify-center transition cursor-pointer"
               >
                 <ArrowRight size={14} />
