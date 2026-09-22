@@ -19,6 +19,7 @@ import {
   Printer,
   FileText,
 } from 'lucide-react';
+import { SCHOOL_INFO } from '../data/schoolData';
 
 interface RoutineRow {
   period: string;
@@ -33,6 +34,405 @@ interface RoutineRow {
 }
 
 const ROUTINES_BY_CLASS: Record<string, RoutineRow[]> = {
+  'Pred 1': [
+    {
+      period: '1st Period',
+      time: '09:00 - 09:40',
+      sunday: 'Rhymes & Phonics',
+      monday: 'English Fun',
+      tuesday: 'Bangla Bornomala',
+      wednesday: 'Rhymes & Singing',
+      thursday: 'Story Telling',
+      friday: 'Drawing & Art',
+    },
+    {
+      period: '2nd Period',
+      time: '09:40 - 10:20',
+      sunday: 'Number Fun',
+      monday: 'Shapes & Colors',
+      tuesday: 'Number Fun',
+      wednesday: 'Counting Practice',
+      thursday: 'Play & Learn',
+      friday: 'Handwriting',
+    },
+    {
+      period: '3rd Period',
+      time: '10:20 - 11:00',
+      sunday: 'Drawing & Color',
+      monday: 'Cartoon & Art',
+      tuesday: 'Clay Modeling',
+      wednesday: 'Paper Craft',
+      thursday: 'Coloring Book',
+      friday: 'Painting',
+    },
+    {
+      period: '4th Period',
+      time: '11:00 - 11:40',
+      isBreak: true,
+    },
+    {
+      period: '5th Period',
+      time: '11:40 - 12:20',
+      sunday: 'General Knowledge',
+      monday: 'Good Manners',
+      tuesday: 'Nature Study',
+      wednesday: 'Rhymes & Drama',
+      thursday: 'Moral Stories',
+      friday: 'General Knowledge',
+    },
+    {
+      period: '6th Period',
+      time: '12:20 - 01:00',
+      sunday: 'Physical Games',
+      monday: 'Indoor Games',
+      tuesday: 'Outdoor Games',
+      wednesday: 'Yoga & Exercise',
+      thursday: 'Fun Activities',
+      friday: 'Free Play',
+    },
+  ],
+  'Pred 2': [
+    {
+      period: '1st Period',
+      time: '09:00 - 09:40',
+      sunday: 'English Alphabet',
+      monday: 'Bangla Bornomala',
+      tuesday: 'English Reading',
+      wednesday: 'Bangla Words',
+      thursday: 'Spelling Fun',
+      friday: 'Rhymes & Songs',
+    },
+    {
+      period: '2nd Period',
+      time: '09:40 - 10:20',
+      sunday: 'Basic Mathematics',
+      monday: 'Counting & Writing',
+      tuesday: 'Shapes & Sizes',
+      wednesday: 'Basic Math',
+      thursday: 'Addition Fun',
+      friday: 'Mental Math',
+    },
+    {
+      period: '3rd Period',
+      time: '10:20 - 11:00',
+      sunday: 'Art & Craft',
+      monday: 'Drawing & Painting',
+      tuesday: 'Coloring Activity',
+      wednesday: 'Paper Origami',
+      thursday: 'Handicraft',
+      friday: 'Sketching',
+    },
+    {
+      period: '4th Period',
+      time: '11:00 - 11:40',
+      isBreak: true,
+    },
+    {
+      period: '5th Period',
+      time: '11:40 - 12:20',
+      sunday: 'General Science Fun',
+      monday: 'Environmental Study',
+      tuesday: 'Good Habits',
+      wednesday: 'Moral Education',
+      thursday: 'Social Manners',
+      friday: 'Story Time',
+    },
+    {
+      period: '6th Period',
+      time: '12:20 - 01:00',
+      sunday: 'Physical Activity',
+      monday: 'Games & Sports',
+      tuesday: 'Action Songs',
+      wednesday: 'Indoor Games',
+      thursday: 'Outdoor Play',
+      friday: 'Kids Yoga',
+    },
+  ],
+  'Class 1': [
+    {
+      period: '1st Period',
+      time: '09:00 - 09:40',
+      sunday: 'Bangla',
+      monday: 'English',
+      tuesday: 'Bangla',
+      wednesday: 'English',
+      thursday: 'Bangla',
+      friday: 'English',
+    },
+    {
+      period: '2nd Period',
+      time: '09:40 - 10:20',
+      sunday: 'Mathematics',
+      monday: 'Mathematics',
+      tuesday: 'Mathematics',
+      wednesday: 'Mathematics',
+      thursday: 'Mathematics',
+      friday: 'Mathematics',
+    },
+    {
+      period: '3rd Period',
+      time: '10:20 - 11:00',
+      sunday: 'Environmental Studies',
+      monday: 'General Knowledge',
+      tuesday: 'Environmental Studies',
+      wednesday: 'Moral Studies',
+      thursday: 'Drawing',
+      friday: 'General Knowledge',
+    },
+    {
+      period: '4th Period',
+      time: '11:00 - 11:40',
+      isBreak: true,
+    },
+    {
+      period: '5th Period',
+      time: '11:40 - 12:20',
+      sunday: 'Drawing',
+      monday: 'Story & Rhymes',
+      tuesday: 'Handwriting',
+      wednesday: 'Drawing',
+      thursday: 'Music & Recitation',
+      friday: 'Art & Craft',
+    },
+    {
+      period: '6th Period',
+      time: '12:20 - 01:00',
+      sunday: 'Physical Education',
+      monday: 'Sports',
+      tuesday: 'Indoor Games',
+      wednesday: 'Sports',
+      thursday: 'Health & Hygiene',
+      friday: 'Free Play',
+    },
+  ],
+  'Class 2': [
+    {
+      period: '1st Period',
+      time: '09:00 - 09:40',
+      sunday: 'Bangla',
+      monday: 'English',
+      tuesday: 'Bangla',
+      wednesday: 'English',
+      thursday: 'Bangla',
+      friday: 'English',
+    },
+    {
+      period: '2nd Period',
+      time: '09:40 - 10:20',
+      sunday: 'Mathematics',
+      monday: 'Mathematics',
+      tuesday: 'Mathematics',
+      wednesday: 'Mathematics',
+      thursday: 'Mathematics',
+      friday: 'Mathematics',
+    },
+    {
+      period: '3rd Period',
+      time: '10:20 - 11:00',
+      sunday: 'English Grammar',
+      monday: 'Bangla Byakoron',
+      tuesday: 'English Reading',
+      wednesday: 'Bangla Kobita',
+      thursday: 'Spelling & Dictation',
+      friday: 'Story Telling',
+    },
+    {
+      period: '4th Period',
+      time: '11:00 - 11:40',
+      isBreak: true,
+    },
+    {
+      period: '5th Period',
+      time: '11:40 - 12:20',
+      sunday: 'General Science',
+      monday: 'Social Studies',
+      tuesday: 'Moral Education',
+      wednesday: 'General Science',
+      thursday: 'Social Studies',
+      friday: 'Drawing',
+    },
+    {
+      period: '6th Period',
+      time: '12:20 - 01:00',
+      sunday: 'Drawing',
+      monday: 'Physical Education',
+      tuesday: 'Craft',
+      wednesday: 'Music',
+      thursday: 'Sports',
+      friday: 'Physical Training',
+    },
+  ],
+  'Class 3': [
+    {
+      period: '1st Period',
+      time: '09:00 - 09:40',
+      sunday: 'Bangla',
+      monday: 'English',
+      tuesday: 'Bangla',
+      wednesday: 'English',
+      thursday: 'Bangla',
+      friday: 'English',
+    },
+    {
+      period: '2nd Period',
+      time: '09:40 - 10:20',
+      sunday: 'Elementary Mathematics',
+      monday: 'Elementary Mathematics',
+      tuesday: 'Elementary Mathematics',
+      wednesday: 'Elementary Mathematics',
+      thursday: 'Elementary Mathematics',
+      friday: 'Elementary Mathematics',
+    },
+    {
+      period: '3rd Period',
+      time: '10:20 - 11:00',
+      sunday: 'Primary Science',
+      monday: 'BGS',
+      tuesday: 'Primary Science',
+      wednesday: 'BGS',
+      thursday: 'Religion',
+      friday: 'Primary Science',
+    },
+    {
+      period: '4th Period',
+      time: '11:00 - 11:40',
+      isBreak: true,
+    },
+    {
+      period: '5th Period',
+      time: '11:40 - 12:20',
+      sunday: 'Religion',
+      monday: 'English Grammar',
+      tuesday: 'Religion',
+      wednesday: 'Bangla Byakoron',
+      thursday: 'Drawing',
+      friday: 'BGS',
+    },
+    {
+      period: '6th Period',
+      time: '12:20 - 01:00',
+      sunday: 'Drawing',
+      monday: 'Physical Education',
+      tuesday: 'Music',
+      wednesday: 'Physical Education',
+      thursday: 'Sports',
+      friday: 'Moral Education',
+    },
+  ],
+  'Class 4': [
+    {
+      period: '1st Period',
+      time: '09:00 - 09:40',
+      sunday: 'Bangla',
+      monday: 'English',
+      tuesday: 'Bangla',
+      wednesday: 'English',
+      thursday: 'Bangla',
+      friday: 'English',
+    },
+    {
+      period: '2nd Period',
+      time: '09:40 - 10:20',
+      sunday: 'Mathematics',
+      monday: 'Mathematics',
+      tuesday: 'Mathematics',
+      wednesday: 'Mathematics',
+      thursday: 'Mathematics',
+      friday: 'Mathematics',
+    },
+    {
+      period: '3rd Period',
+      time: '10:20 - 11:00',
+      sunday: 'Primary Science',
+      monday: 'Bangladesh & Global Studies',
+      tuesday: 'Primary Science',
+      wednesday: 'Bangladesh & Global Studies',
+      thursday: 'Religion',
+      friday: 'Primary Science',
+    },
+    {
+      period: '4th Period',
+      time: '11:00 - 11:40',
+      isBreak: true,
+    },
+    {
+      period: '5th Period',
+      time: '11:40 - 12:20',
+      sunday: 'Religion',
+      monday: 'English Grammar',
+      tuesday: 'Religion',
+      wednesday: 'Bangla Grammar',
+      thursday: 'ICT & Computer',
+      friday: 'Bangladesh & Global Studies',
+    },
+    {
+      period: '6th Period',
+      time: '12:20 - 01:00',
+      sunday: 'Drawing & Art',
+      monday: 'Physical Education',
+      tuesday: 'Music',
+      wednesday: 'Physical Education',
+      thursday: 'Games & Sports',
+      friday: 'Moral & Life Skills',
+    },
+  ],
+  'Class 5': [
+    {
+      period: '1st Period',
+      time: '09:00 - 09:40',
+      sunday: 'Bangla',
+      monday: 'English',
+      tuesday: 'Bangla',
+      wednesday: 'English',
+      thursday: 'Bangla',
+      friday: 'English',
+    },
+    {
+      period: '2nd Period',
+      time: '09:40 - 10:20',
+      sunday: 'Mathematics',
+      monday: 'Mathematics',
+      tuesday: 'Mathematics',
+      wednesday: 'Mathematics',
+      thursday: 'Mathematics',
+      friday: 'Mathematics',
+    },
+    {
+      period: '3rd Period',
+      time: '10:20 - 11:00',
+      sunday: 'Primary Science',
+      monday: 'BGS',
+      tuesday: 'Primary Science',
+      wednesday: 'BGS',
+      thursday: 'Religion',
+      friday: 'Primary Science',
+    },
+    {
+      period: '4th Period',
+      time: '11:00 - 11:40',
+      isBreak: true,
+    },
+    {
+      period: '5th Period',
+      time: '11:40 - 12:20',
+      sunday: 'Religion',
+      monday: 'English Writing',
+      tuesday: 'Religion',
+      wednesday: 'Bangla Composition',
+      thursday: 'Basic ICT',
+      friday: 'BGS',
+    },
+    {
+      period: '6th Period',
+      time: '12:20 - 01:00',
+      sunday: 'Drawing',
+      monday: 'Physical Education',
+      tuesday: 'Music',
+      wednesday: 'Physical Education',
+      thursday: 'Games & Sports',
+      friday: 'Model Test / Quiz',
+    },
+  ],
   'Class 6': [
     {
       period: '1st Period',
@@ -328,7 +728,410 @@ export const Academic: React.FC = () => {
   const activeRoutine = ROUTINES_BY_CLASS[selectedClass] || ROUTINES_BY_CLASS['Class 6'];
 
   const handleDownloadRoutine = () => {
-    window.print();
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert('Please allow popups to print or download the class timetable.');
+      return;
+    }
+
+    const rowsHtml = activeRoutine
+      .map((row) => {
+        if (row.isBreak) {
+          return `
+            <tr class="break-row">
+              <td class="period-cell">
+                <div class="period-title">${row.period}</div>
+                <div class="period-time">${row.time}</div>
+              </td>
+              <td colspan="6">
+                Tiffin Break (11:00 - 11:20 AM)
+              </td>
+            </tr>
+          `;
+        }
+        return `
+          <tr>
+            <td class="period-cell">
+              <div class="period-title">${row.period}</div>
+              <div class="period-time">${row.time}</div>
+            </td>
+            <td>${row.sunday || '-'}</td>
+            <td>${row.monday || '-'}</td>
+            <td>${row.tuesday || '-'}</td>
+            <td>${row.wednesday || '-'}</td>
+            <td>${row.thursday || '-'}</td>
+            <td>${row.friday || '-'}</td>
+          </tr>
+        `;
+      })
+      .join('');
+
+    const currentDateStr = new Date().toLocaleDateString('en-US');
+
+    const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Class Timetable - ${selectedClass} - ${SCHOOL_INFO.name}</title>
+  <style>
+    @page {
+      size: A4 landscape;
+      margin: 8mm 10mm;
+    }
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    body {
+      padding: 16px 20px;
+      min-height: 100vh;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+    .print-frame {
+      border: 2px solid #004d34;
+      border-radius: 4px;
+      padding: 16px 20px 12px 20px;
+      box-sizing: border-box;
+      width: 100%;
+      min-height: calc(100vh - 32px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    @media print {
+      body {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .print-frame {
+        border: 2px solid #004d34 !important;
+        border-radius: 0 !important;
+        min-height: 100% !important;
+        padding: 10mm 12mm 8mm 12mm !important;
+      }
+    }
+    
+    /* Header */
+    .header-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 4px;
+    }
+    .header-logo-cell {
+      width: 55px;
+      vertical-align: middle;
+    }
+    .header-info-cell {
+      vertical-align: middle;
+      padding-left: 12px;
+    }
+    .header-meta-cell {
+      vertical-align: middle;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .school-logo {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      display: block;
+    }
+    .school-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: #004d34;
+      letter-spacing: -0.01em;
+      margin: 0;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+    .school-contact {
+      font-size: 10.5px;
+      font-weight: 500;
+      color: #475569;
+      margin-top: 3px;
+    }
+    .eiin-box {
+      border: 1.5px solid #10b981;
+      background: #ecfdf5;
+      color: #047857;
+      font-weight: 800;
+      font-size: 10.5px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      letter-spacing: 0.02em;
+    }
+    .school-meta-line {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #64748b;
+      margin-top: 3px;
+    }
+
+    /* Green line */
+    .green-divider {
+      height: 2px;
+      background: #004d34;
+      margin: 6px 0;
+    }
+
+    /* Subheader banner */
+    .subheader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding: 2px 0;
+    }
+    .timetable-heading {
+      font-size: 13px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .timetable-meta {
+      font-size: 11.5px;
+      color: #334155;
+      font-weight: 600;
+    }
+    .class-tag {
+      color: #059669;
+      font-weight: 900;
+    }
+
+    /* Routine Table */
+    .routine-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 11px;
+    }
+    .routine-table th {
+      background: #004d34;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding: 7px 6px;
+      border: 1px solid #004d34;
+      border-right: 1px solid rgba(255,255,255,0.25);
+    }
+    .routine-table th:last-child {
+      border-right: 1px solid #004d34;
+    }
+    .routine-table th:first-child {
+      text-align: left;
+      padding-left: 10px;
+    }
+    .routine-table td {
+      border: 1px solid #cbd5e1;
+      padding: 6.5px 6px;
+      font-weight: 500;
+      color: #1e293b;
+    }
+    .routine-table td.period-cell {
+      text-align: left;
+      padding-left: 10px;
+      background: #f8fafc;
+    }
+    .period-title {
+      font-weight: 800;
+      color: #0f172a;
+      font-size: 11px;
+      line-height: 1.2;
+    }
+    .period-time {
+      font-size: 9.5px;
+      color: #64748b;
+      font-weight: 600;
+      margin-top: 1px;
+    }
+    .break-row td {
+      background: #fffbeb !important;
+      color: #b45309 !important;
+      font-weight: 800 !important;
+      font-size: 11.5px;
+      padding: 7px 6px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Instructions Box */
+    .instructions-box {
+      border: 1px dashed #cbd5e1;
+      background: #fafafa;
+      border-radius: 4px;
+      padding: 6px 12px;
+      margin-top: 8px;
+    }
+    .instructions-title {
+      font-weight: 800;
+      font-size: 10.5px;
+      color: #1e293b;
+      margin-bottom: 2px;
+    }
+    .instructions-list {
+      margin: 0;
+      padding-left: 16px;
+      font-size: 9.5px;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    /* Signatures */
+    .signatures-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 36px;
+      padding: 0 20px;
+    }
+    .sig-col {
+      width: 220px;
+      text-align: center;
+    }
+    .sig-line {
+      border-top: 1.5px solid #0f172a;
+      margin-bottom: 4px;
+    }
+    .sig-role {
+      font-weight: 800;
+      font-size: 10px;
+      color: #0f172a;
+      line-height: 1.25;
+    }
+    .sig-school {
+      font-size: 8.5px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* Footer */
+    .doc-footer {
+      text-align: center;
+      font-size: 8.5px;
+      color: #94a3b8;
+      font-weight: 500;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="print-frame">
+    <div>
+      <!-- Header -->
+      <table class="header-table">
+        <tr>
+          <td class="header-logo-cell">
+            <img src="${SCHOOL_INFO.logo}" alt="Logo" class="school-logo" onerror="this.style.display='none'" />
+          </td>
+          <td class="header-info-cell">
+            <h1 class="school-title">${SCHOOL_INFO.name}</h1>
+            <div class="school-contact">
+              ${SCHOOL_INFO.address} | Phone: ${SCHOOL_INFO.phone} | Email: ${SCHOOL_INFO.email}
+            </div>
+          </td>
+          <td class="header-meta-cell">
+            <div class="eiin-box">EIIN: ${SCHOOL_INFO.eiin}</div>
+            <div class="school-meta-line">Established: ${SCHOOL_INFO.established}</div>
+            <div class="school-meta-line">Website: www.soshgskhulna.edu.bd</div>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Green Divider -->
+      <div class="green-divider"></div>
+
+      <!-- Subheader -->
+      <div class="subheader">
+        <div class="timetable-heading">ACADEMIC DAILY CLASS TIMETABLE - 2026</div>
+        <div class="timetable-meta">
+          Class: <span class="class-tag">${selectedClass}</span> &nbsp;&nbsp;|&nbsp;&nbsp; Session: <strong>2026</strong> &nbsp;&nbsp;|&nbsp;&nbsp; Effective: <strong>January 01, 2026</strong>
+        </div>
+      </div>
+
+      <!-- Routine Table -->
+      <table class="routine-table">
+        <thead>
+          <tr>
+            <th style="width: 15%;">TIME & PERIOD</th>
+            <th style="width: 14%;">SUNDAY</th>
+            <th style="width: 14%;">MONDAY</th>
+            <th style="width: 14%;">TUESDAY</th>
+            <th style="width: 14%;">WEDNESDAY</th>
+            <th style="width: 14%;">THURSDAY</th>
+            <th style="width: 15%;">FRIDAY</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rowsHtml}
+        </tbody>
+      </table>
+
+      <!-- Instructions Box -->
+      <div class="instructions-box">
+        <div class="instructions-title">General Instructions:</div>
+        <ol class="instructions-list">
+          <li>Students must arrive at school before 8:00 AM daily to attend the morning national assembly.</li>
+          <li>Students must be seated in their respective classrooms before the start of each period.</li>
+          <li>School authority reserves the right to modify or adjust this schedule when necessary.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div>
+      <!-- Signatures Row -->
+      <div class="signatures-row">
+        <div class="sig-col">
+          <div class="sig-line"></div>
+          <div class="sig-role">Class Teacher / Timetable In-charge</div>
+          <div class="sig-school">${SCHOOL_INFO.name}</div>
+        </div>
+        <div class="sig-col">
+          <div class="sig-line"></div>
+          <div class="sig-role">Academic Coordinator</div>
+          <div class="sig-school">${SCHOOL_INFO.name}</div>
+        </div>
+        <div class="sig-col">
+          <div class="sig-line"></div>
+          <div class="sig-role">Principal / Head of Institution</div>
+          <div class="sig-school">${SCHOOL_INFO.name}</div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="doc-footer">
+        Official Timetable Document • ${SCHOOL_INFO.name} Portal • Generated: ${currentDateStr}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        window.print();
+      }, 350);
+    });
+  </script>
+</body>
+</html>`;
+
+    printWindow.document.open();
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
   };
 
   return (
@@ -566,6 +1369,13 @@ export const Academic: React.FC = () => {
                   onChange={(e) => setSelectedClass(e.target.value)}
                   className="w-full bg-white border border-slate-200 rounded-xl pl-3.5 pr-8 py-2 text-xs font-bold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
                 >
+                  <option value="Pred 1">Pred 1</option>
+                  <option value="Pred 2">Pred 2</option>
+                  <option value="Class 1">Class 1</option>
+                  <option value="Class 2">Class 2</option>
+                  <option value="Class 3">Class 3</option>
+                  <option value="Class 4">Class 4</option>
+                  <option value="Class 5">Class 5</option>
                   <option value="Class 6">Class 6</option>
                   <option value="Class 7">Class 7</option>
                   <option value="Class 8">Class 8</option>

@@ -17,6 +17,7 @@ import {
   Award,
   CheckCircle2,
   Sparkles,
+  ExternalLink,
 } from 'lucide-react';
 import {
   LEADERSHIP,
@@ -210,26 +211,34 @@ export const About: React.FC = () => {
             </p>
 
             <div className="pt-2">
-              <Link
-                to="/academic"
+              <a
+                href="https://en.wikipedia.org/wiki/SOS_Children%27s_Villages"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#004d34] hover:bg-[#064e3b] text-white px-6 py-3 rounded-xl text-xs sm:text-sm font-bold transition shadow-sm hover:shadow cursor-pointer"
               >
                 <span>Learn More About Our History</span>
                 <ArrowRight size={14} />
-              </Link>
+              </a>
             </div>
           </div>
 
           {/* Right Column: Hermann Gmeiner Portrait & Quote Card Side by Side */}
           <div className="lg:col-span-6 flex flex-col sm:flex-row items-stretch gap-4 sm:gap-5">
             {/* Portrait Photo */}
-            <div className="w-full sm:w-[210px] aspect-[4/5] rounded-[24px] overflow-hidden shadow-lg border border-slate-200 shrink-0 bg-slate-100">
+            <a
+              href="https://en.wikipedia.org/wiki/Hermann_Gmeiner"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Read Dr. Hermann Gmeiner's biography on Wikipedia"
+              className="w-full sm:w-[210px] aspect-[4/5] rounded-[24px] overflow-hidden shadow-lg border border-slate-200 shrink-0 bg-slate-100 block group"
+            >
               <img
                 src="/hermann_gmeiner_bw.png"
                 alt="Dr. Hermann Gmeiner"
-                className="w-full h-full object-cover object-center select-none"
+                className="w-full h-full object-cover object-center select-none group-hover:scale-105 transition-transform duration-500"
               />
-            </div>
+            </a>
 
             {/* Quote Card */}
             <div className="w-full flex-1 bg-white rounded-[24px] p-6 sm:p-7 border border-slate-200/80 shadow-xs flex flex-col justify-center">
@@ -237,11 +246,29 @@ export const About: React.FC = () => {
               <p className="text-xs sm:text-sm font-semibold text-slate-800 italic leading-relaxed">
                 “A loving home for every child, and a future full of possibilities.”
               </p>
-              <div className="mt-4 pt-3 border-t border-slate-100">
-                <h4 className="font-black text-xs sm:text-sm text-slate-900">Dr. Hermann Gmeiner</h4>
-                <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                  Founder, SOS Children’s Villages International
-                </p>
+              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                <div>
+                  <a
+                    href="https://en.wikipedia.org/wiki/Hermann_Gmeiner"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-black text-xs sm:text-sm text-slate-900 hover:text-[#004d34] transition-colors"
+                  >
+                    Dr. Hermann Gmeiner
+                  </a>
+                  <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                    Founder, SOS Children’s Villages International
+                  </p>
+                </div>
+                <a
+                  href="https://en.wikipedia.org/wiki/SOS_Children%27s_Villages"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Read on Wikipedia"
+                  className="w-7 h-7 rounded-full bg-slate-100 hover:bg-emerald-50 text-slate-500 hover:text-[#004d34] flex items-center justify-center transition"
+                >
+                  <ExternalLink size={12} />
+                </a>
               </div>
             </div>
           </div>

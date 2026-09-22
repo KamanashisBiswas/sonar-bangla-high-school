@@ -1,23 +1,26 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Home,
   GraduationCap,
   Users,
   Award,
-  Plus,
   Search,
   ChevronDown,
   Eye,
-  Pencil,
-  MoreVertical,
   ArrowRight,
   ChevronLeft,
   ChevronRight,
   X,
-  Check,
   RotateCcw,
+  BookOpen,
+  Droplet,
+  Phone,
+  MapPin,
+  UserCheck,
+  User,
 } from 'lucide-react';
+import { SCHOOL_INFO } from '../data/schoolData';
 
 export interface StudentRecord {
   roll: string;
@@ -31,6 +34,10 @@ export interface StudentRecord {
   section: string; // "Section A" | "Section B" | "Section C"
   bloodGroup?: string;
   guardianName?: string;
+  fatherName?: string;
+  motherName?: string;
+  phoneNumber?: string;
+  address?: string;
 }
 
 const ALL_STUDENTS_DATA: StudentRecord[] = [
@@ -38,7 +45,7 @@ const ALL_STUDENTS_DATA: StudentRecord[] = [
   {
     roll: '#101',
     name: 'Abdullah Al Mamun',
-    subId: 'ID: S-10-101',
+    subId: 'ID: SB-1',
     studentId: 'S-2024-0101',
     classLevel: '10 Class',
     group: 'Science',
@@ -47,24 +54,32 @@ const ALL_STUDENTS_DATA: StudentRecord[] = [
     section: 'Section A',
     bloodGroup: 'B+',
     guardianName: 'Md. Abdur Rahim',
+    fatherName: 'Md. Abdur Rahim',
+    motherName: 'Salma Khatun',
+    phoneNumber: '01711-223344',
+    address: 'Gollamari, Khulna - 9208',
   },
   {
     roll: '#102',
     name: 'Sumaiya Akter',
-    subId: 'ID: S-10-102',
+    subId: 'ID: SB-2',
     studentId: 'S-2024-0102',
     classLevel: '10 Class',
     group: 'Business Studies',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&fit=crop&q=80',
     fallbackAvatar: '/students/student_2.png',
     section: 'Section A',
-    bloodGroup: 'A+',
-    guardianName: 'Md. Shahidul Islam',
+    bloodGroup: 'B+',
+    guardianName: 'Abdul Quader',
+    fatherName: 'Abdul Quader',
+    motherName: 'Sufia Khatun',
+    phoneNumber: '01713-445566',
+    address: 'Gollamari, Khulna - 9208',
   },
   {
     roll: '#103',
     name: 'Rakib Hasan',
-    subId: 'ID: S-10-103',
+    subId: 'ID: SB-3',
     studentId: 'S-2024-0103',
     classLevel: '10 Class',
     group: 'Science',
@@ -73,11 +88,15 @@ const ALL_STUDENTS_DATA: StudentRecord[] = [
     section: 'Section B',
     bloodGroup: 'O+',
     guardianName: 'Md. Anwar Hossain',
+    fatherName: 'Md. Anwar Hossain',
+    motherName: 'Rasheda Begum',
+    phoneNumber: '01712-334455',
+    address: 'Boyra, Khulna - 9000',
   },
   {
     roll: '#104',
     name: 'Nusrat Jahan',
-    subId: 'ID: S-10-104',
+    subId: 'ID: SB-4',
     studentId: 'S-2024-0104',
     classLevel: '10 Class',
     group: 'Science',
@@ -86,11 +105,15 @@ const ALL_STUDENTS_DATA: StudentRecord[] = [
     section: 'Section A',
     bloodGroup: 'AB+',
     guardianName: 'Md. Joynal Abedin',
+    fatherName: 'Md. Joynal Abedin',
+    motherName: 'Nasrin Akter',
+    phoneNumber: '01714-556677',
+    address: 'Sonadanga, Khulna - 9100',
   },
   {
     roll: '#105',
     name: 'Mehedi Hasan',
-    subId: 'ID: S-10-105',
+    subId: 'ID: SB-5',
     studentId: 'S-2024-0105',
     classLevel: '10 Class',
     group: 'Humanities',
@@ -99,11 +122,15 @@ const ALL_STUDENTS_DATA: StudentRecord[] = [
     section: 'Section B',
     bloodGroup: 'O-',
     guardianName: 'Md. Moklesur Rahman',
+    fatherName: 'Md. Moklesur Rahman',
+    motherName: 'Fatema Begum',
+    phoneNumber: '01715-667788',
+    address: 'Khalishpur, Khulna - 9000',
   },
   {
     roll: '#106',
     name: 'Fatema Tuz Zohra',
-    subId: 'ID: S-10-106',
+    subId: 'ID: SB-6',
     studentId: 'S-2024-0106',
     classLevel: '10 Class',
     group: 'Science',
@@ -112,11 +139,15 @@ const ALL_STUDENTS_DATA: StudentRecord[] = [
     section: 'Section A',
     bloodGroup: 'A+',
     guardianName: 'Md. Kamal Uddin',
+    fatherName: 'Md. Kamal Uddin',
+    motherName: 'Tahmina Akter',
+    phoneNumber: '01716-778899',
+    address: 'Daulatpur, Khulna - 9202',
   },
   {
     roll: '#107',
     name: 'Sajib Ahmed',
-    subId: 'ID: S-10-107',
+    subId: 'ID: SB-7',
     studentId: 'S-2024-0107',
     classLevel: '10 Class',
     group: 'Business Studies',
@@ -125,11 +156,15 @@ const ALL_STUDENTS_DATA: StudentRecord[] = [
     section: 'Section B',
     bloodGroup: 'B+',
     guardianName: 'Md. Faruk Ahmed',
+    fatherName: 'Md. Faruk Ahmed',
+    motherName: 'Rokeya Begum',
+    phoneNumber: '01717-889900',
+    address: 'Gollamari, Khulna - 9208',
   },
   {
     roll: '#108',
     name: 'Akiful Sultana',
-    subId: 'ID: S-10-108',
+    subId: 'ID: SB-8',
     studentId: 'S-2024-0108',
     classLevel: '10 Class',
     group: 'Humanities',
@@ -138,11 +173,15 @@ const ALL_STUDENTS_DATA: StudentRecord[] = [
     section: 'Section A',
     bloodGroup: 'O+',
     guardianName: 'Md. Sirajul Islam',
+    fatherName: 'Md. Sirajul Islam',
+    motherName: 'Hasina Banu',
+    phoneNumber: '01718-990011',
+    address: 'Sonadanga, Khulna - 9100',
   },
   {
     roll: '#109',
     name: 'Tanvir Rahman',
-    subId: 'ID: S-10-109',
+    subId: 'ID: SB-9',
     studentId: 'S-2024-0109',
     classLevel: '10 Class',
     group: 'Science',
@@ -151,11 +190,15 @@ const ALL_STUDENTS_DATA: StudentRecord[] = [
     section: 'Section B',
     bloodGroup: 'AB-',
     guardianName: 'Md. Hafizur Rahman',
+    fatherName: 'Md. Hafizur Rahman',
+    motherName: 'Nazma Begum',
+    phoneNumber: '01719-001122',
+    address: 'Boyra, Khulna - 9000',
   },
   {
     roll: '#110',
     name: 'Jannatul Ferdous',
-    subId: 'ID: S-10-110',
+    subId: 'ID: SB-10',
     studentId: 'S-2024-0110',
     classLevel: '10 Class',
     group: 'Business Studies',
@@ -164,6 +207,10 @@ const ALL_STUDENTS_DATA: StudentRecord[] = [
     section: 'Section A',
     bloodGroup: 'B+',
     guardianName: 'Md. Golam Kibria',
+    fatherName: 'Md. Golam Kibria',
+    motherName: 'Ferdousi Begum',
+    phoneNumber: '01720-112233',
+    address: 'Gollamari, Khulna - 9208',
   },
 
   // --- CLASS 9 ---
@@ -773,6 +820,382 @@ const ALL_STUDENTS_DATA: StudentRecord[] = [
     bloodGroup: 'O+',
     guardianName: 'Md. Abdul Khaleque',
   },
+
+  // --- CLASS 4 ---
+  {
+    roll: '#701',
+    name: 'Samiul Islam',
+    subId: 'ID: S-04-701',
+    studentId: 'S-2024-0701',
+    classLevel: '4 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_1.png',
+    section: 'Section A',
+    bloodGroup: 'B+',
+    guardianName: 'Md. Shahidul Islam',
+  },
+  {
+    roll: '#702',
+    name: 'Sadia Jahan',
+    subId: 'ID: S-04-702',
+    studentId: 'S-2024-0702',
+    classLevel: '4 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_2.png',
+    section: 'Section A',
+    bloodGroup: 'A+',
+    guardianName: 'Md. Joynal Abedin',
+  },
+  {
+    roll: '#703',
+    name: 'Tanzim Hossain',
+    subId: 'ID: S-04-703',
+    studentId: 'S-2024-0703',
+    classLevel: '4 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_3.png',
+    section: 'Section B',
+    bloodGroup: 'O+',
+    guardianName: 'Md. Anwarul Kabir',
+  },
+  {
+    roll: '#704',
+    name: 'Moumita Roy',
+    subId: 'ID: S-04-704',
+    studentId: 'S-2024-0704',
+    classLevel: '4 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_4.png',
+    section: 'Section B',
+    bloodGroup: 'AB+',
+    guardianName: 'Bidhan Chandra Roy',
+  },
+
+  // --- CLASS 3 ---
+  {
+    roll: '#801',
+    name: 'Abrar Fahim',
+    subId: 'ID: S-03-801',
+    studentId: 'S-2024-0801',
+    classLevel: '3 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_5.png',
+    section: 'Section A',
+    bloodGroup: 'O+',
+    guardianName: 'Md. Farhad Hossain',
+  },
+  {
+    roll: '#802',
+    name: 'Nusrat Fariha',
+    subId: 'ID: S-03-802',
+    studentId: 'S-2024-0802',
+    classLevel: '3 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_6.png',
+    section: 'Section A',
+    bloodGroup: 'B+',
+    guardianName: 'Md. Sirajul Haque',
+  },
+  {
+    roll: '#803',
+    name: 'Hasibul Islam',
+    subId: 'ID: S-03-803',
+    studentId: 'S-2024-0803',
+    classLevel: '3 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_7.png',
+    section: 'Section B',
+    bloodGroup: 'A+',
+    guardianName: 'Md. Enamul Kabir',
+  },
+  {
+    roll: '#804',
+    name: 'Tanha Akter',
+    subId: 'ID: S-03-804',
+    studentId: 'S-2024-0804',
+    classLevel: '3 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_8.png',
+    section: 'Section B',
+    bloodGroup: 'O-',
+    guardianName: 'Md. Mizanur Rahman',
+  },
+
+  // --- CLASS 2 ---
+  {
+    roll: '#901',
+    name: 'Rafiul Hasan',
+    subId: 'ID: S-02-901',
+    studentId: 'S-2024-0901',
+    classLevel: '2 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_1.png',
+    section: 'Section A',
+    bloodGroup: 'B+',
+    guardianName: 'Md. Golam Sarwar',
+  },
+  {
+    roll: '#902',
+    name: 'Samia Tasnim',
+    subId: 'ID: S-02-902',
+    studentId: 'S-2024-0902',
+    classLevel: '2 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_2.png',
+    section: 'Section A',
+    bloodGroup: 'A+',
+    guardianName: 'Md. Harun-ur-Rashid',
+  },
+  {
+    roll: '#903',
+    name: 'Zubair Ahmed',
+    subId: 'ID: S-02-903',
+    studentId: 'S-2024-0903',
+    classLevel: '2 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_3.png',
+    section: 'Section B',
+    bloodGroup: 'O+',
+    guardianName: 'Md. Babul Akter',
+  },
+  {
+    roll: '#904',
+    name: 'Lamia Islam',
+    subId: 'ID: S-02-904',
+    studentId: 'S-2024-0904',
+    classLevel: '2 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_4.png',
+    section: 'Section B',
+    bloodGroup: 'AB+',
+    guardianName: 'Md. Saiful Islam',
+  },
+
+  // --- CLASS 1 ---
+  {
+    roll: '#1001',
+    name: 'Tahmid Rahman',
+    subId: 'ID: S-01-1001',
+    studentId: 'S-2024-1001',
+    classLevel: '1 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_5.png',
+    section: 'Section A',
+    bloodGroup: 'O+',
+    guardianName: 'Md. Azizul Haque',
+  },
+  {
+    roll: '#1002',
+    name: 'Anika Tabassum',
+    subId: 'ID: S-01-1002',
+    studentId: 'S-2024-1002',
+    classLevel: '1 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_6.png',
+    section: 'Section A',
+    bloodGroup: 'A+',
+    guardianName: 'Md. Moniruzzaman',
+  },
+  {
+    roll: '#1003',
+    name: 'Aryan Das',
+    subId: 'ID: S-01-1003',
+    studentId: 'S-2024-1003',
+    classLevel: '1 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_7.png',
+    section: 'Section B',
+    bloodGroup: 'B+',
+    guardianName: 'Subrata Das',
+  },
+  {
+    roll: '#1004',
+    name: 'Mehvish Khan',
+    subId: 'ID: S-01-1004',
+    studentId: 'S-2024-1004',
+    classLevel: '1 Class',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_8.png',
+    section: 'Section B',
+    bloodGroup: 'AB-',
+    guardianName: 'Md. Alamgir Khan',
+  },
+
+  // --- PRED 2 (Preparatory 2) ---
+  {
+    roll: '#1101',
+    name: 'Ayaan Ahmed',
+    subId: 'ID: S-P2-1101',
+    studentId: 'S-2024-1101',
+    classLevel: 'Pred 2',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_1.png',
+    section: 'Section A',
+    bloodGroup: 'B+',
+    guardianName: 'Md. Kamrul Hasan',
+  },
+  {
+    roll: '#1102',
+    name: 'Inaya Rahman',
+    subId: 'ID: S-P2-1102',
+    studentId: 'S-2024-1102',
+    classLevel: 'Pred 2',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_2.png',
+    section: 'Section A',
+    bloodGroup: 'O+',
+    guardianName: 'Md. Shafiqul Islam',
+  },
+  {
+    roll: '#1103',
+    name: 'Rayyan Chowdhury',
+    subId: 'ID: S-P2-1103',
+    studentId: 'S-2024-1103',
+    classLevel: 'Pred 2',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_3.png',
+    section: 'Section B',
+    bloodGroup: 'A+',
+    guardianName: 'Md. Tanveer Chowdhury',
+  },
+  {
+    roll: '#1104',
+    name: 'Zunaira Noor',
+    subId: 'ID: S-P2-1104',
+    studentId: 'S-2024-1104',
+    classLevel: 'Pred 2',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_4.png',
+    section: 'Section B',
+    bloodGroup: 'B-',
+    guardianName: 'Md. Nuruzzaman',
+  },
+  {
+    roll: '#1105',
+    name: 'Zafirul Islam',
+    subId: 'ID: S-P2-1105',
+    studentId: 'S-2024-1105',
+    classLevel: 'Pred 2',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_5.png',
+    section: 'Section A',
+    bloodGroup: 'O+',
+    guardianName: 'Md. Zulfikar Ali',
+  },
+  {
+    roll: '#1106',
+    name: 'Wania Fatima',
+    subId: 'ID: S-P2-1106',
+    studentId: 'S-2024-1106',
+    classLevel: 'Pred 2',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_6.png',
+    section: 'Section B',
+    bloodGroup: 'A+',
+    guardianName: 'Md. Wahiduzzaman',
+  },
+
+  // --- PRED 1 (Preparatory 1) ---
+  {
+    roll: '#1201',
+    name: 'Adiyan Rahman',
+    subId: 'ID: S-P1-1201',
+    studentId: 'S-2024-1201',
+    classLevel: 'Pred 1',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_1.png',
+    section: 'Section A',
+    bloodGroup: 'O+',
+    guardianName: 'Md. Anisur Rahman',
+  },
+  {
+    roll: '#1202',
+    name: 'Ayat Fatima',
+    subId: 'ID: S-P1-1202',
+    studentId: 'S-2024-1202',
+    classLevel: 'Pred 1',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_2.png',
+    section: 'Section A',
+    bloodGroup: 'B+',
+    guardianName: 'Md. Ashraf Ali',
+  },
+  {
+    roll: '#1203',
+    name: 'Arham Mahmud',
+    subId: 'ID: S-P1-1203',
+    studentId: 'S-2024-1203',
+    classLevel: 'Pred 1',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_3.png',
+    section: 'Section B',
+    bloodGroup: 'A+',
+    guardianName: 'Md. Ashraful Mahmud',
+  },
+  {
+    roll: '#1204',
+    name: 'Zaara Khan',
+    subId: 'ID: S-P1-1204',
+    studentId: 'S-2024-1204',
+    classLevel: 'Pred 1',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_4.png',
+    section: 'Section B',
+    bloodGroup: 'AB+',
+    guardianName: 'Md. Zakir Hossain',
+  },
+  {
+    roll: '#1205',
+    name: 'Shafwan Hossain',
+    subId: 'ID: S-P1-1205',
+    studentId: 'S-2024-1205',
+    classLevel: 'Pred 1',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_7.png',
+    section: 'Section A',
+    bloodGroup: 'B+',
+    guardianName: 'Md. Shahadat Hossain',
+  },
+  {
+    roll: '#1206',
+    name: 'Sara Mehreen',
+    subId: 'ID: S-P1-1206',
+    studentId: 'S-2024-1206',
+    classLevel: 'Pred 1',
+    group: 'General',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&fit=crop&q=80',
+    fallbackAvatar: '/students/student_8.png',
+    section: 'Section B',
+    bloodGroup: 'AB+',
+    guardianName: 'Md. Mahfuzul Alam',
+  },
 ];
 
 const ITEMS_PER_PAGE = 10;
@@ -785,26 +1208,36 @@ export const Students: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [viewingStudent, setViewingStudent] = useState<StudentRecord | null>(null);
-  const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
-
-  // New Student Form State
-  const [newName, setNewName] = useState('');
-  const [newRoll, setNewRoll] = useState('');
-  const [newClass, setNewClass] = useState('10 Class');
-  const [newGroup, setNewGroup] = useState<'Science' | 'Business Studies' | 'Humanities' | 'General'>('Science');
-  const [newSection, setNewSection] = useState('Section A');
-  const [newBloodGroup, setNewBloodGroup] = useState('B+');
-  const [newGuardian, setNewGuardian] = useState('');
 
   // Robust Filter logic supporting All Classes & each individual Class
   const filteredStudents = useMemo(() => {
     return students.filter((s) => {
-      // 1. Class filter matching: "Class 10" matches "10 Class" or "Class 10"
-      const matchClass =
-        selectedClass === 'All Classes' ||
-        s.classLevel === selectedClass ||
-        s.classLevel === `${selectedClass.replace('Class ', '')} Class` ||
-        selectedClass === `Class ${s.classLevel.replace(' Class', '')}`;
+      // 1. Class filter matching: supports Prep 1, Prep 2, Class 1 to Class 10
+      const matchClass = (() => {
+        if (selectedClass === 'All Classes') return true;
+        const normSelected = selectedClass.toLowerCase().trim();
+        const normStudent = s.classLevel.toLowerCase().trim();
+
+        if (normStudent === normSelected) return true;
+
+        // Prep 1 / Pred 1
+        if (
+          (normSelected.includes('prep 1') || normSelected.includes('pred 1') || normSelected === 'prep1' || normSelected === 'pred1') &&
+          (normStudent.includes('prep 1') || normStudent.includes('pred 1') || normStudent.includes('prep-1') || normStudent.includes('prep-i'))
+        ) return true;
+
+        // Prep 2 / Pred 2
+        if (
+          (normSelected.includes('prep 2') || normSelected.includes('pred 2') || normSelected === 'prep2' || normSelected === 'pred2') &&
+          (normStudent.includes('prep 2') || normStudent.includes('pred 2') || normStudent.includes('prep-2') || normStudent.includes('prep-ii'))
+        ) return true;
+
+        const selNum = normSelected.replace(/class/g, '').trim();
+        const stuNum = normStudent.replace(/class/g, '').trim();
+        if (selNum && stuNum && selNum === stuNum) return true;
+
+        return normStudent.includes(normSelected) || normSelected.includes(normStudent);
+      })();
 
       // 2. Group filter
       const matchGroup =
@@ -865,34 +1298,42 @@ export const Students: React.FC = () => {
     setCurrentPage(1);
   };
 
-  const handleAddStudent = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newName.trim() || !newRoll.trim()) return;
-
-    const formattedRoll = newRoll.startsWith('#') ? newRoll : `#${newRoll}`;
-    const idNum = newRoll.replace(/\D/g, '') || Math.floor(100 + Math.random() * 900).toString();
-    const classNum = newClass.replace(/\D/g, '') || '10';
-
-    const newStudent: StudentRecord = {
-      roll: formattedRoll,
-      name: newName.trim(),
-      subId: `ID: S-${classNum}-${idNum}`,
-      studentId: `S-2024-0${idNum}`,
-      classLevel: newClass,
-      group: newGroup,
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&fit=crop&q=80',
-      fallbackAvatar: '/students/student_1.png',
-      section: newSection,
-      bloodGroup: newBloodGroup || 'O+',
-      guardianName: newGuardian || 'Guardian Record on File',
-    };
-
-    setStudents([newStudent, ...students]);
-    setIsAddModalOpen(false);
-    setNewName('');
-    setNewRoll('');
-    setNewGuardian('');
+  // Previous and Next Student Modal Navigation
+  const handlePrevStudent = () => {
+    if (!viewingStudent) return;
+    const currentIndex = filteredStudents.findIndex(
+      (s) => s.roll === viewingStudent.roll && s.studentId === viewingStudent.studentId
+    );
+    if (currentIndex > 0) {
+      setViewingStudent(filteredStudents[currentIndex - 1]);
+    } else if (filteredStudents.length > 0) {
+      setViewingStudent(filteredStudents[filteredStudents.length - 1]);
+    }
   };
+
+  const handleNextStudent = () => {
+    if (!viewingStudent) return;
+    const currentIndex = filteredStudents.findIndex(
+      (s) => s.roll === viewingStudent.roll && s.studentId === viewingStudent.studentId
+    );
+    if (currentIndex >= 0 && currentIndex < filteredStudents.length - 1) {
+      setViewingStudent(filteredStudents[currentIndex + 1]);
+    } else if (filteredStudents.length > 0) {
+      setViewingStudent(filteredStudents[0]);
+    }
+  };
+
+  // Keyboard navigation for Modal (Escape to close, Left/Right arrow to cycle students)
+  useEffect(() => {
+    if (!viewingStudent) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setViewingStudent(null);
+      if (e.key === 'ArrowLeft') handlePrevStudent();
+      if (e.key === 'ArrowRight') handleNextStudent();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [viewingStudent, filteredStudents]);
 
   // Helper for group pill styling matching reference mockup
   const renderGroupBadge = (group: string) => {
@@ -1051,7 +1492,7 @@ export const Students: React.FC = () => {
                 12
               </div>
               <div className="text-xs font-bold text-slate-600 mt-1">Classes</div>
-              <div className="text-[11px] font-medium text-slate-400 mt-0.5">Play to Class 10</div>
+              <div className="text-[11px] font-medium text-slate-400 mt-0.5">Pred 1 to Class 10</div>
             </div>
           </div>
 
@@ -1088,7 +1529,7 @@ export const Students: React.FC = () => {
       {/* 3. Students Data Table & Directory Container */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-10">
         <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-5 sm:p-8 space-y-6">
-          {/* Header Row: Title & + Add New Student Button */}
+          {/* Header Row: Title */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
@@ -1103,16 +1544,6 @@ export const Students: React.FC = () => {
                 </p>
               </div>
             </div>
-
-            {/* + Add New Student Button */}
-            <button
-              type="button"
-              onClick={() => setIsAddModalOpen(true)}
-              className="inline-flex items-center gap-2 bg-[#004d34] hover:bg-[#003826] text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-xs hover:shadow cursor-pointer shrink-0 self-start sm:self-auto"
-            >
-              <Plus size={16} />
-              <span>Add New Student</span>
-            </button>
           </div>
 
           {/* Filter Controls Row */}
@@ -1125,12 +1556,18 @@ export const Students: React.FC = () => {
                 className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
               >
                 <option value="All Classes">All Classes</option>
-                <option value="Class 10">Class 10</option>
-                <option value="Class 9">Class 9</option>
-                <option value="Class 8">Class 8</option>
-                <option value="Class 7">Class 7</option>
-                <option value="Class 6">Class 6</option>
+                <option value="Pred 1">Pred 1</option>
+                <option value="Pred 2">Pred 2</option>
+                <option value="Class 1">Class 1</option>
+                <option value="Class 2">Class 2</option>
+                <option value="Class 3">Class 3</option>
+                <option value="Class 4">Class 4</option>
                 <option value="Class 5">Class 5</option>
+                <option value="Class 6">Class 6</option>
+                <option value="Class 7">Class 7</option>
+                <option value="Class 8">Class 8</option>
+                <option value="Class 9">Class 9</option>
+                <option value="Class 10">Class 10</option>
               </select>
               <ChevronDown
                 size={14}
@@ -1318,35 +1755,15 @@ export const Students: React.FC = () => {
 
                       {/* Action Buttons Column */}
                       <td className="py-3.5 px-4 sm:px-6">
-                        <div className="flex items-center justify-center gap-1.5">
+                        <div className="flex items-center justify-center">
                           {/* Eye / View Profile */}
                           <button
                             type="button"
-                            title="View Student"
+                            title="View Profile"
                             onClick={() => setViewingStudent(student)}
                             className="w-7 h-7 rounded-full bg-slate-50 hover:bg-emerald-50 text-slate-500 hover:text-[#004d34] border border-slate-200/80 flex items-center justify-center transition cursor-pointer"
                           >
                             <Eye size={13} />
-                          </button>
-
-                          {/* Pencil / Edit */}
-                          <button
-                            type="button"
-                            title="Edit Record"
-                            onClick={() => setViewingStudent(student)}
-                            className="w-7 h-7 rounded-full bg-slate-50 hover:bg-emerald-50 text-slate-500 hover:text-[#004d34] border border-slate-200/80 flex items-center justify-center transition cursor-pointer"
-                          >
-                            <Pencil size={12} />
-                          </button>
-
-                          {/* More Options */}
-                          <button
-                            type="button"
-                            title="More Options"
-                            onClick={() => setViewingStudent(student)}
-                            className="w-7 h-7 rounded-full bg-slate-50 hover:bg-emerald-50 text-slate-500 hover:text-[#004d34] border border-slate-200/80 flex items-center justify-center transition cursor-pointer"
-                          >
-                            <MoreVertical size={13} />
                           </button>
                         </div>
                       </td>
@@ -1455,25 +1872,53 @@ export const Students: React.FC = () => {
         </section>
       </div>
 
-      {/* 5. View Student Details Modal */}
+      {/* 5. View Student Details Modal (Matching reference image media_1790114800234.jpg) */}
       {viewingStudent && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-in fade-in duration-150">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 className="font-extrabold text-base text-slate-900">
-                Student Profile Information
-              </h3>
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 overflow-y-auto animate-in fade-in duration-200"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setViewingStudent(null);
+          }}
+        >
+          <div className="relative bg-white rounded-3xl max-w-[430px] w-full shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200 border border-slate-100 my-auto">
+            {/* Dark Green Curved Top Header */}
+            <div className="relative bg-[#004d34] h-28 sm:h-32 flex items-start justify-end p-3.5">
+              {/* Subtle curved bottom shape */}
+              <div
+                className="absolute inset-x-0 -bottom-1 h-8 bg-white"
+                style={{
+                  borderTopLeftRadius: '50% 100%',
+                  borderTopRightRadius: '50% 100%',
+                }}
+              />
+
+              {/* Close Button (X in white round button on top right) */}
               <button
                 type="button"
+                aria-label="Close"
                 onClick={() => setViewingStudent(null)}
-                className="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-500 cursor-pointer"
+                className="relative z-20 w-8 h-8 rounded-full bg-white text-slate-800 hover:bg-slate-100 shadow-md flex items-center justify-center transition cursor-pointer"
               >
                 <X size={16} />
               </button>
             </div>
 
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-100 border-2 border-emerald-500 shrink-0">
+            {/* Avatar & Left/Right Navigation Row */}
+            <div className="relative px-6 -mt-14 sm:-mt-16 flex items-center justify-between z-10">
+              {/* Left Arrow Button */}
+              <button
+                type="button"
+                aria-label="Previous Student"
+                onClick={handlePrevStudent}
+                className="w-8 h-8 rounded-full bg-white border border-slate-200/90 shadow-sm flex items-center justify-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition cursor-pointer"
+              >
+                <ChevronLeft size={16} />
+              </button>
+
+              {/* Central Circular Student Avatar */}
+              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-white shadow-xl overflow-hidden bg-white shrink-0">
                 <img
                   src={viewingStudent.avatar}
                   alt={viewingStudent.name}
@@ -1483,199 +1928,170 @@ export const Students: React.FC = () => {
                   }}
                 />
               </div>
-              <div>
-                <h4 className="font-black text-slate-900 text-lg leading-tight">
+
+              {/* Right Arrow Button */}
+              <button
+                type="button"
+                aria-label="Next Student"
+                onClick={handleNextStudent}
+                className="w-8 h-8 rounded-full bg-white border border-slate-200/90 shadow-sm flex items-center justify-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition cursor-pointer"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
+
+            {/* Modal Body Info */}
+            <div className="p-5 sm:p-6 pt-3 space-y-4">
+              {/* Student Name */}
+              <div className="text-center">
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-tight">
                   {viewingStudent.name}
-                </h4>
-                <p className="text-xs text-emerald-700 font-bold mt-0.5">
-                  Roll: {viewingStudent.roll} • {viewingStudent.studentId}
+                </h3>
+
+                {/* Roll & ID Pill Badge */}
+                <div className="flex items-center justify-center mt-2">
+                  <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#004d34] border border-emerald-200/70 px-3.5 py-1 rounded-full text-xs font-bold shadow-2xs">
+                    <User size={13} className="text-[#059669]" />
+                    <span>Roll: {viewingStudent.roll}</span>
+                    <span className="text-emerald-300">|</span>
+                    <span>
+                      ID:{' '}
+                      {viewingStudent.subId
+                        ? viewingStudent.subId.replace('ID: ', '')
+                        : viewingStudent.studentId}
+                    </span>
+                  </div>
+                </div>
+
+                {/* School Name Subtext */}
+                <p className="text-[11px] sm:text-xs font-semibold text-slate-400 mt-1.5">
+                  {SCHOOL_INFO.name}
                 </p>
-                <div className="mt-1">{renderGroupBadge(viewingStudent.group)}</div>
               </div>
-            </div>
 
-            <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-100 text-xs">
-              <div className="bg-slate-50 p-3 rounded-xl">
-                <span className="text-slate-400 block text-[10px] font-bold uppercase">
-                  Class & Section
-                </span>
-                <span className="font-bold text-slate-800">
-                  {viewingStudent.classLevel}, {viewingStudent.section}
-                </span>
-              </div>
-              <div className="bg-slate-50 p-3 rounded-xl">
-                <span className="text-slate-400 block text-[10px] font-bold uppercase">
-                  Blood Group
-                </span>
-                <span className="font-bold text-slate-800">
-                  {viewingStudent.bloodGroup || 'O+'}
-                </span>
-              </div>
-              <div className="col-span-2 bg-slate-50 p-3 rounded-xl">
-                <span className="text-slate-400 block text-[10px] font-bold uppercase">
-                  Guardian Name
-                </span>
-                <span className="font-bold text-slate-800">
-                  {viewingStudent.guardianName || 'Guardian Record on File'}
-                </span>
-              </div>
-            </div>
+              {/* 4 Info Cards (2x2 Grid) */}
+              <div className="grid grid-cols-2 gap-3 pt-1">
+                {/* 1. Class */}
+                <div className="bg-slate-50/70 border border-slate-200/80 rounded-2xl p-3 sm:p-3.5 flex items-center gap-3 shadow-2xs">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#059669] border border-emerald-100 flex items-center justify-center shrink-0">
+                    <GraduationCap size={18} />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="block text-[10px] font-bold text-slate-400">Class</span>
+                    <span className="block text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">
+                      {viewingStudent.classLevel.replace(' Class', '')}
+                    </span>
+                  </div>
+                </div>
 
-            <div className="pt-2 flex justify-end">
+                {/* 2. Section */}
+                <div className="bg-slate-50/70 border border-slate-200/80 rounded-2xl p-3 sm:p-3.5 flex items-center gap-3 shadow-2xs">
+                  <div className="w-9 h-9 rounded-xl bg-teal-50 text-teal-600 border border-teal-100 flex items-center justify-center shrink-0">
+                    <Users size={18} />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="block text-[10px] font-bold text-slate-400">Section</span>
+                    <span className="block text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">
+                      {viewingStudent.section.replace('Section ', '')}
+                    </span>
+                  </div>
+                </div>
+
+                {/* 3. Group */}
+                <div className="bg-slate-50/70 border border-slate-200/80 rounded-2xl p-3 sm:p-3.5 flex items-center gap-3 shadow-2xs">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#059669] border border-emerald-100 flex items-center justify-center shrink-0">
+                    <BookOpen size={18} />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="block text-[10px] font-bold text-slate-400">Group</span>
+                    <span className="block text-xs font-black text-slate-900 tracking-tight truncate">
+                      {viewingStudent.group}
+                    </span>
+                  </div>
+                </div>
+
+                {/* 4. Blood Group */}
+                <div className="bg-slate-50/70 border border-slate-200/80 rounded-2xl p-3 sm:p-3.5 flex items-center gap-3 shadow-2xs">
+                  <div className="w-9 h-9 rounded-xl bg-teal-50 text-teal-600 border border-teal-100 flex items-center justify-center shrink-0">
+                    <Droplet size={18} />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="block text-[10px] font-bold text-slate-400">Blood Group</span>
+                    <span className="block text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">
+                      {viewingStudent.bloodGroup || 'B+'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Guardian & Contact Details Card */}
+              <div className="bg-[#f0fdf4]/50 border border-emerald-100/90 rounded-2xl p-3.5 sm:p-4 space-y-2.5 shadow-2xs">
+                <div className="flex items-center gap-2 text-[#004d34] font-extrabold text-xs sm:text-sm pb-2 border-b border-emerald-100/80">
+                  <UserCheck size={16} className="text-[#059669]" />
+                  <span>Guardian & Contact Details</span>
+                </div>
+
+                <div className="space-y-2 text-xs">
+                  {/* Father's Name */}
+                  <div className="grid grid-cols-12 items-center">
+                    <div className="col-span-5 flex items-center gap-2 text-slate-500 font-semibold">
+                      <User size={13} className="text-[#059669] shrink-0" />
+                      <span>Father's Name</span>
+                    </div>
+                    <div className="col-span-1 text-slate-400 font-bold text-center">:</div>
+                    <div className="col-span-6 font-bold text-slate-900 truncate">
+                      {viewingStudent.fatherName || viewingStudent.guardianName || 'Md. Abdul Quader'}
+                    </div>
+                  </div>
+
+                  {/* Mother's Name */}
+                  <div className="grid grid-cols-12 items-center">
+                    <div className="col-span-5 flex items-center gap-2 text-slate-500 font-semibold">
+                      <User size={13} className="text-[#059669] shrink-0" />
+                      <span>Mother's Name</span>
+                    </div>
+                    <div className="col-span-1 text-slate-400 font-bold text-center">:</div>
+                    <div className="col-span-6 font-bold text-slate-900 truncate">
+                      {viewingStudent.motherName || 'Sufia Khatun'}
+                    </div>
+                  </div>
+
+                  {/* Phone Number */}
+                  <div className="grid grid-cols-12 items-center">
+                    <div className="col-span-5 flex items-center gap-2 text-slate-500 font-semibold">
+                      <Phone size={13} className="text-[#059669] shrink-0" />
+                      <span>Phone Number</span>
+                    </div>
+                    <div className="col-span-1 text-slate-400 font-bold text-center">:</div>
+                    <div className="col-span-6 font-bold text-slate-900">
+                      {viewingStudent.phoneNumber || '01713-445566'}
+                    </div>
+                  </div>
+
+                  {/* Address */}
+                  <div className="grid grid-cols-12 items-center">
+                    <div className="col-span-5 flex items-center gap-2 text-slate-500 font-semibold">
+                      <MapPin size={13} className="text-[#059669] shrink-0" />
+                      <span>Address</span>
+                    </div>
+                    <div className="col-span-1 text-slate-400 font-bold text-center">:</div>
+                    <div className="col-span-6 font-bold text-slate-900 truncate">
+                      {viewingStudent.address || 'Gollamari, Khulna - 9208'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Close Profile Button */}
               <button
                 type="button"
                 onClick={() => setViewingStudent(null)}
-                className="bg-[#004d34] text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-[#003826] transition cursor-pointer"
+                className="w-full bg-[#004d34] hover:bg-[#003826] text-white py-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-xs hover:shadow cursor-pointer mt-3"
               >
-                Close
+                <UserCheck size={16} />
+                <span>Close Profile</span>
               </button>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* 6. Add Student Modal */}
-      {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-in fade-in duration-150">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-slate-100 space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div className="flex items-center gap-2 text-[#004d34]">
-                <Plus size={18} />
-                <h3 className="font-extrabold text-base text-slate-900">
-                  Add New Student Record
-                </h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsAddModalOpen(false)}
-                className="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-500 cursor-pointer"
-              >
-                <X size={16} />
-              </button>
-            </div>
-
-            <form onSubmit={handleAddStudent} className="space-y-4 text-xs">
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Student Full Name</label>
-                <input
-                  type="text"
-                  required
-                  value={newName}
-                  onChange={(e) => setNewName(e.target.value)}
-                  placeholder="e.g. Mahfuzur Rahman"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-bold mb-1">Roll Number</label>
-                  <input
-                    type="text"
-                    required
-                    value={newRoll}
-                    onChange={(e) => setNewRoll(e.target.value)}
-                    placeholder="e.g. #111"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-slate-700 font-bold mb-1">Class</label>
-                  <select
-                    value={newClass}
-                    onChange={(e) => setNewClass(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                  >
-                    <option value="10 Class">10 Class</option>
-                    <option value="9 Class">9 Class</option>
-                    <option value="8 Class">8 Class</option>
-                    <option value="7 Class">7 Class</option>
-                    <option value="6 Class">6 Class</option>
-                    <option value="5 Class">5 Class</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-bold mb-1">Group</label>
-                  <select
-                    value={newGroup}
-                    onChange={(e) =>
-                      setNewGroup(e.target.value as 'Science' | 'Business Studies' | 'Humanities' | 'General')
-                    }
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                  >
-                    <option value="Science">Science</option>
-                    <option value="Business Studies">Business Studies</option>
-                    <option value="Humanities">Humanities</option>
-                    <option value="General">General</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-slate-700 font-bold mb-1">Section</label>
-                  <select
-                    value={newSection}
-                    onChange={(e) => setNewSection(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                  >
-                    <option value="Section A">Section A</option>
-                    <option value="Section B">Section B</option>
-                    <option value="Section C">Section C</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-bold mb-1">Blood Group</label>
-                  <select
-                    value={newBloodGroup}
-                    onChange={(e) => setNewBloodGroup(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                  >
-                    <option value="A+">A+</option>
-                    <option value="A-">A-</option>
-                    <option value="B+">B+</option>
-                    <option value="B-">B-</option>
-                    <option value="O+">O+</option>
-                    <option value="O-">O-</option>
-                    <option value="AB+">AB+</option>
-                    <option value="AB-">AB-</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-slate-700 font-bold mb-1">Guardian Name</label>
-                  <input
-                    type="text"
-                    value={newGuardian}
-                    onChange={(e) => setNewGuardian(e.target.value)}
-                    placeholder="e.g. Md. Rafiqul Islam"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                  />
-                </div>
-              </div>
-
-              <div className="pt-3 flex items-center justify-end gap-2 border-t border-slate-100">
-                <button
-                  type="button"
-                  onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 font-bold transition cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="bg-[#004d34] hover:bg-[#003826] text-white px-5 py-2 rounded-xl font-bold flex items-center gap-1.5 transition shadow-xs cursor-pointer"
-                >
-                  <Check size={14} />
-                  <span>Save Student</span>
-                </button>
-              </div>
-            </form>
           </div>
         </div>
       )}
