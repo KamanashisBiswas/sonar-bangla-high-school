@@ -470,17 +470,20 @@ const Home: React.FC = () => {
               <Link
                 key={i}
                 to={card.link}
-                className="relative h-80 sm:h-96 rounded-[28px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-slate-700/30 flex flex-col justify-between p-6 group hover:-translate-y-2 cursor-pointer select-none"
+                className="relative h-80 sm:h-96 rounded-md overflow-hidden isolate shadow-md hover:shadow-2xl transition-all duration-500 border border-slate-700/30 flex flex-col justify-between p-6 group hover:-translate-y-2 cursor-pointer select-none"
               >
-                {/* Background Image with Zoom on hover */}
+                {/* Background Image: clear and natural by default, zoom on hover */}
                 <img
                   src={card.image}
                   alt={card.title}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 -z-20"
+                  className="absolute inset-0 w-full h-full object-cover rounded-md scale-100 group-hover:scale-105 transition-transform duration-700 -z-30"
                 />
 
-                {/* Dark Gradient Overlay for High-Contrast Text */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/30 group-hover:from-slate-950 group-hover:via-slate-950/60 transition-all duration-300 -z-10" />
+                {/* Base Bottom Gradient for text contrast (No black overlay covering top half) */}
+                <div className="absolute inset-0 rounded-md bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent -z-20" />
+
+                {/* Black Overlay that smoothly appears on Hover */}
+                <div className="absolute inset-0 rounded-md bg-slate-950/0 group-hover:bg-slate-950/65 transition-colors duration-500 -z-10" />
 
                 {/* Top Badge & Number */}
                 <div className="flex items-center justify-between">
@@ -496,7 +499,7 @@ const Home: React.FC = () => {
 
                 {/* Bottom Content Area */}
                 <div className="space-y-2.5">
-                  <h4 className="font-extrabold text-white text-base sm:text-lg leading-snug drop-shadow-md group-hover:text-emerald-300 transition duration-300">
+                  <h4 className="font-extrabold text-white group-hover:text-emerald-300 text-base sm:text-lg leading-snug drop-shadow-md transition duration-300">
                     {card.title}
                   </h4>
                   <p className="text-xs text-slate-200/90 font-medium leading-relaxed drop-shadow-sm line-clamp-3">

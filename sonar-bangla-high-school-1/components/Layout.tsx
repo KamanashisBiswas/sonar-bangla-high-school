@@ -172,7 +172,7 @@ const Layout: React.FC = () => {
                     : "text-slate-500 hover:text-slate-800"
                 }`}
               >
-                BN
+                বাং
               </button>
               <button
                 type="button"
@@ -261,7 +261,7 @@ const Layout: React.FC = () => {
                   }`}
                   title="বাংলা"
                 >
-                  BN
+                  বাং
                 </button>
                 <button
                   type="button"
@@ -366,7 +366,7 @@ const Layout: React.FC = () => {
                         : "text-slate-500 hover:text-slate-800"
                     }`}
                   >
-                    BN
+                    বাং
                   </button>
                   <button
                     type="button"
@@ -551,6 +551,17 @@ const Layout: React.FC = () => {
                   >
                     <span className="text-emerald-300">›</span>{" "}
                     {language === "bn" ? "ডাউনলোড সেন্টার" : "Download Center"}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/alumni"
+                    className="hover:text-white transition flex items-center gap-2"
+                  >
+                    <span className="text-emerald-300">›</span>{" "}
+                    {language === "bn"
+                      ? "প্রাক্তন শিক্ষার্থী পরিষদ (Alumni)"
+                      : "Alumni Association"}
                   </Link>
                 </li>
               </ul>

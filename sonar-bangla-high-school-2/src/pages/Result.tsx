@@ -18,6 +18,7 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { SCHOOL_INFO } from '../data/schoolData';
 
 interface SubjectMark {
   code: string;
@@ -259,10 +260,45 @@ export const Result: React.FC = () => {
       'Abdullah Al Mamun': 'আব্দুল্লাহ আল মামুন',
       'Sumaiya Akter': 'সুমাইয়া আক্তার',
       'Tanvir Hasan': 'তানভীর হাসান',
+      'Fatema Tuz Zohra': 'ফাতেমা তুজ জোহরা',
+      'Mehedi Hasan Rony': 'মেহেদী হাসান রনি',
       'Nusrat Jahan Tisha': 'নুসরাত জাহান তিশা',
       'Ariful Islam Sakib': 'আরিফুল ইসলাম সাকিব',
     };
     return map[name] || name;
+  };
+
+  const getClassName = (cls: string) => {
+    if (!isBn) return cls;
+    const num = cls.replace('Class ', '');
+    return `${toBanglaNum(num)} শ্রেণি`;
+  };
+
+  const getExamName = (exam: string) => {
+    if (!isBn) return exam;
+    const map: Record<string, string> = {
+      'Annual Examination': 'বার্ষিক পরীক্ষা',
+      'Half Yearly Examination': 'অর্ধ-বার্ষিক পরীক্ষা',
+      'Model Test Examination': 'নির্বাচনী পরীক্ষা',
+    };
+    return map[exam] || exam;
+  };
+
+  const getGroupName = (grp: string) => {
+    if (!isBn) return grp;
+    const map: Record<string, string> = {
+      'All Groups': 'সকল বিভাগ',
+      'Science': 'বিজ্ঞান',
+      'Business Studies': 'ব্যবসায় শিক্ষা',
+      'Humanities': 'মানবিক',
+      'General': 'সাধারণ',
+    };
+    return map[grp] || grp;
+  };
+
+  const getStatusName = (status: string) => {
+    if (!isBn) return status;
+    return status === 'Passed' ? 'উত্তীর্ণ' : 'অনুত্তীর্ণ';
   };
 
   const handleSearchIndividual = (e: React.FormEvent) => {
@@ -307,6 +343,923 @@ export const Result: React.FC = () => {
     if (instGroup === 'All Groups') return true;
     return s.group === instGroup;
   });
+
+  const handlePrintResultSheet = () => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert(
+        isBn
+          ? 'অনুগ্রহ করে প্রাতিষ্ঠানিক ফলাফল শিট প্রিন্ট বা ডাউনলোড করার জন্য পপআপ অনুমতি দিন।'
+          : 'Please allow popups to print or download the institutional result sheet.'
+      );
+      return;
+    }
+
+    const currentDateStr = isBn
+      ? new Date().toLocaleDateString('bn-BD', { year: 'numeric', month: 'long', day: 'numeric' })
+      : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    const totalStudentsCount = filteredInstituteResults.length;
+    const passedCount = filteredInstituteResults.filter((s) => s.status === 'Passed').length;
+    const passRateStr = totalStudentsCount > 0 ? Math.round((passedCount / totalStudentsCount) * 100) : 100;
+
+    const rowsHtml = filteredInstituteResults
+      .map((student, idx) => {
+        const rollDisplay = isBn ? `#${toBanglaNum(student.roll)}` : `#${student.roll}`;
+        const nameDisplay = getStudentName(student.name);
+        const groupDisplay = getGroupSec(student.groupSec);
+        const marksDisplay = isBn
+          ? `${toBanglaNum(student.totalMarks)} / ${toBanglaNum(student.maxMarks)}`
+          : `${student.totalMarks} / ${student.maxMarks}`;
+        const gpaDisplay = isBn ? toBanglaNum(student.gpa) : student.gpa;
+        const statusDisplay = getStatusName(student.status);
+        const slDisplay = isBn ? toBanglaNum(idx + 1) : String(idx + 1);
+
+        return `
+          <tr>
+            <td style="text-align: center; font-weight: 700; color: #64748b;">${slDisplay}</td>
+            <td style="text-align: center; font-weight: 800; color: #004d34;">${rollDisplay}</td>
+            <td style="font-weight: 800; color: #0f172a; padding-left: 12px;">${nameDisplay}</td>
+            <td style="color: #475569; font-weight: 600;">${groupDisplay}</td>
+            <td style="text-align: center; font-weight: 800; color: #059669;">${marksDisplay}</td>
+            <td style="text-align: center; font-weight: 800; color: #0f172a;">${gpaDisplay}</td>
+            <td style="text-align: center;">
+              <span class="grade-badge">${student.grade}</span>
+            </td>
+            <td style="text-align: center; font-weight: 700; color: #059669;">
+              ${statusDisplay}
+            </td>
+          </tr>
+        `;
+      })
+      .join('');
+
+    const htmlContent = `<!DOCTYPE html>
+<html lang="${isBn ? 'bn' : 'en'}">
+<head>
+  <meta charset="UTF-8" />
+  <title>${
+    isBn
+      ? `প্রাতিষ্ঠানিক ফলাফল বিবরণী - ${getClassName(instClass)} - ${getExamName(instExam)} - ${SCHOOL_INFO.nameBn}`
+      : `Institutional Result Sheet - ${instClass} - ${instExam} - ${SCHOOL_INFO.name}`
+  }</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 8mm 10mm;
+    }
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    body {
+      padding: 12px 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .print-frame {
+      border: 2px solid #004d34;
+      border-radius: 4px;
+      padding: 14px 18px 12px 18px;
+      min-height: calc(100vh - 24px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    @media print {
+      body {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .print-frame {
+        border: 2px solid #004d34 !important;
+        border-radius: 0 !important;
+        min-height: 100% !important;
+        padding: 8mm 10mm !important;
+      }
+    }
+
+    /* Header */
+    .header-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 4px;
+    }
+    .header-logo-cell {
+      width: 55px;
+      vertical-align: middle;
+    }
+    .header-info-cell {
+      vertical-align: middle;
+      padding-left: 12px;
+    }
+    .header-meta-cell {
+      vertical-align: middle;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .school-logo {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      display: block;
+    }
+    .school-title {
+      font-size: 17px;
+      font-weight: 900;
+      color: #004d34;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .school-contact {
+      font-size: 9.5px;
+      color: #475569;
+      margin-top: 3px;
+      font-weight: 500;
+    }
+    .eiin-box {
+      display: inline-block;
+      border: 1px solid #004d34;
+      background: #e8f7ee;
+      color: #004d34;
+      font-weight: 800;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 3px;
+      margin-bottom: 2px;
+    }
+    .school-meta-line {
+      font-size: 9px;
+      color: #64748b;
+      font-weight: 600;
+      margin-top: 1px;
+    }
+
+    /* Divider */
+    .green-divider {
+      height: 2px;
+      background: #004d34;
+      margin: 6px 0 10px 0;
+    }
+
+    /* Document Title Banner */
+    .doc-banner {
+      background: #004d34;
+      color: #ffffff;
+      text-align: center;
+      padding: 5px 10px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    /* Info Grid */
+    .info-grid {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+    }
+    .info-grid td {
+      padding: 5px 10px;
+      font-size: 10px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .info-label {
+      font-weight: 800;
+      color: #334155;
+      width: 15%;
+    }
+    .info-value {
+      font-weight: 600;
+      color: #0f172a;
+      width: 35%;
+    }
+
+    /* Tabulation Table */
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+      font-size: 10.5px;
+    }
+    .results-table th {
+      background: #f1f8f4;
+      color: #004d34;
+      font-weight: 800;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border: 1px solid #cbd5e1;
+      padding: 6px 8px;
+    }
+    .results-table td {
+      border: 1px solid #cbd5e1;
+      padding: 5.5px 8px;
+      font-size: 10px;
+    }
+    .results-table tbody tr:nth-child(even) {
+      background: #fcfdfd;
+    }
+    .grade-badge {
+      display: inline-block;
+      background: #e8f7ee;
+      color: #059669;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 4px;
+      border: 1px solid #a7f3d0;
+      font-size: 9.5px;
+    }
+
+    /* Grading Scale Legend */
+    .grading-bar {
+      border: 1px dashed #cbd5e1;
+      background: #f8fafc;
+      border-radius: 4px;
+      padding: 6px 10px;
+      margin-top: 6px;
+    }
+    .grading-title {
+      font-weight: 800;
+      font-size: 9.5px;
+      color: #1e293b;
+      margin-bottom: 3px;
+    }
+    .grading-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 9px;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    /* Signatures */
+    .signatures-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 32px;
+      padding: 0 16px;
+    }
+    .sig-col {
+      width: 190px;
+      text-align: center;
+    }
+    .sig-line {
+      border-top: 1.5px solid #0f172a;
+      margin-bottom: 4px;
+    }
+    .sig-role {
+      font-weight: 800;
+      font-size: 10px;
+      color: #0f172a;
+    }
+    .sig-school {
+      font-size: 8.5px;
+      font-weight: 600;
+      color: #64748b;
+      margin-top: 1px;
+    }
+
+    /* Footer */
+    .doc-footer {
+      text-align: center;
+      font-size: 8.5px;
+      color: #94a3b8;
+      font-weight: 500;
+      margin-top: 10px;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="print-frame">
+    <div>
+      <!-- Header -->
+      <table class="header-table">
+        <tr>
+          <td class="header-logo-cell">
+            <img src="${SCHOOL_INFO.logo}" alt="Logo" class="school-logo" onerror="this.style.display='none'" />
+          </td>
+          <td class="header-info-cell">
+            <h1 class="school-title">${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</h1>
+            <div class="school-contact">
+              ${isBn ? SCHOOL_INFO.addressBn : SCHOOL_INFO.address} | ${isBn ? 'ফোন' : 'Phone'}: ${toBanglaNum(SCHOOL_INFO.phone)} | ${isBn ? 'ইমেইল' : 'Email'}: ${SCHOOL_INFO.email}
+            </div>
+          </td>
+          <td class="header-meta-cell">
+            <div class="eiin-box">EIIN: ${toBanglaNum(SCHOOL_INFO.eiin)}</div>
+            <div class="school-meta-line">${isBn ? 'স্থাপিত' : 'Estd'}: ${toBanglaNum(SCHOOL_INFO.established)}</div>
+            <div class="school-meta-line">www.soshgskhulna.edu.bd</div>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Green Divider -->
+      <div class="green-divider"></div>
+
+      <!-- Banner -->
+      <div class="doc-banner">
+        ${isBn ? 'প্রাতিষ্ঠানিক ফলাফল বিবরণী (TABULATION / RESULT SHEET)' : 'INSTITUTIONAL RESULT TABULATION SHEET'}
+      </div>
+
+      <!-- Info Grid -->
+      <table class="info-grid">
+        <tr>
+          <td class="info-label">${isBn ? 'শ্রেণি:' : 'Class:'}</td>
+          <td class="info-value">${getClassName(instClass)}</td>
+          <td class="info-label">${isBn ? 'শিক্ষাবর্ষ:' : 'Academic Session:'}</td>
+          <td class="info-value">${isBn ? toBanglaNum(instSession) : instSession}</td>
+        </tr>
+        <tr>
+          <td class="info-label">${isBn ? 'পরীক্ষার নাম:' : 'Examination:'}</td>
+          <td class="info-value">${getExamName(instExam)}</td>
+          <td class="info-label">${isBn ? 'বিভাগ / শাখা:' : 'Group / Track:'}</td>
+          <td class="info-value">${getGroupName(instGroup)}</td>
+        </tr>
+        <tr>
+          <td class="info-label">${isBn ? 'মোট পরীক্ষার্থী:' : 'Total Students:'}</td>
+          <td class="info-value">${isBn ? `${toBanglaNum(totalStudentsCount)} জন` : `${totalStudentsCount} Students`}</td>
+          <td class="info-label">${isBn ? 'উত্তীর্ণ ও পাসের হার:' : 'Passed & Rate:'}</td>
+          <td class="info-value" style="color: #059669; font-weight: 800;">
+            ${isBn ? `${toBanglaNum(passedCount)} জন (পাসের হার: ${toBanglaNum(passRateStr)}%)` : `${passedCount} (${passRateStr}% Pass Rate)`}
+          </td>
+        </tr>
+        <tr>
+          <td class="info-label">${isBn ? 'ফলাফল প্রকাশের তারিখ:' : 'Publication Date:'}</td>
+          <td class="info-value" colspan="3">${currentDateStr}</td>
+        </tr>
+      </table>
+
+      <!-- Tabulation Table -->
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th style="width: 7%;">${isBn ? 'ক্রমিক' : 'SL'}</th>
+            <th style="width: 10%;">${isBn ? 'রোল' : 'ROLL'}</th>
+            <th style="width: 28%; text-align: left; padding-left: 12px;">${isBn ? 'শিক্ষার্থীর নাম' : 'STUDENT NAME'}</th>
+            <th style="width: 20%;">${isBn ? 'বিভাগ ও শাখা' : 'GROUP & SEC'}</th>
+            <th style="width: 13%;">${isBn ? 'মোট নম্বর' : 'TOTAL MARKS'}</th>
+            <th style="width: 8%;">${isBn ? 'জিপিএ' : 'GPA'}</th>
+            <th style="width: 7%;">${isBn ? 'গ্রেড' : 'GRADE'}</th>
+            <th style="width: 7%;">${isBn ? 'ফলাফল' : 'STATUS'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rowsHtml}
+        </tbody>
+      </table>
+
+      <!-- Grading Scale Reference -->
+      <div class="grading-bar">
+        <div class="grading-title">${isBn ? 'গ্রেডিং স্কেল নির্দেশিকা:' : 'Grading Scale Reference:'}</div>
+        <div class="grading-items">
+          <span>${isBn ? '৮০-১০০: A+ (৫.০০)' : '80-100: A+ (5.00)'}</span>
+          <span>${isBn ? '৭০-৭৯: A (৪.০০)' : '70-79: A (4.00)'}</span>
+          <span>${isBn ? '৬০-৬৯: A- (৩.৫০)' : '60-69: A- (3.50)'}</span>
+          <span>${isBn ? '৫০-৫৯: B (৩.০০)' : '50-59: B (3.00)'}</span>
+          <span>${isBn ? '৪০-৪৯: C (২.০০)' : '40-49: C (2.00)'}</span>
+          <span>${isBn ? '৩৩-৩৯: D (১.০০)' : '33-39: D (1.00)'}</span>
+          <span>${isBn ? '০-৩২: F (০.০০)' : '0-32: F (0.00)'}</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <!-- Signatures Row -->
+      <div class="signatures-row">
+        <div class="sig-col">
+          <div class="sig-line"></div>
+          <div class="sig-role">${isBn ? 'শ্রেণি শিক্ষক' : 'Class Teacher'}</div>
+          <div class="sig-school">${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</div>
+        </div>
+        <div class="sig-col">
+          <div class="sig-line"></div>
+          <div class="sig-role">${isBn ? 'পরীক্ষা নিয়ন্ত্রক' : 'Controller of Examinations'}</div>
+          <div class="sig-school">${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</div>
+        </div>
+        <div class="sig-col">
+          <div class="sig-line"></div>
+          <div class="sig-role">${isBn ? 'অধ্যক্ষ / প্রতিষ্ঠান প্রধান' : 'Principal / Head of Institution'}</div>
+          <div class="sig-school">${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="doc-footer">
+        ${
+          isBn
+            ? `এটি একটি কম্পিউটার জেনারেটেড অফিসিয়াল প্রাতিষ্ঠানিক ফলাফল শিট • ${SCHOOL_INFO.nameBn} • প্রিন্ট / ডাউনলোড: ${currentDateStr}`
+            : `Official Computer Generated Institutional Result Sheet • ${SCHOOL_INFO.name} • Printed/Generated: ${currentDateStr}`
+        }
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        window.print();
+      }, 350);
+    });
+  </script>
+</body>
+</html>`;
+
+    printWindow.document.open();
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+  };
+
+  const handleDownloadTranscript = () => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert(
+        isBn
+          ? 'অনুগ্রহ করে একাডেমিক ট্রান্সক্রিপ্ট প্রিন্ট বা ডাউনলোড করার জন্য পপআপ অনুমতি দিন।'
+          : 'Please allow popups to print or download the academic transcript.'
+      );
+      return;
+    }
+
+    const currentDateStr = isBn
+      ? new Date().toLocaleDateString('bn-BD', { year: 'numeric', month: 'long', day: 'numeric' })
+      : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    const subjectRowsHtml = activeStudent.subjects
+      .map((sub, idx) => {
+        const slDisplay = isBn ? toBanglaNum(idx + 1) : String(idx + 1);
+        const codeDisplay = isBn ? toBanglaNum(sub.code) : sub.code;
+        const nameDisplay = getSubjectName(sub.name);
+        const fullMarksDisplay = isBn ? toBanglaNum(sub.fullMarks) : String(sub.fullMarks);
+        const obtainedDisplay = isBn ? toBanglaNum(sub.obtained) : String(sub.obtained);
+        const gpaDisplay = isBn ? toBanglaNum(sub.gpa) : sub.gpa;
+
+        return `
+          <tr>
+            <td style="text-align: center; color: #64748b;">${slDisplay}</td>
+            <td style="text-align: center; font-weight: 700;">${codeDisplay}</td>
+            <td style="font-weight: 700; color: #0f172a; padding-left: 10px;">${nameDisplay}</td>
+            <td style="text-align: center;">${fullMarksDisplay}</td>
+            <td style="text-align: center; font-weight: 800; color: #059669;">${obtainedDisplay}</td>
+            <td style="text-align: center;"><span class="grade-badge">${sub.grade}</span></td>
+            <td style="text-align: center; font-weight: 800; color: #0f172a;">${gpaDisplay}</td>
+          </tr>
+        `;
+      })
+      .join('');
+
+    const htmlContent = `<!DOCTYPE html>
+<html lang="${isBn ? 'bn' : 'en'}">
+<head>
+  <meta charset="UTF-8" />
+  <title>${
+    isBn
+      ? `একাডেমিক ট্রান্সক্রিপ্ট - ${getStudentName(activeStudent.name)} (রোল: ${toBanglaNum(activeStudent.roll)}) - ${SCHOOL_INFO.nameBn}`
+      : `Academic Transcript - ${activeStudent.name} (Roll: ${activeStudent.roll}) - ${SCHOOL_INFO.name}`
+  }</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 8mm 10mm;
+    }
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    body {
+      padding: 12px 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .print-frame {
+      border: 2px solid #004d34;
+      border-radius: 4px;
+      padding: 14px 18px 12px 18px;
+      min-height: calc(100vh - 24px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    @media print {
+      body {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .print-frame {
+        border: 2px solid #004d34 !important;
+        border-radius: 0 !important;
+        min-height: 100% !important;
+        padding: 8mm 10mm !important;
+      }
+    }
+
+    /* Header */
+    .header-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 4px;
+    }
+    .header-logo-cell {
+      width: 55px;
+      vertical-align: middle;
+    }
+    .header-info-cell {
+      vertical-align: middle;
+      padding-left: 12px;
+    }
+    .header-meta-cell {
+      vertical-align: middle;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .school-logo {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      display: block;
+    }
+    .school-title {
+      font-size: 17px;
+      font-weight: 900;
+      color: #004d34;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .school-contact {
+      font-size: 9.5px;
+      color: #475569;
+      margin-top: 3px;
+      font-weight: 500;
+    }
+    .eiin-box {
+      display: inline-block;
+      border: 1px solid #004d34;
+      background: #e8f7ee;
+      color: #004d34;
+      font-weight: 800;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 3px;
+      margin-bottom: 2px;
+    }
+    .school-meta-line {
+      font-size: 9px;
+      color: #64748b;
+      font-weight: 600;
+      margin-top: 1px;
+    }
+
+    .green-divider {
+      height: 2px;
+      background: #004d34;
+      margin: 6px 0 10px 0;
+    }
+
+    .doc-banner {
+      background: #004d34;
+      color: #ffffff;
+      text-align: center;
+      padding: 5px 10px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    /* Student Info Box */
+    .student-info-grid {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+    }
+    .student-info-grid td {
+      padding: 5px 10px;
+      font-size: 10px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .info-label {
+      font-weight: 800;
+      color: #334155;
+      width: 18%;
+    }
+    .info-value {
+      font-weight: 700;
+      color: #0f172a;
+      width: 32%;
+    }
+
+    /* Subjects Table */
+    .marks-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+      font-size: 10.5px;
+    }
+    .marks-table th {
+      background: #f1f8f4;
+      color: #004d34;
+      font-weight: 800;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border: 1px solid #cbd5e1;
+      padding: 6px 8px;
+    }
+    .marks-table td {
+      border: 1px solid #cbd5e1;
+      padding: 5.5px 8px;
+      font-size: 10px;
+    }
+    .marks-table tbody tr:nth-child(even) {
+      background: #fcfdfd;
+    }
+    .grade-badge {
+      display: inline-block;
+      background: #e8f7ee;
+      color: #059669;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 4px;
+      border: 1px solid #a7f3d0;
+      font-size: 9.5px;
+    }
+
+    /* Summary Stat Cards */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .summary-card {
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      border-radius: 4px;
+      padding: 8px 10px;
+      text-align: center;
+    }
+    .summary-card-title {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 2px;
+    }
+    .summary-card-val {
+      font-size: 14px;
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    /* Grading Scale Legend */
+    .grading-bar {
+      border: 1px dashed #cbd5e1;
+      background: #f8fafc;
+      border-radius: 4px;
+      padding: 6px 10px;
+      margin-top: 6px;
+    }
+    .grading-title {
+      font-weight: 800;
+      font-size: 9.5px;
+      color: #1e293b;
+      margin-bottom: 3px;
+    }
+    .grading-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 9px;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    /* Signatures */
+    .signatures-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 32px;
+      padding: 0 16px;
+    }
+    .sig-col {
+      width: 190px;
+      text-align: center;
+    }
+    .sig-line {
+      border-top: 1.5px solid #0f172a;
+      margin-bottom: 4px;
+    }
+    .sig-role {
+      font-weight: 800;
+      font-size: 10px;
+      color: #0f172a;
+    }
+    .sig-school {
+      font-size: 8.5px;
+      font-weight: 600;
+      color: #64748b;
+      margin-top: 1px;
+    }
+
+    .doc-footer {
+      text-align: center;
+      font-size: 8.5px;
+      color: #94a3b8;
+      font-weight: 500;
+      margin-top: 10px;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="print-frame">
+    <div>
+      <!-- Header -->
+      <table class="header-table">
+        <tr>
+          <td class="header-logo-cell">
+            <img src="${SCHOOL_INFO.logo}" alt="Logo" class="school-logo" onerror="this.style.display='none'" />
+          </td>
+          <td class="header-info-cell">
+            <h1 class="school-title">${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</h1>
+            <div class="school-contact">
+              ${isBn ? SCHOOL_INFO.addressBn : SCHOOL_INFO.address} | ${isBn ? 'ফোন' : 'Phone'}: ${toBanglaNum(SCHOOL_INFO.phone)} | ${isBn ? 'ইমেইল' : 'Email'}: ${SCHOOL_INFO.email}
+            </div>
+          </td>
+          <td class="header-meta-cell">
+            <div class="eiin-box">EIIN: ${toBanglaNum(SCHOOL_INFO.eiin)}</div>
+            <div class="school-meta-line">${isBn ? 'স্থাপিত' : 'Estd'}: ${toBanglaNum(SCHOOL_INFO.established)}</div>
+            <div class="school-meta-line">www.soshgskhulna.edu.bd</div>
+          </td>
+        </tr>
+      </table>
+
+      <div class="green-divider"></div>
+
+      <!-- Banner -->
+      <div class="doc-banner">
+        ${isBn ? 'অফিসিয়াল একাডেমিক ট্রান্সক্রিপ্ট ও নম্বরপত্র (ACADEMIC TRANSCRIPT)' : 'OFFICIAL ACADEMIC TRANSCRIPT & MARKSHEET'}
+      </div>
+
+      <!-- Student Particulars -->
+      <table class="student-info-grid">
+        <tr>
+          <td class="info-label">${isBn ? 'শিক্ষার্থীর নাম:' : 'Student Name:'}</td>
+          <td class="info-value" style="font-size: 11px; color: #004d34;">${getStudentName(activeStudent.name)}</td>
+          <td class="info-label">${isBn ? 'রোল নম্বর:' : 'Roll Number:'}</td>
+          <td class="info-value">#${isBn ? toBanglaNum(activeStudent.roll) : activeStudent.roll}</td>
+        </tr>
+        <tr>
+          <td class="info-label">${isBn ? 'শ্রেণি:' : 'Class:'}</td>
+          <td class="info-value">${getClassName(indClass)}</td>
+          <td class="info-label">${isBn ? 'বিভাগ / শাখা:' : 'Group / Sec:'}</td>
+          <td class="info-value">${getGroupSec(activeStudent.groupSec)}</td>
+        </tr>
+        <tr>
+          <td class="info-label">${isBn ? 'শিক্ষাবর্ষ / সেশন:' : 'Academic Session:'}</td>
+          <td class="info-value">${isBn ? toBanglaNum(indSession) : indSession}</td>
+          <td class="info-label">${isBn ? 'পরীক্ষার নাম:' : 'Examination:'}</td>
+          <td class="info-value">${getExamName(indExam)}</td>
+        </tr>
+      </table>
+
+      <!-- Marks Table -->
+      <table class="marks-table">
+        <thead>
+          <tr>
+            <th style="width: 7%;">${isBn ? 'ক্রমিক' : 'SL'}</th>
+            <th style="width: 12%;">${isBn ? 'বিষয় কোড' : 'CODE'}</th>
+            <th style="width: 33%; text-align: left; padding-left: 10px;">${isBn ? 'বিষয়ের নাম' : 'SUBJECT NAME'}</th>
+            <th style="width: 12%;">${isBn ? 'পূর্ণমান' : 'FULL MARKS'}</th>
+            <th style="width: 12%;">${isBn ? 'প্রাপ্ত নম্বর' : 'OBTAINED'}</th>
+            <th style="width: 12%;">${isBn ? 'লেটার গ্রেড' : 'GRADE'}</th>
+            <th style="width: 12%;">${isBn ? 'গ্রেড পয়েন্ট' : 'GPA'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${subjectRowsHtml}
+        </tbody>
+      </table>
+
+      <!-- Summary Stat Cards -->
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="summary-card-title">${isBn ? 'মোট প্রাপ্ত নম্বর' : 'Total Obtained'}</div>
+          <div class="summary-card-val" style="color: #059669;">
+            ${isBn ? `${toBanglaNum(activeStudent.totalMarks)} / ${toBanglaNum(activeStudent.maxMarks)}` : `${activeStudent.totalMarks} / ${activeStudent.maxMarks}`}
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card-title">${isBn ? 'জিপিএ (৫.০০ স্কেলে)' : 'GPA (5.00 Scale)'}</div>
+          <div class="summary-card-val" style="color: #004d34;">
+            ${isBn ? toBanglaNum(activeStudent.gpa) : activeStudent.gpa}
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card-title">${isBn ? 'চূড়ান্ত লেটার গ্রেড' : 'Letter Grade'}</div>
+          <div class="summary-card-val">
+            <span class="grade-badge" style="font-size: 12px; padding: 2px 8px;">${activeStudent.grade}</span>
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card-title">${isBn ? 'চূড়ান্ত ফলাফল' : 'Result Status'}</div>
+          <div class="summary-card-val" style="color: #059669;">
+            ${getStatusName(activeStudent.status)}
+          </div>
+        </div>
+      </div>
+
+      <!-- Grading Scale Reference -->
+      <div class="grading-bar">
+        <div class="grading-title">${isBn ? 'গ্রেডিং স্কেল নির্দেশিকা:' : 'Grading Scale Reference:'}</div>
+        <div class="grading-items">
+          <span>${isBn ? '৮০-১০০: A+ (৫.০০)' : '80-100: A+ (5.00)'}</span>
+          <span>${isBn ? '৭০-৭৯: A (৪.০০)' : '70-79: A (4.00)'}</span>
+          <span>${isBn ? '৬০-৬৯: A- (৩.৫০)' : '60-69: A- (3.50)'}</span>
+          <span>${isBn ? '৫০-৫৯: B (৩.০০)' : '50-59: B (3.00)'}</span>
+          <span>${isBn ? '৪০-৪৯: C (২.০০)' : '40-49: C (2.00)'}</span>
+          <span>${isBn ? '৩৩-৩৯: D (১.০০)' : '33-39: D (1.00)'}</span>
+          <span>${isBn ? '০-৩২: F (০.০০)' : '0-32: F (0.00)'}</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <!-- Signatures Row -->
+      <div class="signatures-row">
+        <div class="sig-col">
+          <div class="sig-line"></div>
+          <div class="sig-role">${isBn ? 'শ্রেণি শিক্ষক' : 'Class Teacher'}</div>
+          <div class="sig-school">${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</div>
+        </div>
+        <div class="sig-col">
+          <div class="sig-line"></div>
+          <div class="sig-role">${isBn ? 'পরীক্ষা নিয়ন্ত্রক' : 'Controller of Examinations'}</div>
+          <div class="sig-school">${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</div>
+        </div>
+        <div class="sig-col">
+          <div class="sig-line"></div>
+          <div class="sig-role">${isBn ? 'অধ্যক্ষ / প্রতিষ্ঠান প্রধান' : 'Principal / Head of Institution'}</div>
+          <div class="sig-school">${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="doc-footer">
+        ${
+          isBn
+            ? `এটি একটি অফিসিয়াল কম্পিউটার জেনারেটেড ট্রান্সক্রিপ্ট • ${SCHOOL_INFO.nameBn} • ইস্যুর তারিখ: ${currentDateStr}`
+            : `Official Computer Generated Academic Transcript • ${SCHOOL_INFO.name} • Issued: ${currentDateStr}`
+        }
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        window.print();
+      }, 350);
+    });
+  </script>
+</body>
+</html>`;
+
+    printWindow.document.open();
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+  };
 
   return (
     <div className="bg-[#fcfdfd] pb-20 overflow-hidden">
@@ -697,7 +1650,7 @@ export const Result: React.FC = () => {
                 </div>
                 <button
                   type="button"
-                  onClick={() => window.print()}
+                  onClick={handlePrintResultSheet}
                   className="inline-flex items-center gap-1.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3.5 py-1.5 rounded-xl text-xs font-bold transition shadow-2xs cursor-pointer"
                 >
                   <Printer size={14} />
@@ -840,7 +1793,7 @@ export const Result: React.FC = () => {
               {/* Download Transcript Button */}
               <button
                 type="button"
-                onClick={() => window.print()}
+                onClick={handleDownloadTranscript}
                 className="inline-flex items-center gap-2 bg-[#e8f7ee] hover:bg-[#d1fae5] border border-emerald-300 text-[#004d34] px-4 py-2 rounded-xl text-xs font-bold transition shadow-2xs cursor-pointer self-start sm:self-auto"
               >
                 <Download size={15} />

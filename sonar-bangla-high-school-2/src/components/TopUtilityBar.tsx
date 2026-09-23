@@ -44,7 +44,7 @@ export const TopUtilityBar: React.FC<TopUtilityBarProps> = () => {
             {t.topbar.teacherPortal}
           </Link>
           <span className="text-emerald-600/80">|</span>
-          <Link to="/about" className="hover:text-white transition-colors">
+          <Link to="/alumni" className="hover:text-white transition-colors">
             {t.topbar.alumni}
           </Link>
           <span className="text-emerald-600/80">|</span>

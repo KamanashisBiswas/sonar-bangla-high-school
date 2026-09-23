@@ -25,6 +25,7 @@ import { AcademicPrograms } from './pages/AcademicPrograms';
 import { SportsAthletics } from './pages/SportsAthletics';
 import { CulturalActivities } from './pages/CulturalActivities';
 import { ClubsSocieties } from './pages/ClubsSocieties';
+import { Alumni } from './pages/Alumni';
 
 // Scroll to top on page navigation
 const ScrollToTop: React.FC = () => {
@@ -67,6 +68,7 @@ export const AppContent: React.FC = () => {
           <Route path="/downloads" element={<Downloads />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/alumni" element={<Alumni />} />
 
           {/* Program Pages */}
           <Route path="/academic-programs" element={<AcademicPrograms />} />

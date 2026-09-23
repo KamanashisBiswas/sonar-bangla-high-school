@@ -132,6 +132,7 @@ export const Footer: React.FC = () => {
                 { label: t.nav.downloads, path: '/downloads' },
                 { label: language === 'bn' ? 'একাডেমিক ক্যালেন্ডার' : 'Academic Calendar', path: '/academic' },
                 { label: language === 'bn' ? 'পরীক্ষার ফলাফল' : 'Result Archive', path: '/result' },
+                { label: language === 'bn' ? 'প্রাক্তন শিক্ষার্থী (Alumni)' : 'Alumni Network', path: '/alumni' },
                 { label: language === 'bn' ? 'যোগাযোগ' : 'Contact Support', path: '/contact' },
               ].map((link) => (
                 <li key={link.label}>

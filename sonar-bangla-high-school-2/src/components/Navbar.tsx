@@ -138,7 +138,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
             ))}
           </nav>
 
-          {/* Far Right: Language Switcher Toggle (BN / EN) */}
+          {/* Far Right: Language Switcher Toggle (বাং / EN) */}
           <div className="flex items-center bg-[#003826] p-0.5 rounded-full border border-emerald-700/60 shrink-0 ml-3">
             <button
               type="button"
@@ -149,7 +149,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
                   : 'text-white/80 hover:text-white'
               }`}
             >
-              BN
+              বাং
             </button>
             <button
               type="button"
@@ -222,7 +222,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
                       : 'text-white/80'
                   }`}
                 >
-                  BN
+                  বাং
                 </button>
                 <button
                   type="button"

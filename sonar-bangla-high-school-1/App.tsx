@@ -27,6 +27,7 @@ import FacultyExcellence from './pages/FacultyExcellence';
 import SmartClassrooms from './pages/SmartClassrooms';
 import AcademicBrilliance from './pages/AcademicBrilliance';
 import CampusTour from './pages/CampusTour';
+import Alumni from './pages/Alumni';
 
 // Admin Pages
 import AdminDashboard from './pages/admin/Dashboard';
@@ -68,6 +69,7 @@ const App: React.FC = () => {
                 <Route path="smart-classrooms" element={<SmartClassrooms />} />
                 <Route path="academic-excellence" element={<AcademicBrilliance />} />
                 <Route path="campus-tour" element={<CampusTour />} />
+                <Route path="alumni" element={<Alumni />} />
                 <Route path="admin-login" element={<Login />} />
               </Route>
 
