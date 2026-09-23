@@ -21,6 +21,13 @@ import {
 } from 'lucide-react';
 import { SCHOOL_INFO } from '../data/schoolData';
 import { useLanguage } from '../contexts/LanguageContext';
+import {
+  formatSubject,
+  formatPeriod,
+  formatClassName,
+  CODE_OF_CONDUCT,
+  MODAL_DETAILS,
+} from '../data/routineLocalization';
 
 interface RoutineRow {
   period: string;
@@ -740,7 +747,7 @@ export const Academic: React.FC = () => {
 
     const rowsHtml = activeRoutine
       .map((row) => {
-        const periodDisplay = isBn ? toBanglaNum(row.period) : row.period;
+        const periodDisplay = formatPeriod(row.period, isBn);
         const timeDisplay = isBn ? toBanglaNum(row.time) : row.time;
 
         if (row.isBreak) {
@@ -751,7 +758,7 @@ export const Academic: React.FC = () => {
                 <div class="period-time">${timeDisplay}</div>
               </td>
               <td colspan="6">
-                ${isBn ? `টিফিন বিরতি (${toBanglaNum('11:00 - 11:20')} পূর্বাহ্ন)` : 'Tiffin Break (11:00 - 11:20 AM)'}
+                ${isBn ? `টিফিন বিরতি (${toBanglaNum('11:00 - 11:20')} পূর্বাহ্ণ)` : 'Tiffin Break (11:00 - 11:20 AM)'}
               </td>
             </tr>
           `;
@@ -762,12 +769,12 @@ export const Academic: React.FC = () => {
               <div class="period-title">${periodDisplay}</div>
               <div class="period-time">${timeDisplay}</div>
             </td>
-            <td>${row.sunday || '-'}</td>
-            <td>${row.monday || '-'}</td>
-            <td>${row.tuesday || '-'}</td>
-            <td>${row.wednesday || '-'}</td>
-            <td>${row.thursday || '-'}</td>
-            <td>${row.friday || '-'}</td>
+            <td>${formatSubject(row.sunday, isBn)}</td>
+            <td>${formatSubject(row.monday, isBn)}</td>
+            <td>${formatSubject(row.tuesday, isBn)}</td>
+            <td>${formatSubject(row.wednesday, isBn)}</td>
+            <td>${formatSubject(row.thursday, isBn)}</td>
+            <td>${formatSubject(row.friday, isBn)}</td>
           </tr>
         `;
       })
@@ -781,7 +788,7 @@ export const Academic: React.FC = () => {
 <html lang="${isBn ? 'bn' : 'en'}">
 <head>
   <meta charset="UTF-8" />
-  <title>Class Timetable - ${selectedClass} - ${SCHOOL_INFO.name}</title>
+  <title>${isBn ? `দৈনিক শ্রেণি রুটিন - ${formatClassName(selectedClass, true)} - ${SCHOOL_INFO.nameBn}` : `Class Timetable - ${formatClassName(selectedClass, false)} - ${SCHOOL_INFO.name}`}</title>
   <style>
     @page {
       size: A4 landscape;
@@ -1068,7 +1075,7 @@ export const Academic: React.FC = () => {
       <div class="subheader">
         <div class="timetable-heading">${isBn ? 'একাডেমিক দৈনিক শ্রেণি রুটিন - ২০২৬' : 'ACADEMIC DAILY CLASS TIMETABLE - 2026'}</div>
         <div class="timetable-meta">
-          ${isBn ? `শ্রেণি: <span class="class-tag">${toBanglaNum(selectedClass)}</span> &nbsp;&nbsp;|&nbsp;&nbsp; শিক্ষাবর্ষ: <strong>২০২৬</strong> &nbsp;&nbsp;|&nbsp;&nbsp; কার্যকরের তারিখ: <strong>০১ জানুয়ারি, ২০২৬</strong>` : `Class: <span class="class-tag">${selectedClass}</span> &nbsp;&nbsp;|&nbsp;&nbsp; Session: <strong>2026</strong> &nbsp;&nbsp;|&nbsp;&nbsp; Effective: <strong>January 01, 2026</strong>`}
+          ${isBn ? `শ্রেণি: <span class="class-tag">${formatClassName(selectedClass, true)}</span> &nbsp;&nbsp;|&nbsp;&nbsp; শিক্ষাবর্ষ: <strong>২০২৬</strong> &nbsp;&nbsp;|&nbsp;&nbsp; কার্যকরের তারিখ: <strong>০১ জানুয়ারি, ২০২৬</strong>` : `Class: <span class="class-tag">${formatClassName(selectedClass, false)}</span> &nbsp;&nbsp;|&nbsp;&nbsp; Session: <strong>2026</strong> &nbsp;&nbsp;|&nbsp;&nbsp; Effective: <strong>January 01, 2026</strong>`}
         </div>
       </div>
 
@@ -1411,7 +1418,7 @@ export const Academic: React.FC = () => {
             <div className="flex items-center gap-2 self-end sm:self-auto">
               <div className="inline-flex items-center gap-2 bg-white border border-slate-200 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-700 shadow-2xs">
                 <Calendar size={13} className="text-slate-400" />
-                <span>{language === 'bn' ? `আজ, ১০ ডিসেম্বর ২০২৫` : 'Today, 10 Dec 2025 (Wed)'}</span>
+                <span>{language === 'bn' ? `আজ, ১০ ডিসেম্বর ২০২৬` : 'Today, 10 Dec 2026 (Wed)'}</span>
               </div>
               <button
                 type="button"
@@ -1450,14 +1457,18 @@ export const Academic: React.FC = () => {
               {/* Table Body */}
               <tbody className="divide-y divide-slate-100 bg-white text-slate-700">
                 {activeRoutine.map((row, idx) => {
+                  const isBn = language === 'bn';
+                  const periodDisplay = formatPeriod(row.period, isBn);
+                  const timeDisplay = isBn ? toBanglaNum(row.time) : row.time;
+
                   if (row.isBreak) {
                     return (
                       <tr key={idx} className="bg-[#fffbeb] text-[#b45309]">
                         <td className="py-3 px-4 sm:px-6 font-black text-amber-900">
-                          {row.period}
+                          {periodDisplay}
                         </td>
                         <td className="py-3 px-4 sm:px-6 font-bold text-amber-800">
-                          {row.time}
+                          {timeDisplay}
                         </td>
                         <td
                           colSpan={6}
@@ -1465,7 +1476,11 @@ export const Academic: React.FC = () => {
                         >
                           <div className="inline-flex items-center gap-2 justify-center">
                             <Coffee size={14} className="text-amber-700" />
-                            <span>Tiffin Break: 11:00 AM – 11:20 AM</span>
+                            <span>
+                              {isBn
+                                ? `টিফিন বিরতি: ${toBanglaNum('11:00')} পূর্বাহ্ণ – ${toBanglaNum('11:20')} পূর্বাহ্ণ`
+                                : 'Tiffin Break: 11:00 AM – 11:20 AM'}
+                            </span>
                           </div>
                         </td>
                       </tr>
@@ -1478,28 +1493,28 @@ export const Academic: React.FC = () => {
                       className="hover:bg-slate-50/70 transition-colors"
                     >
                       <td className="py-3.5 px-4 sm:px-6 font-black text-slate-900">
-                        {row.period}
+                        {periodDisplay}
                       </td>
                       <td className="py-3.5 px-4 sm:px-6 font-semibold text-slate-500 whitespace-nowrap">
-                        {row.time}
+                        {timeDisplay}
                       </td>
                       <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-800">
-                        {row.sunday}
+                        {formatSubject(row.sunday, isBn)}
                       </td>
                       <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-800">
-                        {row.monday}
+                        {formatSubject(row.monday, isBn)}
                       </td>
                       <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-800">
-                        {row.tuesday}
+                        {formatSubject(row.tuesday, isBn)}
                       </td>
                       <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-800">
-                        {row.wednesday}
+                        {formatSubject(row.wednesday, isBn)}
                       </td>
                       <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-800">
-                        {row.thursday}
+                        {formatSubject(row.thursday, isBn)}
                       </td>
                       <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-800">
-                        {row.friday}
+                        {formatSubject(row.friday, isBn)}
                       </td>
                     </tr>
                   );
@@ -1512,7 +1527,9 @@ export const Academic: React.FC = () => {
           <div className="bg-[#e8f7ee] border border-emerald-100/90 rounded-2xl p-3.5 flex items-center gap-2.5 text-xs text-slate-700 font-medium">
             <Info size={16} className="text-[#059669] shrink-0" />
             <span>
-              Note: Schedule may be subject to changes upon administrative requirements. Please check notice board for updates.
+              {language === 'bn'
+                ? 'বিশেষ দ্রষ্টব্য: প্রশাসনিক প্রয়োজনে রুটিনের সময়সূচি পরিবর্তনযোগ্য। যেকোনো হালনাগাদের জন্য নোটিশ বোর্ড লক্ষ্য করুন।'
+                : 'Note: Schedule may be subject to changes upon administrative requirements. Please check notice board for updates.'}
             </span>
           </div>
         </div>
@@ -1643,138 +1660,81 @@ export const Academic: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 pt-2 text-xs text-slate-700 font-medium">
             {/* Left Column */}
             <div className="space-y-3">
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-                <span>Students must arrive at school by 8:00 AM daily.</span>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-                <span>Mobile phones and electronic gadgets are strictly prohibited on campus.</span>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-                <span>Show respect and courteous behavior towards teachers and peers.</span>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-                <span>Participation in all scheduled exams and evaluations is mandatory.</span>
-              </div>
+              {(language === 'bn' ? CODE_OF_CONDUCT.bn.left : CODE_OF_CONDUCT.en.left).map((rule, idx) => (
+                <div key={idx} className="flex items-start gap-2.5">
+                  <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
+                  <span>{rule}</span>
+                </div>
+              ))}
             </div>
 
             {/* Right Column */}
             <div className="space-y-3">
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-                <span>Absence requires a written application signed by parents.</span>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-                <span>Students must maintain classroom and campus cleanliness.</span>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-                <span>Any damage to school property and furniture is strictly punishable.</span>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-                <span>Leaving classroom during session without permission is not allowed.</span>
-              </div>
+              {(language === 'bn' ? CODE_OF_CONDUCT.bn.right : CODE_OF_CONDUCT.en.right).map((rule, idx) => (
+                <div key={idx} className="flex items-start gap-2.5">
+                  <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
+                  <span>{rule}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
       {/* 6. Modals for Uniform Details and Code of Conduct */}
-      {detailsModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-in fade-in duration-150">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-slate-100 space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div className="flex items-center gap-2.5 text-[#004d34]">
-                {detailsModal === 'policy' ? <ShieldCheck size={20} /> : <Shirt size={20} />}
-                <h3 className="font-extrabold text-base text-slate-900">
-                  {detailsModal === 'boys'
-                    ? "Boys' Dress Code Specification"
-                    : detailsModal === 'girls'
-                    ? "Girls' Dress Code Specification"
-                    : 'Institutional Code of Conduct & Guidelines'}
-                </h3>
+      {detailsModal && (() => {
+        const isBn = language === 'bn';
+        const modalData = isBn ? MODAL_DETAILS.bn[detailsModal] : MODAL_DETAILS.en[detailsModal];
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-in fade-in duration-150">
+            <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-slate-100 space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-2.5 text-[#004d34]">
+                  {detailsModal === 'policy' ? <ShieldCheck size={20} /> : <Shirt size={20} />}
+                  <h3 className="font-extrabold text-base text-slate-900">
+                    {modalData.title}
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setDetailsModal(null)}
+                  className="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-500 cursor-pointer"
+                >
+                  <X size={16} />
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => setDetailsModal(null)}
-                className="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-500 cursor-pointer"
-              >
-                <X size={16} />
-              </button>
-            </div>
 
-            <div className="text-xs text-slate-600 space-y-3 leading-relaxed">
-              {detailsModal === 'boys' && (
-                <>
-                  <p>
-                    All male students must strictly wear standard uniforms specified by SOS Hermann Gmeiner School Khulna:
-                  </p>
-                  <ul className="list-disc pl-5 space-y-1.5 text-slate-700">
-                    <li>White cotton half-sleeve (summer) or full-sleeve (winter) shirt.</li>
-                    <li>Navy blue formal trousers tailored as per institutional fit.</li>
-                    <li>Plain black leather shoes with clean white socks.</li>
-                    <li>Dark navy blue sweater/blazer during winter season.</li>
-                    <li>Properly pinned school ID card and metal embroidered chest crest.</li>
-                  </ul>
-                </>
-              )}
+              <div className="text-xs text-slate-600 space-y-3 leading-relaxed">
+                <p>{modalData.intro}</p>
+                <ul className="list-disc pl-5 space-y-1.5 text-slate-700">
+                  {modalData.items.map((item, idx) => (
+                    <li key={idx}>{item}</li>
+                  ))}
+                </ul>
+              </div>
 
-              {detailsModal === 'girls' && (
-                <>
-                  <p>
-                    All female students must wear the designated institutional attire:
-                  </p>
-                  <ul className="list-disc pl-5 space-y-1.5 text-slate-700">
-                    <li>Navy blue salwar/frock with official school pattern and cut.</li>
-                    <li>White cotton or polyester dupatta / hijab fastened neatly.</li>
-                    <li>Plain black footwear and white ankle-high socks.</li>
-                    <li>Navy blue pullover cardigan or blazer during the winter period.</li>
-                    <li>Official institutional badge and student identification card.</li>
-                  </ul>
-                </>
-              )}
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 cursor-pointer"
+                >
+                  <Printer size={13} />
+                  <span>{isBn ? 'নথি প্রিন্ট করুন' : 'Print Document'}</span>
+                </button>
 
-              {detailsModal === 'policy' && (
-                <>
-                  <p>
-                    SOS Hermann Gmeiner School Khulna maintains rigorous standards of academic discipline, punctuality, and personal ethics:
-                  </p>
-                  <ul className="list-disc pl-5 space-y-1.5 text-slate-700">
-                    <li>75% minimum mandatory attendance required for exam eligibility.</li>
-                    <li>Strict zero-tolerance policy against bullying, vandalism, and digital device misuse.</li>
-                    <li>Leave of absence must be applied for in writing with guardian endorsement.</li>
-                    <li>Active respect for school teachers, staff, peer students, and national values.</li>
-                  </ul>
-                </>
-              )}
-            </div>
-
-            <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-              <button
-                type="button"
-                onClick={() => window.print()}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 cursor-pointer"
-              >
-                <Printer size={13} />
-                <span>{language === 'bn' ? 'নথি প্রিন্ট করুন' : 'Print Document'}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setDetailsModal(null)}
-                className="bg-[#004d34] hover:bg-[#003826] text-white px-5 py-2 rounded-xl text-xs font-bold transition cursor-pointer"
-              >
-                {language === 'bn' ? 'বন্ধ করুন' : 'Close'}
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setDetailsModal(null)}
+                  className="bg-[#004d34] hover:bg-[#003826] text-white px-5 py-2 rounded-xl text-xs font-bold transition cursor-pointer"
+                >
+                  {isBn ? 'বন্ধ করুন' : 'Close'}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 };

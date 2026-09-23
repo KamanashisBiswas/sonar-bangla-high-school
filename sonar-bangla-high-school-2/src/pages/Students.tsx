@@ -1939,19 +1939,8 @@ export const Students: React.FC = () => {
               </button>
             </div>
 
-            {/* Avatar & Left/Right Navigation Row */}
-            <div className="relative px-6 -mt-14 sm:-mt-16 flex items-center justify-between z-10">
-              {/* Left Arrow Button */}
-              <button
-                type="button"
-                aria-label={isBn ? 'পূর্ববর্তী শিক্ষার্থী' : 'Previous Student'}
-                onClick={handlePrevStudent}
-                className="w-8 h-8 rounded-full bg-white border border-slate-200/90 shadow-sm flex items-center justify-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition cursor-pointer"
-              >
-                <ChevronLeft size={16} />
-              </button>
-
-              {/* Central Circular Student Avatar */}
+            {/* Central Circular Student Avatar */}
+            <div className="relative px-6 -mt-14 sm:-mt-16 flex items-center justify-center z-10">
               <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-white shadow-xl overflow-hidden bg-white shrink-0">
                 <img
                   src={viewingStudent.avatar}
@@ -1962,16 +1951,6 @@ export const Students: React.FC = () => {
                   }}
                 />
               </div>
-
-              {/* Right Arrow Button */}
-              <button
-                type="button"
-                aria-label={isBn ? 'পরবর্তী শিক্ষার্থী' : 'Next Student'}
-                onClick={handleNextStudent}
-                className="w-8 h-8 rounded-full bg-white border border-slate-200/90 shadow-sm flex items-center justify-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition cursor-pointer"
-              >
-                <ChevronRight size={16} />
-              </button>
             </div>
 
             {/* Modal Body Info */}

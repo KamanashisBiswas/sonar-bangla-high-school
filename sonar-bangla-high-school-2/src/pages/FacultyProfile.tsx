@@ -15,9 +15,10 @@ import {
   Clock,
   MapPin,
   ExternalLink,
-  ArrowRight
+  ArrowRight,
+  Briefcase
 } from 'lucide-react';
-import { TEACHERS, SCHOOL_INFO, LEADERSHIP_PROFILES } from '../data/schoolData';
+import { TEACHERS, SCHOOL_INFO, LEADERSHIP_PROFILES, STAFF_PROFILES } from '../data/schoolData';
 import { TEACHER_DETAILS_BN } from '../data/teacherLocalization';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -32,6 +33,10 @@ const TEACHER_TRANSLATIONS: Record<string, { nameBn: string; designationBn: stri
   '8': { nameBn: 'ফারহানা ইয়াসমিন', designationBn: 'সহকারী শিক্ষক', subjectBn: 'তথ্য ও যোগাযোগ প্রযুক্তি' },
   'chairman': { nameBn: 'মাকসুদা সুলতানা', designationBn: 'সভাপতি, গভর্নিং বডি', subjectBn: 'প্রশাসন' },
   'principal': { nameBn: 'ইন্দ্রজিৎ কুমার মণ্ডল', designationBn: 'অধ্যক্ষ ও সদস্য সচিব', subjectBn: 'শিক্ষা প্রশাসন' },
+  'staff-1': { nameBn: 'মোঃ রফিকুল ইসলাম', designationBn: 'অফিস সুপারিনটেনডেন্ট', subjectBn: 'সাধারণ প্রশাসন' },
+  'staff-2': { nameBn: 'সুমাইয়া আক্তার', designationBn: 'সিনিয়র হিসাবরক্ষক', subjectBn: 'অর্থ ও হিসাব শাখা' },
+  'staff-3': { nameBn: 'মোঃ হাসানুজ্জামান', designationBn: 'প্রধান গ্রন্থাগারিক', subjectBn: 'গ্রন্থাগার ও তথ্য সেবা' },
+  'staff-4': { nameBn: 'রাকিবুল ইসলাম', designationBn: 'আইসিটি সহকারী ও নেটওয়ার্ক ইন-চার্জ', subjectBn: 'আইসিটি ও ডিজিটাল সার্ভিসেস' },
 };
 
 export const FacultyProfile: React.FC = () => {
@@ -47,14 +52,26 @@ export const FacultyProfile: React.FC = () => {
     normalizedId === 'maksuda-sultana' ||
     normalizedId === 'indrajit-kumar-mondal';
 
-  // Find profile: check leadership profiles first, then teachers
+  // Find staff profile by ID or common name slug
+  const staffProfile =
+    (normalizedId && STAFF_PROFILES[normalizedId]) ||
+    (id && STAFF_PROFILES[id]) ||
+    (normalizedId === 'rafiqul-islam' ? STAFF_PROFILES['staff-1'] : null) ||
+    (normalizedId === 'sumaiya-akter' ? STAFF_PROFILES['staff-2'] : null) ||
+    (normalizedId === 'hasanuzzaman' ? STAFF_PROFILES['staff-3'] : null) ||
+    (normalizedId === 'rakibul-islam' ? STAFF_PROFILES['staff-4'] : null);
+
+  // Find profile: check leadership profiles first, then staff profiles, then teachers
   const teacher =
     (normalizedId && LEADERSHIP_PROFILES[normalizedId]) ||
     (normalizedId === 'maksuda-sultana' ? LEADERSHIP_PROFILES.chairman : null) ||
     (normalizedId === 'indrajit-kumar-mondal' ? LEADERSHIP_PROFILES.principal : null) ||
+    staffProfile ||
     TEACHERS.find((t) => t.id === id) ||
     TEACHERS[1] ||
     TEACHERS[0];
+
+  const isStaff = (teacher as any).roleType === 'staff' || teacher.id?.startsWith('staff');
 
   if (!teacher) {
     return <Navigate to="/faculty" replace />;
@@ -103,8 +120,8 @@ export const FacultyProfile: React.FC = () => {
             className="hover:text-emerald-800 transition-colors text-slate-600"
           >
             {isBn
-              ? (isLeader ? "প্রশাসন ও পরিচালনা পর্ষদ" : "শিক্ষক ও কর্মকর্তা ডিরেক্টরি")
-              : (isLeader ? "School Leadership & Administration" : "Faculty & Staff Directory")}
+              ? (isLeader ? "প্রশাসন ও পরিচালনা পর্ষদ" : (isStaff ? "প্রশাসনিক কর্মকর্তা ও স্টাফ" : "শিক্ষক ও কর্মকর্তা ডিরেক্টরি"))
+              : (isLeader ? "School Leadership & Administration" : (isStaff ? "Administrative Staff" : "Faculty & Staff Directory"))}
           </Link>
           <span className="text-slate-400">›</span>
           <span className="text-slate-800 font-bold">{teacherName}</span>
@@ -119,8 +136,8 @@ export const FacultyProfile: React.FC = () => {
             <ChevronLeft size={14} />
             <span>
               {isBn
-                ? (isLeader ? "প্রশাসনে ফিরে যান" : "শিক্ষক ডিরেক্টরিতে ফিরে যান")
-                : (isLeader ? "Back to Administration" : "Back to Faculty & Staff Directory")}
+                ? (isLeader ? "প্রশাসনে ফিরে যান" : (isStaff ? "স্টাফ ডিরেক্টরিতে ফিরে যান" : "শিক্ষক ডিরেক্টরিতে ফিরে যান"))
+                : (isLeader ? "Back to Administration" : (isStaff ? "Back to Staff Directory" : "Back to Faculty & Staff Directory"))}
             </span>
           </Link>
 
@@ -151,6 +168,11 @@ export const FacultyProfile: React.FC = () => {
                       <Award size={14} className="text-amber-400" />
                       <span>{isBn ? 'প্রাতিষ্ঠানিক নেতৃত্ব' : 'School Leadership'}</span>
                     </>
+                  ) : isStaff ? (
+                    <>
+                      <Briefcase size={14} className="text-emerald-400" />
+                      <span>{isBn ? 'প্রশাসনিক কর্মকর্তা' : 'Administrative Staff'}</span>
+                    </>
                   ) : (
                     <>
                       <GraduationCap size={14} className="text-emerald-400" />
@@ -166,13 +188,15 @@ export const FacultyProfile: React.FC = () => {
               {/* Header Details & Quote */}
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                 <div>
-                  <span className="inline-flex items-center gap-1.5 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full">
-                    {isLeader ? <Award size={13} /> : <GraduationCap size={13} />}
+                  <span className={`inline-flex items-center gap-1.5 ${isStaff ? 'bg-[#eff6ff] text-[#1d4ed8] border-blue-100' : 'bg-[#e8f7ee] text-[#059669] border-emerald-100/90'} border text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full`}>
+                    {isLeader ? <Award size={13} /> : isStaff ? <Briefcase size={13} /> : <GraduationCap size={13} />}
                     <span>
                       {isLeader
                         ? (teacher.id === 'chairman'
                             ? (isBn ? 'সভাপতি, গভর্নিং বডি' : 'CHAIRMAN, GOVERNING BODY')
                             : (isBn ? 'অধ্যক্ষ ও সদস্য সচিব' : 'PRINCIPAL & MEMBER SECRETARY'))
+                        : isStaff
+                        ? (isBn ? 'প্রশাসনিক কর্মকর্তা' : 'ADMINISTRATIVE STAFF')
                         : (isBn ? 'শিক্ষকমণ্ডলী' : 'TEACHING FACULTY')}
                     </span>
                   </span>
@@ -225,15 +249,19 @@ export const FacultyProfile: React.FC = () => {
                 </div>
 
                 <div className="bg-slate-50/80 border border-slate-100 rounded-2xl p-3.5 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100">
-                    <Star size={18} />
+                  <div className={`w-10 h-10 rounded-xl ${isStaff ? 'bg-blue-50 text-blue-600 border-blue-100' : 'bg-amber-50 text-amber-600 border-amber-100'} flex items-center justify-center shrink-0 border`}>
+                    {isStaff ? <Briefcase size={18} /> : <Star size={18} />}
                   </div>
-                  <div>
-                    <span className="text-lg font-black text-slate-900 block leading-tight">
-                      {isBn ? toBanglaNum(teacher.studentsMentored || '250+') : (teacher.studentsMentored || '250+')}
+                  <div className="min-w-0">
+                    <span className="text-xs sm:text-sm font-black text-slate-900 block leading-tight truncate">
+                      {isStaff
+                        ? (isBn ? (detailsBn?.subjectBn || teacher.subject) : teacher.subject)
+                        : (isBn ? toBanglaNum(teacher.studentsMentored || '250+') : (teacher.studentsMentored || '250+'))}
                     </span>
                     <p className="text-[11px] text-slate-500 font-medium">
-                      {isBn ? 'দিকনির্দেশনা প্রাপ্ত শিক্ষার্থী' : 'Students Mentored'}
+                      {isStaff
+                        ? (isBn ? 'দাপ্তরিক শাখা / বিভাগ' : 'Department / Division')
+                        : (isBn ? 'দিকনির্দেশনা প্রাপ্ত শিক্ষার্থী' : 'Students Mentored')}
                     </p>
                   </div>
                 </div>
@@ -352,61 +380,106 @@ export const FacultyProfile: React.FC = () => {
             </div>
           </div>
 
-          {/* Card 3: Research & Publications */}
+          {/* Card 3: Research & Publications / Staff Core Services */}
           <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between gap-2 mb-5">
                 <div className="flex items-center gap-2.5">
                   <div className="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100">
-                    <FileText size={18} />
+                    {isStaff ? <Briefcase size={18} /> : <FileText size={18} />}
                   </div>
                   <h3 className="text-base sm:text-lg font-bold text-slate-900">
-                    {isBn ? 'গবেষণা ও প্রকাশনা' : 'Research & Publications'}
+                    {isStaff
+                      ? (isBn ? 'দাপ্তরিক কর্মপরিধি ও সেবাসমূহ' : 'Administrative Scope & Key Services')
+                      : (isBn ? 'গবেষণা ও প্রকাশনা' : 'Research & Publications')}
                   </h3>
                 </div>
                 <span className="bg-slate-100 text-slate-600 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
-                  {isBn
-                    ? `${toBanglaNum(teacherPublications?.length || 2)}টি প্রকাশনা`
-                    : `${teacherPublications?.length || 2} publications`}
+                  {isStaff
+                    ? (isBn ? 'প্রাতিষ্ঠানিক সেবা' : 'Core Services')
+                    : (isBn
+                        ? `${toBanglaNum(teacherPublications?.length || 2)}টি প্রকাশনা`
+                        : `${teacherPublications?.length || 2} publications`)}
                 </span>
               </div>
 
-              <div className="space-y-3">
-                {(teacherPublications || [
-                  { title: `Communicative ${teacher.subject} Pedagogical Techniques in Rural and Semi-Urban High Schools`, publisher: 'Educational Research Forum Bangladesh', year: '2020' },
-                  { title: `Fostering Creative Problem Solving and Critical Reading Habits among High School Learners`, publisher: 'Secondary Education Journal', year: '2022' }
-                ]).map((pub, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-slate-50/70 border border-slate-100 rounded-2xl p-3.5 flex items-start justify-between gap-3"
-                  >
-                    <div>
-                      <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
-                        "{pub.title}"
-                      </h4>
-                      <p className="text-xs text-slate-500 mt-1">
-                        {pub.publisher || pub.journal}
-                      </p>
+              {isStaff ? (
+                <div className="space-y-3">
+                  {[
+                    {
+                      title: isBn ? 'শিক্ষার্থী ও অভিভাবক সেবা' : 'Student & Guardian Support Desk',
+                      desc: isBn ? 'সকল প্রকার প্রাতিষ্ঠানিক তথ্য, সনদ, প্রত্যয়ন ও সহায়তা প্রদান।' : 'Providing verified academic records, documentation, and inquiry assistance.',
+                      tag: isBn ? 'সক্রিয়' : 'Active'
+                    },
+                    {
+                      title: isBn ? 'ডিজিটাল রেকর্ড ও নথিপত্র ব্যবস্থাপনা' : 'Digital Documentation & Record Governance',
+                      desc: isBn ? 'স্মার্ট অফিস ও নির্ভুল প্রাতিষ্ঠানিক ডেটাবেজ পরিচালনা।' : 'Maintaining secure institutional archives, databases, and compliance records.',
+                      tag: isBn ? 'সার্বক্ষণিক' : 'Ongoing'
+                    },
+                    {
+                      title: isBn ? 'আন্তঃবিভাগীয় ও বোর্ড সমন্বয়' : 'Inter-Departmental & Board Coordination',
+                      desc: isBn ? 'শিক্ষা বোর্ড ও সংশ্লিষ্ট সরকারি দপ্তরের সাথে দাপ্তরিক যোগাযোগ রক্ষা।' : 'Official liaisons with Education Board, SOS authorities, and stakeholders.',
+                      tag: isBn ? 'নিয়মিত' : 'Daily'
+                    }
+                  ].map((service, idx) => (
+                    <div
+                      key={idx}
+                      className="bg-slate-50/70 border border-slate-100 rounded-2xl p-3.5 flex items-start justify-between gap-3"
+                    >
+                      <div>
+                        <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
+                          {service.title}
+                        </h4>
+                        <p className="text-xs text-slate-500 mt-1">
+                          {service.desc}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="bg-purple-50 text-purple-700 border border-purple-100 text-[11px] font-bold px-2 py-0.5 rounded-md">
+                          {service.tag}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <span className="bg-purple-50 text-purple-700 border border-purple-100 text-[11px] font-bold px-2 py-0.5 rounded-md">
-                        {isBn ? toBanglaNum(pub.year) : pub.year}
-                      </span>
-                      <ExternalLink size={13} className="text-slate-400" />
+                  ))}
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {(teacherPublications || [
+                    { title: `Communicative ${teacher.subject} Pedagogical Techniques in Rural and Semi-Urban High Schools`, publisher: 'Educational Research Forum Bangladesh', year: '2020' },
+                    { title: `Fostering Creative Problem Solving and Critical Reading Habits among High School Learners`, publisher: 'Secondary Education Journal', year: '2022' }
+                  ]).map((pub, idx) => (
+                    <div
+                      key={idx}
+                      className="bg-slate-50/70 border border-slate-100 rounded-2xl p-3.5 flex items-start justify-between gap-3"
+                    >
+                      <div>
+                        <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
+                          "{pub.title}"
+                        </h4>
+                        <p className="text-xs text-slate-500 mt-1">
+                          {pub.publisher || pub.journal}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="bg-purple-50 text-purple-700 border border-purple-100 text-[11px] font-bold px-2 py-0.5 rounded-md">
+                          {isBn ? toBanglaNum(pub.year) : pub.year}
+                        </span>
+                        <ExternalLink size={13} className="text-slate-400" />
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="mt-5 pt-4 border-t border-slate-100">
-              <button
-                type="button"
+              <Link
+                to="/faculty"
                 className="text-xs font-bold text-[#004d34] hover:text-emerald-800 transition flex items-center gap-1.5 cursor-pointer"
               >
-                <span>{isBn ? 'সকল প্রকাশনা দেখুন' : 'View All Publications'}</span>
+                <span>{isBn ? (isStaff ? 'সকল কর্মকর্তা ও শিক্ষক ডিরেক্টরি' : 'সকল প্রকাশনা দেখুন') : (isStaff ? 'View All Faculty & Staff' : 'View All Publications')}</span>
                 <ArrowRight size={13} />
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -416,11 +489,13 @@ export const FacultyProfile: React.FC = () => {
               <div className="flex items-center justify-between gap-2 mb-5">
                 <div className="flex items-center gap-2.5">
                   <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100">
-                    <BookOpen size={18} />
+                    {isStaff ? <Briefcase size={18} /> : <BookOpen size={18} />}
                   </div>
                   <h3 className="text-base sm:text-lg font-bold text-slate-900">
                     {isLeader
                       ? (isBn ? 'প্রাতিষ্ঠানিক দায়িত্ব ও প্রশাসন' : 'Institutional Responsibilities & Governance')
+                      : isStaff
+                      ? (isBn ? 'দাপ্তরিক ও প্রাতিষ্ঠানিক দায়িত্ব' : 'Administrative & Operational Responsibilities')
                       : (isBn ? 'পাঠদান ও প্রাতিষ্ঠানিক দায়িত্ব' : 'Courses & Teaching Responsibilities')}
                   </h3>
                 </div>
@@ -445,13 +520,13 @@ export const FacultyProfile: React.FC = () => {
               <div className="flex items-center gap-2">
                 <MapPin size={13} className="text-[#059669] shrink-0" />
                 <span>
-                  <strong>{isBn ? 'অবস্থান:' : 'Location:'}</strong> {teacherOfficeLocation || (isBn ? 'শিক্ষক মিলনায়তন, ২য় তলা, একাডেমিক ভবন' : "Teachers' Room, 2nd Floor, Academic Building")}
+                  <strong>{isBn ? 'অবস্থান:' : 'Location:'}</strong> {teacherOfficeLocation || (isBn ? (isStaff ? 'প্রধান প্রশাসনিক ভবন, নিচতলা' : 'শিক্ষক মিলনায়তন, ২য় তলা, একাডেমিক ভবন') : (isStaff ? 'Main Admin Block, Ground Floor' : "Teachers' Room, 2nd Floor, Academic Building"))}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock size={13} className="text-[#059669] shrink-0" />
                 <span>
-                  <strong>{isBn ? 'অফিস সময়:' : 'Office Hours:'}</strong> {teacherOfficeHours || (isBn ? 'রবিবার - বৃহস্পতিবার: সকাল ৯:০০ - বিকাল ৪:০০' : "Sunday - Thursday: 9:00 AM - 4:00 PM")}
+                  <strong>{isBn ? 'অফিস সময়:' : 'Office Hours:'}</strong> {teacherOfficeHours || (isBn ? 'রবিবার - বৃহস্পতিবার: সকাল ৮:০০ - বিকাল ৪:০০' : "Sunday - Thursday: 8:00 AM - 4:00 PM")}
                 </span>
               </div>
             </div>

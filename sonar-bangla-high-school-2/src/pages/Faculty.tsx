@@ -27,7 +27,7 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import type { Teacher } from '../data/schoolData';
-import { TEACHERS, ADMINISTRATIVE_STAFF } from '../data/schoolData';
+import { TEACHERS, ADMINISTRATIVE_STAFF, STAFF_PROFILES } from '../data/schoolData';
 import { TEACHER_DETAILS_BN } from '../data/teacherLocalization';
 
 const TEACHER_TRANSLATIONS: Record<string, { nameBn: string; designationBn: string; subjectBn: string }> = {
@@ -42,6 +42,10 @@ const TEACHER_TRANSLATIONS: Record<string, { nameBn: string; designationBn: stri
 };
 
 const STAFF_TRANSLATIONS: Record<string, { nameBn: string; roleBn: string }> = {
+  'staff-1': { nameBn: 'মোঃ রফিকুল ইসলাম', roleBn: 'অফিস সুপারিনটেনডেন্ট' },
+  'staff-2': { nameBn: 'সুমাইয়া আক্তার', roleBn: 'সিনিয়র হিসাবরক্ষক' },
+  'staff-3': { nameBn: 'মোঃ হাসানুজ্জামান', roleBn: 'প্রধান গ্রন্থাগারিক' },
+  'staff-4': { nameBn: 'রাকিবুল ইসলাম', roleBn: 'আইসিটি সহকারী ও নেটওয়ার্ক ইন-চার্জ' },
   '1': { nameBn: 'মোঃ রফিকুল ইসলাম', roleBn: 'অফিস সুপারিনটেনডেন্ট' },
   '2': { nameBn: 'সুমাইয়া আক্তার', roleBn: 'সিনিয়র হিসাবরক্ষক' },
   '3': { nameBn: 'মোঃ হাসানুজ্জামান', roleBn: 'প্রধান গ্রন্থাগারিক' },
@@ -71,7 +75,7 @@ export const Faculty: React.FC = () => {
   const { language, toBanglaNum } = useLanguage();
   const isBn = language === 'bn';
 
-  const [activeTab, setActiveTab] = useState<'all' | 'teaching' | 'admin'>('all');
+  const [activeTab, setActiveTab] = useState<'teaching' | 'admin'>('teaching');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('All');
   const [selectedDesignation, setSelectedDesignation] = useState('All');
@@ -119,7 +123,6 @@ export const Faculty: React.FC = () => {
     setSearchQuery('');
     setSelectedSubject('All');
     setSelectedDesignation('All');
-    setActiveTab('all');
   };
 
   // Helper for badge color based on subject (Matching mockup)
@@ -296,9 +299,9 @@ export const Faculty: React.FC = () => {
           <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={() => setActiveTab(activeTab === 'teaching' ? 'all' : 'teaching')}
+              onClick={() => setActiveTab('teaching')}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs ${
-                activeTab === 'teaching' || activeTab === 'all'
+                activeTab === 'teaching'
                   ? 'bg-[#004d34] text-white'
                   : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
               }`}
@@ -309,7 +312,7 @@ export const Faculty: React.FC = () => {
 
             <button
               type="button"
-              onClick={() => setActiveTab(activeTab === 'admin' ? 'all' : 'admin')}
+              onClick={() => setActiveTab('admin')}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs ${
                 activeTab === 'admin'
                   ? 'bg-[#004d34] text-white'
@@ -333,42 +336,49 @@ export const Faculty: React.FC = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={isBn ? 'নাম, বিষয় বা পদবি দিয়ে খুঁজুন...' : 'Search by name, subject or designation...'}
+                placeholder={
+                  activeTab === 'teaching'
+                    ? (isBn ? 'নাম, বিষয় বা পদবি দিয়ে খুঁজুন...' : 'Search by name, subject or designation...')
+                    : (isBn ? 'কর্মকর্তার নাম বা পদবি দিয়ে খুঁজুন...' : 'Search by staff name or role...')
+                }
                 className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3.5 py-2 text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34] shadow-xs"
               />
             </div>
 
-            {/* Subject Dropdown */}
-            <select
-              value={selectedSubject}
-              onChange={(e) => setSelectedSubject(e.target.value)}
-              className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-xs"
-            >
-              <option value="All">{isBn ? 'সকল বিষয়' : 'All Subjects'}</option>
-              {subjectList
-                .filter((s) => s !== 'All')
-                .map((subj) => (
-                  <option key={subj} value={subj}>
-                    {isBn ? (SUBJECT_CAT_BN[subj] || subj) : subj}
-                  </option>
-                ))}
-            </select>
+            {/* Subject & Designation Dropdowns - Relevant for Teaching Faculty */}
+            {activeTab === 'teaching' && (
+              <>
+                <select
+                  value={selectedSubject}
+                  onChange={(e) => setSelectedSubject(e.target.value)}
+                  className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-xs"
+                >
+                  <option value="All">{isBn ? 'সকল বিষয়' : 'All Subjects'}</option>
+                  {subjectList
+                    .filter((s) => s !== 'All')
+                    .map((subj) => (
+                      <option key={subj} value={subj}>
+                        {isBn ? (SUBJECT_CAT_BN[subj] || subj) : subj}
+                      </option>
+                    ))}
+                </select>
 
-            {/* Designation Dropdown */}
-            <select
-              value={selectedDesignation}
-              onChange={(e) => setSelectedDesignation(e.target.value)}
-              className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-xs"
-            >
-              <option value="All">{isBn ? 'সকল পদবি' : 'All Designations'}</option>
-              {designationList
-                .filter((d) => d !== 'All')
-                .map((desig) => (
-                  <option key={desig} value={desig}>
-                    {isBn ? (DESIGNATION_BN[desig] || desig) : desig}
-                  </option>
-                ))}
-            </select>
+                <select
+                  value={selectedDesignation}
+                  onChange={(e) => setSelectedDesignation(e.target.value)}
+                  className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-xs"
+                >
+                  <option value="All">{isBn ? 'সকল পদবি' : 'All Designations'}</option>
+                  {designationList
+                    .filter((d) => d !== 'All')
+                    .map((desig) => (
+                      <option key={desig} value={desig}>
+                        {isBn ? (DESIGNATION_BN[desig] || desig) : desig}
+                      </option>
+                    ))}
+                </select>
+              </>
+            )}
 
             {/* Reset Button */}
             <button
@@ -385,7 +395,7 @@ export const Faculty: React.FC = () => {
       </div>
 
       {/* 3. Teaching Faculty Section (Matching media_1790105578493.jpg) */}
-      {(activeTab === 'all' || activeTab === 'teaching') && (
+      {activeTab === 'teaching' && (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-10">
           <section className="space-y-6">
             {/* Header Row */}
@@ -498,8 +508,8 @@ export const Faculty: React.FC = () => {
       )}
 
       {/* 4. Administrative Staff Section (Matching media_1790105578493.jpg) */}
-      {(activeTab === 'all' || activeTab === 'admin') && (
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-14">
+      {activeTab === 'admin' && (
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-10">
           <section className="space-y-6">
             {/* Header Row */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -527,10 +537,23 @@ export const Faculty: React.FC = () => {
                 {filteredStaff.map((staff) => {
                   const staffName = isBn ? (STAFF_TRANSLATIONS[staff.id]?.nameBn || staff.name) : staff.name;
                   const staffRole = isBn ? (STAFF_TRANSLATIONS[staff.id]?.roleBn || staff.role) : staff.role;
+                  const staffProfile = STAFF_PROFILES[staff.id] || ({
+                    ...staff,
+                    designation: staff.role,
+                    subject: staff.role,
+                    subjectCategory: 'Administration',
+                    qualifications: 'Administrative Management',
+                    roleType: 'staff'
+                  } as Teacher);
+
                   return (
                     <div
                       key={staff.id}
-                      className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group"
+                      onClick={() => {
+                        setSelectedTeacher(staffProfile);
+                        setModalTab('professional');
+                      }}
+                      className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group cursor-pointer"
                     >
                       <div>
                         {/* Photo & Role */}
@@ -571,13 +594,18 @@ export const Faculty: React.FC = () => {
 
                       {/* View Profile Link */}
                       <div className="pt-3 mt-3 border-t border-slate-100">
-                        <Link
-                          to="/about"
-                          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 transition"
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedTeacher(staffProfile);
+                            setModalTab('professional');
+                          }}
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 transition cursor-pointer"
                         >
                           <span>{isBn ? 'বিস্তারিত' : 'View'}</span>
                           <ArrowRight size={13} />
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   );
@@ -630,10 +658,10 @@ export const Faculty: React.FC = () => {
         </section>
       </div>
 
-      {/* 6. Faculty Quick View Modal (Matching media_1790113348730.jpg) */}
-      {/* 6. Faculty Quick View Modal (Matching media_1790113348730.jpg) */}
+      {/* 6. Faculty & Staff Quick View Modal */}
       {selectedTeacher && (() => {
         const detailsBn = TEACHER_DETAILS_BN[selectedTeacher.id];
+        const isStaff = (selectedTeacher as any).roleType === 'staff' || selectedTeacher.id?.startsWith('staff');
         return (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs animate-in fade-in duration-150"
@@ -673,9 +701,9 @@ export const Faculty: React.FC = () => {
                   </div>
 
                   <div className="mt-3.5">
-                    <span className="inline-flex items-center gap-1.5 bg-[#e8f7ee] text-[#059669] border border-emerald-100 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full">
-                      <GraduationCap size={13} />
-                      <span>{isBn ? 'শিক্ষকমণ্ডলী' : 'TEACHING FACULTY'}</span>
+                    <span className={`inline-flex items-center gap-1.5 ${isStaff ? 'bg-[#eff6ff] text-[#1d4ed8] border-blue-100' : 'bg-[#e8f7ee] text-[#059669] border-emerald-100'} border text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full`}>
+                      {isStaff ? <Briefcase size={13} /> : <GraduationCap size={13} />}
+                      <span>{isBn ? (isStaff ? 'প্রশাসনিক কর্মকর্তা' : 'শিক্ষকমণ্ডলী') : (isStaff ? 'ADMINISTRATIVE STAFF' : 'TEACHING FACULTY')}</span>
                     </span>
                   </div>
 
@@ -691,16 +719,16 @@ export const Faculty: React.FC = () => {
 
                   <p className="text-xs text-slate-600 mt-2.5 leading-relaxed">
                     {isBn
-                      ? (detailsBn?.aboutBn || 'শিক্ষার মানোন্নয়ন ও শিক্ষার্থীদের সার্বিক বিকাশে নিবেদিতপ্রাণ শিক্ষক।')
-                      : (selectedTeacher.about || 'Passionate about education and dedicated to nurturing young minds. Committed to creating an engaging and inclusive learning environment.')}
+                      ? (detailsBn?.aboutBn || (isStaff ? 'বিদ্যালয়ের সার্বিক দাপ্তরিক কার্যক্রম ও সেবা পরিচালনায় নিবেদিত কর্মকর্তা।' : 'শিক্ষার মানোন্নয়ন ও শিক্ষার্থীদের সার্বিক বিকাশে নিবেদিতপ্রাণ শিক্ষক।'))
+                      : (selectedTeacher.about || (isStaff ? 'Dedicated administrative professional ensuring smooth institutional operations.' : 'Passionate about education and dedicated to nurturing young minds.'))}
                   </p>
 
                   <div className="bg-[#f0faf5] border border-[#d7f1e5] rounded-xl p-3 mt-3 flex items-start gap-2 shadow-2xs">
                     <span className="text-lg text-[#059669] font-serif font-black leading-none shrink-0">“</span>
                     <p className="text-xs text-slate-700 italic font-medium leading-relaxed">
                       {isBn
-                        ? (detailsBn?.mottoQuoteBn || 'আজকের শিক্ষা, উজ্জ্বল ও আলোকিত আগামীর মূল ভিত্তি।')
-                        : (selectedTeacher.mottoQuote || 'Education is the foundation for a brighter tomorrow.')}
+                        ? (detailsBn?.mottoQuoteBn || (isStaff ? 'সেবায় আন্তরিকতা ও প্রাতিষ্ঠানিক উৎকর্ষ অর্জনে আমরা প্রতিশ্রুতিবদ্ধ।' : 'আজকের শিক্ষা, উজ্জ্বল ও আলোকিত আগামীর মূল ভিত্তি।'))
+                        : (selectedTeacher.mottoQuote || (isStaff ? 'Excellence in service, discipline in execution.' : 'Education is the foundation for a brighter tomorrow.'))}
                     </p>
                   </div>
                 </div>
@@ -759,14 +787,14 @@ export const Faculty: React.FC = () => {
 
                       {/* 6 Cards Grid */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {/* Card 1: Teaching Subject */}
+                        {/* Card 1: Teaching Subject or Department */}
                         <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start gap-3">
                           <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
-                            <BookOpen size={16} />
+                            {isStaff ? <Briefcase size={16} /> : <BookOpen size={16} />}
                           </div>
                           <div>
                             <span className="text-[11px] text-slate-400 font-semibold block">
-                              {isBn ? 'পাঠদানের বিষয়' : 'Teaching Subject'}
+                              {isBn ? (isStaff ? 'বিভাগ / দপ্তর' : 'পাঠদানের বিষয়') : (isStaff ? 'Department / Division' : 'Teaching Subject')}
                             </span>
                             <span className="text-xs sm:text-sm font-black text-slate-900">
                               {isBn ? (detailsBn?.subjectBn || selectedTeacher.subject) : selectedTeacher.subject}
@@ -799,7 +827,7 @@ export const Faculty: React.FC = () => {
                               {isBn ? 'পেশাগত যোগ্যতা' : 'Professional Qualifications'}
                             </span>
                             <span className="text-xs font-bold text-slate-900 block leading-tight">
-                              {isBn ? (detailsBn?.professionalQualificationsBn || 'বি.এড, আধুনিক পাঠদান পদ্ধতি প্রশিক্ষণ') : (selectedTeacher.professionalQualifications || 'B.Ed, Training in Modern Teaching Methods')}
+                              {isBn ? (detailsBn?.professionalQualificationsBn || (isStaff ? 'প্রশাসনিক ব্যবস্থাপনা ও সরকারি স্কুল গভর্ন্যান্স' : 'বি.এড, আধুনিক পাঠদান পদ্ধতি প্রশিক্ষণ')) : (selectedTeacher.professionalQualifications || (isStaff ? 'Educational Administration & Governance' : 'B.Ed, Training in Modern Teaching Methods'))}
                             </span>
                             <div className="flex items-center gap-1.5 text-[11px] text-emerald-800 font-medium mt-1 truncate">
                               <Mail size={11} className="shrink-0" />
@@ -833,7 +861,7 @@ export const Faculty: React.FC = () => {
                               {isBn ? 'অফিস কক্ষ' : 'Office Location'}
                             </span>
                             <span className="text-xs sm:text-sm font-black text-slate-900">
-                              {isBn ? (detailsBn?.officeLocationBn || 'শিক্ষক মিলনায়তন / একাডেমি ভবন') : (selectedTeacher.officeLocation || 'Admin Building')}
+                              {isBn ? (detailsBn?.officeLocationBn || (isStaff ? 'প্রধান প্রশাসনিক ভবন, নিচতলা' : 'শিক্ষক মিলনায়তন / একাডেমি ভবন')) : (selectedTeacher.officeLocation || (isStaff ? 'Main Admin Block, Ground Floor' : 'Admin Building'))}
                             </span>
                           </div>
                         </div>
@@ -932,19 +960,26 @@ export const Faculty: React.FC = () => {
                   {modalTab === 'additional' && (
                     <div className="mt-3.5 space-y-3.5 animate-in fade-in duration-100">
                       <h4 className="text-sm font-bold text-slate-900 border-b-2 border-[#059669] inline-block pb-0.5">
-                        {isBn ? 'পাঠদান দায়িত্ব ও প্রকাশনা' : 'Teaching Responsibilities & Publications'}
+                        {isBn
+                          ? (isStaff ? 'দাপ্তরিক ও প্রাতিষ্ঠানিক দায়িত্ব' : 'পাঠদান দায়িত্ব ও প্রকাশনা')
+                          : (isStaff ? 'Administrative & Institutional Responsibilities' : 'Teaching Responsibilities & Publications')}
                       </h4>
 
                       <div className="space-y-2">
                         <h5 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                          {isBn ? 'ক্লাসরুমের দায়িত্ব:' : 'Classroom Duties:'}
+                          {isBn
+                            ? (isStaff ? 'মূল দায়িত্ব ও কর্মপরিধি:' : 'ক্লাসরুমের দায়িত্ব:')
+                            : (isStaff ? 'Key Duties & Operational Scope:' : 'Classroom Duties:')}
                         </h5>
                         {(isBn && detailsBn?.responsibilitiesBn
                           ? detailsBn.responsibilitiesBn
-                          : selectedTeacher.responsibilities || [
+                          : selectedTeacher.responsibilities || (isStaff ? [
+                              'Institutional office administration and record governance',
+                              'Student and guardian communication and support'
+                            ] : [
                               `${selectedTeacher.subject}: Core Subject Instruction (Classes 8, 9, 10)`,
                               `Remedial Learning & Student Mentorship Support`
-                            ]
+                            ])
                         ).map((resp, ri) => (
                           <div key={ri} className="flex items-start gap-2 text-xs text-slate-700 bg-[#f7faf8] p-2.5 rounded-xl border border-slate-100">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-1.5 shrink-0" />

@@ -35,6 +35,7 @@ export interface Teacher {
   certifications?: string[];
   publications?: PublicationItem[];
   responsibilities?: string[];
+  roleType?: 'teacher' | 'staff' | 'leadership';
 }
 
 export interface Staff {
@@ -381,7 +382,7 @@ export const TEACHERS: Teacher[] = [
 
 export const ADMINISTRATIVE_STAFF: Staff[] = [
   {
-    id: "1",
+    id: "staff-1",
     name: "Md. Rafiqul Islam",
     role: "Office Superintendent",
     email: "office.super@sos-bangladesh.org",
@@ -389,7 +390,7 @@ export const ADMINISTRATIVE_STAFF: Staff[] = [
     image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&fit=crop&q=80",
   },
   {
-    id: "2",
+    id: "staff-2",
     name: "Sumaiya Akter",
     role: "Senior Accountant",
     email: "accounts@sos-bangladesh.org",
@@ -397,7 +398,7 @@ export const ADMINISTRATIVE_STAFF: Staff[] = [
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&fit=crop&q=80",
   },
   {
-    id: "3",
+    id: "staff-3",
     name: "Md. Hasanuzzaman",
     role: "Head Librarian",
     email: "library@sos-bangladesh.org",
@@ -405,7 +406,7 @@ export const ADMINISTRATIVE_STAFF: Staff[] = [
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80",
   },
   {
-    id: "4",
+    id: "staff-4",
     name: "Rakibul Islam",
     role: "ICT Assistant & Network In-charge",
     email: "ict.support@sos-bangladesh.org",
@@ -413,6 +414,153 @@ export const ADMINISTRATIVE_STAFF: Staff[] = [
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&fit=crop&q=80",
   },
 ];
+
+export const STAFF_PROFILES: Record<string, Teacher> = {
+  "staff-1": {
+    id: "staff-1",
+    name: "Md. Rafiqul Islam",
+    designation: "Office Superintendent",
+    subject: "General Administration & Institutional Services",
+    subjectCategory: "Administration",
+    qualifications: "M.Com in Management, MBA",
+    experience: "15+ Years",
+    studentsMentored: "N/A",
+    email: "office.super@sos-bangladesh.org",
+    phone: "01712-112233",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&fit=crop&q=80",
+    mottoQuote: "Excellence in service, discipline in execution, and integrity in institution building.",
+    bioQuote: "Dedicated to maintaining seamless campus operations, professional discipline, and supportive student-administrative services.",
+    about: "Md. Rafiqul Islam serves as the Office Superintendent at SOS Hermann Gmeiner School Khulna. With over 15 years of institutional experience, he manages daily administrative operations, board correspondence, official records, and campus coordination.",
+    officeLocation: "Main Administration Block, Ground Floor, Room 102",
+    officeHours: "Sunday - Thursday: 8:00 AM - 4:00 PM",
+    professionalQualifications: "Executive Management in Educational Administration, Public School Governance",
+    education: [
+      { degree: "Master of Commerce (M.Com in Management)", institution: "University of Rajshahi", result: "First Class", year: "2008" },
+      { degree: "Bachelor of Commerce (B.Com Hons)", institution: "University of Rajshahi", result: "First Class", year: "2006" }
+    ],
+    certifications: [
+      "Institutional Governance & Public School Administration (NAEM)",
+      "Digital Institutional Records & Smart Office Management",
+      "Workplace Health, Safety & Child Safeguarding Compliance"
+    ],
+    responsibilities: [
+      "Supervising general administrative and office operations",
+      "Liaison with Education Board, District Education Office, and SOS Village",
+      "Maintenance of institutional records, faculty files, and official documents",
+      "Coordination of school events, logistics, and official protocol"
+    ],
+    publications: [],
+    roleType: "staff"
+  },
+  "staff-2": {
+    id: "staff-2",
+    name: "Sumaiya Akter",
+    designation: "Senior Accountant",
+    subject: "Finance & Institutional Accounts",
+    subjectCategory: "Administration",
+    qualifications: "MBA in Finance, BBA in Accounting",
+    experience: "08+ Years",
+    studentsMentored: "N/A",
+    email: "accounts@sos-bangladesh.org",
+    phone: "01713-223344",
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&fit=crop&q=80",
+    mottoQuote: "Transparency and accountability are the cornerstones of institutional trust.",
+    bioQuote: "Committed to meticulous financial management, seamless digital fee systems, and complete institutional transparency.",
+    about: "Ms. Sumaiya Akter is the Senior Accountant at SOS Hermann Gmeiner School Khulna. She oversees annual budgeting, student tuition fee systems, institutional procurement accounts, and internal audit compliance.",
+    officeLocation: "Accounts Office, Admin Building, 1st Floor",
+    officeHours: "Sunday - Thursday: 8:00 AM - 4:00 PM",
+    professionalQualifications: "Certified Financial Management & Institutional Accounting Specialist",
+    education: [
+      { degree: "Master of Business Administration (MBA in Finance)", institution: "Khulna University", result: "CGPA 3.80", year: "2016" },
+      { degree: "BBA in Accounting & Information Systems", institution: "Khulna University", result: "CGPA 3.75", year: "2014" }
+    ],
+    certifications: [
+      "Certified TallyPrime & Automated Institutional Accounts Specialist",
+      "National Tax, VAT & Statutory Compliance Certification (NBR)",
+      "Digital Education Finance Administration System (DEFAS)"
+    ],
+    responsibilities: [
+      "Management of student tuition fee collection and digital payment gateways",
+      "Preparation of annual operating budgets, ledger audits, and financial reporting",
+      "Payroll administration and institutional statutory compliance",
+      "Procurement financial auditing and fiscal reporting"
+    ],
+    publications: [],
+    roleType: "staff"
+  },
+  "staff-3": {
+    id: "staff-3",
+    name: "Md. Hasanuzzaman",
+    designation: "Head Librarian",
+    subject: "Library & Information Science",
+    subjectCategory: "Administration",
+    qualifications: "MA in Information Science & Library Management",
+    experience: "10+ Years",
+    studentsMentored: "N/A",
+    email: "library@sos-bangladesh.org",
+    phone: "01714-334455",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80",
+    mottoQuote: "A library is not just a room of books, but a gateway to endless knowledge and imagination.",
+    bioQuote: "Dedicated to fostering reading habits, research literacy, and modern digital library resources for all students.",
+    about: "Mr. Md. Hasanuzzaman leads the Central Library at SOS Hermann Gmeiner School Khulna. He has introduced modern digital cataloging, extended book collections, and guided students in reading circle programs.",
+    officeLocation: "Central Library, 3rd Floor, Main Academic Block",
+    officeHours: "Sunday - Thursday: 8:00 AM - 4:00 PM",
+    professionalQualifications: "Advanced Library Automation and Digital Resource Management",
+    education: [
+      { degree: "MA in Information Science & Library Management", institution: "University of Dhaka", result: "First Class", year: "2014" },
+      { degree: "BA (Hons) in Information Science", institution: "University of Dhaka", result: "First Class", year: "2012" }
+    ],
+    certifications: [
+      "Koha Open Source Integrated Library System Specialist",
+      "Dewey Decimal Classification (DDC) Certified Cataloger",
+      "Digital Archive & Electronic Learning Resources Certification"
+    ],
+    responsibilities: [
+      "Cataloging, book acquisitions, and digital circulation desk management",
+      "Guiding students in reference reading, science project research, and literature clubs",
+      "Organizing annual reading month, book fairs, and library orientation workshops",
+      "Preserving institutional archives and rare learning materials"
+    ],
+    publications: [],
+    roleType: "staff"
+  },
+  "staff-4": {
+    id: "staff-4",
+    name: "Rakibul Islam",
+    designation: "ICT Assistant & Network In-charge",
+    subject: "ICT & Digital Services",
+    subjectCategory: "ICT",
+    qualifications: "B.Sc in Computer Science & Engineering (KUET)",
+    experience: "06+ Years",
+    studentsMentored: "N/A",
+    email: "ict.support@sos-bangladesh.org",
+    phone: "01715-445566",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&fit=crop&q=80",
+    mottoQuote: "Empowering education through smart technology and reliable digital connectivity.",
+    bioQuote: "Passionate about high-tech classrooms, network security, and smooth online educational infrastructure.",
+    about: "Mr. Rakibul Islam oversees the digital infrastructure, computer laboratories, campus LAN/Wi-Fi, and smart multimedia classrooms at SOS Hermann Gmeiner School Khulna.",
+    officeLocation: "Computer Lab 1, ICT Block, 2nd Floor",
+    officeHours: "Sunday - Thursday: 8:00 AM - 4:00 PM",
+    professionalQualifications: "Cisco CCNA, Network Administration & Smart Classroom AV Engineering",
+    education: [
+      { degree: "B.Sc in Computer Science & Engineering", institution: "Khulna University of Engineering & Technology (KUET)", result: "CGPA 3.65", year: "2018" },
+      { degree: "Diploma in Computer Technology", institution: "Khulna Polytechnic Institute", result: "First Division", year: "2014" }
+    ],
+    certifications: [
+      "Cisco Certified Network Associate (CCNA)",
+      "Microsoft Certified Solutions Associate (MCSA)",
+      "Interactive Smart Screen & Digital Lab Infrastructure Specialist"
+    ],
+    responsibilities: [
+      "Maintenance of computer laboratories, servers, and smart multimedia screens",
+      "Managing school internet connectivity, firewall, and data security",
+      "Technical support for online result portal, admissions, and teacher ICT setups",
+      "Troubleshooting computer systems and digital classroom hardware"
+    ],
+    publications: [],
+    roleType: "staff"
+  }
+};
 
 export const LEADERSHIP = {
   chairman: {
