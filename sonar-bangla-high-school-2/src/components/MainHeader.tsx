@@ -32,7 +32,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
               {language === 'bn' ? SCHOOL_INFO.addressBn : SCHOOL_INFO.address}
             </p>
             <p className="text-[9px] sm:text-[10px] font-bold text-slate-400 tracking-wider uppercase hidden sm:block mt-0.5">
-              {SCHOOL_INFO.tagline}
+              {language === 'bn' ? 'জ্ঞান • শৃঙ্খলা • ভবিষ্যৎ' : SCHOOL_INFO.tagline}
             </p>
           </div>
         </Link>
@@ -41,7 +41,8 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Quick Search */}
           <button
-            aria-label="Search"
+            aria-label={language === 'bn' ? 'অনুসন্ধান' : 'Search'}
+            title={language === 'bn' ? 'অনুসন্ধান' : 'Search'}
             className="w-9 h-9 rounded-full bg-slate-50 hover:bg-slate-100 border border-slate-200/80 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-all cursor-pointer shadow-2xs"
           >
             <Search size={16} />
@@ -53,7 +54,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
             className="hidden sm:inline-flex items-center gap-1.5 bg-[#e8f7f0] hover:bg-[#d5f2e3] text-[#005a3c] border border-[#9fe3c2] px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-all shadow-2xs hover:shadow-xs"
           >
             <BookOpen size={14} className="text-[#059669]" />
-            <span>Online Admission</span>
+            <span>{language === 'bn' ? 'অনলাইন ভর্তি' : 'Online Admission'}</span>
           </Link>
 
           {/* Quick Action: Result */}
@@ -62,7 +63,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
             className="hidden md:inline-flex items-center gap-1.5 bg-[#fef4ea] hover:bg-[#fde8d4] text-[#b45309] border border-[#fcd9be] px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-all shadow-2xs hover:shadow-xs"
           >
             <ShieldCheck size={14} className="text-[#d97706]" />
-            <span>Result</span>
+            <span>{language === 'bn' ? 'ফলাফল' : 'Result'}</span>
           </Link>
 
           {/* Mobile Menu Button */}

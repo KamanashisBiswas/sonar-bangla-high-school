@@ -17,6 +17,7 @@ import {
   ArrowRight,
   ChevronDown,
 } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface SubjectMark {
   code: string;
@@ -200,6 +201,9 @@ const RESULTS_DATABASE: StudentResult[] = [
 ];
 
 export const Result: React.FC = () => {
+  const { language, toBanglaNum } = useLanguage();
+  const isBn = language === 'bn';
+
   const [activeTab, setActiveTab] = useState<'institute' | 'individual'>('institute');
 
   // Filters for Institute Result
@@ -217,6 +221,50 @@ export const Result: React.FC = () => {
   // Active individual result
   const [activeStudent, setActiveStudent] = useState<StudentResult>(RESULTS_DATABASE[0]);
 
+  const getSubjectName = (name: string) => {
+    if (!isBn) return name;
+    const map: Record<string, string> = {
+      'Bangla': 'বাংলা',
+      'English': 'ইংরেজি',
+      'Mathematics': 'সাধারণ গণিত',
+      'Physics': 'পদার্থবিজ্ঞান',
+      'Chemistry': 'রসায়ন',
+      'Biology': 'জীববিজ্ঞান',
+      'ICT': 'তথ্য ও যোগাযোগ প্রযুক্তি',
+      'Accounting': 'হিসাববিজ্ঞান',
+      'Business Org': 'ব্যবসায় উদ্যোগ',
+      'Finance & Banking': 'ফিন্যান্স ও ব্যাংকিং',
+      'History of Bangladesh': 'বাংলাদেশের ইতিহাস ও বিশ্বসভ্যতা',
+      'Civics & Citizenship': 'পৌরনীতি ও নাগরিকতা',
+      'Geography': 'ভূগোল ও পরিবেশ',
+      'Science / Studies': 'সাধারণ বিজ্ঞান',
+    };
+    return map[name] || name;
+  };
+
+  const getGroupSec = (groupSec: string) => {
+    if (!isBn) return groupSec;
+    return groupSec
+      .replace('Science', 'বিজ্ঞান')
+      .replace('Business Studies', 'ব্যবসায় শিক্ষা')
+      .replace('Humanities', 'মানবিক')
+      .replace('General', 'সাধারণ')
+      .replace('(A)', '(এ)')
+      .replace('(B)', '(বি)');
+  };
+
+  const getStudentName = (name: string) => {
+    if (!isBn) return name;
+    const map: Record<string, string> = {
+      'Abdullah Al Mamun': 'আব্দুল্লাহ আল মামুন',
+      'Sumaiya Akter': 'সুমাইয়া আক্তার',
+      'Tanvir Hasan': 'তানভীর হাসান',
+      'Nusrat Jahan Tisha': 'নুসরাত জাহান তিশা',
+      'Ariful Islam Sakib': 'আরিফুল ইসলাম সাকিব',
+    };
+    return map[name] || name;
+  };
+
   const handleSearchIndividual = (e: React.FormEvent) => {
     e.preventDefault();
     const cleanRoll = rollInput.replace(/\D/g, '') || '101';
@@ -227,11 +275,11 @@ export const Result: React.FC = () => {
       // Create custom student if not found in default 7
       setActiveStudent({
         roll: cleanRoll,
-        name: `Student (Roll ${cleanRoll})`,
+        name: isBn ? `শিক্ষার্থী (রোল ${toBanglaNum(cleanRoll)})` : `Student (Roll ${cleanRoll})`,
         avatarLetter: cleanRoll.charAt(0),
         avatarColor: 'bg-emerald-100 text-emerald-700',
-        groupSec: 'General',
-        group: 'General',
+        groupSec: isBn ? 'সাধারণ' : 'General',
+        group: isBn ? 'সাধারণ' : 'General',
         totalMarks: 620,
         maxMarks: 700,
         gpa: '4.70',
@@ -311,17 +359,19 @@ export const Result: React.FC = () => {
               className="hover:text-emerald-800 flex items-center gap-1 transition-colors text-emerald-700"
             >
               <Home size={14} />
-              <span>Home</span>
+              <span>{isBn ? 'মূলপাতা' : 'Home'}</span>
             </Link>
             <span className="text-slate-400">›</span>
             <Link
               to="/result"
               className="hover:text-emerald-800 transition-colors text-slate-600"
             >
-              Result
+              {isBn ? 'ফলাফল' : 'Result'}
             </Link>
             <span className="text-slate-400">›</span>
-            <span className="text-slate-800 font-bold">Academic Results & Marksheet</span>
+            <span className="text-slate-800 font-bold">
+              {isBn ? 'একাডেমিক ফলাফল ও মার্কশিট' : 'Academic Results & Marksheet'}
+            </span>
           </div>
 
           {/* Left Narrative Block */}
@@ -329,13 +379,22 @@ export const Result: React.FC = () => {
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <BarChart3 size={15} />
-              <span>ACADEMIC RESULT PORTAL</span>
+              <span>{isBn ? 'একাডেমিক ফলাফল পোর্টাল' : 'ACADEMIC RESULT PORTAL'}</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              Academic Results & <br />
-              Marksheet
+              {isBn ? (
+                <>
+                  একাডেমিক ফলাফল ও <br />
+                  মার্কশিট
+                </>
+              ) : (
+                <>
+                  Academic Results & <br />
+                  Marksheet
+                </>
+              )}
             </h1>
 
             {/* Short Green Accent Line Under Title */}
@@ -343,7 +402,9 @@ export const Result: React.FC = () => {
 
             {/* Subtitle */}
             <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              Search results and generate official academic transcripts using student Roll and Class.
+              {isBn
+                ? 'শিক্ষার্থীর রোল ও শ্রেণি নির্বাচন করে ফলাফল অনুসন্ধান ও অফিসিয়াল মার্কশিট সংগ্রহ করুন।'
+                : 'Search results and generate official academic transcripts using student Roll and Class.'}
             </p>
           </div>
 
@@ -355,10 +416,10 @@ export const Result: React.FC = () => {
               </span>
               <div>
                 <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  Education today for a brighter tomorrow
+                  {isBn ? 'আজকের শিক্ষা, আগামীর সম্ভাবনা' : 'Education today for a brighter tomorrow'}
                 </h4>
                 <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — SOS Hermann Gmeiner School
+                  — {isBn ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
                 </p>
               </div>
             </div>
@@ -382,7 +443,7 @@ export const Result: React.FC = () => {
               }`}
             >
               <Landmark size={17} />
-              <span>Institute Result</span>
+              <span>{isBn ? 'প্রাতিষ্ঠানিক ফলাফল' : 'Institute Result'}</span>
             </button>
 
             {/* Tab 2: Individual Student Result */}
@@ -396,7 +457,7 @@ export const Result: React.FC = () => {
               }`}
             >
               <User size={17} />
-              <span>Individual Student Result</span>
+              <span>{isBn ? 'একক শিক্ষার্থী ফলাফল' : 'Individual Student Result'}</span>
             </button>
           </div>
 
@@ -406,7 +467,7 @@ export const Result: React.FC = () => {
               {/* Session */}
               <div>
                 <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                  SESSION
+                  {isBn ? 'শিক্ষাবর্ষ' : 'SESSION'}
                 </label>
                 <div className="relative">
                   <Calendar size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -415,8 +476,8 @@ export const Result: React.FC = () => {
                     onChange={(e) => setInstSession(e.target.value)}
                     className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-8 py-2.5 text-xs font-semibold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
                   >
-                    <option value="2025">2025</option>
-                    <option value="2024">2024</option>
+                    <option value="2025">{isBn ? toBanglaNum('2025') : '2025'}</option>
+                    <option value="2024">{isBn ? toBanglaNum('2024') : '2024'}</option>
                   </select>
                   <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                 </div>
@@ -425,7 +486,7 @@ export const Result: React.FC = () => {
               {/* Examination */}
               <div>
                 <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                  EXAMINATION
+                  {isBn ? 'পরীক্ষার নাম' : 'EXAMINATION'}
                 </label>
                 <div className="relative">
                   <FileText size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -434,9 +495,9 @@ export const Result: React.FC = () => {
                     onChange={(e) => setInstExam(e.target.value)}
                     className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-8 py-2.5 text-xs font-semibold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
                   >
-                    <option value="Annual Examination">Annual Examination</option>
-                    <option value="Half Yearly Examination">Half Yearly Examination</option>
-                    <option value="Model Test Examination">Model Test Examination</option>
+                    <option value="Annual Examination">{isBn ? 'বার্ষিক পরীক্ষা' : 'Annual Examination'}</option>
+                    <option value="Half Yearly Examination">{isBn ? 'অর্ধ-বার্ষিক পরীক্ষা' : 'Half Yearly Examination'}</option>
+                    <option value="Model Test Examination">{isBn ? 'নির্বাচনী পরীক্ষা' : 'Model Test Examination'}</option>
                   </select>
                   <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                 </div>
@@ -445,7 +506,7 @@ export const Result: React.FC = () => {
               {/* Class */}
               <div>
                 <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                  CLASS
+                  {isBn ? 'শ্রেণি' : 'CLASS'}
                 </label>
                 <div className="relative">
                   <FileText size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -454,11 +515,11 @@ export const Result: React.FC = () => {
                     onChange={(e) => setInstClass(e.target.value)}
                     className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-8 py-2.5 text-xs font-semibold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
                   >
-                    <option value="Class 10">Class 10</option>
-                    <option value="Class 9">Class 9</option>
-                    <option value="Class 8">Class 8</option>
-                    <option value="Class 7">Class 7</option>
-                    <option value="Class 6">Class 6</option>
+                    <option value="Class 10">{isBn ? '১০ম শ্রেণি' : 'Class 10'}</option>
+                    <option value="Class 9">{isBn ? '৯ম শ্রেণি' : 'Class 9'}</option>
+                    <option value="Class 8">{isBn ? '৮ম শ্রেণি' : 'Class 8'}</option>
+                    <option value="Class 7">{isBn ? '৭ম শ্রেণি' : 'Class 7'}</option>
+                    <option value="Class 6">{isBn ? '৬ষ্ঠ শ্রেণি' : 'Class 6'}</option>
                   </select>
                   <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                 </div>
@@ -467,7 +528,7 @@ export const Result: React.FC = () => {
               {/* Group (Optional) */}
               <div>
                 <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                  GROUP (OPTIONAL)
+                  {isBn ? 'গ্রুপ / বিভাগ (ঐচ্ছিক)' : 'GROUP (OPTIONAL)'}
                 </label>
                 <div className="relative">
                   <Users size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -476,10 +537,10 @@ export const Result: React.FC = () => {
                     onChange={(e) => setInstGroup(e.target.value)}
                     className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-8 py-2.5 text-xs font-semibold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
                   >
-                    <option value="All Groups">All Groups</option>
-                    <option value="Science">Science</option>
-                    <option value="Business Studies">Business Studies</option>
-                    <option value="Humanities">Humanities</option>
+                    <option value="All Groups">{isBn ? 'সকল বিভাগ' : 'All Groups'}</option>
+                    <option value="Science">{isBn ? 'বিজ্ঞান' : 'Science'}</option>
+                    <option value="Business Studies">{isBn ? 'ব্যবসায় শিক্ষা' : 'Business Studies'}</option>
+                    <option value="Humanities">{isBn ? 'মানবিক' : 'Humanities'}</option>
                   </select>
                   <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                 </div>
@@ -492,7 +553,7 @@ export const Result: React.FC = () => {
                   className="w-full bg-[#004d34] hover:bg-[#003826] text-white font-bold text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-xs hover:shadow cursor-pointer"
                 >
                   <Search size={14} />
-                  <span>Search Result</span>
+                  <span>{isBn ? 'ফলাফল দেখুন' : 'Search Result'}</span>
                 </button>
               </div>
             </div>
@@ -504,7 +565,7 @@ export const Result: React.FC = () => {
               {/* Session */}
               <div>
                 <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                  SESSION
+                  {isBn ? 'শিক্ষাবর্ষ' : 'SESSION'}
                 </label>
                 <div className="relative">
                   <Calendar size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -513,8 +574,8 @@ export const Result: React.FC = () => {
                     onChange={(e) => setIndSession(e.target.value)}
                     className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-8 py-2.5 text-xs font-semibold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
                   >
-                    <option value="2025">2025</option>
-                    <option value="2024">2024</option>
+                    <option value="2025">{isBn ? toBanglaNum('2025') : '2025'}</option>
+                    <option value="2024">{isBn ? toBanglaNum('2024') : '2024'}</option>
                   </select>
                   <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                 </div>
@@ -523,7 +584,7 @@ export const Result: React.FC = () => {
               {/* Examination */}
               <div>
                 <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                  EXAMINATION
+                  {isBn ? 'পরীক্ষার নাম' : 'EXAMINATION'}
                 </label>
                 <div className="relative">
                   <FileText size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -532,9 +593,9 @@ export const Result: React.FC = () => {
                     onChange={(e) => setIndExam(e.target.value)}
                     className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-8 py-2.5 text-xs font-semibold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
                   >
-                    <option value="Annual Examination">Annual Examination</option>
-                    <option value="Half Yearly Examination">Half Yearly Examination</option>
-                    <option value="Model Test Examination">Model Test Examination</option>
+                    <option value="Annual Examination">{isBn ? 'বার্ষিক পরীক্ষা' : 'Annual Examination'}</option>
+                    <option value="Half Yearly Examination">{isBn ? 'অর্ধ-বার্ষিক পরীক্ষা' : 'Half Yearly Examination'}</option>
+                    <option value="Model Test Examination">{isBn ? 'নির্বাচনী পরীক্ষা' : 'Model Test Examination'}</option>
                   </select>
                   <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                 </div>
@@ -543,7 +604,7 @@ export const Result: React.FC = () => {
               {/* Class */}
               <div>
                 <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                  CLASS
+                  {isBn ? 'শ্রেণি' : 'CLASS'}
                 </label>
                 <div className="relative">
                   <FileText size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -552,11 +613,11 @@ export const Result: React.FC = () => {
                     onChange={(e) => setIndClass(e.target.value)}
                     className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-8 py-2.5 text-xs font-semibold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
                   >
-                    <option value="Class 10">Class 10</option>
-                    <option value="Class 9">Class 9</option>
-                    <option value="Class 8">Class 8</option>
-                    <option value="Class 7">Class 7</option>
-                    <option value="Class 6">Class 6</option>
+                    <option value="Class 10">{isBn ? '১০ম শ্রেণি' : 'Class 10'}</option>
+                    <option value="Class 9">{isBn ? '৯ম শ্রেণি' : 'Class 9'}</option>
+                    <option value="Class 8">{isBn ? '৮ম শ্রেণি' : 'Class 8'}</option>
+                    <option value="Class 7">{isBn ? '৭ম শ্রেণি' : 'Class 7'}</option>
+                    <option value="Class 6">{isBn ? '৬ষ্ঠ শ্রেণি' : 'Class 6'}</option>
                   </select>
                   <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                 </div>
@@ -565,7 +626,7 @@ export const Result: React.FC = () => {
               {/* Student Roll Number */}
               <div>
                 <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                  STUDENT ROLL NUMBER *
+                  {isBn ? 'শিক্ষার্থীর রোল নম্বর *' : 'STUDENT ROLL NUMBER *'}
                 </label>
                 <div className="relative">
                   <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs">
@@ -576,7 +637,7 @@ export const Result: React.FC = () => {
                     required
                     value={rollInput}
                     onChange={(e) => setRollInput(e.target.value)}
-                    placeholder="101"
+                    placeholder={isBn ? '১০১' : '101'}
                     className="w-full bg-white border border-slate-200 rounded-xl pl-8 pr-4 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#004d34] shadow-2xs"
                   />
                 </div>
@@ -589,7 +650,7 @@ export const Result: React.FC = () => {
                   className="w-full bg-[#004d34] hover:bg-[#003826] text-white font-bold text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-xs hover:shadow cursor-pointer"
                 >
                   <Search size={14} />
-                  <span>Search Result</span>
+                  <span>{isBn ? 'ফলাফল দেখুন' : 'Search Result'}</span>
                 </button>
               </div>
             </form>
@@ -610,10 +671,20 @@ export const Result: React.FC = () => {
                 </div>
                 <div>
                   <h2 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
-                    {instClass} Institutional Result Summary
+                    {isBn
+                      ? `${toBanglaNum(instClass.replace('Class ', ''))} শ্রেণি প্রাতিষ্ঠানিক ফলাফলের সারাংশ`
+                      : `${instClass} Institutional Result Summary`}
                   </h2>
                   <p className="text-xs text-slate-500 font-medium">
-                    Session: {instSession} | Exam: {instExam}
+                    {isBn
+                      ? `শিক্ষাবর্ষ: ${toBanglaNum(instSession)} | পরীক্ষা: ${
+                          instExam === 'Annual Examination'
+                            ? 'বার্ষিক পরীক্ষা'
+                            : instExam === 'Half Yearly Examination'
+                            ? 'অর্ধ-বার্ষিক পরীক্ষা'
+                            : 'নির্বাচনী পরীক্ষা'
+                        }`
+                      : `Session: ${instSession} | Exam: ${instExam}`}
                   </p>
                 </div>
               </div>
@@ -622,7 +693,7 @@ export const Result: React.FC = () => {
               <div className="flex items-center gap-2.5">
                 <div className="inline-flex items-center gap-1.5 bg-[#e8f7ee] border border-emerald-100 px-3 py-1.5 rounded-xl text-xs font-bold text-[#059669]">
                   <BarChart3 size={14} />
-                  <span>Pass Rate: 100%</span>
+                  <span>{isBn ? `পাসের হার: ${toBanglaNum('100%')}` : 'Pass Rate: 100%'}</span>
                 </div>
                 <button
                   type="button"
@@ -630,7 +701,7 @@ export const Result: React.FC = () => {
                   className="inline-flex items-center gap-1.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3.5 py-1.5 rounded-xl text-xs font-bold transition shadow-2xs cursor-pointer"
                 >
                   <Printer size={14} />
-                  <span>Print Result Sheet</span>
+                  <span>{isBn ? 'রেজাল্ট শিট প্রিন্ট' : 'Print Result Sheet'}</span>
                 </button>
               </div>
             </div>
@@ -640,14 +711,14 @@ export const Result: React.FC = () => {
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr className="bg-[#f4f9f6] text-slate-700 font-bold uppercase tracking-wider text-[11px] border-b border-slate-100">
-                    <th className="py-3.5 px-4 sm:px-6">ROLL</th>
-                    <th className="py-3.5 px-4 sm:px-6">STUDENT NAME</th>
-                    <th className="py-3.5 px-4 sm:px-6">GROUP & SEC</th>
-                    <th className="py-3.5 px-4 sm:px-6">TOTAL MARKS</th>
-                    <th className="py-3.5 px-4 sm:px-6">GPA</th>
-                    <th className="py-3.5 px-4 sm:px-6">GRADE</th>
-                    <th className="py-3.5 px-4 sm:px-6">STATUS</th>
-                    <th className="py-3.5 px-4 sm:px-6 text-center">MARKSHEET</th>
+                    <th className="py-3.5 px-4 sm:px-6">{isBn ? 'রোল' : 'ROLL'}</th>
+                    <th className="py-3.5 px-4 sm:px-6">{isBn ? 'শিক্ষার্থীর নাম' : 'STUDENT NAME'}</th>
+                    <th className="py-3.5 px-4 sm:px-6">{isBn ? 'বিভাগ ও শাখা' : 'GROUP & SEC'}</th>
+                    <th className="py-3.5 px-4 sm:px-6">{isBn ? 'মোট নম্বর' : 'TOTAL MARKS'}</th>
+                    <th className="py-3.5 px-4 sm:px-6">{isBn ? 'জিপিএ' : 'GPA'}</th>
+                    <th className="py-3.5 px-4 sm:px-6">{isBn ? 'গ্রেড' : 'GRADE'}</th>
+                    <th className="py-3.5 px-4 sm:px-6">{isBn ? 'স্ট্যাটাস' : 'STATUS'}</th>
+                    <th className="py-3.5 px-4 sm:px-6 text-center">{isBn ? 'মার্কশিট' : 'MARKSHEET'}</th>
                   </tr>
                 </thead>
 
@@ -659,7 +730,7 @@ export const Result: React.FC = () => {
                     >
                       {/* Roll */}
                       <td className="py-3.5 px-4 sm:px-6 font-bold text-slate-800">
-                        #{student.roll}
+                        #{isBn ? toBanglaNum(student.roll) : student.roll}
                       </td>
 
                       {/* Student Name */}
@@ -671,24 +742,24 @@ export const Result: React.FC = () => {
                             {student.avatarLetter}
                           </div>
                           <span className="font-extrabold text-slate-900 leading-tight">
-                            {student.name}
+                            {getStudentName(student.name)}
                           </span>
                         </div>
                       </td>
 
                       {/* Group & Sec */}
                       <td className="py-3.5 px-4 sm:px-6 text-slate-600 font-medium">
-                        {student.groupSec}
+                        {getGroupSec(student.groupSec)}
                       </td>
 
                       {/* Total Marks */}
                       <td className="py-3.5 px-4 sm:px-6 font-extrabold text-[#059669]">
-                        {student.totalMarks}
+                        {isBn ? toBanglaNum(student.totalMarks) : student.totalMarks}
                       </td>
 
                       {/* GPA */}
                       <td className="py-3.5 px-4 sm:px-6 font-bold text-slate-800">
-                        {student.gpa}
+                        {isBn ? toBanglaNum(student.gpa) : student.gpa}
                       </td>
 
                       {/* Grade Badge */}
@@ -702,7 +773,7 @@ export const Result: React.FC = () => {
                       <td className="py-3.5 px-4 sm:px-6">
                         <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700">
                           <CheckCircle2 size={14} className="text-emerald-600" />
-                          <span>Passed</span>
+                          <span>{isBn ? 'উত্তীর্ণ' : 'Passed'}</span>
                         </span>
                       </td>
 
@@ -714,7 +785,7 @@ export const Result: React.FC = () => {
                           className="inline-flex items-center gap-1.5 bg-[#e8f7ee] hover:bg-[#d1fae5] text-[#004d34] border border-emerald-200/80 px-3 py-1 rounded-lg text-xs font-bold transition shadow-2xs cursor-pointer"
                         >
                           <FileText size={13} />
-                          <span>Transcript</span>
+                          <span>{isBn ? 'মার্কশিট' : 'Transcript'}</span>
                         </button>
                       </td>
                     </tr>
@@ -727,7 +798,9 @@ export const Result: React.FC = () => {
             <div className="bg-[#eff6ff] border border-blue-100 rounded-2xl p-3 flex items-center gap-2 text-xs text-blue-900 font-medium">
               <span className="text-blue-500 font-bold shrink-0">ⓘ</span>
               <span>
-                Note: This is the institutional result summary. For detailed individual subject marks, please use the Individual Student Result option above.
+                {isBn
+                  ? 'বিশেষ দ্রষ্টব্য: এটি প্রাতিষ্ঠানিক ফলাফলের সংক্ষিপ্ত বিবরণ। বিষয়ের বিস্তারিত নম্বর ও গ্রেড দেখতে একক শিক্ষার্থী ফলাফল অপশন ব্যবহার করুন।'
+                  : 'Note: This is the institutional result summary. For detailed individual subject marks, please use the Individual Student Result option above.'}
               </span>
             </div>
           </div>
@@ -744,13 +817,22 @@ export const Result: React.FC = () => {
                 </div>
                 <div>
                   <span className="block text-[10px] font-bold text-[#059669] tracking-wider uppercase">
-                    OFFICIAL ACADEMIC TRANSCRIPT
+                    {isBn ? 'অফিসিয়াল একাডেমিক ট্রান্সক্রিপ্ট' : 'OFFICIAL ACADEMIC TRANSCRIPT'}
                   </span>
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-tight">
-                    {activeStudent.name}
+                    {getStudentName(activeStudent.name)}
                   </h2>
                   <p className="text-xs text-slate-500 font-semibold mt-0.5">
-                    Roll: {activeStudent.roll} | Class: {indClass.replace('Class ', '')} | Group: {activeStudent.group} | Session: {indSession}
+                    {isBn
+                      ? `রোল: ${toBanglaNum(activeStudent.roll)} | শ্রেণি: ${toBanglaNum(
+                          indClass.replace('Class ', '')
+                        )} | বিভাগ: ${getGroupSec(activeStudent.group)} | শিক্ষাবর্ষ: ${toBanglaNum(
+                          indSession
+                        )}`
+                      : `Roll: ${activeStudent.roll} | Class: ${indClass.replace(
+                          'Class ',
+                          ''
+                        )} | Group: ${activeStudent.group} | Session: ${indSession}`}
                   </p>
                 </div>
               </div>
@@ -762,7 +844,7 @@ export const Result: React.FC = () => {
                 className="inline-flex items-center gap-2 bg-[#e8f7ee] hover:bg-[#d1fae5] border border-emerald-300 text-[#004d34] px-4 py-2 rounded-xl text-xs font-bold transition shadow-2xs cursor-pointer self-start sm:self-auto"
               >
                 <Download size={15} />
-                <span>Download Transcript</span>
+                <span>{isBn ? 'ট্রান্সক্রিপ্ট ডাউনলোড' : 'Download Transcript'}</span>
               </button>
             </div>
 
@@ -774,9 +856,14 @@ export const Result: React.FC = () => {
                   <FileText size={20} />
                 </div>
                 <div>
-                  <div className="text-[11px] font-bold text-slate-500">Total Obtained</div>
+                  <div className="text-[11px] font-bold text-slate-500">
+                    {isBn ? 'মোট প্রাপ্ত নম্বর' : 'Total Obtained'}
+                  </div>
                   <div className="text-xl font-black text-slate-900 leading-tight">
-                    {activeStudent.totalMarks} <span className="text-xs text-slate-400 font-normal">out of {activeStudent.maxMarks}</span>
+                    {isBn ? toBanglaNum(activeStudent.totalMarks) : activeStudent.totalMarks}{' '}
+                    <span className="text-xs text-slate-400 font-normal">
+                      {isBn ? `(মোট ${toBanglaNum(activeStudent.maxMarks)})` : `out of ${activeStudent.maxMarks}`}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -787,9 +874,11 @@ export const Result: React.FC = () => {
                   <TrendingUp size={20} />
                 </div>
                 <div>
-                  <div className="text-[11px] font-bold text-slate-500">GPA (5.00 Scale)</div>
+                  <div className="text-[11px] font-bold text-slate-500">
+                    {isBn ? 'জিপিএ (৫.০০ স্কেল)' : 'GPA (5.00 Scale)'}
+                  </div>
                   <div className="text-xl font-black text-slate-900 leading-tight">
-                    {activeStudent.gpa}
+                    {isBn ? toBanglaNum(activeStudent.gpa) : activeStudent.gpa}
                   </div>
                 </div>
               </div>
@@ -800,7 +889,9 @@ export const Result: React.FC = () => {
                   <Star size={20} />
                 </div>
                 <div>
-                  <div className="text-[11px] font-bold text-slate-500">Letter Grade</div>
+                  <div className="text-[11px] font-bold text-slate-500">
+                    {isBn ? 'লেটার গ্রেড' : 'Letter Grade'}
+                  </div>
                   <div className="text-xl font-black text-slate-900 leading-tight">
                     {activeStudent.grade}
                   </div>
@@ -813,9 +904,11 @@ export const Result: React.FC = () => {
                   <CheckCircle2 size={20} />
                 </div>
                 <div>
-                  <div className="text-[11px] font-bold text-slate-500">Result Status</div>
+                  <div className="text-[11px] font-bold text-slate-500">
+                    {isBn ? 'ফলাফল স্ট্যাটাস' : 'Result Status'}
+                  </div>
                   <div className="text-xl font-black text-emerald-700 leading-tight">
-                    Passed
+                    {isBn ? 'উত্তীর্ণ' : 'Passed'}
                   </div>
                 </div>
               </div>
@@ -827,29 +920,41 @@ export const Result: React.FC = () => {
                 <thead>
                   <tr className="bg-[#f4f9f6] text-slate-700 font-bold uppercase tracking-wider text-[11px] border-b border-slate-100">
                     <th className="py-3 px-4 sm:px-6">#</th>
-                    <th className="py-3 px-4 sm:px-6">Subject Code</th>
-                    <th className="py-3 px-4 sm:px-6">Subject Name</th>
-                    <th className="py-3 px-4 sm:px-6">Full Marks</th>
-                    <th className="py-3 px-4 sm:px-6">Obtained Marks</th>
-                    <th className="py-3 px-4 sm:px-6">Letter Grade</th>
-                    <th className="py-3 px-4 sm:px-6">Grade Point</th>
+                    <th className="py-3 px-4 sm:px-6">{isBn ? 'বিষয় কোড' : 'Subject Code'}</th>
+                    <th className="py-3 px-4 sm:px-6">{isBn ? 'বিষয়ের নাম' : 'Subject Name'}</th>
+                    <th className="py-3 px-4 sm:px-6">{isBn ? 'পূর্ণমান' : 'Full Marks'}</th>
+                    <th className="py-3 px-4 sm:px-6">{isBn ? 'প্রাপ্ত নম্বর' : 'Obtained Marks'}</th>
+                    <th className="py-3 px-4 sm:px-6">{isBn ? 'লেটার গ্রেড' : 'Letter Grade'}</th>
+                    <th className="py-3 px-4 sm:px-6">{isBn ? 'গ্রেড পয়েন্ট' : 'Grade Point'}</th>
                   </tr>
                 </thead>
 
                 <tbody className="divide-y divide-slate-100 bg-white">
                   {activeStudent.subjects.map((sub, idx) => (
                     <tr key={sub.code} className="hover:bg-slate-50/70 transition-colors">
-                      <td className="py-3.5 px-4 sm:px-6 text-slate-500 font-bold">{idx + 1}</td>
-                      <td className="py-3.5 px-4 sm:px-6 text-slate-600 font-semibold">{sub.code}</td>
-                      <td className="py-3.5 px-4 sm:px-6 font-bold text-slate-900">{sub.name}</td>
-                      <td className="py-3.5 px-4 sm:px-6 text-slate-600">{sub.fullMarks}</td>
-                      <td className="py-3.5 px-4 sm:px-6 font-extrabold text-[#059669]">{sub.obtained}</td>
+                      <td className="py-3.5 px-4 sm:px-6 text-slate-500 font-bold">
+                        {isBn ? toBanglaNum(idx + 1) : idx + 1}
+                      </td>
+                      <td className="py-3.5 px-4 sm:px-6 text-slate-600 font-semibold">
+                        {isBn ? toBanglaNum(sub.code) : sub.code}
+                      </td>
+                      <td className="py-3.5 px-4 sm:px-6 font-bold text-slate-900">
+                        {getSubjectName(sub.name)}
+                      </td>
+                      <td className="py-3.5 px-4 sm:px-6 text-slate-600">
+                        {isBn ? toBanglaNum(sub.fullMarks) : sub.fullMarks}
+                      </td>
+                      <td className="py-3.5 px-4 sm:px-6 font-extrabold text-[#059669]">
+                        {isBn ? toBanglaNum(sub.obtained) : sub.obtained}
+                      </td>
                       <td className="py-3.5 px-4 sm:px-6">
                         <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-[#e8f7ee] text-[#059669]">
                           {sub.grade}
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 sm:px-6 font-bold text-slate-800">{sub.gpa}</td>
+                      <td className="py-3.5 px-4 sm:px-6 font-bold text-slate-800">
+                        {isBn ? toBanglaNum(sub.gpa) : sub.gpa}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -860,7 +965,9 @@ export const Result: React.FC = () => {
             <div className="bg-[#eff6ff] border border-blue-100 rounded-2xl p-3 flex items-center gap-2 text-xs text-blue-900 font-medium">
               <span className="text-blue-500 font-bold shrink-0">ⓘ</span>
               <span>
-                Note: This is the individual student result. For class-wise results and detailed statistics, please use the Institute Result option above.
+                {isBn
+                  ? 'বিশেষ দ্রষ্টব্য: এটি শিক্ষার্থীর একক ফলাফল বিবরণী। শ্রেণিভিত্তিক ফলাফল ও পরিসংখ্যান দেখতে উপরের প্রাতিষ্ঠানিক ফলাফল অপশন নির্বাচন করুন।'
+                  : 'Note: This is the individual student result. For class-wise results and detailed statistics, please use the Institute Result option above.'}
               </span>
             </div>
           </div>
@@ -878,11 +985,15 @@ export const Result: React.FC = () => {
                   <Landmark size={20} />
                 </div>
                 <h3 className="font-extrabold text-base text-slate-900">
-                  {activeTab === 'institute' ? 'Institute Result' : 'View Institute Result'}
+                  {isBn
+                    ? (activeTab === 'institute' ? 'প্রাতিষ্ঠানিক ফলাফল' : 'প্রাতিষ্ঠানিক ফলাফল দেখুন')
+                    : (activeTab === 'institute' ? 'Institute Result' : 'View Institute Result')}
                 </h3>
               </div>
               <p className="text-xs text-slate-500 font-medium max-w-sm">
-                Check class-wise results, subject statistics, pass rates and academic performance summary.
+                {isBn
+                  ? 'শ্রেণিভিত্তিক ফলাফল, বিষয়ভিত্তিক পরিসংখ্যান, পাসের হার ও একাডেমিক অর্জনের বিবরণ দেখুন।'
+                  : 'Check class-wise results, subject statistics, pass rates and academic performance summary.'}
               </p>
               <button
                 type="button"
@@ -892,7 +1003,11 @@ export const Result: React.FC = () => {
                 }}
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 transition cursor-pointer"
               >
-                <span>{activeTab === 'institute' ? 'View Institute Result' : 'Go to Institute Result'}</span>
+                <span>
+                  {isBn
+                    ? (activeTab === 'institute' ? 'প্রাতিষ্ঠানিক ফলাফল দেখুন' : 'প্রাতিষ্ঠানিক ফলাফলে যান')
+                    : (activeTab === 'institute' ? 'View Institute Result' : 'Go to Institute Result')}
+                </span>
                 <ArrowRight size={13} />
               </button>
             </div>
@@ -913,13 +1028,19 @@ export const Result: React.FC = () => {
                   <User size={20} />
                 </div>
                 <h3 className="font-extrabold text-base text-slate-900">
-                  {activeTab === 'institute' ? 'Individual Student Result' : 'Search Another Student'}
+                  {isBn
+                    ? (activeTab === 'institute' ? 'একক শিক্ষার্থী ফলাফল' : 'অন্য শিক্ষার্থীর ফলাফল অনুসন্ধান')
+                    : (activeTab === 'institute' ? 'Individual Student Result' : 'Search Another Student')}
                 </h3>
               </div>
               <p className="text-xs text-slate-500 font-medium max-w-sm">
-                {activeTab === 'institute'
-                  ? 'Search and view individual student marksheet and academic transcript.'
-                  : "Enter a different roll number to view another student's marksheet."}
+                {isBn
+                  ? (activeTab === 'institute'
+                      ? 'রোল নম্বর দিয়ে শিক্ষার্থীর পূর্ণাঙ্গ মার্কশিট ও একাডেমিক ট্রান্সক্রিপ্ট দেখুন।'
+                      : 'অন্য কোনো শিক্ষার্থীর মার্কশিট দেখতে ভিন্ন রোল নম্বর লিখুন।')
+                  : (activeTab === 'institute'
+                      ? 'Search and view individual student marksheet and academic transcript.'
+                      : "Enter a different roll number to view another student's marksheet.")}
               </p>
               <button
                 type="button"
@@ -929,7 +1050,11 @@ export const Result: React.FC = () => {
                 }}
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition cursor-pointer"
               >
-                <span>{activeTab === 'institute' ? 'View Student Result' : 'Search Again'}</span>
+                <span>
+                  {isBn
+                    ? (activeTab === 'institute' ? 'শিক্ষার্থীর ফলাফল দেখুন' : 'আবার অনুসন্ধান করুন')
+                    : (activeTab === 'institute' ? 'View Student Result' : 'Search Again')}
+                </span>
                 <ArrowRight size={13} />
               </button>
             </div>

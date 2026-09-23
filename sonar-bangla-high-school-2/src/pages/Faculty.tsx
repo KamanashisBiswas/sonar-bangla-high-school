@@ -25,10 +25,52 @@ import {
   CheckCircle2,
   ExternalLink
 } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 import type { Teacher } from '../data/schoolData';
 import { TEACHERS, ADMINISTRATIVE_STAFF } from '../data/schoolData';
+import { TEACHER_DETAILS_BN } from '../data/teacherLocalization';
+
+const TEACHER_TRANSLATIONS: Record<string, { nameBn: string; designationBn: string; subjectBn: string }> = {
+  '1': { nameBn: 'ইন্দ্রজিৎ কুমার মণ্ডল', designationBn: 'সহকারী শিক্ষক', subjectBn: 'রসায়ন / বিজ্ঞান' },
+  '2': { nameBn: 'মোসাম্মৎ রেহানা পারভীন', designationBn: 'সহকারী অধ্যাপিকা', subjectBn: 'ইংরেজি' },
+  '3': { nameBn: 'মোঃ জহিরুল হক', designationBn: 'সিনিয়র শিক্ষক', subjectBn: 'সাধারণ ও উচ্চতর গণিত' },
+  '4': { nameBn: 'তানজিলা রহমান', designationBn: 'সিনিয়র শিক্ষক', subjectBn: 'পদার্থবিজ্ঞান' },
+  '5': { nameBn: 'আব্দুল করিম শেখ', designationBn: 'সহকারী শিক্ষক', subjectBn: 'বাংলা সাহিত্য' },
+  '6': { nameBn: 'সুবর্ণা দাস', designationBn: 'সহকারী শিক্ষক', subjectBn: 'জীববিজ্ঞান ও পরিবেশ' },
+  '7': { nameBn: 'মাওলানা মোঃ সাইফুল ইসলাম', designationBn: 'সহকারী শিক্ষক', subjectBn: 'ইসলাম ও নৈতিক শিক্ষা' },
+  '8': { nameBn: 'প্রকৌশলী অমিত রায়', designationBn: 'সহকারী শিক্ষক', subjectBn: 'তথ্য ও যোগাযোগ প্রযুক্তি' },
+};
+
+const STAFF_TRANSLATIONS: Record<string, { nameBn: string; roleBn: string }> = {
+  '1': { nameBn: 'মোঃ রফিকুল ইসলাম', roleBn: 'অফিস সুপারিনটেনডেন্ট' },
+  '2': { nameBn: 'সুমাইয়া আক্তার', roleBn: 'সিনিয়র হিসাবরক্ষক' },
+  '3': { nameBn: 'মোঃ হাসানুজ্জামান', roleBn: 'প্রধান গ্রন্থাগারিক' },
+  '4': { nameBn: 'রাকিবুল ইসলাম', roleBn: 'আইসিটি সহকারী ও নেটওয়ার্ক ইন-চার্জ' },
+};
+
+const SUBJECT_CAT_BN: Record<string, string> = {
+  'All': 'সকল বিষয়',
+  'Science': 'বিজ্ঞান',
+  'English': 'ইংরেজি',
+  'Math': 'গণিত',
+  'Physics': 'পদার্থবিজ্ঞান',
+  'Bangla': 'বাংলা',
+  'Biology': 'জীববিজ্ঞান',
+  'Islamic Studies': 'ইসলাম ধর্ম',
+  'ICT': 'আইসিটি',
+};
+
+const DESIGNATION_BN: Record<string, string> = {
+  'All': 'সকল পদবি',
+  'Assistant Teacher': 'সহকারী শিক্ষক',
+  'Assistant Professor': 'সহকারী অধ্যাপিকা',
+  'Senior Teacher': 'সিনিয়র শিক্ষক',
+};
 
 export const Faculty: React.FC = () => {
+  const { language, toBanglaNum } = useLanguage();
+  const isBn = language === 'bn';
+
   const [activeTab, setActiveTab] = useState<'all' | 'teaching' | 'admin'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('All');
@@ -188,10 +230,10 @@ export const Faculty: React.FC = () => {
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
             <Link to="/" className="hover:text-emerald-800 flex items-center gap-1 transition-colors text-emerald-700">
               <Home size={14} />
-              <span>Home</span>
+              <span>{isBn ? 'মূলপাতা' : 'Home'}</span>
             </Link>
             <span className="text-slate-400">›</span>
-            <span className="text-slate-800 font-bold">Faculty & Staff</span>
+            <span className="text-slate-800 font-bold">{isBn ? 'শিক্ষক ও কর্মচারী ডিরেক্টরি' : 'Faculty & Staff'}</span>
           </div>
 
           {/* Left Narrative Block */}
@@ -199,13 +241,22 @@ export const Faculty: React.FC = () => {
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <Users size={14} className="text-[#059669]" />
-              <span>OUR EDUCATORS, OUR STRENGTH</span>
+              <span>{isBn ? 'আমাদের শিক্ষক, আমাদের শক্তি' : 'OUR EDUCATORS, OUR STRENGTH'}</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              Faculty & Staff <br />
-              Directory
+              {isBn ? (
+                <>
+                  শিক্ষক ও স্টাফ <br />
+                  ডিরেক্টরি
+                </>
+              ) : (
+                <>
+                  Faculty & Staff <br />
+                  Directory
+                </>
+              )}
             </h1>
 
             {/* Short Green Accent Line Under Title */}
@@ -213,7 +264,9 @@ export const Faculty: React.FC = () => {
 
             {/* Subtitle */}
             <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              Meet our dedicated and experienced faculty and staff who inspire, guide and support our students towards a brighter future.
+              {isBn
+                ? 'আমাদের দক্ষ, অভিজ্ঞ ও নিবেদিতপ্রাণ শিক্ষক ও কর্মকর্তা-কর্মচারীবৃন্দ যারা শিক্ষার্থীদের সম্ভাবনাময় ভবিষ্যৎ বিনির্মাণে সদা ব্রতী।'
+                : 'Meet our dedicated and experienced faculty and staff who inspire, guide and support our students towards a brighter future.'}
             </p>
           </div>
 
@@ -225,10 +278,10 @@ export const Faculty: React.FC = () => {
               </span>
               <div>
                 <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  Education today for a brighter tomorrow
+                  {isBn ? 'আজকের শিক্ষা, আগামীর সম্ভাবনা' : 'Education today for a brighter tomorrow'}
                 </h4>
                 <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — SOS Hermann Gmeiner School
+                  — {isBn ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
                 </p>
               </div>
             </div>
@@ -251,7 +304,7 @@ export const Faculty: React.FC = () => {
               }`}
             >
               <GraduationCap size={16} />
-              <span>Teaching Faculty</span>
+              <span>{isBn ? 'শিক্ষকমণ্ডলী' : 'Teaching Faculty'}</span>
             </button>
 
             <button
@@ -264,7 +317,7 @@ export const Faculty: React.FC = () => {
               }`}
             >
               <Briefcase size={16} />
-              <span>Administrative Staff</span>
+              <span>{isBn ? 'প্রশাসনিক ও অফিস স্টাফ' : 'Administrative Staff'}</span>
             </button>
           </div>
 
@@ -280,7 +333,7 @@ export const Faculty: React.FC = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by name, subject or designation..."
+                placeholder={isBn ? 'নাম, বিষয় বা পদবি দিয়ে খুঁজুন...' : 'Search by name, subject or designation...'}
                 className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3.5 py-2 text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34] shadow-xs"
               />
             </div>
@@ -291,12 +344,12 @@ export const Faculty: React.FC = () => {
               onChange={(e) => setSelectedSubject(e.target.value)}
               className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-xs"
             >
-              <option value="All">All Subjects</option>
+              <option value="All">{isBn ? 'সকল বিষয়' : 'All Subjects'}</option>
               {subjectList
                 .filter((s) => s !== 'All')
                 .map((subj) => (
                   <option key={subj} value={subj}>
-                    {subj}
+                    {isBn ? (SUBJECT_CAT_BN[subj] || subj) : subj}
                   </option>
                 ))}
             </select>
@@ -307,12 +360,12 @@ export const Faculty: React.FC = () => {
               onChange={(e) => setSelectedDesignation(e.target.value)}
               className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-xs"
             >
-              <option value="All">All Designations</option>
+              <option value="All">{isBn ? 'সকল পদবি' : 'All Designations'}</option>
               {designationList
                 .filter((d) => d !== 'All')
                 .map((desig) => (
                   <option key={desig} value={desig}>
-                    {desig}
+                    {isBn ? (DESIGNATION_BN[desig] || desig) : desig}
                   </option>
                 ))}
             </select>
@@ -322,10 +375,10 @@ export const Faculty: React.FC = () => {
               type="button"
               onClick={handleReset}
               className="flex items-center gap-1.5 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer shadow-xs"
-              title="Reset Filters"
+              title={isBn ? 'ফিল্টার রিসেট' : 'Reset Filters'}
             >
               <RotateCcw size={13} />
-              <span>Reset</span>
+              <span>{isBn ? 'রিসেট' : 'Reset'}</span>
             </button>
           </div>
         </div>
@@ -343,95 +396,100 @@ export const Faculty: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                    Teaching Faculty
+                    {isBn ? 'শিক্ষকমণ্ডলী' : 'Teaching Faculty'}
                   </h2>
                   <span className="bg-[#e8f7ee] text-[#004d34] border border-emerald-100 text-xs font-bold px-3 py-0.5 rounded-full">
-                    {filteredTeachers.length} Members
+                    {isBn ? `${toBanglaNum(filteredTeachers.length)} জন শিক্ষক` : `${filteredTeachers.length} Members`}
                   </span>
                 </div>
               </div>
               <p className="text-xs text-slate-500 font-medium">
-                Dedicated to creating a better learning tomorrow —
+                {isBn ? 'সুন্দর ও দক্ষ ভবিষ্যৎ প্রজন্ম গড়ায় নিবেদিত —' : 'Dedicated to creating a better learning tomorrow —'}
               </p>
             </div>
 
             {/* 4 Cards Grid for Teaching Faculty */}
             {filteredTeachers.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                {filteredTeachers.map((teacher) => (
-                  <div
-                    key={teacher.id}
-                    onClick={() => {
-                      setSelectedTeacher(teacher);
-                      setModalTab('professional');
-                    }}
-                    className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group cursor-pointer"
-                  >
-                    <div>
-                      {/* Photo & Identity Row */}
-                      <div className="flex items-start gap-3.5 mb-3">
-                        <div className="w-16 h-18 sm:w-18 sm:h-20 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-2xs">
-                          <img
-                            src={teacher.image}
-                            alt={teacher.name}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&fit=crop&q=80';
-                            }}
-                          />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-extrabold text-slate-900 text-sm leading-snug group-hover:text-[#004d34] transition">
-                            {teacher.name}
-                          </h3>
-                          <p className="text-xs text-slate-500 font-semibold mt-0.5">
-                            {teacher.designation}
-                          </p>
+                {filteredTeachers.map((teacher) => {
+                  const teacherName = isBn ? (TEACHER_TRANSLATIONS[teacher.id]?.nameBn || teacher.name) : teacher.name;
+                  const teacherDesig = isBn ? (TEACHER_TRANSLATIONS[teacher.id]?.designationBn || teacher.designation) : teacher.designation;
+                  const teacherSubj = isBn ? (TEACHER_TRANSLATIONS[teacher.id]?.subjectBn || teacher.subject) : teacher.subject;
+                  return (
+                    <div
+                      key={teacher.id}
+                      onClick={() => {
+                        setSelectedTeacher(teacher);
+                        setModalTab('professional');
+                      }}
+                      className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group cursor-pointer"
+                    >
+                      <div>
+                        {/* Photo & Identity Row */}
+                        <div className="flex items-start gap-3.5 mb-3">
+                          <div className="w-16 h-18 sm:w-18 sm:h-20 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-2xs">
+                            <img
+                              src={teacher.image}
+                              alt={teacherName}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src =
+                                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&fit=crop&q=80';
+                              }}
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-extrabold text-slate-900 text-sm leading-snug group-hover:text-[#004d34] transition">
+                              {teacherName}
+                            </h3>
+                            <p className="text-xs text-slate-500 font-semibold mt-0.5">
+                              {teacherDesig}
+                            </p>
 
-                          {/* Subject Badge */}
-                          <div className="mt-2">
-                            {getSubjectBadge(teacher.subjectCategory, teacher.subject)}
+                            {/* Subject Badge */}
+                            <div className="mt-2">
+                              {getSubjectBadge(teacher.subjectCategory, teacherSubj)}
+                            </div>
                           </div>
                         </div>
+
+                        {/* Qualifications */}
+                        <div className="pt-2.5 border-t border-slate-100 text-[11px] text-slate-600 font-normal">
+                          <strong className="text-slate-800 font-bold">{isBn ? 'শিক্ষাগত যোগ্যতা: ' : 'Qualifications: '}</strong>
+                          <span>{isBn ? (TEACHER_DETAILS_BN[teacher.id]?.qualificationsBn || teacher.qualifications) : teacher.qualifications}</span>
+                        </div>
                       </div>
 
-                      {/* Qualifications */}
-                      <div className="pt-2.5 border-t border-slate-100 text-[11px] text-slate-600 font-normal">
-                        <strong className="text-slate-800 font-bold">Qualifications: </strong>
-                        <span>{teacher.qualifications}</span>
+                      {/* View Profile Link */}
+                      <div className="pt-3 mt-3 border-t border-slate-100">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedTeacher(teacher);
+                            setModalTab('professional');
+                          }}
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 transition cursor-pointer"
+                        >
+                          <span>{isBn ? 'বিস্তারিত' : 'View'}</span>
+                          <ArrowRight size={13} />
+                        </button>
                       </div>
                     </div>
-
-                    {/* View Profile Link */}
-                    <div className="pt-3 mt-3 border-t border-slate-100">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedTeacher(teacher);
-                          setModalTab('professional');
-                        }}
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 transition cursor-pointer"
-                      >
-                        <span>View</span>
-                        <ArrowRight size={13} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div className="bg-white rounded-3xl p-8 text-center border border-slate-200">
                 <p className="text-slate-500 text-sm">
-                  No teaching faculty found matching your filters.
+                  {isBn ? 'আপনার অনুসন্ধানের সাথে মিল রেখে কোনো শিক্ষক পাওয়া যায়নি।' : 'No teaching faculty found matching your filters.'}
                 </p>
                 <button
                   type="button"
                   onClick={handleReset}
                   className="mt-3 text-xs font-bold text-[#004d34] underline cursor-pointer"
                 >
-                  Clear filters
+                  {isBn ? 'ফিল্টার রিসেট করুন' : 'Clear filters'}
                 </button>
               </div>
             )}
@@ -451,81 +509,92 @@ export const Faculty: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                    Administrative Staff
+                    {isBn ? 'প্রশাসনিক ও অফিস স্টাফ' : 'Administrative Staff'}
                   </h2>
                   <span className="bg-[#e8f7ee] text-[#004d34] border border-emerald-100 text-xs font-bold px-3 py-0.5 rounded-full">
-                    {filteredStaff.length} Members
+                    {isBn ? `${toBanglaNum(filteredStaff.length)} জন কর্মকর্তা-কর্মচারী` : `${filteredStaff.length} Members`}
                   </span>
                 </div>
               </div>
               <p className="text-xs text-slate-500 font-medium">
-                Supporting a well-managed and nurturing school environment —
+                {isBn ? 'সুশৃঙ্খল ও আন্তরিক প্রাতিষ্ঠানিক পরিবেশ পরিচালনায় নিবেদিত —' : 'Supporting a well-managed and nurturing school environment —'}
               </p>
             </div>
 
             {/* 4 Cards Grid for Administrative Staff */}
             {filteredStaff.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                {filteredStaff.map((staff) => (
-                  <div
-                    key={staff.id}
-                    className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group"
-                  >
-                    <div>
-                      {/* Photo & Role */}
-                      <div className="flex items-start gap-3.5 mb-3">
-                        <div className="w-16 h-18 sm:w-18 sm:h-20 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-2xs">
-                          <img
-                            src={staff.image}
-                            alt={staff.name}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&fit=crop&q=80';
-                            }}
-                          />
+                {filteredStaff.map((staff) => {
+                  const staffName = isBn ? (STAFF_TRANSLATIONS[staff.id]?.nameBn || staff.name) : staff.name;
+                  const staffRole = isBn ? (STAFF_TRANSLATIONS[staff.id]?.roleBn || staff.role) : staff.role;
+                  return (
+                    <div
+                      key={staff.id}
+                      className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group"
+                    >
+                      <div>
+                        {/* Photo & Role */}
+                        <div className="flex items-start gap-3.5 mb-3">
+                          <div className="w-16 h-18 sm:w-18 sm:h-20 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-2xs">
+                            <img
+                              src={staff.image}
+                              alt={staffName}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src =
+                                  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&fit=crop&q=80';
+                              }}
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-extrabold text-slate-900 text-sm leading-snug group-hover:text-[#004d34] transition">
+                              {staffName}
+                            </h3>
+                            <p className="text-xs text-[#059669] font-bold mt-1">
+                              {staffRole}
+                            </p>
+                          </div>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-extrabold text-slate-900 text-sm leading-snug group-hover:text-[#004d34] transition">
-                            {staff.name}
-                          </h3>
-                          <p className="text-xs text-[#059669] font-bold mt-1">
-                            {staff.role}
-                          </p>
+
+                        {/* Contact Info */}
+                        <div className="pt-2.5 border-t border-slate-100 space-y-1 text-[11px] text-slate-600 font-normal">
+                          <div className="flex items-center gap-1.5 truncate">
+                            <Mail size={12} className="text-slate-400 shrink-0" />
+                            <span className="truncate">{staff.email}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <Phone size={12} className="text-slate-400 shrink-0" />
+                            <span>{isBn ? toBanglaNum(staff.phone) : staff.phone}</span>
+                          </div>
                         </div>
                       </div>
 
-                      {/* Contact Info */}
-                      <div className="pt-2.5 border-t border-slate-100 space-y-1 text-[11px] text-slate-600 font-normal">
-                        <div className="flex items-center gap-1.5 truncate">
-                          <Mail size={12} className="text-slate-400 shrink-0" />
-                          <span className="truncate">{staff.email}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <Phone size={12} className="text-slate-400 shrink-0" />
-                          <span>{staff.phone}</span>
-                        </div>
+                      {/* View Profile Link */}
+                      <div className="pt-3 mt-3 border-t border-slate-100">
+                        <Link
+                          to="/about"
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 transition"
+                        >
+                          <span>{isBn ? 'বিস্তারিত' : 'View'}</span>
+                          <ArrowRight size={13} />
+                        </Link>
                       </div>
                     </div>
-
-                    {/* View Profile Link */}
-                    <div className="pt-3 mt-3 border-t border-slate-100">
-                      <Link
-                        to="/about"
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 transition"
-                      >
-                        <span>View</span>
-                        <ArrowRight size={13} />
-                      </Link>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div className="bg-white rounded-3xl p-8 text-center border border-slate-200">
                 <p className="text-slate-500 text-sm">
-                  No administrative staff found matching your search.
+                  {isBn ? 'আপনার অনুসন্ধানের সাথে মিল রেখে কোনো স্টাফ পাওয়া যায়নি।' : 'No administrative staff found matching your search.'}
                 </p>
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="mt-3 text-xs font-bold text-[#004d34] underline cursor-pointer"
+                >
+                  {isBn ? 'ফিল্টার রিসেট করুন' : 'Clear filters'}
+                </button>
               </div>
             )}
           </section>
@@ -541,10 +610,12 @@ export const Faculty: React.FC = () => {
             </div>
             <div>
               <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
-                Together for a Brighter Future
+                {isBn ? 'সমৃদ্ধ আগামীর জন্য আমরা ঐক্যবদ্ধ' : 'Together for a Brighter Future'}
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 font-normal mt-0.5">
-                Our faculty and staff work hand in hand to nurture confident, compassionate and capable individuals.
+                {isBn
+                  ? 'আমাদের শিক্ষক ও স্টাফ ঐক্যবদ্ধভাবে প্রতিটি শিক্ষার্থীকে আত্মবিশ্বাসী, মানবিক ও দক্ষ হিসেবে গড়ে তোলে।'
+                  : 'Our faculty and staff work hand in hand to nurture confident, compassionate and capable individuals.'}
               </p>
             </div>
           </div>
@@ -553,344 +624,378 @@ export const Faculty: React.FC = () => {
             href="mailto:soshgskhu@sos-bangladesh.org"
             className="inline-flex items-center gap-2 bg-[#004d34] hover:bg-[#003826] text-white px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-xs hover:shadow whitespace-nowrap cursor-pointer shrink-0"
           >
-            <span>Join Our Team</span>
+            <span>{isBn ? 'যোগ দিন আমাদের টিমে' : 'Join Our Team'}</span>
             <ArrowRight size={14} />
           </a>
         </section>
       </div>
 
       {/* 6. Faculty Quick View Modal (Matching media_1790113348730.jpg) */}
-      {selectedTeacher && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs animate-in fade-in duration-150"
-          onClick={() => setSelectedTeacher(null)}
-        >
+      {/* 6. Faculty Quick View Modal (Matching media_1790113348730.jpg) */}
+      {selectedTeacher && (() => {
+        const detailsBn = TEACHER_DETAILS_BN[selectedTeacher.id];
+        return (
           <div
-            className="bg-white rounded-3xl max-w-4xl w-full p-6 sm:p-7 shadow-2xl relative border border-slate-100 max-h-[92vh] overflow-y-auto animate-in zoom-in-95 duration-150"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs animate-in fade-in duration-150"
+            onClick={() => setSelectedTeacher(null)}
           >
-            {/* Close Button */}
-            <button
-              onClick={() => setSelectedTeacher(null)}
-              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 flex items-center justify-center transition cursor-pointer z-20"
-              title="Close"
+            <div
+              className="bg-white rounded-3xl max-w-4xl w-full p-6 sm:p-7 shadow-2xl relative border border-slate-100 max-h-[92vh] overflow-y-auto animate-in zoom-in-95 duration-150"
+              onClick={(e) => e.stopPropagation()}
             >
-              <X size={16} />
-            </button>
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedTeacher(null)}
+                className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 flex items-center justify-center transition cursor-pointer z-20"
+                title="Close"
+              >
+                <X size={16} />
+              </button>
 
-            {/* Modal Body Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-              {/* Left Column: Photo & Brief Info */}
-              <div className="md:col-span-5 lg:col-span-4">
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 relative shadow-2xs">
-                  <img
-                    src={selectedTeacher.image}
-                    alt={selectedTeacher.name}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src =
-                        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&fit=crop&q=80';
-                    }}
-                  />
-                  <div className="absolute bottom-3 right-3 bg-slate-950/80 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                    <span>Active</span>
+              {/* Modal Body Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                {/* Left Column: Photo & Brief Info */}
+                <div className="md:col-span-5 lg:col-span-4">
+                  <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 relative shadow-2xs">
+                    <img
+                      src={selectedTeacher.image}
+                      alt={isBn ? (detailsBn?.nameBn || selectedTeacher.name) : selectedTeacher.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src =
+                          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&fit=crop&q=80';
+                      }}
+                    />
+                    <div className="absolute bottom-3 right-3 bg-slate-950/80 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                      <span>{isBn ? 'সক্রিয়' : 'Active'}</span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="mt-3.5">
-                  <span className="inline-flex items-center gap-1.5 bg-[#e8f7ee] text-[#059669] border border-emerald-100 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full">
-                    <GraduationCap size={13} />
-                    <span>TEACHING FACULTY</span>
-                  </span>
-                </div>
+                  <div className="mt-3.5">
+                    <span className="inline-flex items-center gap-1.5 bg-[#e8f7ee] text-[#059669] border border-emerald-100 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full">
+                      <GraduationCap size={13} />
+                      <span>{isBn ? 'শিক্ষকমণ্ডলী' : 'TEACHING FACULTY'}</span>
+                    </span>
+                  </div>
 
-                <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-2 leading-tight">
-                  {selectedTeacher.name}
-                </h3>
-                <p className="text-xs sm:text-sm font-bold text-[#059669] mt-0.5">
-                  {selectedTeacher.designation}
-                </p>
-                <p className="text-xs text-slate-500 font-medium">
-                  SOS Hermann Gmeiner School Khulna
-                </p>
-
-                <p className="text-xs text-slate-600 mt-2.5 leading-relaxed">
-                  Passionate about education and dedicated to nurturing young minds. Committed to creating an engaging and inclusive learning environment.
-                </p>
-
-                <div className="bg-[#f0faf5] border border-[#d7f1e5] rounded-xl p-3 mt-3 flex items-start gap-2 shadow-2xs">
-                  <span className="text-lg text-[#059669] font-serif font-black leading-none shrink-0">“</span>
-                  <p className="text-xs text-slate-700 italic font-medium leading-relaxed">
-                    {selectedTeacher.mottoQuote || 'Education is the foundation for a brighter tomorrow.'}
+                  <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-2 leading-tight">
+                    {isBn ? (detailsBn?.nameBn || selectedTeacher.name) : selectedTeacher.name}
+                  </h3>
+                  <p className="text-xs sm:text-sm font-bold text-[#059669] mt-0.5">
+                    {isBn ? (detailsBn?.designationBn || selectedTeacher.designation) : selectedTeacher.designation}
                   </p>
-                </div>
-              </div>
+                  <p className="text-xs text-slate-500 font-medium">
+                    {isBn ? 'এস ও এস হারম্যান মেইনার স্কুল খুলনা' : 'SOS Hermann Gmeiner School Khulna'}
+                  </p>
 
-              {/* Right Column: Tabbed Information */}
-              <div className="md:col-span-7 lg:col-span-8 flex flex-col justify-between">
-                {/* Top Tabs */}
-                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar border-b border-slate-100 pb-3">
-                  <button
-                    type="button"
-                    onClick={() => setModalTab('professional')}
-                    className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer shrink-0 ${
-                      modalTab === 'professional'
-                        ? 'bg-[#e8f7ee] text-[#004d34] border border-emerald-200 shadow-2xs'
-                        : 'bg-slate-50 text-slate-600 hover:text-slate-900 border border-slate-200/80'
-                    }`}
-                  >
-                    <User size={14} />
-                    <span>Professional Information</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setModalTab('academic')}
-                    className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer shrink-0 ${
-                      modalTab === 'academic'
-                        ? 'bg-[#e8f7ee] text-[#004d34] border border-emerald-200 shadow-2xs'
-                        : 'bg-slate-50 text-slate-600 hover:text-slate-900 border border-slate-200/80'
-                    }`}
-                  >
-                    <BookOpen size={14} />
-                    <span>Academic Details</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setModalTab('additional')}
-                    className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer shrink-0 ${
-                      modalTab === 'additional'
-                        ? 'bg-[#e8f7ee] text-[#004d34] border border-emerald-200 shadow-2xs'
-                        : 'bg-slate-50 text-slate-600 hover:text-slate-900 border border-slate-200/80'
-                    }`}
-                  >
-                    <FileText size={14} />
-                    <span>Additional Info</span>
-                  </button>
-                </div>
+                  <p className="text-xs text-slate-600 mt-2.5 leading-relaxed">
+                    {isBn
+                      ? (detailsBn?.aboutBn || 'শিক্ষার মানোন্নয়ন ও শিক্ষার্থীদের সার্বিক বিকাশে নিবেদিতপ্রাণ শিক্ষক।')
+                      : (selectedTeacher.about || 'Passionate about education and dedicated to nurturing young minds. Committed to creating an engaging and inclusive learning environment.')}
+                  </p>
 
-                {/* Tab 1: Professional Information */}
-                {modalTab === 'professional' && (
-                  <div className="mt-3.5 space-y-3.5 animate-in fade-in duration-100">
-                    <h4 className="text-sm font-bold text-slate-900 border-b-2 border-[#059669] inline-block pb-0.5">
-                      Professional Information
-                    </h4>
-
-                    {/* 6 Cards Grid (Matching reference screenshot) */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {/* Card 1: Teaching Subject */}
-                      <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
-                          <BookOpen size={16} />
-                        </div>
-                        <div>
-                          <span className="text-[11px] text-slate-400 font-semibold block">
-                            Teaching Subject
-                          </span>
-                          <span className="text-xs sm:text-sm font-black text-slate-900">
-                            {selectedTeacher.subject}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Card 2: Educational Qualifications */}
-                      <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
-                          <GraduationCap size={16} />
-                        </div>
-                        <div>
-                          <span className="text-[11px] text-slate-400 font-semibold block">
-                            Educational Qualifications
-                          </span>
-                          <span className="text-xs sm:text-sm font-black text-slate-900">
-                            {selectedTeacher.qualifications}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Card 3: Professional Qualifications */}
-                      <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
-                          <Award size={16} />
-                        </div>
-                        <div className="min-w-0">
-                          <span className="text-[11px] text-slate-400 font-semibold block">
-                            Professional Qualifications
-                          </span>
-                          <span className="text-xs font-bold text-slate-900 block leading-tight">
-                            {selectedTeacher.professionalQualifications || 'B.Ed, Training in Modern Teaching Methods'}
-                          </span>
-                          <div className="flex items-center gap-1.5 text-[11px] text-emerald-800 font-medium mt-1 truncate">
-                            <Mail size={11} className="shrink-0" />
-                            <span className="truncate">{selectedTeacher.email || 'info@soshgskhulna.edu.bd'}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Card 4: Contact Phone */}
-                      <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
-                          <Phone size={16} />
-                        </div>
-                        <div>
-                          <span className="text-[11px] text-slate-400 font-semibold block">
-                            Contact Phone
-                          </span>
-                          <span className="text-xs sm:text-sm font-black text-slate-900">
-                            {selectedTeacher.phone || '024-77726775'}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Card 5: Office Location */}
-                      <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
-                          <MapPin size={16} />
-                        </div>
-                        <div>
-                          <span className="text-[11px] text-slate-400 font-semibold block">
-                            Office Location
-                          </span>
-                          <span className="text-xs sm:text-sm font-black text-slate-900">
-                            {selectedTeacher.officeLocation || 'Admin Building'}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Card 6: Office Hours */}
-                      <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
-                          <Clock size={16} />
-                        </div>
-                        <div>
-                          <span className="text-[11px] text-slate-400 font-semibold block">
-                            Office Hours
-                          </span>
-                          <span className="text-xs font-bold text-slate-900 block">
-                            {selectedTeacher.officeHours || 'Sunday - Thursday: 8:00 AM - 4:00 PM'}
-                          </span>
-                          <span className="text-[11px] font-bold text-rose-600 block mt-0.5">
-                            Friday: Closed
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* About Card */}
-                    <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3.5 flex items-start gap-3 mt-3">
-                      <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
-                        <FileText size={16} />
-                      </div>
-                      <div>
-                        <h5 className="text-xs sm:text-sm font-bold text-slate-900 mb-1">
-                          About
-                        </h5>
-                        <p className="text-xs text-slate-600 leading-relaxed">
-                          {selectedTeacher.about || `Mr./Ms. ${selectedTeacher.name} is a dedicated ${selectedTeacher.designation} at SOS Hermann Gmeiner School Khulna. Brings a strong academic background and a deep passion for teaching ${selectedTeacher.subject}. Teaching approach focuses on student-centered learning and creative expression.`}
-                        </p>
-                      </div>
-                    </div>
+                  <div className="bg-[#f0faf5] border border-[#d7f1e5] rounded-xl p-3 mt-3 flex items-start gap-2 shadow-2xs">
+                    <span className="text-lg text-[#059669] font-serif font-black leading-none shrink-0">“</span>
+                    <p className="text-xs text-slate-700 italic font-medium leading-relaxed">
+                      {isBn
+                        ? (detailsBn?.mottoQuoteBn || 'আজকের শিক্ষা, উজ্জ্বল ও আলোকিত আগামীর মূল ভিত্তি।')
+                        : (selectedTeacher.mottoQuote || 'Education is the foundation for a brighter tomorrow.')}
+                    </p>
                   </div>
-                )}
+                </div>
 
-                {/* Tab 2: Academic Details */}
-                {modalTab === 'academic' && (
-                  <div className="mt-3.5 space-y-3.5 animate-in fade-in duration-100">
-                    <h4 className="text-sm font-bold text-slate-900 border-b-2 border-[#059669] inline-block pb-0.5">
-                      Degrees & Training Certifications
-                    </h4>
+                {/* Right Column: Tabbed Information */}
+                <div className="md:col-span-7 lg:col-span-8 flex flex-col justify-between">
+                  {/* Top Tabs */}
+                  <div className="flex items-center gap-2 overflow-x-auto no-scrollbar border-b border-slate-100 pb-3">
+                    <button
+                      type="button"
+                      onClick={() => setModalTab('professional')}
+                      className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer shrink-0 ${
+                        modalTab === 'professional'
+                          ? 'bg-[#e8f7ee] text-[#004d34] border border-emerald-200 shadow-2xs'
+                          : 'bg-slate-50 text-slate-600 hover:text-slate-900 border border-slate-200/80'
+                      }`}
+                    >
+                      <User size={14} />
+                      <span>{isBn ? 'পেশাগত তথ্য' : 'Professional Information'}</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setModalTab('academic')}
+                      className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer shrink-0 ${
+                        modalTab === 'academic'
+                          ? 'bg-[#e8f7ee] text-[#004d34] border border-emerald-200 shadow-2xs'
+                          : 'bg-slate-50 text-slate-600 hover:text-slate-900 border border-slate-200/80'
+                      }`}
+                    >
+                      <BookOpen size={14} />
+                      <span>{isBn ? 'শিক্ষাগত বিবরণ' : 'Academic Details'}</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setModalTab('additional')}
+                      className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer shrink-0 ${
+                        modalTab === 'additional'
+                          ? 'bg-[#e8f7ee] text-[#004d34] border border-emerald-200 shadow-2xs'
+                          : 'bg-slate-50 text-slate-600 hover:text-slate-900 border border-slate-200/80'
+                      }`}
+                    >
+                      <FileText size={14} />
+                      <span>{isBn ? 'অতিরিক্ত তথ্য' : 'Additional Info'}</span>
+                    </button>
+                  </div>
 
-                    <div className="space-y-2.5">
-                      {(selectedTeacher.education || [
-                        { degree: `Master Degree in ${selectedTeacher.subject}`, institution: 'University of Dhaka', result: 'First Class', year: '2015' },
-                        { degree: `Bachelor (Hons) in ${selectedTeacher.subject}`, institution: 'University of Dhaka', result: 'First Class', year: '2013' }
-                      ]).map((edu, i) => (
-                        <div key={i} className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start justify-between gap-3">
+                  {/* Tab 1: Professional Information */}
+                  {modalTab === 'professional' && (
+                    <div className="mt-3.5 space-y-3.5 animate-in fade-in duration-100">
+                      <h4 className="text-sm font-bold text-slate-900 border-b-2 border-[#059669] inline-block pb-0.5">
+                        {isBn ? 'পেশাগত তথ্য' : 'Professional Information'}
+                      </h4>
+
+                      {/* 6 Cards Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {/* Card 1: Teaching Subject */}
+                        <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
+                            <BookOpen size={16} />
+                          </div>
                           <div>
-                            <h5 className="text-xs sm:text-sm font-bold text-slate-900">{edu.degree}</h5>
-                            <p className="text-xs text-slate-500 mt-0.5">{edu.institution}</p>
-                            <span className="text-[11px] font-bold text-[#059669]">Result: {edu.result}</span>
+                            <span className="text-[11px] text-slate-400 font-semibold block">
+                              {isBn ? 'পাঠদানের বিষয়' : 'Teaching Subject'}
+                            </span>
+                            <span className="text-xs sm:text-sm font-black text-slate-900">
+                              {isBn ? (detailsBn?.subjectBn || selectedTeacher.subject) : selectedTeacher.subject}
+                            </span>
                           </div>
-                          <span className="bg-white border border-slate-200 text-slate-600 text-xs font-bold px-2 py-1 rounded-lg shadow-2xs">{edu.year}</span>
                         </div>
-                      ))}
-                    </div>
 
-                    <div className="pt-2">
-                      <h5 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Training Certifications:</h5>
-                      <div className="space-y-1.5">
-                        {(selectedTeacher.certifications || [
-                          'B.Ed, Training in Modern Teaching Methods & Micro-teaching',
-                          'Certified in ICT Integration in Education (TQI-SEP)'
-                        ]).map((cert, ci) => (
-                          <div key={ci} className="flex items-center gap-2 text-xs text-slate-700 bg-white border border-slate-100 p-2 rounded-lg">
-                            <CheckCircle2 size={13} className="text-[#059669] shrink-0" />
-                            <span>{cert}</span>
+                        {/* Card 2: Educational Qualifications */}
+                        <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
+                            <GraduationCap size={16} />
+                          </div>
+                          <div>
+                            <span className="text-[11px] text-slate-400 font-semibold block">
+                              {isBn ? 'শিক্ষাগত যোগ্যতা' : 'Educational Qualifications'}
+                            </span>
+                            <span className="text-xs sm:text-sm font-black text-slate-900">
+                              {isBn ? (detailsBn?.qualificationsBn || selectedTeacher.qualifications) : selectedTeacher.qualifications}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Card 3: Professional Qualifications */}
+                        <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
+                            <Award size={16} />
+                          </div>
+                          <div className="min-w-0">
+                            <span className="text-[11px] text-slate-400 font-semibold block">
+                              {isBn ? 'পেশাগত যোগ্যতা' : 'Professional Qualifications'}
+                            </span>
+                            <span className="text-xs font-bold text-slate-900 block leading-tight">
+                              {isBn ? (detailsBn?.professionalQualificationsBn || 'বি.এড, আধুনিক পাঠদান পদ্ধতি প্রশিক্ষণ') : (selectedTeacher.professionalQualifications || 'B.Ed, Training in Modern Teaching Methods')}
+                            </span>
+                            <div className="flex items-center gap-1.5 text-[11px] text-emerald-800 font-medium mt-1 truncate">
+                              <Mail size={11} className="shrink-0" />
+                              <span className="truncate">{selectedTeacher.email || 'info@soshgskhulna.edu.bd'}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Card 4: Contact Phone */}
+                        <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
+                            <Phone size={16} />
+                          </div>
+                          <div>
+                            <span className="text-[11px] text-slate-400 font-semibold block">
+                              {isBn ? 'যোগাযোগের ফোন' : 'Contact Phone'}
+                            </span>
+                            <span className="text-xs sm:text-sm font-black text-slate-900">
+                              {isBn ? toBanglaNum(selectedTeacher.phone || '024-77726775') : (selectedTeacher.phone || '024-77726775')}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Card 5: Office Location */}
+                        <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
+                            <MapPin size={16} />
+                          </div>
+                          <div>
+                            <span className="text-[11px] text-slate-400 font-semibold block">
+                              {isBn ? 'অফিস কক্ষ' : 'Office Location'}
+                            </span>
+                            <span className="text-xs sm:text-sm font-black text-slate-900">
+                              {isBn ? (detailsBn?.officeLocationBn || 'শিক্ষক মিলনায়তন / একাডেমি ভবন') : (selectedTeacher.officeLocation || 'Admin Building')}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Card 6: Office Hours */}
+                        <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
+                            <Clock size={16} />
+                          </div>
+                          <div>
+                            <span className="text-[11px] text-slate-400 font-semibold block">
+                              {isBn ? 'সাক্ষাতের সময়সূচি' : 'Office Hours'}
+                            </span>
+                            <span className="text-xs font-bold text-slate-900 block">
+                              {isBn ? (detailsBn?.officeHoursBn || 'রবিবার - বৃহস্পতিবার: সকাল ৮:০০ - বিকাল ৪:০০') : (selectedTeacher.officeHours || 'Sunday - Thursday: 8:00 AM - 4:00 PM')}
+                            </span>
+                            <span className="text-[11px] font-bold text-rose-600 block mt-0.5">
+                              {isBn ? 'শুক্রবার: সাপ্তাহিক ছুটি' : 'Friday: Closed'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* About Card */}
+                      <div className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3.5 flex items-start gap-3 mt-3">
+                        <div className="w-9 h-9 rounded-xl bg-white text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
+                          <FileText size={16} />
+                        </div>
+                        <div>
+                          <h5 className="text-xs sm:text-sm font-bold text-slate-900 mb-1">
+                            {isBn ? 'পরিচিতি' : 'About'}
+                          </h5>
+                          <p className="text-xs text-slate-600 leading-relaxed">
+                            {isBn
+                              ? (detailsBn?.aboutBn || `${detailsBn?.nameBn || selectedTeacher.name} এস ও এস হারম্যান মেইনার স্কুল খুলনার একজন নিবেদিতপ্রাণ ও অভিজ্ঞ ${detailsBn?.designationBn || selectedTeacher.designation}। তিনি আধুনিক পাঠদান পদ্ধতি ও শিক্ষার্থীদের সৃজনশীল মেধা বিকাশে সচেষ্ট।`)
+                              : (selectedTeacher.about || `Mr./Ms. ${selectedTeacher.name} is a dedicated ${selectedTeacher.designation} at SOS Hermann Gmeiner School Khulna. Brings a strong academic background and a deep passion for teaching ${selectedTeacher.subject}. Teaching approach focuses on student-centered learning and creative expression.`)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Tab 2: Academic Details */}
+                  {modalTab === 'academic' && (
+                    <div className="mt-3.5 space-y-3.5 animate-in fade-in duration-100">
+                      <h4 className="text-sm font-bold text-slate-900 border-b-2 border-[#059669] inline-block pb-0.5">
+                        {isBn ? 'ডিগ্রি ও প্রশিক্ষণ সনদ' : 'Degrees & Training Certifications'}
+                      </h4>
+
+                      <div className="space-y-2.5">
+                        {(isBn && detailsBn?.educationBn
+                          ? detailsBn.educationBn
+                          : selectedTeacher.education || [
+                              { degree: `Master Degree in ${selectedTeacher.subject}`, institution: 'University of Dhaka', result: 'First Class', year: '2015' },
+                              { degree: `Bachelor (Hons) in ${selectedTeacher.subject}`, institution: 'University of Dhaka', result: 'First Class', year: '2013' }
+                            ]
+                        ).map((edu, i) => (
+                          <div key={i} className="bg-[#f7faf8] border border-slate-100 rounded-xl p-3 flex items-start justify-between gap-3">
+                            <div>
+                              <h5 className="text-xs sm:text-sm font-bold text-slate-900">{edu.degree}</h5>
+                              <p className="text-xs text-slate-500 mt-0.5">{edu.institution}</p>
+                              <span className="text-[11px] font-bold text-[#059669]">
+                                {isBn ? `ফলাফল: ${edu.result}` : `Result: ${edu.result}`}
+                              </span>
+                            </div>
+                            <span className="bg-white border border-slate-200 text-slate-600 text-xs font-bold px-2 py-1 rounded-lg shadow-2xs">
+                              {isBn ? toBanglaNum(edu.year) : edu.year}
+                            </span>
                           </div>
                         ))}
                       </div>
-                    </div>
-                  </div>
-                )}
 
-                {/* Tab 3: Additional Info */}
-                {modalTab === 'additional' && (
-                  <div className="mt-3.5 space-y-3.5 animate-in fade-in duration-100">
-                    <h4 className="text-sm font-bold text-slate-900 border-b-2 border-[#059669] inline-block pb-0.5">
-                      Teaching Responsibilities & Publications
-                    </h4>
-
-                    <div className="space-y-2">
-                      <h5 className="text-xs font-bold uppercase tracking-wider text-slate-400">Classroom Duties:</h5>
-                      {(selectedTeacher.responsibilities || [
-                        `${selectedTeacher.subject}: Core Subject Instruction (Classes 8, 9, 10)`,
-                        `Remedial Learning & Student Mentorship Support`
-                      ]).map((resp, ri) => (
-                        <div key={ri} className="flex items-start gap-2 text-xs text-slate-700 bg-[#f7faf8] p-2.5 rounded-xl border border-slate-100">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-1.5 shrink-0" />
-                          <span>{resp}</span>
+                      <div className="pt-2">
+                        <h5 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                          {isBn ? 'প্রশিক্ষণ সনদসমূহ:' : 'Training Certifications:'}
+                        </h5>
+                        <div className="space-y-1.5">
+                          {(isBn && detailsBn?.certificationsBn
+                            ? detailsBn.certificationsBn
+                            : selectedTeacher.certifications || [
+                                'B.Ed, Training in Modern Teaching Methods & Micro-teaching',
+                                'Certified in ICT Integration in Education (TQI-SEP)'
+                              ]
+                          ).map((cert, ci) => (
+                            <div key={ci} className="flex items-center gap-2 text-xs text-slate-700 bg-white border border-slate-100 p-2 rounded-lg">
+                              <CheckCircle2 size={13} className="text-[#059669] shrink-0" />
+                              <span>{cert}</span>
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      </div>
                     </div>
+                  )}
 
-                    {selectedTeacher.publications && selectedTeacher.publications.length > 0 && (
-                      <div className="pt-2 space-y-2">
-                        <h5 className="text-xs font-bold uppercase tracking-wider text-slate-400">Research Works:</h5>
-                        {selectedTeacher.publications.map((pub, pi) => (
-                          <div key={pi} className="bg-white border border-slate-100 p-2.5 rounded-xl text-xs">
-                            <p className="font-bold text-slate-900">"{pub.title}"</p>
-                            <p className="text-[11px] text-slate-500 mt-0.5">{pub.publisher} ({pub.year})</p>
+                  {/* Tab 3: Additional Info */}
+                  {modalTab === 'additional' && (
+                    <div className="mt-3.5 space-y-3.5 animate-in fade-in duration-100">
+                      <h4 className="text-sm font-bold text-slate-900 border-b-2 border-[#059669] inline-block pb-0.5">
+                        {isBn ? 'পাঠদান দায়িত্ব ও প্রকাশনা' : 'Teaching Responsibilities & Publications'}
+                      </h4>
+
+                      <div className="space-y-2">
+                        <h5 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                          {isBn ? 'ক্লাসরুমের দায়িত্ব:' : 'Classroom Duties:'}
+                        </h5>
+                        {(isBn && detailsBn?.responsibilitiesBn
+                          ? detailsBn.responsibilitiesBn
+                          : selectedTeacher.responsibilities || [
+                              `${selectedTeacher.subject}: Core Subject Instruction (Classes 8, 9, 10)`,
+                              `Remedial Learning & Student Mentorship Support`
+                            ]
+                        ).map((resp, ri) => (
+                          <div key={ri} className="flex items-start gap-2 text-xs text-slate-700 bg-[#f7faf8] p-2.5 rounded-xl border border-slate-100">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-1.5 shrink-0" />
+                            <span>{resp}</span>
                           </div>
                         ))}
                       </div>
-                    )}
+
+                      {((isBn && detailsBn?.publicationsBn) ? detailsBn.publicationsBn : (selectedTeacher.publications || [])).length > 0 && (
+                        <div className="pt-2 space-y-2">
+                          <h5 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                            {isBn ? 'গবেষণা ও প্রকাশনা:' : 'Research Works:'}
+                          </h5>
+                          {(isBn && detailsBn?.publicationsBn
+                            ? detailsBn.publicationsBn
+                            : selectedTeacher.publications!
+                          ).map((pub, pi) => (
+                            <div key={pi} className="bg-white border border-slate-100 p-2.5 rounded-xl text-xs">
+                              <p className="font-bold text-slate-900">"{pub.title}"</p>
+                              <p className="text-[11px] text-slate-500 mt-0.5">
+                                {pub.publisher} ({isBn ? toBanglaNum(pub.year) : pub.year})
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Modal Footer Actions */}
+                  <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+                    <Link
+                      to={`/faculty/${selectedTeacher.id}`}
+                      className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold flex items-center gap-2 shadow-2xs transition"
+                    >
+                      <User size={14} />
+                      <span>{isBn ? 'পূর্ণাঙ্গ প্রোফাইল দেখুন' : 'View Full Profile'}</span>
+                    </Link>
+
+                    <button
+                      type="button"
+                      onClick={() => setSelectedTeacher(null)}
+                      className="px-5 py-2.5 rounded-xl bg-[#004d34] hover:bg-[#003b28] text-white text-xs font-bold flex items-center gap-1.5 shadow-xs transition cursor-pointer"
+                    >
+                      <X size={14} />
+                      <span>{isBn ? 'বন্ধ করুন' : 'Close'}</span>
+                    </button>
                   </div>
-                )}
-
-                {/* Modal Footer Actions */}
-                <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
-                  <Link
-                    to={`/faculty/${selectedTeacher.id}`}
-                    className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold flex items-center gap-2 shadow-2xs transition"
-                  >
-                    <User size={14} />
-                    <span>View Full Profile</span>
-                  </Link>
-
-                  <button
-                    type="button"
-                    onClick={() => setSelectedTeacher(null)}
-                    className="px-5 py-2.5 rounded-xl bg-[#004d34] hover:bg-[#003b28] text-white text-xs font-bold flex items-center gap-1.5 shadow-xs transition cursor-pointer"
-                  >
-                    <X size={14} />
-                    <span>Close</span>
-                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 };

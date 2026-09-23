@@ -22,8 +22,12 @@ import {
 import {
   LEADERSHIP,
 } from '../data/schoolData';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export const About: React.FC = () => {
+  const { language, toBanglaNum } = useLanguage();
+  const isBn = language === 'bn';
+
   return (
     <div className="bg-[#fcfdfd] pb-20 overflow-hidden">
       {/* 1. Hero Section: Full-width Campus Background with White Fade Overlay (Matching media_1790101513924.jpg) */}
@@ -64,10 +68,10 @@ export const About: React.FC = () => {
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
             <Link to="/" className="hover:text-emerald-800 flex items-center gap-1 transition-colors text-emerald-700">
               <Home size={14} />
-              <span>Home</span>
+              <span>{isBn ? 'মূলপাতা' : 'Home'}</span>
             </Link>
             <span className="text-slate-400">›</span>
-            <span className="text-slate-800 font-bold">About Us</span>
+            <span className="text-slate-800 font-bold">{isBn ? 'পরিচিতি' : 'About Us'}</span>
           </div>
 
           {/* Left Narrative Block */}
@@ -75,13 +79,22 @@ export const About: React.FC = () => {
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <Sparkles size={14} />
-              <span>OUR STORY, OUR COMMITMENT</span>
+              <span>{isBn ? 'আমাদের ঐতিহ্য ও অঙ্গীকার' : 'OUR STORY, OUR COMMITMENT'}</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              About Our <br />
-              Institution
+              {isBn ? (
+                <>
+                  আমাদের পরিচিতি ও <br />
+                  পটভূমি
+                </>
+              ) : (
+                <>
+                  About Our <br />
+                  Institution
+                </>
+              )}
             </h1>
 
             {/* Short Green Accent Line Under Title */}
@@ -89,8 +102,17 @@ export const About: React.FC = () => {
 
             {/* Subtitle */}
             <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              Spreading the light of quality education and moral discipline continuously{' '}
-              <strong className="text-emerald-800 font-bold">since 1987.</strong>
+              {isBn ? (
+                <>
+                  ১৯৮৭ সাল থেকে মানসম্মত শিক্ষা ও মানবিক মূল্যবোধের আলো ছড়িয়ে যাচ্ছে{' '}
+                  <strong className="text-emerald-800 font-bold">নিরবচ্ছিন্নভাবে।</strong>
+                </>
+              ) : (
+                <>
+                  Spreading the light of quality education and moral discipline continuously{' '}
+                  <strong className="text-emerald-800 font-bold">since 1987.</strong>
+                </>
+              )}
             </p>
           </div>
 
@@ -102,10 +124,10 @@ export const About: React.FC = () => {
               </span>
               <div>
                 <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  Education today for a brighter tomorrow
+                  {isBn ? 'আজকের মানসম্মত শিক্ষাই আগামীর সম্ভাবনাময় ভবিষ্যৎ' : 'Education today for a brighter tomorrow'}
                 </h4>
                 <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — SOS Hermann Gmeiner School
+                  — {isBn ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
                 </p>
               </div>
             </div>
@@ -123,10 +145,14 @@ export const About: React.FC = () => {
             </div>
             <div>
               <h4 className="text-2xl font-black text-slate-900 tracking-tight leading-none">
-                10
+                {isBn ? toBanglaNum(10) : '10'}
               </h4>
-              <p className="text-xs font-bold text-slate-800 mt-1">Total Students</p>
-              <p className="text-[10px] text-slate-400 font-medium">Nurturing young minds</p>
+              <p className="text-xs font-bold text-slate-800 mt-1">
+                {isBn ? 'মোট শিক্ষার্থী' : 'Total Students'}
+              </p>
+              <p className="text-[10px] text-slate-400 font-medium">
+                {isBn ? 'মেধা ও মূল্যবোধের বিকাশ' : 'Nurturing young minds'}
+              </p>
             </div>
           </div>
 
@@ -137,10 +163,14 @@ export const About: React.FC = () => {
             </div>
             <div>
               <h4 className="text-2xl font-black text-slate-900 tracking-tight leading-none">
-                8
+                {isBn ? toBanglaNum(8) : '8'}
               </h4>
-              <p className="text-xs font-bold text-slate-800 mt-1">Teaching Faculty</p>
-              <p className="text-[10px] text-slate-400 font-medium">Dedicated educators</p>
+              <p className="text-xs font-bold text-slate-800 mt-1">
+                {isBn ? 'শিক্ষকমণ্ডলী' : 'Teaching Faculty'}
+              </p>
+              <p className="text-[10px] text-slate-400 font-medium">
+                {isBn ? 'নিবেদিতপ্রাণ শিক্ষকবৃন্দ' : 'Dedicated educators'}
+              </p>
             </div>
           </div>
 
@@ -151,10 +181,14 @@ export const About: React.FC = () => {
             </div>
             <div>
               <h4 className="text-2xl font-black text-slate-900 tracking-tight leading-none">
-                98.5%
+                {isBn ? toBanglaNum('98.5%') : '98.5%'}
               </h4>
-              <p className="text-xs font-bold text-slate-800 mt-1">Average Pass Rate</p>
-              <p className="text-[10px] text-slate-400 font-medium">Academic excellence</p>
+              <p className="text-xs font-bold text-slate-800 mt-1">
+                {isBn ? 'গড় পাসের হার' : 'Average Pass Rate'}
+              </p>
+              <p className="text-[10px] text-slate-400 font-medium">
+                {isBn ? 'ধারাবাহিক একাডেমিক সাফল্য' : 'Academic excellence'}
+              </p>
             </div>
           </div>
 
@@ -165,10 +199,14 @@ export const About: React.FC = () => {
             </div>
             <div>
               <h4 className="text-2xl font-black text-slate-900 tracking-tight leading-none">
-                38+
+                {isBn ? toBanglaNum('38+') : '38+'}
               </h4>
-              <p className="text-xs font-bold text-slate-800 mt-1">Years of Heritage</p>
-              <p className="text-[10px] text-slate-400 font-medium">Since 1987</p>
+              <p className="text-xs font-bold text-slate-800 mt-1">
+                {isBn ? 'বছরের ঐতিহ্য' : 'Years of Heritage'}
+              </p>
+              <p className="text-[10px] text-slate-400 font-medium">
+                {isBn ? '১৯৮৭ সাল থেকে' : 'Since 1987'}
+              </p>
             </div>
           </div>
         </section>
@@ -189,25 +227,23 @@ export const About: React.FC = () => {
           <div className="lg:col-span-6 space-y-4">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#059669]">
               <span className="w-5 h-0.5 bg-[#059669]" />
-              <span>HISTORY & HERITAGE</span>
+              <span>{isBn ? 'ইতিহাস ও ঐতিহ্য' : 'HISTORY & HERITAGE'}</span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              Our History & Heritage
+              {isBn ? 'আমাদের ইতিহাস ও পটভূমি' : 'Our History & Heritage'}
             </h2>
 
             <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-normal">
-              The very name of the School bears the name of the founder father of SOS Children's
-              Village International, Dr. Hermann Gmeiner. The School was established in 1987 with a
-              view to imparting quality education to the Students of both inside and outside of the
-              SOS Children's Village, Khulna.
+              {isBn
+                ? "এস ও এস হারম্যান মেইনার স্কুল খুলনার নামকরণ করা হয়েছে আন্তর্জাতিক এস ও এস চিলড্রেনস ভিলেজেসের প্রতিষ্ঠাতা ড. হারম্যান মেইনারের নামানুসারে। ১৯৮৭ সালে প্রতিষ্ঠিত এই বিদ্যাপীঠ এস ও এস ভিলেজের শিশুসহ সমাজের সর্বস্তরের শিক্ষার্থীদের গুণগত মানসম্মত শিক্ষাদানে নিবেদিত।"
+                : "The very name of the School bears the name of the founder father of SOS Children's Village International, Dr. Hermann Gmeiner. The School was established in 1987 with a view to imparting quality education to the Students of both inside and outside of the SOS Children's Village, Khulna."}
             </p>
 
             <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-normal">
-              The main criteria for entry is merit, discipline and integrity. The motto of the
-              school is "Honesty is education, education is peace and peace is progress." The
-              institution follows the curriculum of NCTB and BISE Jessore with special emphasis on
-              English language proficiency.
+              {isBn
+                ? 'আমাদের মূল লক্ষ্য সততা, শৃঙ্খলা ও নৈতিক শিক্ষার সুদৃঢ় ভিত্তি তৈরি করা। বিদ্যালয়ের মূল বাণী — "সততাই শিক্ষা, শিক্ষাই শান্তি এবং শান্তিই প্রগতি"। প্রতিষ্ঠানটি জাতীয় শিক্ষাক্রম (এনসিটিবি) ও যশোর শিক্ষা বোর্ডের অধীনে পরিচালিত হয় এবং ইংরেজি ভাষা ও আইসিটি দক্ষতায় বিশেষ গুরুত্ব প্রদান করে।'
+                : 'The main criteria for entry is merit, discipline and integrity. The motto of the school is "Honesty is education, education is peace and peace is progress." The institution follows the curriculum of NCTB and BISE Jessore with special emphasis on English language proficiency.'}
             </p>
 
             <div className="pt-2">
@@ -217,7 +253,7 @@ export const About: React.FC = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#004d34] hover:bg-[#064e3b] text-white px-6 py-3 rounded-xl text-xs sm:text-sm font-bold transition shadow-sm hover:shadow cursor-pointer"
               >
-                <span>Learn More About Our History</span>
+                <span>{isBn ? 'আমাদের পূর্ণ ইতিহাস জানুন' : 'Learn More About Our History'}</span>
                 <ArrowRight size={14} />
               </a>
             </div>
@@ -230,7 +266,7 @@ export const About: React.FC = () => {
               href="https://en.wikipedia.org/wiki/Hermann_Gmeiner"
               target="_blank"
               rel="noopener noreferrer"
-              title="Read Dr. Hermann Gmeiner's biography on Wikipedia"
+              title={isBn ? "উইকিপিডিয়ায় ড. হারম্যান মেইনারের জীবনী পড়ুন" : "Read Dr. Hermann Gmeiner's biography on Wikipedia"}
               className="w-full sm:w-[210px] aspect-[4/5] rounded-[24px] overflow-hidden shadow-lg border border-slate-200 shrink-0 bg-slate-100 block group"
             >
               <img
@@ -244,7 +280,9 @@ export const About: React.FC = () => {
             <div className="w-full flex-1 bg-white rounded-[24px] p-6 sm:p-7 border border-slate-200/80 shadow-xs flex flex-col justify-center">
               <span className="text-3xl font-serif text-[#004d34] leading-none mb-3 select-none">“</span>
               <p className="text-xs sm:text-sm font-semibold text-slate-800 italic leading-relaxed">
-                “A loving home for every child, and a future full of possibilities.”
+                {isBn
+                  ? '“প্রতিটি শিশুর জন্য একটি স্নেহময় নিরাপদ নীড় এবং সম্ভাবনাময় উজ্জ্বল ভবিষ্যৎ।”'
+                  : '“A loving home for every child, and a future full of possibilities.”'}
               </p>
               <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
                 <div>
@@ -254,10 +292,10 @@ export const About: React.FC = () => {
                     rel="noopener noreferrer"
                     className="font-black text-xs sm:text-sm text-slate-900 hover:text-[#004d34] transition-colors"
                   >
-                    Dr. Hermann Gmeiner
+                    {isBn ? 'ড. হারম্যান মেইনার' : 'Dr. Hermann Gmeiner'}
                   </a>
                   <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                    Founder, SOS Children’s Villages International
+                    {isBn ? 'প্রতিষ্ঠাতা, এস ও এস চিলড্রেনস ভিলেজেস ইন্টারন্যাশনাল' : 'Founder, SOS Children’s Villages International'}
                   </p>
                 </div>
                 <a
@@ -286,7 +324,7 @@ export const About: React.FC = () => {
                 <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
                   <Users size={12} />
                 </div>
-                <span>Message from the Chairman</span>
+                <span>{isBn ? 'সভাপতির বাণী' : 'Message from the Chairman'}</span>
               </div>
 
               {/* Body: Photo & Quote */}
@@ -297,7 +335,7 @@ export const About: React.FC = () => {
                 >
                   <img
                     src={LEADERSHIP.chairman.image}
-                    alt={LEADERSHIP.chairman.name}
+                    alt={isBn ? 'মাকসুদা সুলতানা' : LEADERSHIP.chairman.name}
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src =
@@ -310,17 +348,19 @@ export const About: React.FC = () => {
                   <div className="flex items-start gap-1.5">
                     <span className="text-xl font-serif text-emerald-600 leading-none select-none">“</span>
                     <p className="text-xs text-slate-600 italic leading-relaxed">
-                      "SOS Hermann Gmeiner School Khulna is established within the verdant campus of SOS Children's Village Khulna with a steadfast mission to ensure quality education and a wholesome learning atmosphere..."
+                      {isBn
+                        ? '"এস ও এস চিলড্রেনস ভিলেজ খুলনার সুপরিসর ও সুশোভিত ক্যাম্পাসে অবস্থিত এস ও এস হারম্যান মেইনার স্কুল খুলনা একটি আদর্শ ও মানবিক বিদ্যাপীঠ। মানসম্মত শিক্ষা ও সুশৃঙ্খল পরিবেশের মাধ্যমে আমরা ভবিষ্যৎ নেতৃত্ব গঠনে অঙ্গীকারবদ্ধ..."'
+                        : '"SOS Hermann Gmeiner School Khulna is established within the verdant campus of SOS Children\'s Village Khulna with a steadfast mission to ensure quality education and a wholesome learning atmosphere..."'}
                     </p>
                   </div>
                   <div className="mt-3">
                     <Link to="/profile/chairman" className="hover:text-emerald-800 transition-colors">
                       <h4 className="font-extrabold text-slate-900 text-xs sm:text-sm">
-                        {LEADERSHIP.chairman.name}
+                        {isBn ? 'মাকসুদা সুলতানা' : LEADERSHIP.chairman.name}
                       </h4>
                     </Link>
                     <p className="text-[11px] text-[#b45309] font-bold mt-0.5">
-                      Chairman, Governing Body
+                      {isBn ? 'সভাপতি, গভর্নিং বডি' : 'Chairman, Governing Body'}
                     </p>
                   </div>
                 </div>
@@ -331,7 +371,7 @@ export const About: React.FC = () => {
             <div className="pt-3 flex justify-end">
               <Link
                 to="/profile/chairman"
-                aria-label="View Chairman Profile"
+                aria-label={isBn ? 'সভাপতির প্রোফাইল দেখুন' : 'View Chairman Profile'}
                 className="w-8 h-8 rounded-full bg-white border border-emerald-200 text-[#004d34] hover:bg-[#004d34] hover:text-white flex items-center justify-center transition shadow-2xs cursor-pointer"
               >
                 <ArrowRight size={13} />
@@ -347,7 +387,7 @@ export const About: React.FC = () => {
                 <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center shrink-0">
                   <GraduationCap size={12} />
                 </div>
-                <span>Message from the Principal</span>
+                <span>{isBn ? 'অধ্যক্ষের বাণী' : 'Message from the Principal'}</span>
               </div>
 
               {/* Body: Photo & Quote */}
@@ -358,7 +398,7 @@ export const About: React.FC = () => {
                 >
                   <img
                     src={LEADERSHIP.principal.image}
-                    alt={LEADERSHIP.principal.name}
+                    alt={isBn ? 'ইন্দ্রজিৎ কুমার মণ্ডল' : LEADERSHIP.principal.name}
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src =
@@ -371,17 +411,19 @@ export const About: React.FC = () => {
                   <div className="flex items-start gap-1.5">
                     <span className="text-xl font-serif text-blue-600 leading-none select-none">“</span>
                     <p className="text-xs text-slate-600 italic leading-relaxed">
-                      "SOS Hermann Gmeiner School Khulna was founded in 1987 with an uncompromising commitment to educational excellence. We believe in nurturing students to become responsible, compassionate and future-ready global citizens."
+                      {isBn
+                        ? '"১৯৮৭ সালে প্রতিষ্ঠার পর থেকে এস ও এস হারম্যান মেইনার স্কুল খুলনা নিরবচ্ছিন্নভাবে শিক্ষার আলোকবর্তিকা প্রজ্বলন করে চলেছে। প্রতিটি শিক্ষার্থীকে দায়িত্বশীল, মানবিক ও যুগের উপযোগী যোগ্য নাগরিক হিসেবে গড়ে তোলাই আমাদের পরম ব্রত।"'
+                        : '"SOS Hermann Gmeiner School Khulna was founded in 1987 with an uncompromising commitment to educational excellence. We believe in nurturing students to become responsible, compassionate and future-ready global citizens."'}
                     </p>
                   </div>
                   <div className="mt-3">
                     <Link to="/profile/principal" className="hover:text-blue-800 transition-colors">
                       <h4 className="font-extrabold text-slate-900 text-xs sm:text-sm">
-                        {LEADERSHIP.principal.name}
+                        {isBn ? 'ইন্দ্রজিৎ কুমার মণ্ডল' : LEADERSHIP.principal.name}
                       </h4>
                     </Link>
                     <p className="text-[11px] text-[#1d4ed8] font-bold mt-0.5">
-                      Principal
+                      {isBn ? 'অধ্যক্ষ' : 'Principal'}
                     </p>
                   </div>
                 </div>
@@ -392,7 +434,7 @@ export const About: React.FC = () => {
             <div className="pt-3 flex justify-end">
               <Link
                 to="/profile/principal"
-                aria-label="View Principal Profile"
+                aria-label={isBn ? 'অধ্যক্ষের প্রোফাইল দেখুন' : 'View Principal Profile'}
                 className="w-8 h-8 rounded-full bg-white border border-blue-200 text-blue-800 hover:bg-blue-800 hover:text-white flex items-center justify-center transition shadow-2xs cursor-pointer"
               >
                 <ArrowRight size={13} />
@@ -423,12 +465,14 @@ export const About: React.FC = () => {
                   <Eye size={22} />
                 </div>
                 <h3 className="text-xl font-black text-slate-900 tracking-tight">
-                  Our Vision
+                  {isBn ? 'আমাদের লক্ষ্য (Vision)' : 'Our Vision'}
                 </h3>
               </div>
 
               <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed font-normal max-w-md">
-                To nurture educated, technologically skilled, confident, and morally grounded future generations who will lead the nation with honesty, integrity, and discipline.
+                {isBn
+                  ? 'শিক্ষিত, তথ্যপ্রযুক্তি নির্ভর, আত্মবিশ্বাসী এবং নৈতিক মূল্যবোধে সমৃদ্ধ ভবিষ্যৎ প্রজন্ম গড়ে তোলা যারা সততা, ন্যায়পরায়ণতা ও শৃঙ্খলার সাথে দেশকে নেতৃত্ব প্রদান করবে।'
+                  : 'To nurture educated, technologically skilled, confident, and morally grounded future generations who will lead the nation with honesty, integrity, and discipline.'}
               </p>
             </div>
 
@@ -436,15 +480,15 @@ export const About: React.FC = () => {
             <div className="relative z-10 pt-6 flex flex-wrap gap-2.5">
               <span className="inline-flex items-center gap-1.5 bg-[#eefaf3] text-[#004d34] text-[11px] font-bold px-3 py-1.5 rounded-xl border border-emerald-100">
                 <CheckCircle2 size={13} className="text-emerald-600" />
-                <span>Moral Values</span>
+                <span>{isBn ? 'নৈতিক মূল্যবোধ' : 'Moral Values'}</span>
               </span>
               <span className="inline-flex items-center gap-1.5 bg-[#eefaf3] text-[#004d34] text-[11px] font-bold px-3 py-1.5 rounded-xl border border-emerald-100">
                 <CheckCircle2 size={13} className="text-emerald-600" />
-                <span>Academic Excellence</span>
+                <span>{isBn ? 'একাডেমিক শ্রেষ্ঠত্ব' : 'Academic Excellence'}</span>
               </span>
               <span className="inline-flex items-center gap-1.5 bg-[#eefaf3] text-[#004d34] text-[11px] font-bold px-3 py-1.5 rounded-xl border border-emerald-100">
                 <CheckCircle2 size={13} className="text-emerald-600" />
-                <span>Leadership & Integrity</span>
+                <span>{isBn ? 'নেতৃত্ব ও সততা' : 'Leadership & Integrity'}</span>
               </span>
             </div>
           </div>
@@ -468,12 +512,14 @@ export const About: React.FC = () => {
                   <Target size={22} />
                 </div>
                 <h3 className="text-xl font-black text-slate-900 tracking-tight">
-                  Mission & Core Motto
+                  {isBn ? 'উদ্দেশ্য ও মূল বাণী (Mission)' : 'Mission & Core Motto'}
                 </h3>
               </div>
 
               <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed font-normal max-w-md">
-                Delivering holistic education through modern pedagogies, STEM laboratories, multimedia smart classrooms, and extensive co-curricular programs for all-round student development.
+                {isBn
+                  ? 'আধুনিক শিক্ষণ পদ্ধতি, বিজ্ঞান ও আইসিটি ল্যাব, মাল্টিমিডিয়া ক্লাসরুম এবং বিস্তৃত সহশিক্ষা কার্যক্রমের মাধ্যমে শিক্ষার্থীদের সার্বিক ও নান্দনিক বিকাশ সাধন করা।'
+                  : 'Delivering holistic education through modern pedagogies, STEM laboratories, multimedia smart classrooms, and extensive co-curricular programs for all-round student development.'}
               </p>
             </div>
 
@@ -481,15 +527,15 @@ export const About: React.FC = () => {
             <div className="relative z-10 pt-6 flex flex-wrap gap-2.5">
               <span className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-800 text-[11px] font-bold px-3 py-1.5 rounded-xl border border-blue-100">
                 <CheckCircle2 size={13} className="text-blue-600" />
-                <span>STEM & Technology</span>
+                <span>{isBn ? 'বিজ্ঞান ও তথ্যপ্রযুক্তি' : 'STEM & Technology'}</span>
               </span>
               <span className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-800 text-[11px] font-bold px-3 py-1.5 rounded-xl border border-blue-100">
                 <CheckCircle2 size={13} className="text-blue-600" />
-                <span>Holistic Development</span>
+                <span>{isBn ? 'সার্বিক ও নান্দনিক বিকাশ' : 'Holistic Development'}</span>
               </span>
               <span className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-800 text-[11px] font-bold px-3 py-1.5 rounded-xl border border-amber-100">
                 <Award size={13} className="text-amber-600" />
-                <span>Inclusivity & Care</span>
+                <span>{isBn ? 'মমতা ও মানবিক যত্ন' : 'Inclusivity & Care'}</span>
               </span>
             </div>
           </div>
@@ -507,10 +553,10 @@ export const About: React.FC = () => {
               </div>
               <div>
                 <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                  Campus & Facilities
+                  {isBn ? 'ক্যাম্পাস ও আধুনিক সুবিধাসমূহ' : 'Campus & Facilities'}
                 </h2>
                 <p className="text-xs text-slate-500 font-medium">
-                  A modern learning environment with world-class facilities
+                  {isBn ? 'বিশ্বমানের আধুনিক সুবিধা সমৃদ্ধ সবুজ ও সুশৃঙ্খল ক্যাম্পাস' : 'A modern learning environment with world-class facilities'}
                 </p>
               </div>
             </div>
@@ -519,7 +565,7 @@ export const About: React.FC = () => {
               to="/academic"
               className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 border border-emerald-600/70 hover:border-emerald-700 bg-white hover:bg-emerald-50/60 px-4 py-2 rounded-xl transition shadow-2xs self-start sm:self-auto cursor-pointer"
             >
-              <span>View All Facilities</span>
+              <span>{isBn ? 'সকল সুবিধা দেখুন' : 'View All Facilities'}</span>
               <ArrowRight size={13} />
             </Link>
           </div>
@@ -531,7 +577,7 @@ export const About: React.FC = () => {
               <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-100">
                 <img
                   src="/facilities/facility_computer.png"
-                  alt="Digital Computer Lab"
+                  alt={isBn ? 'ডিজিটাল কম্পিউটার ল্যাব' : 'Digital Computer Lab'}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
@@ -545,10 +591,10 @@ export const About: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-emerald-800 transition">
-                    Digital Computer Lab
+                    {isBn ? 'ডিজিটাল কম্পিউটার ল্যাব' : 'Digital Computer Lab'}
                   </h4>
                   <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                    High-speed internet & 30+ PCs
+                    {isBn ? 'উচ্চগতির ইন্টারনেট ও ৩০+ কম্পিউটার' : 'High-speed internet & 30+ PCs'}
                   </p>
                 </div>
               </div>
@@ -559,7 +605,7 @@ export const About: React.FC = () => {
               <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-100">
                 <img
                   src="/facilities/facility_science.png"
-                  alt="Modern Science Lab"
+                  alt={isBn ? 'আধুনিক বিজ্ঞান ল্যাব' : 'Modern Science Lab'}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
@@ -573,10 +619,10 @@ export const About: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-emerald-800 transition">
-                    Modern Science Lab
+                    {isBn ? 'আধুনিক বিজ্ঞান ল্যাব' : 'Modern Science Lab'}
                   </h4>
                   <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                    Physics, Chemistry, Biology Kits
+                    {isBn ? 'পদার্থ, রসায়ন ও জীববিজ্ঞানের উপকরণ' : 'Physics, Chemistry, Biology Kits'}
                   </p>
                 </div>
               </div>
@@ -587,7 +633,7 @@ export const About: React.FC = () => {
               <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-100">
                 <img
                   src="/facilities/facility_library.png"
-                  alt="School Library"
+                  alt={isBn ? 'বিদ্যালয় গ্রন্থাগার' : 'School Library'}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
@@ -601,10 +647,10 @@ export const About: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-emerald-800 transition">
-                    School Library
+                    {isBn ? 'বিদ্যালয় গ্রন্থাগার' : 'School Library'}
                   </h4>
                   <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                    Wide collection of books & reading corner
+                    {isBn ? 'সমৃদ্ধ বইয়ের সংগ্রহ ও পাঠকক্ষ' : 'Wide collection of books & reading corner'}
                   </p>
                 </div>
               </div>
@@ -615,7 +661,7 @@ export const About: React.FC = () => {
               <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-100">
                 <img
                   src="/facilities/facility_grounds.png"
-                  alt="Green Athletic Grounds"
+                  alt={isBn ? 'সবুজ খেলার মাঠ ও ক্রীড়া প্রাঙ্গণ' : 'Green Athletic Grounds'}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
@@ -629,10 +675,10 @@ export const About: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-emerald-800 transition">
-                    Green Athletic Grounds
+                    {isBn ? 'সবুজ খেলার মাঠ ও ক্রীড়া প্রাঙ্গণ' : 'Green Athletic Grounds'}
                   </h4>
                   <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                    Sports, athletics & co-curricular area
+                    {isBn ? 'খেলাধুলা, অ্যাথলেটিক্স ও সহশিক্ষা প্রাঙ্গণ' : 'Sports, athletics & co-curricular area'}
                   </p>
                 </div>
               </div>

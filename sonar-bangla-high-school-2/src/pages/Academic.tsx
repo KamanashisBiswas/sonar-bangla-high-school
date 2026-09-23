@@ -20,6 +20,7 @@ import {
   FileText,
 } from 'lucide-react';
 import { SCHOOL_INFO } from '../data/schoolData';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface RoutineRow {
   period: string;
@@ -721,6 +722,7 @@ const ROUTINES_BY_CLASS: Record<string, RoutineRow[]> = {
 };
 
 export const Academic: React.FC = () => {
+  const { language, t, toBanglaNum } = useLanguage();
   const [selectedClass, setSelectedClass] = useState<string>('Class 6');
   const [activeTab, setActiveTab] = useState<'routine' | 'uniform' | 'conduct' | 'calendar' | 'downloads'>('routine');
   const [detailsModal, setDetailsModal] = useState<'boys' | 'girls' | 'policy' | null>(null);
@@ -730,21 +732,26 @@ export const Academic: React.FC = () => {
   const handleDownloadRoutine = () => {
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
-      alert('Please allow popups to print or download the class timetable.');
+      alert(language === 'bn' ? 'অনুগ্রহ করে ক্লাস রুটিন প্রিন্ট বা ডাউনলোড করার জন্য পপআপ অনুমতি দিন।' : 'Please allow popups to print or download the class timetable.');
       return;
     }
 
+    const isBn = language === 'bn';
+
     const rowsHtml = activeRoutine
       .map((row) => {
+        const periodDisplay = isBn ? toBanglaNum(row.period) : row.period;
+        const timeDisplay = isBn ? toBanglaNum(row.time) : row.time;
+
         if (row.isBreak) {
           return `
             <tr class="break-row">
               <td class="period-cell">
-                <div class="period-title">${row.period}</div>
-                <div class="period-time">${row.time}</div>
+                <div class="period-title">${periodDisplay}</div>
+                <div class="period-time">${timeDisplay}</div>
               </td>
               <td colspan="6">
-                Tiffin Break (11:00 - 11:20 AM)
+                ${isBn ? `টিফিন বিরতি (${toBanglaNum('11:00 - 11:20')} পূর্বাহ্ন)` : 'Tiffin Break (11:00 - 11:20 AM)'}
               </td>
             </tr>
           `;
@@ -752,8 +759,8 @@ export const Academic: React.FC = () => {
         return `
           <tr>
             <td class="period-cell">
-              <div class="period-title">${row.period}</div>
-              <div class="period-time">${row.time}</div>
+              <div class="period-title">${periodDisplay}</div>
+              <div class="period-time">${timeDisplay}</div>
             </td>
             <td>${row.sunday || '-'}</td>
             <td>${row.monday || '-'}</td>
@@ -766,10 +773,12 @@ export const Academic: React.FC = () => {
       })
       .join('');
 
-    const currentDateStr = new Date().toLocaleDateString('en-US');
+    const currentDateStr = isBn
+      ? new Date().toLocaleDateString('bn-BD', { year: 'numeric', month: 'long', day: 'numeric' })
+      : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
     const htmlContent = `<!DOCTYPE html>
-<html lang="en">
+<html lang="${isBn ? 'bn' : 'en'}">
 <head>
   <meta charset="UTF-8" />
   <title>Class Timetable - ${selectedClass} - ${SCHOOL_INFO.name}</title>
@@ -1039,14 +1048,14 @@ export const Academic: React.FC = () => {
             <img src="${SCHOOL_INFO.logo}" alt="Logo" class="school-logo" onerror="this.style.display='none'" />
           </td>
           <td class="header-info-cell">
-            <h1 class="school-title">${SCHOOL_INFO.name}</h1>
+            <h1 class="school-title">${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</h1>
             <div class="school-contact">
-              ${SCHOOL_INFO.address} | Phone: ${SCHOOL_INFO.phone} | Email: ${SCHOOL_INFO.email}
+              ${isBn ? SCHOOL_INFO.addressBn : SCHOOL_INFO.address} | ${isBn ? 'ফোন' : 'Phone'}: ${toBanglaNum(SCHOOL_INFO.phone)} | ${isBn ? 'ইমেইল' : 'Email'}: ${SCHOOL_INFO.email}
             </div>
           </td>
           <td class="header-meta-cell">
-            <div class="eiin-box">EIIN: ${SCHOOL_INFO.eiin}</div>
-            <div class="school-meta-line">Established: ${SCHOOL_INFO.established}</div>
+            <div class="eiin-box">EIIN: ${toBanglaNum(SCHOOL_INFO.eiin)}</div>
+            <div class="school-meta-line">${isBn ? 'স্থাপিত' : 'Established'}: ${toBanglaNum(SCHOOL_INFO.established)}</div>
             <div class="school-meta-line">Website: www.soshgskhulna.edu.bd</div>
           </td>
         </tr>
@@ -1057,9 +1066,9 @@ export const Academic: React.FC = () => {
 
       <!-- Subheader -->
       <div class="subheader">
-        <div class="timetable-heading">ACADEMIC DAILY CLASS TIMETABLE - 2026</div>
+        <div class="timetable-heading">${isBn ? 'একাডেমিক দৈনিক শ্রেণি রুটিন - ২০২৬' : 'ACADEMIC DAILY CLASS TIMETABLE - 2026'}</div>
         <div class="timetable-meta">
-          Class: <span class="class-tag">${selectedClass}</span> &nbsp;&nbsp;|&nbsp;&nbsp; Session: <strong>2026</strong> &nbsp;&nbsp;|&nbsp;&nbsp; Effective: <strong>January 01, 2026</strong>
+          ${isBn ? `শ্রেণি: <span class="class-tag">${toBanglaNum(selectedClass)}</span> &nbsp;&nbsp;|&nbsp;&nbsp; শিক্ষাবর্ষ: <strong>২০২৬</strong> &nbsp;&nbsp;|&nbsp;&nbsp; কার্যকরের তারিখ: <strong>০১ জানুয়ারি, ২০২৬</strong>` : `Class: <span class="class-tag">${selectedClass}</span> &nbsp;&nbsp;|&nbsp;&nbsp; Session: <strong>2026</strong> &nbsp;&nbsp;|&nbsp;&nbsp; Effective: <strong>January 01, 2026</strong>`}
         </div>
       </div>
 
@@ -1067,13 +1076,13 @@ export const Academic: React.FC = () => {
       <table class="routine-table">
         <thead>
           <tr>
-            <th style="width: 15%;">TIME & PERIOD</th>
-            <th style="width: 14%;">SUNDAY</th>
-            <th style="width: 14%;">MONDAY</th>
-            <th style="width: 14%;">TUESDAY</th>
-            <th style="width: 14%;">WEDNESDAY</th>
-            <th style="width: 14%;">THURSDAY</th>
-            <th style="width: 15%;">FRIDAY</th>
+            <th style="width: 15%;">${isBn ? 'সময় ও পিরিয়ড' : 'TIME & PERIOD'}</th>
+            <th style="width: 14%;">${isBn ? 'রবিবার' : 'SUNDAY'}</th>
+            <th style="width: 14%;">${isBn ? 'সোমবার' : 'MONDAY'}</th>
+            <th style="width: 14%;">${isBn ? 'মঙ্গলবার' : 'TUESDAY'}</th>
+            <th style="width: 14%;">${isBn ? 'বুধবার' : 'WEDNESDAY'}</th>
+            <th style="width: 14%;">${isBn ? 'বৃহস্পতিবার' : 'THURSDAY'}</th>
+            <th style="width: 15%;">${isBn ? 'শুক্রবার' : 'FRIDAY'}</th>
           </tr>
         </thead>
         <tbody>
@@ -1083,11 +1092,11 @@ export const Academic: React.FC = () => {
 
       <!-- Instructions Box -->
       <div class="instructions-box">
-        <div class="instructions-title">General Instructions:</div>
+        <div class="instructions-title">${isBn ? 'সাধারণ নির্দেশনাবলী:' : 'General Instructions:'}</div>
         <ol class="instructions-list">
-          <li>Students must arrive at school before 8:00 AM daily to attend the morning national assembly.</li>
-          <li>Students must be seated in their respective classrooms before the start of each period.</li>
-          <li>School authority reserves the right to modify or adjust this schedule when necessary.</li>
+          <li>${isBn ? 'শিক্ষার্থীদের প্রতিদিন সকাল ৮:০০ ঘটিকার পূর্বে বিদ্যালয়ে উপস্থিত হয়ে প্রাত্যহিক সমাবেশে অংশগ্রহণ করতে হবে।' : 'Students must arrive at school before 8:00 AM daily to attend the morning national assembly.'}</li>
+          <li>${isBn ? 'প্রতিটি পিরিয়ড শুরুর পূর্বেই শিক্ষার্থীদের নিজ নিজ শ্রেণিকক্ষে উপস্থিত থাকতে হবে।' : 'Students must be seated in their respective classrooms before the start of each period.'}</li>
+          <li>${isBn ? 'বিদ্যালয় কর্তৃপক্ষ প্রয়োজনে যেকোনো সময় এই সময়সূচি পরিবর্তন বা সংশোধন করার অধিকার সংরক্ষণ করে।' : 'School authority reserves the right to modify or adjust this schedule when necessary.'}</li>
         </ol>
       </div>
     </div>
@@ -1097,24 +1106,24 @@ export const Academic: React.FC = () => {
       <div class="signatures-row">
         <div class="sig-col">
           <div class="sig-line"></div>
-          <div class="sig-role">Class Teacher / Timetable In-charge</div>
-          <div class="sig-school">${SCHOOL_INFO.name}</div>
+          <div class="sig-role">${isBn ? 'শ্রেণি শিক্ষক / রুটিন ইনচার্জ' : 'Class Teacher / Timetable In-charge'}</div>
+          <div class="sig-school">${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</div>
         </div>
         <div class="sig-col">
           <div class="sig-line"></div>
-          <div class="sig-role">Academic Coordinator</div>
-          <div class="sig-school">${SCHOOL_INFO.name}</div>
+          <div class="sig-role">${isBn ? 'একাডেমিক কো-অর্ডিনেটর' : 'Academic Coordinator'}</div>
+          <div class="sig-school">${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</div>
         </div>
         <div class="sig-col">
           <div class="sig-line"></div>
-          <div class="sig-role">Principal / Head of Institution</div>
-          <div class="sig-school">${SCHOOL_INFO.name}</div>
+          <div class="sig-role">${isBn ? 'অধ্যক্ষ / প্রতিষ্ঠান প্রধান' : 'Principal / Head of Institution'}</div>
+          <div class="sig-school">${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</div>
         </div>
       </div>
 
       <!-- Footer -->
       <div class="doc-footer">
-        Official Timetable Document • ${SCHOOL_INFO.name} Portal • Generated: ${currentDateStr}
+        ${isBn ? `অফিসিয়াল শ্রেণি রুটিন • ${SCHOOL_INFO.nameBn} • প্রস্তুতের তারিখ: ${currentDateStr}` : `Official Timetable Document • ${SCHOOL_INFO.name} Portal • Generated: ${currentDateStr}`}
       </div>
     </div>
   </div>
@@ -1185,17 +1194,17 @@ export const Academic: React.FC = () => {
               className="hover:text-emerald-800 flex items-center gap-1 transition-colors text-emerald-700"
             >
               <Home size={14} />
-              <span>Home</span>
+              <span>{t.nav.home}</span>
             </Link>
             <span className="text-slate-400">›</span>
             <Link
               to="/academic"
               className="hover:text-emerald-800 transition-colors text-slate-600"
             >
-              Academic
+              {t.nav.academic}
             </Link>
             <span className="text-slate-400">›</span>
-            <span className="text-slate-800 font-bold">Academic Policies & Routine</span>
+            <span className="text-slate-800 font-bold">{t.academic.title}</span>
           </div>
 
           {/* Left Narrative Block */}
@@ -1203,13 +1212,22 @@ export const Academic: React.FC = () => {
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <GraduationCap size={15} />
-              <span>ACADEMIC EXCELLENCE</span>
+              <span>{t.academic.badge}</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              Academic Policies & <br />
-              Routine
+              {language === 'bn' ? (
+                <>
+                  একাডেমিক তথ্য ও <br />
+                  ক্লাস রুটিন
+                </>
+              ) : (
+                <>
+                  Academic Policies & <br />
+                  Routine
+                </>
+              )}
             </h1>
 
             {/* Short Green Accent Line Under Title */}
@@ -1218,10 +1236,10 @@ export const Academic: React.FC = () => {
             {/* Sub-headline & Description */}
             <div className="space-y-1">
               <p className="text-[#059669] font-bold text-sm sm:text-base leading-snug">
-                Structured learning. Disciplined routines. Brighter futures.
+                {language === 'bn' ? 'মানসম্মত পাঠদান, সুশৃঙ্খল পরিবেশ ও আধুনিক সুবিধা।' : 'Structured learning. Disciplined routines. Brighter futures.'}
               </p>
               <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-                Explore our class routines, curriculum guidelines, and academic policies designed to ensure quality education for every student.
+                {t.academic.subtitle}
               </p>
             </div>
           </div>
@@ -1234,10 +1252,10 @@ export const Academic: React.FC = () => {
               </span>
               <div>
                 <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  Education today for a brighter tomorrow
+                  {language === 'bn' ? 'আলোকিত আগামীর জন্য আজকের শিক্ষা' : 'Education today for a brighter tomorrow'}
                 </h4>
                 <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — SOS Hermann Gmeiner School
+                  — {language === 'bn' ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
                 </p>
               </div>
             </div>
@@ -1259,7 +1277,7 @@ export const Academic: React.FC = () => {
             }`}
           >
             <Calendar size={15} />
-            <span>Class Routine</span>
+            <span>{t.academic.tabRoutine}</span>
           </button>
 
           {/* Pill 2: Uniform Guidelines */}
@@ -1277,7 +1295,7 @@ export const Academic: React.FC = () => {
             }`}
           >
             <Shirt size={15} className={activeTab === 'uniform' ? 'text-white' : 'text-emerald-700'} />
-            <span>Uniform Guidelines</span>
+            <span>{t.academic.tabUniform}</span>
           </button>
 
           {/* Pill 3: Code of Conduct */}
@@ -1295,7 +1313,7 @@ export const Academic: React.FC = () => {
             }`}
           >
             <ShieldCheck size={15} className={activeTab === 'conduct' ? 'text-white' : 'text-emerald-700'} />
-            <span>Code of Conduct</span>
+            <span>{t.academic.tabConduct}</span>
           </button>
 
           {/* Pill 4: Academic Calendar */}
@@ -1312,7 +1330,7 @@ export const Academic: React.FC = () => {
             }`}
           >
             <CalendarDays size={15} className={activeTab === 'calendar' ? 'text-white' : 'text-emerald-700'} />
-            <span>Academic Calendar</span>
+            <span>{t.academic.tabCalendar}</span>
           </button>
 
           {/* Pill 5: Downloads */}
@@ -1321,7 +1339,7 @@ export const Academic: React.FC = () => {
             className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition text-slate-700 hover:bg-slate-50 hover:text-[#004d34] cursor-pointer"
           >
             <Download size={15} className="text-emerald-700" />
-            <span>Downloads</span>
+            <span>{t.nav.downloads}</span>
           </Link>
         </div>
       </div>
@@ -1337,10 +1355,10 @@ export const Academic: React.FC = () => {
               </div>
               <div>
                 <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                  Daily Class Schedule & Routine
+                  {t.academic.routineTitle}
                 </h2>
                 <p className="text-xs text-slate-500 font-medium">
-                  View the daily timetable by class. Select a class to see the complete routine.
+                  {t.academic.routineSubtitle}
                 </p>
               </div>
             </div>
@@ -1352,7 +1370,7 @@ export const Academic: React.FC = () => {
               className="inline-flex items-center gap-2 bg-[#e8f7ee] hover:bg-[#d1fae5] border border-emerald-300/80 text-[#004d34] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-2xs hover:shadow-xs cursor-pointer shrink-0 self-start sm:self-auto"
             >
               <Download size={15} />
-              <span>Download Timetable</span>
+              <span>{t.academic.downloadRoutine}</span>
             </button>
           </div>
 
@@ -1361,7 +1379,7 @@ export const Academic: React.FC = () => {
             {/* Select Class */}
             <div className="flex items-center gap-3">
               <span className="text-xs font-bold text-slate-900 whitespace-nowrap">
-                Select Class
+                {t.academic.selectClass}
               </span>
               <div className="relative w-44">
                 <select
@@ -1369,18 +1387,18 @@ export const Academic: React.FC = () => {
                   onChange={(e) => setSelectedClass(e.target.value)}
                   className="w-full bg-white border border-slate-200 rounded-xl pl-3.5 pr-8 py-2 text-xs font-bold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
                 >
-                  <option value="Pred 1">Pred 1</option>
-                  <option value="Pred 2">Pred 2</option>
-                  <option value="Class 1">Class 1</option>
-                  <option value="Class 2">Class 2</option>
-                  <option value="Class 3">Class 3</option>
-                  <option value="Class 4">Class 4</option>
-                  <option value="Class 5">Class 5</option>
-                  <option value="Class 6">Class 6</option>
-                  <option value="Class 7">Class 7</option>
-                  <option value="Class 8">Class 8</option>
-                  <option value="Class 9">Class 9</option>
-                  <option value="Class 10">Class 10</option>
+                  <option value="Pred 1">{language === 'bn' ? 'প্রেপ ১' : 'Pred 1'}</option>
+                  <option value="Pred 2">{language === 'bn' ? 'প্রেপ ২' : 'Pred 2'}</option>
+                  <option value="Class 1">{language === 'bn' ? '১ম শ্রেণি' : 'Class 1'}</option>
+                  <option value="Class 2">{language === 'bn' ? '২য় শ্রেণি' : 'Class 2'}</option>
+                  <option value="Class 3">{language === 'bn' ? '৩য় শ্রেণি' : 'Class 3'}</option>
+                  <option value="Class 4">{language === 'bn' ? '৪র্থ শ্রেণি' : 'Class 4'}</option>
+                  <option value="Class 5">{language === 'bn' ? '৫ম শ্রেণি' : 'Class 5'}</option>
+                  <option value="Class 6">{language === 'bn' ? '৬ষ্ঠ শ্রেণি' : 'Class 6'}</option>
+                  <option value="Class 7">{language === 'bn' ? '৭ম শ্রেণি' : 'Class 7'}</option>
+                  <option value="Class 8">{language === 'bn' ? '৮ম শ্রেণি' : 'Class 8'}</option>
+                  <option value="Class 9">{language === 'bn' ? '৯ম শ্রেণি' : 'Class 9'}</option>
+                  <option value="Class 10">{language === 'bn' ? '১০ম শ্রেণি' : 'Class 10'}</option>
                 </select>
                 <ChevronDown
                   size={14}
@@ -1393,7 +1411,7 @@ export const Academic: React.FC = () => {
             <div className="flex items-center gap-2 self-end sm:self-auto">
               <div className="inline-flex items-center gap-2 bg-white border border-slate-200 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-700 shadow-2xs">
                 <Calendar size={13} className="text-slate-400" />
-                <span>Today, 10 Dec 2025 (Wed)</span>
+                <span>{language === 'bn' ? `আজ, ১০ ডিসেম্বর ২০২৫` : 'Today, 10 Dec 2025 (Wed)'}</span>
               </div>
               <button
                 type="button"
@@ -1418,14 +1436,14 @@ export const Academic: React.FC = () => {
               {/* Table Header */}
               <thead>
                 <tr className="bg-[#f4f9f6] text-slate-700 font-bold text-[11px] border-b border-slate-100">
-                  <th className="py-3.5 px-4 sm:px-6">Period</th>
-                  <th className="py-3.5 px-4 sm:px-6">Time</th>
-                  <th className="py-3.5 px-4 sm:px-6">Sunday</th>
-                  <th className="py-3.5 px-4 sm:px-6">Monday</th>
-                  <th className="py-3.5 px-4 sm:px-6">Tuesday</th>
-                  <th className="py-3.5 px-4 sm:px-6">Wednesday</th>
-                  <th className="py-3.5 px-4 sm:px-6">Thursday</th>
-                  <th className="py-3.5 px-4 sm:px-6">Friday</th>
+                  <th className="py-3.5 px-4 sm:px-6">{t.academic.period}</th>
+                  <th className="py-3.5 px-4 sm:px-6">{t.academic.time}</th>
+                  <th className="py-3.5 px-4 sm:px-6">{language === 'bn' ? 'রবিবার' : 'Sunday'}</th>
+                  <th className="py-3.5 px-4 sm:px-6">{language === 'bn' ? 'সোমবার' : 'Monday'}</th>
+                  <th className="py-3.5 px-4 sm:px-6">{language === 'bn' ? 'মঙ্গলবার' : 'Tuesday'}</th>
+                  <th className="py-3.5 px-4 sm:px-6">{language === 'bn' ? 'বুধবার' : 'Wednesday'}</th>
+                  <th className="py-3.5 px-4 sm:px-6">{language === 'bn' ? 'বৃহস্পতিবার' : 'Thursday'}</th>
+                  <th className="py-3.5 px-4 sm:px-6">{language === 'bn' ? 'শুক্রবার' : 'Friday'}</th>
                 </tr>
               </thead>
 
@@ -1513,7 +1531,7 @@ export const Academic: React.FC = () => {
                     <Shirt size={18} />
                   </div>
                   <h3 className="font-extrabold text-base text-slate-900">
-                    Boys' School Uniform
+                    {language === 'bn' ? 'ছাত্রদের নির্ধারিত পোশাক (ইউনিফর্ম)' : "Boys' School Uniform"}
                   </h3>
                 </div>
 
@@ -1522,7 +1540,7 @@ export const Academic: React.FC = () => {
                   onClick={() => setDetailsModal('boys')}
                   className="inline-flex items-center gap-1 text-[11px] font-bold text-[#004d34] hover:text-emerald-800 bg-[#e8f7ee] hover:bg-[#d1fae5] px-2.5 py-1 rounded-lg transition cursor-pointer"
                 >
-                  <span>View Details</span>
+                  <span>{language === 'bn' ? 'বিস্তারিত দেখুন' : 'View Details'}</span>
                   <ArrowRight size={12} />
                 </button>
               </div>
@@ -1531,19 +1549,19 @@ export const Academic: React.FC = () => {
               <ul className="space-y-3 pt-4 text-xs text-slate-700 font-medium">
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>White half/full sleeve shirt (as per school design)</span>
+                  <span>{language === 'bn' ? 'সাদা হাফ/ফুল হাতা শার্ট (স্কুল নির্ধারিত মনোগ্রামসহ)' : 'White half/full sleeve shirt (as per school design)'}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>Navy blue formal trousers with black belt</span>
+                  <span>{language === 'bn' ? 'নেভি ব্লু রঙের প্যান্ট ও কালো বেল্ট' : 'Navy blue formal trousers with black belt'}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>White socks and black school shoes</span>
+                  <span>{language === 'bn' ? 'সাদা মোজা এবং কালো রঙের বাটা শু' : 'White socks and black school shoes'}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>Official school crest/badge is mandatory</span>
+                  <span>{language === 'bn' ? 'অফিসিয়াল স্কুল ব্যাজ ও আইডি কার্ড পরিধান আবশ্যক' : 'Official school crest/badge is mandatory'}</span>
                 </li>
               </ul>
             </div>
@@ -1559,7 +1577,7 @@ export const Academic: React.FC = () => {
                     <Shirt size={18} />
                   </div>
                   <h3 className="font-extrabold text-base text-slate-900">
-                    Girls' School Uniform
+                    {language === 'bn' ? 'ছাত্রীদের নির্ধারিত পোশাক (ইউনিফর্ম)' : "Girls' School Uniform"}
                   </h3>
                 </div>
 
@@ -1568,7 +1586,7 @@ export const Academic: React.FC = () => {
                   onClick={() => setDetailsModal('girls')}
                   className="inline-flex items-center gap-1 text-[11px] font-bold text-[#004d34] hover:text-emerald-800 bg-[#e8f7ee] hover:bg-[#d1fae5] px-2.5 py-1 rounded-lg transition cursor-pointer"
                 >
-                  <span>View Details</span>
+                  <span>{language === 'bn' ? 'বিস্তারিত দেখুন' : 'View Details'}</span>
                   <ArrowRight size={12} />
                 </button>
               </div>
@@ -1577,19 +1595,19 @@ export const Academic: React.FC = () => {
               <ul className="space-y-3 pt-4 text-xs text-slate-700 font-medium">
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>Navy blue school salwar/frock with white dupatta/hijab</span>
+                  <span>{language === 'bn' ? 'নেভি ব্লু ফ্রক/কামিজ, সাদা সালোয়ার ও সাদা ওড়না' : 'Navy blue school salwar/frock with white dupatta/hijab'}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>White scarf / one-piece shirt (as per school design)</span>
+                  <span>{language === 'bn' ? 'সাদা স্কার্ফ বা নির্ধারিত হিজাব' : 'White scarf / one-piece shirt (as per school design)'}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>White socks and black school shoes</span>
+                  <span>{language === 'bn' ? 'সাদা মোজা এবং কালো স্কুল শু' : 'White socks and black school shoes'}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>Official school crest/badge is mandatory</span>
+                  <span>{language === 'bn' ? 'অফিসিয়াল স্কুল ব্যাজ ও আইডি কার্ড পরিধান আবশ্যক' : 'Official school crest/badge is mandatory'}</span>
                 </li>
               </ul>
             </div>
@@ -1607,7 +1625,7 @@ export const Academic: React.FC = () => {
                 <ShieldCheck size={18} />
               </div>
               <h3 className="font-extrabold text-base text-slate-900">
-                Discipline & Code of Conduct
+                {t.academic.rulesTitle}
               </h3>
             </div>
 
@@ -1616,7 +1634,7 @@ export const Academic: React.FC = () => {
               onClick={() => setDetailsModal('policy')}
               className="inline-flex items-center gap-1 text-[11px] font-bold text-[#004d34] hover:text-emerald-800 bg-[#e8f7ee] hover:bg-[#d1fae5] px-2.5 py-1 rounded-lg transition cursor-pointer"
             >
-              <span>View Full Policy</span>
+              <span>{language === 'bn' ? 'পূর্ণাঙ্গ নীতিমালা দেখুন' : 'View Full Policy'}</span>
               <ArrowRight size={12} />
             </button>
           </div>
@@ -1740,10 +1758,10 @@ export const Academic: React.FC = () => {
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 cursor-pointer"
               >
                 <Printer size={13} />
-                <span>Print Document</span>
+                <span>{language === 'bn' ? 'নথি প্রিন্ট করুন' : 'Print Document'}</span>
               </button>
 
               <button
@@ -1751,7 +1769,7 @@ export const Academic: React.FC = () => {
                 onClick={() => setDetailsModal(null)}
                 className="bg-[#004d34] hover:bg-[#003826] text-white px-5 py-2 rounded-xl text-xs font-bold transition cursor-pointer"
               >
-                Close
+                {language === 'bn' ? 'বন্ধ করুন' : 'Close'}
               </button>
             </div>
           </div>

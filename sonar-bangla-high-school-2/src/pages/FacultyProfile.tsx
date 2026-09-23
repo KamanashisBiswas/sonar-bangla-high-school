@@ -22,9 +22,26 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { TEACHERS, SCHOOL_INFO, LEADERSHIP_PROFILES } from '../data/schoolData';
+import { TEACHER_DETAILS_BN } from '../data/teacherLocalization';
+import { useLanguage } from '../contexts/LanguageContext';
+
+const TEACHER_TRANSLATIONS: Record<string, { nameBn: string; designationBn: string; subjectBn: string }> = {
+  '1': { nameBn: 'ইন্দ্রজিৎ কুমার মণ্ডল', designationBn: 'সহকারী শিক্ষক', subjectBn: 'রসায়ন / বিজ্ঞান' },
+  '2': { nameBn: 'মোসাম্মৎ রেহানা পারভীন', designationBn: 'সহকারী অধ্যাপিকা', subjectBn: 'ইংরেজি' },
+  '3': { nameBn: 'মোঃ জহিরুল হক', designationBn: 'সিনিয়র শিক্ষক', subjectBn: 'সাধারণ ও উচ্চতর গণিত' },
+  '4': { nameBn: 'তানজিলা রহমান', designationBn: 'সিনিয়র শিক্ষক', subjectBn: 'পদার্থবিজ্ঞান' },
+  '5': { nameBn: 'আব্দুল করিম শেখ', designationBn: 'সহকারী শিক্ষক', subjectBn: 'বাংলা সাহিত্য' },
+  '6': { nameBn: 'নাসরিন সুলতানা', designationBn: 'সহকারী শিক্ষক', subjectBn: 'জীববিজ্ঞান' },
+  '7': { nameBn: 'মোহাম্মদ আলী', designationBn: 'সিনিয়র শিক্ষক', subjectBn: 'ইসলাম ও নৈতিক শিক্ষা' },
+  '8': { nameBn: 'ফারহানা ইয়াসমিন', designationBn: 'সহকারী শিক্ষক', subjectBn: 'তথ্য ও যোগাযোগ প্রযুক্তি' },
+  'chairman': { nameBn: 'মাকসুদা সুলতানা', designationBn: 'সভাপতি, গভর্নিং বডি', subjectBn: 'প্রশাসন' },
+  'principal': { nameBn: 'ইন্দ্রজিৎ কুমার মণ্ডল', designationBn: 'অধ্যক্ষ ও সদস্য সচিব', subjectBn: 'শিক্ষা প্রশাসন' },
+};
 
 export const FacultyProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { language, toBanglaNum } = useLanguage();
+  const isBn = language === 'bn';
   const [activeTab, setActiveTab] = useState<'overview' | 'education' | 'certifications' | 'publications' | 'teaching' | 'contact'>('overview');
   const [copied, setCopied] = useState(false);
 
@@ -48,10 +65,25 @@ export const FacultyProfile: React.FC = () => {
     return <Navigate to="/faculty" replace />;
   }
 
+  const detailsBn = isBn && teacher.id ? (TEACHER_DETAILS_BN[teacher.id] || (normalizedId ? TEACHER_DETAILS_BN[normalizedId] : undefined)) : undefined;
+  const tr = teacher.id ? TEACHER_TRANSLATIONS[teacher.id] : undefined;
+  const teacherName = isBn && (detailsBn?.nameBn || tr?.nameBn) ? (detailsBn?.nameBn || tr?.nameBn) : teacher.name;
+  const teacherDesignation = isBn && (detailsBn?.designationBn || tr?.designationBn) ? (detailsBn?.designationBn || tr?.designationBn) : teacher.designation;
+  const teacherSubject = isBn && (detailsBn?.subjectBn || tr?.subjectBn) ? (detailsBn?.subjectBn || tr?.subjectBn) : teacher.subject;
+  const teacherMottoQuote = isBn && detailsBn?.mottoQuoteBn ? detailsBn.mottoQuoteBn : teacher.mottoQuote;
+  const teacherBioQuote = isBn && (detailsBn?.bioQuoteBn || detailsBn?.aboutBn) ? (detailsBn.bioQuoteBn || detailsBn.aboutBn) : (teacher.bioQuote || teacher.about);
+  const teacherEducation = isBn && detailsBn?.educationBn ? detailsBn.educationBn : teacher.education;
+  const teacherCertifications = isBn && detailsBn?.certificationsBn ? detailsBn.certificationsBn : teacher.certifications;
+  const teacherPublications = isBn && detailsBn?.publicationsBn ? detailsBn.publicationsBn : teacher.publications;
+  const teacherResponsibilities = isBn && detailsBn?.responsibilitiesBn ? detailsBn.responsibilitiesBn : teacher.responsibilities;
+  const teacherOfficeLocation = isBn && detailsBn?.officeLocationBn ? detailsBn.officeLocationBn : teacher.officeLocation;
+  const teacherOfficeHours = isBn && detailsBn?.officeHoursBn ? detailsBn.officeHoursBn : teacher.officeHours;
+
+
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: `${teacher.name} - SOS Hermann Gmeiner School Khulna`,
+        title: `${teacherName} - ${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}`,
         url: window.location.href,
       }).catch(() => {});
     } else {
@@ -62,12 +94,12 @@ export const FacultyProfile: React.FC = () => {
   };
 
   const navTabs = [
-    { id: 'overview', label: 'Overview', icon: <GraduationCap size={15} /> },
-    { id: 'education', label: 'Education', icon: <BookOpen size={15} /> },
-    { id: 'certifications', label: 'Certifications', icon: <Award size={15} /> },
-    { id: 'publications', label: 'Publications', icon: <FileText size={15} /> },
-    { id: 'teaching', label: isLeader ? 'Leadership' : 'Teaching', icon: <Layers size={15} /> },
-    { id: 'contact', label: 'Contact', icon: <Mail size={15} /> },
+    { id: 'overview', label: isBn ? 'সার্বিক পরিচিতি' : 'Overview', icon: <GraduationCap size={15} /> },
+    { id: 'education', label: isBn ? 'শিক্ষাগত যোগ্যতা' : 'Education', icon: <BookOpen size={15} /> },
+    { id: 'certifications', label: isBn ? 'প্রশিক্ষণ ও সনদ' : 'Certifications', icon: <Award size={15} /> },
+    { id: 'publications', label: isBn ? 'গবেষণা ও প্রকাশনা' : 'Publications', icon: <FileText size={15} /> },
+    { id: 'teaching', label: isBn ? (isLeader ? 'দায়িত্ব ও নেতৃত্ব' : 'পাঠদান ও কোর্স') : (isLeader ? 'Leadership' : 'Teaching'), icon: <Layers size={15} /> },
+    { id: 'contact', label: isBn ? 'যোগাযোগ' : 'Contact', icon: <Mail size={15} /> },
   ] as const;
 
   return (
@@ -77,17 +109,19 @@ export const FacultyProfile: React.FC = () => {
         <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 mb-3">
           <Link to="/" className="hover:text-emerald-800 flex items-center gap-1 transition-colors text-emerald-700">
             <Home size={13} />
-            <span>Home</span>
+            <span>{isBn ? 'মূলপাতা' : 'Home'}</span>
           </Link>
           <span className="text-slate-400">›</span>
           <Link
             to={isLeader ? "/administration" : "/faculty"}
             className="hover:text-emerald-800 transition-colors text-slate-600"
           >
-            {isLeader ? "School Leadership & Administration" : "Faculty & Staff Directory"}
+            {isBn
+              ? (isLeader ? "প্রশাসন ও পরিচালনা পর্ষদ" : "শিক্ষক ও কর্মকর্তা ডিরেক্টরি")
+              : (isLeader ? "School Leadership & Administration" : "Faculty & Staff Directory")}
           </Link>
           <span className="text-slate-400">›</span>
-          <span className="text-slate-800 font-bold">{teacher.name}</span>
+          <span className="text-slate-800 font-bold">{teacherName}</span>
         </div>
 
         {/* Back and Share Action Row */}
@@ -97,7 +131,11 @@ export const FacultyProfile: React.FC = () => {
             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 hover:bg-slate-50 shadow-2xs transition"
           >
             <ChevronLeft size={14} />
-            <span>{isLeader ? "Back to Administration" : "Back to Faculty & Staff Directory"}</span>
+            <span>
+              {isBn
+                ? (isLeader ? "প্রশাসনে ফিরে যান" : "শিক্ষক ডিরেক্টরিতে ফিরে যান")
+                : (isLeader ? "Back to Administration" : "Back to Faculty & Staff Directory")}
+            </span>
           </Link>
 
           <button
@@ -106,7 +144,7 @@ export const FacultyProfile: React.FC = () => {
             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 hover:bg-slate-50 shadow-2xs transition cursor-pointer"
           >
             <Share2 size={13} />
-            <span>{copied ? 'Link Copied!' : 'Share Profile'}</span>
+            <span>{copied ? (isBn ? 'লিংক কপি হয়েছে!' : 'Link Copied!') : (isBn ? 'প্রোফাইল শেয়ার' : 'Share Profile')}</span>
           </button>
         </div>
 
@@ -118,19 +156,19 @@ export const FacultyProfile: React.FC = () => {
               <div className="aspect-[4/5] rounded-3xl overflow-hidden relative shadow-md bg-slate-100 border border-slate-200/90 group">
                 <img
                   src={teacher.image}
-                  alt={teacher.name}
+                  alt={teacherName}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute bottom-4 left-4 bg-slate-950/85 backdrop-blur-xs text-white text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-md">
                   {isLeader ? (
                     <>
                       <Award size={14} className="text-amber-400" />
-                      <span>School Leadership</span>
+                      <span>{isBn ? 'প্রাতিষ্ঠানিক নেতৃত্ব' : 'School Leadership'}</span>
                     </>
                   ) : (
                     <>
                       <GraduationCap size={14} className="text-emerald-400" />
-                      <span>Teaching Faculty</span>
+                      <span>{isBn ? 'শিক্ষকমণ্ডলী' : 'Teaching Faculty'}</span>
                     </>
                   )}
                 </div>
@@ -144,19 +182,25 @@ export const FacultyProfile: React.FC = () => {
                 <div>
                   <span className="inline-flex items-center gap-1.5 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full">
                     {isLeader ? <Award size={13} /> : <GraduationCap size={13} />}
-                    <span>{isLeader ? (teacher.id === 'chairman' ? 'CHAIRMAN, GOVERNING BODY' : 'PRINCIPAL & MEMBER SECRETARY') : 'TEACHING FACULTY'}</span>
+                    <span>
+                      {isLeader
+                        ? (teacher.id === 'chairman'
+                            ? (isBn ? 'সভাপতি, গভর্নিং বডি' : 'CHAIRMAN, GOVERNING BODY')
+                            : (isBn ? 'অধ্যক্ষ ও সদস্য সচিব' : 'PRINCIPAL & MEMBER SECRETARY'))
+                        : (isBn ? 'শিক্ষকমণ্ডলী' : 'TEACHING FACULTY')}
+                    </span>
                   </span>
 
                   <h1 className="text-3xl sm:text-4xl font-black text-slate-900 mt-2 tracking-tight">
-                    {teacher.name}
+                    {teacherName}
                   </h1>
 
                   <p className="text-sm sm:text-base font-bold text-[#059669] mt-0.5">
-                    {teacher.designation} {teacher.subject ? `(${teacher.subject})` : ''}
+                    {teacherDesignation} {teacherSubject ? `(${teacherSubject})` : ''}
                   </p>
 
                   <p className="text-xs text-slate-500 font-medium">
-                    {SCHOOL_INFO.name}
+                    {isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}
                   </p>
                 </div>
 
@@ -166,7 +210,7 @@ export const FacultyProfile: React.FC = () => {
                     “
                   </span>
                   <p className="text-xs text-slate-700 italic font-medium leading-relaxed">
-                    {teacher.mottoQuote || 'Education is the foundation for a brighter tomorrow.'}
+                    {teacherMottoQuote || (isBn ? 'শিক্ষাই একটি সম্ভাবনাময় ভবিষ্যতের সূচনা করে।' : 'Education is the foundation for a brighter tomorrow.')}
                   </p>
                 </div>
               </div>
@@ -174,7 +218,7 @@ export const FacultyProfile: React.FC = () => {
               {/* Bio Quote */}
               <div className="border-l-2 border-[#059669] pl-3.5 py-0.5">
                 <p className="text-xs sm:text-sm text-slate-600 italic font-medium leading-relaxed">
-                  "{teacher.bioQuote || teacher.about}"
+                  "{teacherBioQuote}"
                 </p>
               </div>
 
@@ -186,10 +230,10 @@ export const FacultyProfile: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-lg font-black text-slate-900 block leading-tight">
-                      {teacher.experience || '08+ Years'}
+                      {isBn ? toBanglaNum(teacher.experience || '08+') + ' বছর' : (teacher.experience || '08+ Years')}
                     </span>
                     <p className="text-[11px] text-slate-500 font-medium">
-                      Years of Experience
+                      {isBn ? 'কর্ম অভিজ্ঞতা' : 'Years of Experience'}
                     </p>
                   </div>
                 </div>
@@ -200,10 +244,10 @@ export const FacultyProfile: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-lg font-black text-slate-900 block leading-tight">
-                      {teacher.studentsMentored || '250+'}
+                      {isBn ? toBanglaNum(teacher.studentsMentored || '250+') : (teacher.studentsMentored || '250+')}
                     </span>
                     <p className="text-[11px] text-slate-500 font-medium">
-                      Students Mentored
+                      {isBn ? 'দিকনির্দেশনা প্রাপ্ত শিক্ষার্থী' : 'Students Mentored'}
                     </p>
                   </div>
                 </div>
@@ -218,7 +262,7 @@ export const FacultyProfile: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <Phone size={13} className="text-[#059669] shrink-0" />
                     <span className="font-semibold text-slate-700">
-                      {teacher.phone || SCHOOL_INFO.phone}
+                      {isBn ? toBanglaNum(teacher.phone || SCHOOL_INFO.phone) : (teacher.phone || SCHOOL_INFO.phone)}
                     </span>
                   </div>
                 </div>
@@ -256,17 +300,19 @@ export const FacultyProfile: React.FC = () => {
                     <GraduationCap size={18} />
                   </div>
                   <h3 className="text-base sm:text-lg font-bold text-slate-900">
-                    Educational Qualifications
+                    {isBn ? 'শিক্ষাগত যোগ্যতা' : 'Educational Qualifications'}
                   </h3>
                 </div>
                 <span className="bg-slate-100 text-slate-600 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
-                  {teacher.education?.length || 3} qualifications
+                  {isBn
+                    ? `${toBanglaNum(teacherEducation?.length || 3)}টি ডিগ্রি`
+                    : `${teacherEducation?.length || 3} qualifications`}
                 </span>
               </div>
 
               {/* Education Timeline */}
               <div className="space-y-4 relative pl-3 before:absolute before:left-[19px] before:top-3 before:bottom-3 before:w-0.5 before:bg-emerald-200">
-                {(teacher.education || [
+                {(teacherEducation || [
                   { degree: `Master of Science (M.Sc) in ${teacher.subject}`, institution: 'University of Dhaka', result: 'First Class', year: '2015' },
                   { degree: `Bachelor of Science (B.Sc Hons) in ${teacher.subject}`, institution: 'University of Dhaka', result: 'First Class', year: '2013' },
                   { degree: 'Bachelor of Education (B.Ed)', institution: "Govt. Teachers' Training College", result: 'First Class', year: '2017' }
@@ -282,11 +328,11 @@ export const FacultyProfile: React.FC = () => {
                           {edu.institution}
                         </p>
                         <span className="inline-block text-[11px] font-bold text-[#059669] mt-1">
-                          Result: {edu.result}
+                          {isBn ? 'ফলাফল: ' : 'Result: '}{edu.result}
                         </span>
                       </div>
                       <span className="bg-white border border-slate-200 text-slate-600 text-[11px] font-bold px-2.5 py-1 rounded-lg shrink-0 shadow-2xs">
-                        {edu.year}
+                        {isBn ? toBanglaNum(edu.year) : edu.year}
                       </span>
                     </div>
                   </div>
@@ -304,17 +350,19 @@ export const FacultyProfile: React.FC = () => {
                     <Award size={18} />
                   </div>
                   <h3 className="text-base sm:text-lg font-bold text-slate-900">
-                    Professional Training & Certifications
+                    {isBn ? 'পেশাগত প্রশিক্ষণ ও সনদ' : 'Professional Training & Certifications'}
                   </h3>
                 </div>
                 <span className="bg-slate-100 text-slate-600 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
-                  {teacher.certifications?.length || 4} certifications
+                  {isBn
+                    ? `${toBanglaNum(teacherCertifications?.length || 4)}টি সনদ`
+                    : `${teacherCertifications?.length || 4} certifications`}
                 </span>
               </div>
 
               {/* Certifications List */}
               <div className="space-y-3">
-                {(teacher.certifications || [
+                {(teacherCertifications || [
                   'British Council Certificate in English Language Teaching (CELT)',
                   'B.Ed, Training in Modern Teaching Methods & Micro-teaching',
                   'Certified in ICT Integration in Language Education (TQI-SEP)',
@@ -345,16 +393,18 @@ export const FacultyProfile: React.FC = () => {
                     <FileText size={18} />
                   </div>
                   <h3 className="text-base sm:text-lg font-bold text-slate-900">
-                    Research & Publications
+                    {isBn ? 'গবেষণা ও প্রকাশনা' : 'Research & Publications'}
                   </h3>
                 </div>
                 <span className="bg-slate-100 text-slate-600 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
-                  {teacher.publications?.length || 2} publications
+                  {isBn
+                    ? `${toBanglaNum(teacherPublications?.length || 2)}টি প্রকাশনা`
+                    : `${teacherPublications?.length || 2} publications`}
                 </span>
               </div>
 
               <div className="space-y-3">
-                {(teacher.publications || [
+                {(teacherPublications || [
                   { title: `Communicative ${teacher.subject} Pedagogical Techniques in Rural and Semi-Urban High Schools`, publisher: 'Educational Research Forum Bangladesh', year: '2020' },
                   { title: `Fostering Creative Problem Solving and Critical Reading Habits among High School Learners`, publisher: 'Secondary Education Journal', year: '2022' }
                 ]).map((pub, idx) => (
@@ -372,7 +422,7 @@ export const FacultyProfile: React.FC = () => {
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
                       <span className="bg-purple-50 text-purple-700 border border-purple-100 text-[11px] font-bold px-2 py-0.5 rounded-md">
-                        {pub.year}
+                        {isBn ? toBanglaNum(pub.year) : pub.year}
                       </span>
                       <ExternalLink size={13} className="text-slate-400" />
                     </div>
@@ -386,7 +436,7 @@ export const FacultyProfile: React.FC = () => {
                 type="button"
                 className="text-xs font-bold text-[#004d34] hover:text-emerald-800 transition flex items-center gap-1.5 cursor-pointer"
               >
-                <span>View All Publications</span>
+                <span>{isBn ? 'সকল প্রকাশনা দেখুন' : 'View All Publications'}</span>
                 <ArrowRight size={13} />
               </button>
             </div>
@@ -401,13 +451,15 @@ export const FacultyProfile: React.FC = () => {
                     <BookOpen size={18} />
                   </div>
                   <h3 className="text-base sm:text-lg font-bold text-slate-900">
-                    {isLeader ? 'Institutional Responsibilities & Governance' : 'Courses & Teaching Responsibilities'}
+                    {isLeader
+                      ? (isBn ? 'প্রাতিষ্ঠানিক দায়িত্ব ও প্রশাসন' : 'Institutional Responsibilities & Governance')
+                      : (isBn ? 'পাঠদান ও প্রাতিষ্ঠানিক দায়িত্ব' : 'Courses & Teaching Responsibilities')}
                   </h3>
                 </div>
               </div>
 
               <div className="space-y-3">
-                {(teacher.responsibilities || [
+                {(teacherResponsibilities || [
                   `${teacher.subject}: Core Subject Instruction & Exam Preparation (Classes 8, 9, 10)`,
                   `Practical Sessions & Remedial Coaching (Classes 9, 10)`,
                   `Co-Curricular & Student Mentorship Program Facilitation`
@@ -425,13 +477,13 @@ export const FacultyProfile: React.FC = () => {
               <div className="flex items-center gap-2">
                 <MapPin size={13} className="text-[#059669] shrink-0" />
                 <span>
-                  <strong>Location:</strong> {teacher.officeLocation || "Teachers' Room, 2nd Floor, Academic Building"}
+                  <strong>{isBn ? 'অবস্থান:' : 'Location:'}</strong> {teacherOfficeLocation || (isBn ? 'শিক্ষক মিলনায়তন, ২য় তলা, একাডেমিক ভবন' : "Teachers' Room, 2nd Floor, Academic Building")}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock size={13} className="text-[#059669] shrink-0" />
                 <span>
-                  <strong>Office Hours:</strong> {teacher.officeHours || "Sunday - Thursday: 9:00 AM - 4:00 PM"}
+                  <strong>{isBn ? 'অফিস সময়:' : 'Office Hours:'}</strong> {teacherOfficeHours || (isBn ? 'রবিবার - বৃহস্পতিবার: সকাল ৯:০০ - বিকাল ৪:০০' : "Sunday - Thursday: 9:00 AM - 4:00 PM")}
                 </span>
               </div>
             </div>

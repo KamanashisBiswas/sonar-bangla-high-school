@@ -13,123 +13,195 @@ import {
   Image as ImageIcon,
   GraduationCap
 } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export const SportsAthletics: React.FC = () => {
+  const { language, toBanglaNum } = useLanguage();
+  const isBn = language === 'bn';
   const [selectedDiscipline, setSelectedDiscipline] = useState<string>('all');
 
   const highlights = [
-    { value: '2+ Acres', label: 'Lush Campus Grounds', desc: 'Full-sized football field & cricket pitch' },
-    { value: '8+ Events', label: 'Sporting Disciplines', desc: 'Football, cricket, athletics, badminton & more' },
-    { value: '4 Houses', label: 'Inter-House League', desc: 'Padma, Meghna, Jamuna & Karnaphuli' },
-    { value: '100+ Medals', label: 'District Honors', desc: 'Championship titles in inter-school tournaments' }
+    {
+      value: isBn ? `${toBanglaNum(2)}+ একর` : '2+ Acres',
+      label: isBn ? 'বিস্তীর্ণ ক্যাম্পাস মাঠ' : 'Lush Campus Grounds',
+      desc: isBn ? 'আন্তর্জাতিক মানের ফুটবল মাঠ ও ক্রিকেট পিচ' : 'Full-sized football field & cricket pitch'
+    },
+    {
+      value: isBn ? `${toBanglaNum(8)}+টি ইভেন্ট` : '8+ Events',
+      label: isBn ? 'ক্রীড়া প্রতিযোগিতা' : 'Sporting Disciplines',
+      desc: isBn ? 'ফুটবল, ক্রিকেট, অ্যাথলেটিক্স, ব্যাডমিন্টন ও অন্যান্য' : 'Football, cricket, athletics, badminton & more'
+    },
+    {
+      value: isBn ? `${toBanglaNum(4)}টি হাউস` : '4 Houses',
+      label: isBn ? 'আন্তঃহাউস প্রতিযোগিতা' : 'Inter-House League',
+      desc: isBn ? 'পদ্মা, মেঘনা, যমুনা ও কর্ণফুলী' : 'Padma, Meghna, Jamuna & Karnaphuli'
+    },
+    {
+      value: isBn ? `${toBanglaNum(100)}+ পদক` : '100+ Medals',
+      label: isBn ? 'জেলা পর্যায়ের গৌরব' : 'District Honors',
+      desc: isBn ? 'আন্তঃস্কুল টুর্নামেন্টে চ্যাম্পিয়নশিপ ট্রফি' : 'Championship titles in inter-school tournaments'
+    }
   ];
 
   const sportsList = [
     {
       id: 'football',
-      name: 'Football (Soccer)',
-      badge: 'Team Sport',
-      tag: 'Most Popular',
+      name: isBn ? 'ফুটবল খেলা' : 'Football (Soccer)',
+      badge: isBn ? 'দলীয় খেলা' : 'Team Sport',
+      tag: isBn ? 'জনপ্রিয়তম' : 'Most Popular',
       category: 'outdoor',
       image: '/programs/program_sports.png',
-      description: 'The heartbeat of our school sports culture. Students participate in annual inter-house tournaments and represent the institution at Khulna district school leagues.',
-      features: [
-        'Full-size grass field with regulation goalposts',
-        'Certified physical education coaching & fitness drills',
-        'Junior and Senior inter-house championship cups',
-        'Annual friendly matches with neighboring institutions'
-      ]
+      description: isBn
+        ? 'আমাদের স্কুল ক্রীড়া সংস্কৃতির প্রাণকেন্দ্র। শিক্ষার্থীরা বার্ষিক আন্তঃহাউস টুর্নামেন্টে অংশ নেয় এবং খুলনা জেলা আন্তঃস্কুল লিগে প্রতিষ্ঠানের প্রতিনিধিত্ব করে।'
+        : 'The heartbeat of our school sports culture. Students participate in annual inter-house tournaments and represent the institution at Khulna district school leagues.',
+      features: isBn
+        ? [
+            'প্রমাণ মাপের ঘাসের মাঠ ও গোলপোস্ট সুবিধা',
+            'সার্টিফাইড শারীরিক শিক্ষা প্রশিক্ষক ও ফিটনেস ড্রিল',
+            'জুনিয়র ও সিনিয়র আন্তঃহাউস চ্যাম্পিয়নশিপ কাপ',
+            'প্রতিবেশী শিক্ষা প্রতিষ্ঠানের সাথে বার্ষিক প্রীতি ম্যাচ'
+          ]
+        : [
+            'Full-size grass field with regulation goalposts',
+            'Certified physical education coaching & fitness drills',
+            'Junior and Senior inter-house championship cups',
+            'Annual friendly matches with neighboring institutions'
+          ]
     },
     {
       id: 'cricket',
-      name: 'Cricket Training & Matches',
-      badge: 'National Passion',
-      tag: 'Turf Nets',
+      name: isBn ? 'ক্রিকেট প্রশিক্ষণ ও ম্যাচ' : 'Cricket Training & Matches',
+      badge: isBn ? 'জাতীয় আবেগ' : 'National Passion',
+      tag: isBn ? 'টার্ফ নেট' : 'Turf Nets',
       category: 'outdoor',
       image: '/facilities/facility_grounds.png',
-      description: 'Developing batting precision, bowling discipline, and strategic field leadership on our dedicated cricket practice pitches with safety netting.',
-      features: [
-        'Dedicated practice pitches with protective safety nets',
-        'Season ball and tape-tennis seasonal tournaments',
-        'Specialized pace, spin, and wicketkeeping coaching',
-        'Inter-school divisional tournament selection'
-      ]
+      description: isBn
+        ? 'নিরাপত্তা নেটযুক্ত সুনির্দিষ্ট ক্রিকেট অনুশীলন পিচে ব্যাটিং দক্ষতা, নিখুঁত বোলিং এবং কৌশলগত ফিল্ডিং নেতৃত্বের বিকাশ ঘটানো হয়।'
+        : 'Developing batting precision, bowling discipline, and strategic field leadership on our dedicated cricket practice pitches with safety netting.',
+      features: isBn
+        ? [
+            'প্রতিরক্ষামূলক নেটসহ সুনির্দিষ্ট অনুশীলন পিচ',
+            'মৌসুমি ডিউস বল ও টেপ-টেনিস টুর্নামেন্ট আয়োজন',
+            'পেস, স্পিন ও উইকেটকিপিংয়ের বিশেষ কোচিং',
+            'আন্তঃস্কুল বিভাগীয় টুর্নামেন্টের জন্য দল নির্বাচন'
+          ]
+        : [
+            'Dedicated practice pitches with protective safety nets',
+            'Season ball and tape-tennis seasonal tournaments',
+            'Specialized pace, spin, and wicketkeeping coaching',
+            'Inter-school divisional tournament selection'
+          ]
     },
     {
       id: 'athletics',
-      name: 'Track & Field Athletics',
-      badge: 'Individual Mastery',
-      tag: 'Annual Meet',
+      name: isBn ? 'ট্র্যাক অ্যান্ড ফিল্ড অ্যাথলেটিক্স' : 'Track & Field Athletics',
+      badge: isBn ? 'ব্যক্তিগত দক্ষতা' : 'Individual Mastery',
+      tag: isBn ? 'বার্ষিক ক্রীড়া' : 'Annual Meet',
       category: 'track',
       image: '/gallery/album_sports.jpg',
-      description: 'The core centerpiece of our grand Annual Sports Meet. Fostering speed, endurance, power, and agility across sprint, middle distance, and field jumps.',
-      features: [
-        '100m, 200m, 400m sprint and 4x100m relay competitions',
-        'High jump, long jump, and triple jump arenas',
-        'Shot put and discus throwing sector with safety zones',
-        'March-past parade and Olympic torch inauguration'
-      ]
+      description: isBn
+        ? 'আমাদের জমকালো বার্ষিক ক্রীড়া প্রতিযোগিতার মূল আকর্ষণ। স্প্রিন্ট, দূরপাল্লার দৌড় ও ফিল্ড জাম্পের মাধ্যমে গতি, স্ট্যামিনা ও ক্ষিপ্রতা তৈরি করা হয়।'
+        : 'The core centerpiece of our grand Annual Sports Meet. Fostering speed, endurance, power, and agility across sprint, middle distance, and field jumps.',
+      features: isBn
+        ? [
+            '১০০ মি., ২০০ মি., ৪০০ মি. স্প্রিন্ট ও ৪x১০০ মি. রিলে দৌড়',
+            'হাই জাম্প, লং জাম্প ও ট্রিপল জাম্প ট্র্যাক',
+            'নিরাপদ জোনে শটপুট ও চাকতি নিক্ষেপ প্রতিযোগিতা',
+            'মার্চ-পাস্ট কুচকাওয়াজ ও অলিম্পিক মশাল প্রজ্জ্বলন'
+          ]
+        : [
+            '100m, 200m, 400m sprint and 4x100m relay competitions',
+            'High jump, long jump, and triple jump arenas',
+            'Shot put and discus throwing sector with safety zones',
+            'March-past parade and Olympic torch inauguration'
+          ]
     },
     {
       id: 'badminton',
-      name: 'Badminton & Volleyball',
-      badge: 'Court Games',
-      tag: 'Floodlight Play',
+      name: isBn ? 'ব্যাডমিন্টন ও ভলিবল' : 'Badminton & Volleyball',
+      badge: isBn ? 'কোর্ট গেমস' : 'Court Games',
+      tag: isBn ? 'ফ্লাডলাইট সুবিধা' : 'Floodlight Play',
       category: 'outdoor',
       image: '/gallery/card_sports.jpg',
-      description: 'Fast-paced agility and reflex building. Featuring outdoor courts equipped with floodlight fixtures for twilight practices and winter tournaments.',
-      features: [
-        'Multi-court facility for badminton and volleyball',
-        'Winter inter-batch badminton singles & doubles open',
-        'High-grade racquets, shuttlecocks, and standard volleyballs',
-        'Daily recreational games during break and after classes'
-      ]
+      description: isBn
+        ? 'দ্রুত প্রতিফলন ও ক্ষিপ্রতা বৃদ্ধির খেলা। ফ্লাডলাইট সুবিধাযুক্ত আউটডোর কোর্টে গোধূলিলগ্নে অনুশীলন ও শীতকালীন টুর্নামেন্ট অনুষ্ঠিত হয়।'
+        : 'Fast-paced agility and reflex building. Featuring outdoor courts equipped with floodlight fixtures for twilight practices and winter tournaments.',
+      features: isBn
+        ? [
+            'ব্যাডমিন্টন ও ভলিবলের জন্য দ্বৈত কোর্ট সুবিধা',
+            'শীতকালীন ব্যাচভিত্তিক একক ও দ্বৈত ব্যাডমিন্টন টুর্নামেন্ট',
+            'উন্নত মানের র‍্যাকেট, কর্ক ও আন্তর্জাতিক মানের ভলিবল',
+            'টিফিন বিরতিতে ও ক্লাসের পরে নিয়মিত শরীরচর্চা ও খেলা'
+          ]
+        : [
+            'Multi-court facility for badminton and volleyball',
+            'Winter inter-batch badminton singles & doubles open',
+            'High-grade racquets, shuttlecocks, and standard volleyballs',
+            'Daily recreational games during break and after classes'
+          ]
     },
     {
       id: 'indoor',
-      name: 'Chess, Carrom & Table Tennis',
-      badge: 'Mental Focus',
-      tag: 'Indoor Arena',
+      name: isBn ? 'দাবা, ক্যারম ও টেবিল টেনিস' : 'Chess, Carrom & Table Tennis',
+      badge: isBn ? 'মানসিক একাগ্রতা' : 'Mental Focus',
+      tag: isBn ? 'ইনডোর এরিনা' : 'Indoor Arena',
       category: 'indoor',
       image: '/gallery/album_prize.jpg',
-      description: 'Sharpening tactical concentration and cognitive foresight in our dedicated indoor recreation common room.',
-      features: [
-        'International standard chess boards and tournament timers',
-        'Carrom boards for friendly and competitive matches',
-        'Indoor table tennis board for quick reflexes',
-        'Inter-school chess tournament representations'
-      ]
+      description: isBn
+        ? 'আমাদের সুনির্দিষ্ট ইনডোর কমনরুমে শিক্ষার্থীদের কৌশলগত মনোযোগ ও চিন্তাশক্তি শাণিত করা হয়।'
+        : 'Sharpening tactical concentration and cognitive foresight in our dedicated indoor recreation common room.',
+      features: isBn
+        ? [
+            'আন্তর্জাতিক মানসম্পন্ন দাবা বোর্ড ও টুর্নামেন্ট টাইমার',
+            'বন্ধুত্বপূর্ণ ও প্রতিযোগিতামূলক ম্যাচের জন্য ক্যারম বোর্ড',
+            'দ্রুত রিফ্লেক্স গড়ে তুলতে ইনডোর টেবিল টেনিস সুবিধা',
+            'জেলা ও জাতীয় পর্যায়ে আন্তঃস্কুল দাবা প্রতিযোগিতায় অংশগ্রহণ'
+          ]
+        : [
+            'International standard chess boards and tournament timers',
+            'Carrom boards for friendly and competitive matches',
+            'Indoor table tennis board for quick reflexes',
+            'Inter-school chess tournament representations'
+          ]
     }
   ];
 
   const houses = [
     {
-      name: 'Padma House',
-      motto: 'Courage & Dignity',
+      name: isBn ? 'পদ্মা হাউস' : 'Padma House',
+      motto: isBn ? 'সাহস ও মর্যাদা' : 'Courage & Dignity',
       color: 'bg-emerald-600',
-      badge: 'Green',
-      desc: 'Named after the mighty river, symbolizing fearless determination and endurance.'
+      badge: isBn ? 'সবুজ' : 'Green',
+      desc: isBn
+        ? 'প্রমত্তা পদ্মার নামে নামাঙ্কিত, যা অদম্য সংকল্প ও অবিচল সহনশীলতার প্রতীক।'
+        : 'Named after the mighty river, symbolizing fearless determination and endurance.'
     },
     {
-      name: 'Meghna House',
-      motto: 'Wisdom & Strength',
+      name: isBn ? 'মেঘনা হাউস' : 'Meghna House',
+      motto: isBn ? 'প্রজ্ঞা ও শক্তি' : 'Wisdom & Strength',
       color: 'bg-blue-600',
-      badge: 'Blue',
-      desc: 'Reflecting vast potential, strategic intellect, and unyielding team unity.'
+      badge: isBn ? 'নীল' : 'Blue',
+      desc: isBn
+        ? 'অফুরন্ত সম্ভাবনা, কৌশলগত বুদ্ধিমত্তা এবং অটুট দলীয় ঐক্যের পরিচায়ক।'
+        : 'Reflecting vast potential, strategic intellect, and unyielding team unity.'
     },
     {
-      name: 'Jamuna House',
-      motto: 'Purity & Passion',
+      name: isBn ? 'যমুনা হাউস' : 'Jamuna House',
+      motto: isBn ? 'বিশুদ্ধতা ও উদ্দীপনা' : 'Purity & Passion',
       color: 'bg-amber-500',
-      badge: 'Yellow',
-      desc: 'Inspired by youthful energy, blazing enthusiasm, and fair play excellence.'
+      badge: isBn ? 'হলুদ' : 'Yellow',
+      desc: isBn
+        ? 'তারুণ্যের শক্তি, প্রদীপ্ত উৎসাহ এবং ন্যায়সঙ্গত ক্রীড়াসুলভ মনোভাবের প্রতীক।'
+        : 'Inspired by youthful energy, blazing enthusiasm, and fair play excellence.'
     },
     {
-      name: 'Karnaphuli House',
-      motto: 'Speed & Honor',
+      name: isBn ? 'কর্ণফুলী হাউস' : 'Karnaphuli House',
+      motto: isBn ? 'গতি ও সম্মান' : 'Speed & Honor',
       color: 'bg-rose-600',
-      badge: 'Red',
-      desc: 'Representing swift agility, spirited competition, and respect for all contenders.'
+      badge: isBn ? 'লাল' : 'Red',
+      desc: isBn
+        ? 'ক্ষিপ্র গতি, উদ্দীপনাময় প্রতিদ্বন্দ্বিতা এবং সকল প্রতিযোগীর প্রতি শ্রদ্ধাবোধের নিদর্শন।'
+        : 'Representing swift agility, spirited competition, and respect for all contenders.'
     }
   ];
 
@@ -171,31 +243,43 @@ export const SportsAthletics: React.FC = () => {
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
             <Link to="/" className="hover:text-emerald-800 flex items-center gap-1 transition-colors text-emerald-700">
               <Home size={14} />
-              <span>Home</span>
+              <span>{isBn ? 'মূলপাতা' : 'Home'}</span>
             </Link>
             <span className="text-slate-400">›</span>
-            <span className="text-slate-500">Our Programs</span>
+            <span className="text-slate-500">{isBn ? 'আমাদের কার্যক্রম' : 'Our Programs'}</span>
             <span className="text-slate-400">›</span>
-            <span className="text-slate-800 font-bold">Sports & Athletics</span>
+            <span className="text-slate-800 font-bold">{isBn ? 'খেলাধুলা ও শরীরচর্চা' : 'Sports & Athletics'}</span>
           </div>
 
           {/* Left Narrative Block */}
           <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <Trophy size={14} />
-              <span>PHYSICAL FITNESS & SPORTSMANSHIP</span>
+              <span>{isBn ? 'শারীরিক সক্ষমতা ও ক্রীড়াসুলভ চেতনা' : 'PHYSICAL FITNESS & SPORTSMANSHIP'}</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              Sports & <br />
-              Athletics
+              {isBn ? (
+                <>খেলাধুলা ও <br />শরীরচর্চা</>
+              ) : (
+                <>Sports & <br />Athletics</>
+              )}
             </h1>
 
             <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
 
             <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              Building physical discipline, tactical resilience, and unwavering team leadership on our sprawling green campus grounds{' '}
-              <strong className="text-emerald-800 font-bold">since 1987.</strong>
+              {isBn ? (
+                <>
+                  আমাদের সুপরিসর সবুজ ক্যাম্পাস মাঠে শারীরিক নিয়মানুবর্তিতা, কৌশলগত দৃঢ়তা ও দলীয় নেতৃত্বের পাঠ দেওয়া হচ্ছে{' '}
+                  <strong className="text-emerald-800 font-bold">{toBanglaNum(1987)} থেকে।</strong>
+                </>
+              ) : (
+                <>
+                  Building physical discipline, tactical resilience, and unwavering team leadership on our sprawling green campus grounds{' '}
+                  <strong className="text-emerald-800 font-bold">since 1987.</strong>
+                </>
+              )}
             </p>
           </div>
 
@@ -207,11 +291,13 @@ export const SportsAthletics: React.FC = () => {
               </span>
               <div>
                 <p className="text-xs text-slate-700 font-medium italic leading-relaxed">
-                  Champions keep playing until they get it right. Sports do not just build character—they reveal it.
+                  {isBn
+                    ? 'চ্যাম্পিয়নরা ততক্ষণ খেলে যতক্ষণ না তারা নিখুঁত হয়। খেলাধুলা শুধু চরিত্র গড়ে না—তা চরিত্র প্রকাশ করে।'
+                    : 'Champions keep playing until they get it right. Sports do not just build character—they reveal it.'}
                 </p>
                 <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-[11px] font-bold text-slate-900">Sports & Athletics Dept</span>
-                  <span className="text-[10px] text-emerald-700 font-bold">Active Life</span>
+                  <span className="text-[11px] font-bold text-slate-900">{isBn ? 'শারীরিক শিক্ষা ও ক্রীড়া বিভাগ' : 'Sports & Athletics Dept'}</span>
+                  <span className="text-[10px] text-emerald-700 font-bold">{isBn ? 'সক্রিয় জীবন' : 'Active Life'}</span>
                 </div>
               </div>
             </div>
@@ -224,33 +310,33 @@ export const SportsAthletics: React.FC = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
           <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0 hidden sm:inline-block">
-              Programs:
+              {isBn ? 'কার্যক্রম:' : 'Programs:'}
             </span>
             <div className="flex items-center gap-2 shrink-0">
               <Link
                 to="/academic-programs"
                 className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
               >
-                <span>Academic Programs</span>
+                <span>{isBn ? 'একাডেমিক কার্যক্রম' : 'Academic Programs'}</span>
               </Link>
               <Link
                 to="/sports-athletics"
                 className="px-4 py-2 rounded-xl text-xs font-bold bg-[#004d34] text-white shadow-xs flex items-center gap-1.5 transition"
               >
                 <Trophy size={14} />
-                <span>Sports & Athletics</span>
+                <span>{isBn ? 'খেলাধুলা ও শরীরচর্চা' : 'Sports & Athletics'}</span>
               </Link>
               <Link
                 to="/cultural-activities"
                 className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
               >
-                <span>Cultural Activities</span>
+                <span>{isBn ? 'সাংস্কৃতিক কার্যক্রম' : 'Cultural Activities'}</span>
               </Link>
               <Link
                 to="/clubs-societies"
                 className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
               >
-                <span>Clubs & Societies</span>
+                <span>{isBn ? 'ক্লাব ও সোসাইটি' : 'Clubs & Societies'}</span>
               </Link>
             </div>
           </div>
@@ -284,22 +370,24 @@ export const SportsAthletics: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-5">
           <div>
             <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
-              TRACK, FIELD & COURTS
+              {isBn ? 'ট্র্যাক, ফিল্ড ও কোর্ট' : 'TRACK, FIELD & COURTS'}
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
-              Active Sports Disciplines
+              {isBn ? 'সক্রিয় ক্রীড়া বিভাগসমূহ' : 'Active Sports Disciplines'}
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Encouraging physical vitality, competitive spirit, and sportsmanlike conduct in every student.
+              {isBn
+                ? 'প্রতিটি শিক্ষার্থীর মধ্যে শারীরিক সক্ষমতা, প্রতিযোগিতামূলক মনোভাব ও ক্রীড়াসুলভ আচরণের বিকাশ।'
+                : 'Encouraging physical vitality, competitive spirit, and sportsmanlike conduct in every student.'}
             </p>
           </div>
 
           <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-xl self-start md:self-auto">
             {[
-              { id: 'all', label: 'All Sports' },
-              { id: 'outdoor', label: 'Outdoor' },
-              { id: 'track', label: 'Track & Field' },
-              { id: 'indoor', label: 'Indoor Games' }
+              { id: 'all', label: isBn ? 'সকল খেলা' : 'All Sports' },
+              { id: 'outdoor', label: isBn ? 'আউটডোর' : 'Outdoor' },
+              { id: 'track', label: isBn ? 'ট্র্যাক ও ফিল্ড' : 'Track & Field' },
+              { id: 'indoor', label: isBn ? 'ইনডোর গেমস' : 'Indoor Games' }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -350,7 +438,7 @@ export const SportsAthletics: React.FC = () => {
 
                 <div className="mt-4 pt-4 border-t border-slate-100 space-y-2">
                   <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                    Key Features:
+                    {isBn ? 'মূল বৈশিষ্ট্যসমূহ:' : 'Key Features:'}
                   </h4>
                   {sport.features.map((feat, i) => (
                     <div key={i} className="flex items-start gap-2 text-xs text-slate-700">
@@ -370,13 +458,15 @@ export const SportsAthletics: React.FC = () => {
         <div className="bg-[#f0faf5] border border-emerald-100/80 rounded-3xl p-8 sm:p-10 lg:p-12">
           <div className="max-w-2xl mb-8">
             <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
-              HOUSE SYSTEM & CAMARADERIE
+              {isBn ? 'হাউস পদ্ধতি ও ভ্রাতৃত্ববোধ' : 'HOUSE SYSTEM & CAMARADERIE'}
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
-              Four School Houses: Fostering Lifelong Brotherhood
+              {isBn ? 'চারটি স্কুল হাউস: আজীবন বন্ধুত্বের বন্ধন' : 'Four School Houses: Fostering Lifelong Brotherhood'}
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              Every student belongs to one of four historic houses from Class 1 through Class 10, earning points through athletic, academic, and co-curricular tournaments.
+              {isBn
+                ? '১ম থেকে ১০ম শ্রেণি পর্যন্ত প্রতিটি শিক্ষার্থী চারটি ঐতিহ্যবাহী হাউসের অন্তর্ভুক্ত হয়ে ক্রীড়া ও সহশিক্ষা কার্যক্রমে অংশ নেয়।'
+                : 'Every student belongs to one of four historic houses from Class 1 through Class 10, earning points through athletic, academic, and co-curricular tournaments.'}
             </p>
           </div>
 
@@ -416,22 +506,32 @@ export const SportsAthletics: React.FC = () => {
             <div className="lg:col-span-7 space-y-4">
               <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
                 <Flame size={14} className="text-amber-400" />
-                <span>SIGNATURE ANNUAL EVENT</span>
+                <span>{isBn ? 'বার্ষিক সিগনেচার ইভেন্ট' : 'SIGNATURE ANNUAL EVENT'}</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-black leading-tight">
-                The Grand Annual Athletic & Sports Meet
+                {isBn ? 'ঐতিহ্যবাহী বার্ষিক অ্যাথলেটিক্স ও ক্রীড়া প্রতিযোগিতা' : 'The Grand Annual Athletic & Sports Meet'}
               </h2>
               <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-normal">
-                Held each winter on our expansive campus grounds, the Annual Sports Meet draws over 1,200 enthusiastic student participants, respected parents, alumni, and district educational dignitaries.
+                {isBn
+                  ? `প্রতি বছর শীতকালে আমাদের সুবিশাল ক্যাম্পাসে আয়োজিত হয় বার্ষিক ক্রীড়া প্রতিযোগিতা, যেখানে অংশ নেয় ${toBanglaNum(1200)}+ শিক্ষার্থী, অভিভাবক, প্রাক্তন ছাত্র এবং গণ্যমান্য ব্যক্তিবর্গ।`
+                  : 'Held each winter on our expansive campus grounds, the Annual Sports Meet draws over 1,200 enthusiastic student participants, respected parents, alumni, and district educational dignitaries.'}
               </p>
               <div className="grid grid-cols-2 gap-4 pt-2">
                 <div className="border-l-2 border-emerald-400 pl-3">
-                  <span className="text-lg font-black text-white block">March Past & Oath</span>
-                  <p className="text-[11px] text-emerald-200">Synchronized house parade saluting the national flag</p>
+                  <span className="text-lg font-black text-white block">
+                    {isBn ? 'মার্চ-পাস্ট ও শপথগ্রহণ' : 'March Past & Oath'}
+                  </span>
+                  <p className="text-[11px] text-emerald-200">
+                    {isBn ? 'জাতীয় পতাকাকে অভিবাদন জানিয়ে সুশৃঙ্খল হাউসভিত্তিক কুচকাওয়াজ' : 'Synchronized house parade saluting the national flag'}
+                  </p>
                 </div>
                 <div className="border-l-2 border-emerald-400 pl-3">
-                  <span className="text-lg font-black text-white block">25+ Athletic Events</span>
-                  <p className="text-[11px] text-emerald-200">Sprints, relays, high jump, discus, and hurdle challenges</p>
+                  <span className="text-lg font-black text-white block">
+                    {isBn ? `${toBanglaNum(25)}+টি অ্যাথলেটিক্স ইভেন্ট` : '25+ Athletic Events'}
+                  </span>
+                  <p className="text-[11px] text-emerald-200">
+                    {isBn ? 'স্প্রিন্ট, রিলে, হাই জাম্প, চাকতি নিক্ষেপ ও হার্ডল প্রতিযোগিতা' : 'Sprints, relays, high jump, discus, and hurdle challenges'}
+                  </p>
                 </div>
               </div>
             </div>
@@ -454,10 +554,12 @@ export const SportsAthletics: React.FC = () => {
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1.5 text-center md:text-left">
             <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-              Want to see our athletes and sports day in action?
+              {isBn ? 'আমাদের শিক্ষার্থীদের ক্রীড়া নৈপুণ্য দেখতে চান?' : 'Want to see our athletes and sports day in action?'}
             </h3>
             <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
-              Browse our high-resolution sports photo galleries, check upcoming athletic schedules on the notice board, or get in touch with our physical education faculty.
+              {isBn
+                ? 'আমাদের ফটো গ্যালারিতে বার্ষিক ক্রীড়ার ছবি দেখুন, নোটিশ বোর্ডে ক্রীড়া সূচি চেক করুন বা সরাসরি যোগাযোগ করুন।'
+                : 'Browse our high-resolution sports photo galleries, check upcoming athletic schedules on the notice board, or get in touch with our physical education faculty.'}
             </p>
           </div>
 
@@ -467,20 +569,20 @@ export const SportsAthletics: React.FC = () => {
               className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
             >
               <ImageIcon size={14} />
-              <span>Sports Gallery</span>
+              <span>{isBn ? 'ক্রীড়া গ্যালারি' : 'Sports Gallery'}</span>
             </Link>
             <Link
               to="/notices"
               className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
             >
               <Calendar size={14} />
-              <span>Sports Notices</span>
+              <span>{isBn ? 'ক্রীড়া নোটিশ' : 'Sports Notices'}</span>
             </Link>
             <Link
               to="/contact"
               className="px-5 py-2.5 rounded-xl bg-[#004d34] hover:bg-[#003b28] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xs"
             >
-              <span>Contact Sports Dept</span>
+              <span>{isBn ? 'ক্রীড়া বিভাগে যোগাযোগ' : 'Contact Sports Dept'}</span>
               <ArrowRight size={14} />
             </Link>
           </div>

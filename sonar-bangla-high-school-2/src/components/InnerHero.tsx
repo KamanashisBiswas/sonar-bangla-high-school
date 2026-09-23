@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Home, Quote } from 'lucide-react';
 import { SCHOOL_INFO } from '../data/schoolData';
 
+import { useLanguage } from '../contexts/LanguageContext';
+
 export interface FeatureChip {
   icon: React.ReactNode;
   title: string;
@@ -34,11 +36,22 @@ export const InnerHero: React.FC<InnerHeroProps> = ({
   description,
   quote,
   features,
-  buildingQuote = {
-    text: "Great teachers inspire great minds.",
-    author: "SOS Hermann Gmeiner School Khulna",
-  },
+  buildingQuote,
 }) => {
+  const { language } = useLanguage();
+  const isBn = language === 'bn';
+
+  const defaultBuildingQuote = {
+    text: isBn
+      ? "আদর্শ শিক্ষকই ভবিষ্যৎ প্রজন্মকে আলোকিত করতে পারেন।"
+      : "Great teachers inspire great minds.",
+    author: isBn
+      ? "এস ও এস হারম্যান মেইনার স্কুল খুলনা"
+      : "SOS Hermann Gmeiner School Khulna",
+  };
+
+  const activeBuildingQuote = buildingQuote || defaultBuildingQuote;
+
   return (
     <section className="bg-gradient-to-b from-[#e8f7f0]/60 via-white to-slate-50 pt-5 pb-12 sm:pb-16 border-b border-slate-100 overflow-hidden relative">
       <div className="container mx-auto">
@@ -46,7 +59,7 @@ export const InnerHero: React.FC<InnerHeroProps> = ({
         <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 mb-6">
           <Link to="/" className="hover:text-emerald-800 flex items-center gap-1 transition-colors">
             <Home size={14} className="text-emerald-700" />
-            <span>Home</span>
+            <span>{isBn ? 'মূলপাতা' : 'Home'}</span>
           </Link>
           <span className="text-slate-400">/</span>
           <span className="text-slate-800 font-bold">{breadcrumb}</span>
@@ -128,10 +141,10 @@ export const InnerHero: React.FC<InnerHeroProps> = ({
                   </div>
                   <div>
                     <p className="text-xs sm:text-sm font-semibold leading-snug">
-                      "{buildingQuote.text}"
+                      "{activeBuildingQuote.text}"
                     </p>
                     <p className="text-[10px] sm:text-[11px] text-emerald-200/90 font-medium mt-1">
-                      — {buildingQuote.author}
+                      — {activeBuildingQuote.author}
                     </p>
                   </div>
                 </div>

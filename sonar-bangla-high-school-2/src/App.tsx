@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 // Layout Components
 import { TopUtilityBar } from './components/TopUtilityBar';
@@ -37,17 +38,15 @@ const ScrollToTop: React.FC = () => {
 };
 
 export const AppContent: React.FC = () => {
-  const [language, setLanguage] = useState<'en' | 'bn'>('en');
-
   return (
     <div className="min-h-screen flex flex-col font-sans bg-slate-50 text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
       <ScrollToTop />
       
       {/* Top Utility Contact Bar */}
-      <TopUtilityBar language={language} setLanguage={setLanguage} />
+      <TopUtilityBar />
 
       {/* Main Unified Branding & Sticky Navigation Header */}
-      <Navbar language={language} setLanguage={setLanguage} />
+      <Navbar />
 
       {/* Main Body Route Content */}
       <main className="flex-1">
@@ -92,7 +91,9 @@ export const AppContent: React.FC = () => {
 export default function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <LanguageProvider>
+        <AppContent />
+      </LanguageProvider>
     </BrowserRouter>
   );
 }

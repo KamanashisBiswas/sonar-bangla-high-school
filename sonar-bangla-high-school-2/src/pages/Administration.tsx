@@ -15,17 +15,20 @@ import {
   UserCheck,
 } from 'lucide-react';
 import { LEADERSHIP } from '../data/schoolData';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export const Administration: React.FC = () => {
-  const [sliderIndex, setSliderIndex] = useState(0);
+  const { language } = useLanguage();
+  const isBn = language === 'bn';
+  const [, setSliderIndex] = useState(0);
 
   // Governing Body Members (Full committee displayed in responsive grid)
   const governingMembers = [
     {
       id: '1',
-      name: 'Maksuda Sultana',
-      role: 'President (Chairman)',
-      tag: 'PRESIDENT',
+      name: isBn ? 'মাকসুদা সুলতানা' : 'Maksuda Sultana',
+      role: isBn ? 'সভাপতি, গভর্নিং বডি' : 'President (Chairman)',
+      tag: isBn ? 'সভাপতি' : 'PRESIDENT',
       tagColor: 'bg-[#e8f7ee] text-[#004d34] border-emerald-100',
       image: LEADERSHIP.chairman.image,
       fallback: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&fit=crop&q=80',
@@ -33,9 +36,9 @@ export const Administration: React.FC = () => {
     },
     {
       id: '2',
-      name: 'Indrajit Kumar Mondal',
-      role: 'Member Secretary (Acting)',
-      tag: 'MEMBER',
+      name: isBn ? 'ইন্দ্রজিৎ কুমার মণ্ডল' : 'Indrajit Kumar Mondal',
+      role: isBn ? 'ভারপ্রাপ্ত অধ্যক্ষ ও সদস্য সচিব' : 'Member Secretary (Acting)',
+      tag: isBn ? 'সদস্য সচিব' : 'MEMBER',
       tagColor: 'bg-[#eff6ff] text-[#1d4ed8] border-blue-100',
       image: LEADERSHIP.principal.image,
       fallback: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80',
@@ -43,56 +46,56 @@ export const Administration: React.FC = () => {
     },
     {
       id: '3',
-      name: 'Representative,',
-      subtitle: "SOS Children's Village",
-      role: "Representative, SOS Children's Village",
-      tag: 'EXECUTIVE MEMBER',
+      name: isBn ? 'প্রতিনিধি,' : 'Representative,',
+      subtitle: isBn ? "এস ও এস চিলড্রেনস ভিলেজ" : "SOS Children's Village",
+      role: isBn ? "প্রতিনিধি, এস ও এস চিলড্রেনস ভিলেজ" : "Representative, SOS Children's Village",
+      tag: isBn ? 'নির্বাহী সদস্য' : 'EXECUTIVE MEMBER',
       tagColor: 'bg-[#eff6ff] text-[#1d4ed8] border-blue-100',
       isAvatar: true,
       avatarType: 'executive',
     },
     {
       id: '4',
-      name: 'Guardian Member',
-      role: 'Elected Guardian Rep.',
-      tag: 'MEMBER',
+      name: isBn ? 'অভিভাবক সদস্য' : 'Guardian Member',
+      role: isBn ? 'নির্বাচিত অভিভাবক প্রতিনিধি' : 'Elected Guardian Rep.',
+      tag: isBn ? 'সদস্য' : 'MEMBER',
       tagColor: 'bg-[#eff6ff] text-[#1d4ed8] border-blue-100',
       isAvatar: true,
       avatarType: 'guardian',
     },
     {
       id: '5',
-      name: 'Teacher Representative',
-      role: 'Elected Teacher Rep.',
-      tag: 'TEACHER REP.',
+      name: isBn ? 'শিক্ষক প্রতিনিধি' : 'Teacher Representative',
+      role: isBn ? 'নির্বাচিত শিক্ষক প্রতিনিধি' : 'Elected Teacher Rep.',
+      tag: isBn ? 'শিক্ষক প্রতিনিধি' : 'TEACHER REP.',
       tagColor: 'bg-[#fef3c7] text-[#92400e] border-amber-100',
       image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&fit=crop&q=80',
       profileLink: '/faculty/2',
     },
     {
       id: '6',
-      name: 'Female Guardian Member',
-      role: 'Elected Guardian Rep.',
-      tag: 'GUARDIAN REP.',
+      name: isBn ? 'মহিলা অভিভাবক সদস্য' : 'Female Guardian Member',
+      role: isBn ? 'সংরক্ষিত নারী অভিভাবক প্রতিনিধি' : 'Elected Guardian Rep.',
+      tag: isBn ? 'অভিভাবক প্রতিনিধি' : 'GUARDIAN REP.',
       tagColor: 'bg-[#fce7f3] text-[#9d174d] border-pink-100',
       isAvatar: true,
       avatarType: 'guardian',
     },
     {
       id: '7',
-      name: 'Educationist Member',
-      role: 'Nominated Education Specialist',
-      tag: 'SPECIAL MEMBER',
+      name: isBn ? 'বিশিষ্ট শিক্ষানুরাগী সদস্য' : 'Educationist Member',
+      role: isBn ? 'মনোনীত শিক্ষা বিশেষজ্ঞ' : 'Nominated Education Specialist',
+      tag: isBn ? 'বিশেষ সদস্য' : 'SPECIAL MEMBER',
       tagColor: 'bg-[#f3e8ff] text-[#6b21a8] border-purple-100',
       isAvatar: true,
       avatarType: 'executive',
     },
     {
       id: '8',
-      name: 'Education Board Rep.',
-      subtitle: 'BISE Jessore',
-      role: 'Board Nominated Member',
-      tag: 'BOARD NOMINEE',
+      name: isBn ? 'শিক্ষা বোর্ড প্রতিনিধি' : 'Education Board Rep.',
+      subtitle: isBn ? 'যশোর শিক্ষা বোর্ড' : 'BISE Jessore',
+      role: isBn ? 'বোর্ড কর্তৃক মনোনীত সদস্য' : 'Board Nominated Member',
+      tag: isBn ? 'বোর্ড মনোনীত' : 'BOARD NOMINEE',
       tagColor: 'bg-[#ecfdf5] text-[#065f46] border-emerald-100',
       isAvatar: true,
       avatarType: 'executive',
@@ -139,10 +142,10 @@ export const Administration: React.FC = () => {
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
             <Link to="/" className="hover:text-emerald-800 flex items-center gap-1 transition-colors text-emerald-700">
               <Home size={14} />
-              <span>Home</span>
+              <span>{isBn ? 'মূলপাতা' : 'Home'}</span>
             </Link>
             <span className="text-slate-400">›</span>
-            <span className="text-slate-800 font-bold">Administration</span>
+            <span className="text-slate-800 font-bold">{isBn ? 'প্রশাসন ও গভর্নিং বডি' : 'Administration'}</span>
           </div>
 
           {/* Left Narrative Block */}
@@ -150,13 +153,22 @@ export const Administration: React.FC = () => {
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <Users size={14} className="text-[#059669]" />
-              <span>ADMINISTRATION & GOVERNANCE</span>
+              <span>{isBn ? 'প্রশাসন ও পরিচালনা পর্ষদ' : 'ADMINISTRATION & GOVERNANCE'}</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              Administration & <br />
-              Governance
+              {isBn ? (
+                <>
+                  প্রশাসন ও <br />
+                  পরিচালনা পর্ষদ
+                </>
+              ) : (
+                <>
+                  Administration & <br />
+                  Governance
+                </>
+              )}
             </h1>
 
             {/* Short Green Accent Line Under Title */}
@@ -164,7 +176,9 @@ export const Administration: React.FC = () => {
 
             {/* Subtitle */}
             <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              Dedicated leadership and transparent governance ensuring excellence in education, discipline and holistic development.
+              {isBn
+                ? 'বিদ্যালয়ের সার্বিক শৃঙ্খলা, মানসম্মত শিক্ষা এবং কল্যাণমুখী পরিচালনায় নিবেদিত প্রশাসন ও পরিচালনা পর্ষদ।'
+                : 'Dedicated leadership and transparent governance ensuring excellence in education, discipline and holistic development.'}
             </p>
           </div>
 
@@ -176,10 +190,10 @@ export const Administration: React.FC = () => {
               </span>
               <div>
                 <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  Education today for a brighter tomorrow
+                  {isBn ? 'আজকের মানসম্মত শিক্ষাই আগামীর সম্ভাবনাময় ভবিষ্যৎ' : 'Education today for a brighter tomorrow'}
                 </h4>
                 <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — SOS Hermann Gmeiner School
+                  — {isBn ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
                 </p>
               </div>
             </div>
@@ -197,9 +211,11 @@ export const Administration: React.FC = () => {
             </div>
             <div>
               <h4 className="text-xs sm:text-sm font-black text-slate-900 leading-tight">
-                Strong Leadership
+                {isBn ? 'দৃঢ় ও দূরদর্শী নেতৃত্ব' : 'Strong Leadership'}
               </h4>
-              <p className="text-[11px] text-slate-500 font-medium mt-1">Guiding with vision & care</p>
+              <p className="text-[11px] text-slate-500 font-medium mt-1">
+                {isBn ? 'দূরদর্শিতা ও স্নেহের মেলবন্ধন' : 'Guiding with vision & care'}
+              </p>
             </div>
           </div>
 
@@ -210,9 +226,11 @@ export const Administration: React.FC = () => {
             </div>
             <div>
               <h4 className="text-xs sm:text-sm font-black text-slate-900 leading-tight">
-                Transparent Governance
+                {isBn ? 'স্বচ্ছ প্রশাসন' : 'Transparent Governance'}
               </h4>
-              <p className="text-[11px] text-slate-500 font-medium mt-1">Accountability in action</p>
+              <p className="text-[11px] text-slate-500 font-medium mt-1">
+                {isBn ? 'কার্যকর জবাবদিহিতা' : 'Accountability in action'}
+              </p>
             </div>
           </div>
 
@@ -223,9 +241,11 @@ export const Administration: React.FC = () => {
             </div>
             <div>
               <h4 className="text-xs sm:text-sm font-black text-slate-900 leading-tight">
-                Student-Centered
+                {isBn ? 'শিক্ষার্থীবান্ধব নীতি' : 'Student-Centered'}
               </h4>
-              <p className="text-[11px] text-slate-500 font-medium mt-1">Policies for brighter futures</p>
+              <p className="text-[11px] text-slate-500 font-medium mt-1">
+                {isBn ? 'উজ্জ্বল ভবিষ্যতের রূপরেখা' : 'Policies for brighter futures'}
+              </p>
             </div>
           </div>
 
@@ -236,9 +256,11 @@ export const Administration: React.FC = () => {
             </div>
             <div>
               <h4 className="text-xs sm:text-sm font-black text-slate-900 leading-tight">
-                Continuous Improvement
+                {isBn ? 'ধারাবাহিক উৎকর্ষ' : 'Continuous Improvement'}
               </h4>
-              <p className="text-[11px] text-slate-500 font-medium mt-1">For a better tomorrow</p>
+              <p className="text-[11px] text-slate-500 font-medium mt-1">
+                {isBn ? 'সমৃদ্ধ আগামীর প্রত্যয়ে' : 'For a better tomorrow'}
+              </p>
             </div>
           </div>
         </section>
@@ -252,16 +274,18 @@ export const Administration: React.FC = () => {
             <div>
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#059669] mb-1.5">
                 <span className="w-5 h-0.5 bg-[#059669]" />
-                <span>SCHOOL LEADERSHIP</span>
+                <span>{isBn ? 'স্কুল প্রশাসন' : 'SCHOOL LEADERSHIP'}</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-                Our School Leadership
+                {isBn ? 'আমাদের প্রাতিষ্ঠানিক নেতৃত্ব' : 'Our School Leadership'}
               </h2>
             </div>
 
             <div className="flex items-center gap-4 sm:self-end">
               <p className="hidden lg:block text-xs text-slate-500 max-w-md font-medium text-right leading-relaxed">
-                Our dedicated leadership team works collectively to ensure quality education, ethical practices and a nurturing environment for every learner.
+                {isBn
+                  ? 'আমাদের সুদক্ষ ও নিষ্ঠাবান নেতৃত্ব দল প্রতিটি শিক্ষার্থীর জন্য মানসম্মত শিক্ষা, সুশৃঙ্খল চর্চা ও অনুকূল পরিবেশ নিশ্চিত করতে নিরবচ্ছিন্নভাবে কাজ করে চলেছে।'
+                  : 'Our dedicated leadership team works collectively to ensure quality education, ethical practices and a nurturing environment for every learner.'}
               </p>
               {/* Slider Arrow Buttons */}
               <div className="flex items-center gap-2">
@@ -296,7 +320,7 @@ export const Administration: React.FC = () => {
               >
                 <img
                   src={LEADERSHIP.chairman.image}
-                  alt={LEADERSHIP.chairman.name}
+                  alt={isBn ? 'মাকসুদা সুলতানা' : LEADERSHIP.chairman.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
@@ -309,18 +333,20 @@ export const Administration: React.FC = () => {
               <div className="flex-1 flex flex-col justify-between text-center sm:text-left min-w-0">
                 <div>
                   <span className="inline-block bg-[#e8f7ee] text-[#004d34] border border-emerald-100 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md tracking-wider">
-                    CHAIRMAN
+                    {isBn ? 'সভাপতি' : 'CHAIRMAN'}
                   </span>
                   <Link to="/profile/chairman" className="block hover:text-[#004d34] transition-colors">
                     <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-2 leading-tight">
-                      {LEADERSHIP.chairman.name}
+                      {isBn ? 'মাকসুদা সুলতানা' : LEADERSHIP.chairman.name}
                     </h3>
                   </Link>
                   <p className="text-xs text-slate-500 font-semibold mt-1">
-                    {LEADERSHIP.chairman.subtitle}
+                    {isBn ? 'সহকারী প্রকল্প পরিচালক ও সভাপতি' : LEADERSHIP.chairman.subtitle}
                   </p>
                   <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed font-normal mt-3">
-                    {LEADERSHIP.chairman.description}
+                    {isBn
+                      ? 'জ্ঞানের আলোয় সমাজ গড়ার প্রত্যয়ে একনিষ্ঠ ভূমিকা রেখে চলেছেন আমাদের সভাপতি মহোদয়া। তাঁর বলিষ্ঠ নেতৃত্বে প্রতিষ্ঠানটি সার্বিক শিক্ষায় শীর্ষস্থান ধরে রেখেছে।'
+                      : LEADERSHIP.chairman.description}
                   </p>
                 </div>
 
@@ -329,7 +355,7 @@ export const Administration: React.FC = () => {
                     to="/profile/chairman"
                     className="inline-flex items-center gap-1.5 bg-[#eefaf3] hover:bg-[#dcf5e7] text-[#004d34] px-4 py-2 rounded-xl text-xs font-bold transition shadow-2xs cursor-pointer"
                   >
-                    <span>View Profile</span>
+                    <span>{isBn ? 'প্রোফাইল দেখুন' : 'View Profile'}</span>
                     <ArrowRight size={13} />
                   </Link>
                 </div>
@@ -345,7 +371,7 @@ export const Administration: React.FC = () => {
               >
                 <img
                   src={LEADERSHIP.principal.image}
-                  alt={LEADERSHIP.principal.name}
+                  alt={isBn ? 'ইন্দ্রজিৎ কুমার মণ্ডল' : LEADERSHIP.principal.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
@@ -358,18 +384,20 @@ export const Administration: React.FC = () => {
               <div className="flex-1 flex flex-col justify-between text-center sm:text-left min-w-0">
                 <div>
                   <span className="inline-block bg-[#eff6ff] text-[#1d4ed8] border border-blue-100 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md tracking-wider">
-                    PRINCIPAL
+                    {isBn ? 'ভারপ্রাপ্ত অধ্যক্ষ' : 'PRINCIPAL'}
                   </span>
                   <Link to="/profile/principal" className="block hover:text-[#1d4ed8] transition-colors">
                     <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-2 leading-tight">
-                      {LEADERSHIP.principal.name}
+                      {isBn ? 'ইন্দ্রজিৎ কুমার মণ্ডল' : LEADERSHIP.principal.name}
                     </h3>
                   </Link>
                   <p className="text-xs text-slate-500 font-semibold mt-1">
-                    {LEADERSHIP.principal.subtitle}
+                    {isBn ? 'ভারপ্রাপ্ত অধ্যক্ষ ও সদস্য সচিব' : LEADERSHIP.principal.subtitle}
                   </p>
                   <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed font-normal mt-3">
-                    {LEADERSHIP.principal.description}
+                    {isBn
+                      ? 'গুণগত পাঠদান, সুশৃঙ্খল পরিবেশ এবং শিক্ষার্থীদের মানসিক বিকাশে তিনি প্রতিনিয়ত নিরলস কাজ করে যাচ্ছেন।'
+                      : LEADERSHIP.principal.description}
                   </p>
                 </div>
 
@@ -378,7 +406,7 @@ export const Administration: React.FC = () => {
                     to="/profile/principal"
                     className="inline-flex items-center gap-1.5 bg-[#eff6ff] hover:bg-[#dbeafe] text-[#1d4ed8] px-4 py-2 rounded-xl text-xs font-bold transition shadow-2xs cursor-pointer"
                   >
-                    <span>View Profile</span>
+                    <span>{isBn ? 'প্রোফাইল দেখুন' : 'View Profile'}</span>
                     <ArrowRight size={13} />
                   </Link>
                 </div>
@@ -396,13 +424,15 @@ export const Administration: React.FC = () => {
             <div>
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#059669] mb-1.5">
                 <span className="w-5 h-0.5 bg-[#059669]" />
-                <span>GOVERNANCE</span>
+                <span>{isBn ? 'পরিচালনা পরিষদ' : 'GOVERNANCE'}</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-                Honorable Governing Body
+                {isBn ? 'সম্মানিত গভর্নিং বডি' : 'Honorable Governing Body'}
               </h2>
               <p className="text-xs text-slate-500 font-medium mt-1">
-                A committed team working together for the sustained growth and development of our school.
+                {isBn
+                  ? 'প্রতিষ্ঠানের টেকসই উন্নয়ন ও সামগ্রিক অগ্রযাত্রায় নিবেদিত একটি দূরদর্শী ও ঐক্যবদ্ধ পরিষদ।'
+                  : 'A committed team working together for the sustained growth and development of our school.'}
               </p>
             </div>
           </div>
@@ -511,10 +541,12 @@ export const Administration: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-lg font-black text-slate-900 tracking-tight">
-                  Our Commitment
+                  {isBn ? 'আমাদের অঙ্গীকার' : 'Our Commitment'}
                 </h3>
                 <p className="text-xs sm:text-[13px] text-slate-600 font-normal leading-relaxed mt-1">
-                  We believe in transparent administration, collaborative leadership and policies that put students at the heart of everything we do.
+                  {isBn
+                    ? 'আমরা একটি স্বচ্ছ প্রশাসনিক কাঠামো, দলগত নেতৃত্ব এবং এমন শিক্ষার্থী-কেন্দ্রিক নীতিমালায় বিশ্বাসী যা প্রতিটি শিক্ষার্থীর আত্মবিকাশের মূল চাবিকাঠি।'
+                    : 'We believe in transparent administration, collaborative leadership and policies that put students at the heart of everything we do.'}
                 </p>
               </div>
             </div>
@@ -525,24 +557,24 @@ export const Administration: React.FC = () => {
                 <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#004d34] flex items-center justify-center mx-auto border border-emerald-100/60">
                   <Scale size={18} />
                 </div>
-                <h5 className="text-xs font-bold text-slate-900">Integrity</h5>
-                <p className="text-[10px] text-slate-500 font-medium">In all actions</p>
+                <h5 className="text-xs font-bold text-slate-900">{isBn ? 'সততা ও নিষ্ঠা' : 'Integrity'}</h5>
+                <p className="text-[10px] text-slate-500 font-medium">{isBn ? 'প্রতিটি কর্মকাণ্ডে' : 'In all actions'}</p>
               </div>
 
               <div className="space-y-1">
                 <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#004d34] flex items-center justify-center mx-auto border border-emerald-100/60">
                   <Users size={18} />
                 </div>
-                <h5 className="text-xs font-bold text-slate-900">Collaboration</h5>
-                <p className="text-[10px] text-slate-500 font-medium">With community</p>
+                <h5 className="text-xs font-bold text-slate-900">{isBn ? 'যৌথ প্রয়াস' : 'Collaboration'}</h5>
+                <p className="text-[10px] text-slate-500 font-medium">{isBn ? 'সমাজ ও পরিবারের সাথে' : 'With community'}</p>
               </div>
 
               <div className="space-y-1">
                 <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#004d34] flex items-center justify-center mx-auto border border-emerald-100/60">
                   <TrendingUp size={18} />
                 </div>
-                <h5 className="text-xs font-bold text-slate-900">Excellence</h5>
-                <p className="text-[10px] text-slate-500 font-medium">In education</p>
+                <h5 className="text-xs font-bold text-slate-900">{isBn ? 'উৎকর্ষ সাধন' : 'Excellence'}</h5>
+                <p className="text-[10px] text-slate-500 font-medium">{isBn ? 'শিক্ষায় ও নেতৃত্বে' : 'In education'}</p>
               </div>
             </div>
           </div>

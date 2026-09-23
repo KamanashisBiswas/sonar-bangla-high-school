@@ -29,17 +29,13 @@ import {
   AlertCircle
 } from 'lucide-react';
 
+import { useLanguage } from '../contexts/LanguageContext';
+
 interface PhotoAlbum {
   id: string;
   title: string;
-  category:
-    | 'Sports & Awards'
-    | 'Jayanti 2026'
-    | 'Leadership'
-    | 'Campus Grounds'
-    | 'Assembly'
-    | 'Academic & Labs'
-    | 'Others';
+  category: string;
+  filterGroup: string;
   date: string;
   photosCount: number;
   thumbnail: string;
@@ -51,6 +47,9 @@ interface PhotoAlbum {
 }
 
 export const Gallery: React.FC = () => {
+  const { language, toBanglaNum } = useLanguage();
+  const isBn = language === 'bn';
+
   const [selectedCategory, setSelectedCategory] = useState<string>('All Albums');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<'latest' | 'oldest' | 'photos' | 'name'>('latest');
@@ -60,301 +59,324 @@ export const Gallery: React.FC = () => {
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const albums: PhotoAlbum[] = [
+  const albums: PhotoAlbum[] = useMemo(() => [
     {
       id: '1',
-      title: 'Annual Sports & Cultural Program 2025',
-      category: 'Sports & Awards',
-      date: '18 FEB 2025',
+      title: isBn ? 'বার্ষিক ক্রীড়া ও সাংস্কৃতিক প্রতিযোগিতা ২০২৫' : 'Annual Sports & Cultural Program 2025',
+      category: isBn ? 'ক্রীড়া ও পুরস্কার' : 'Sports & Awards',
+      filterGroup: 'Sports & Awards',
+      date: isBn ? '১৮ ফেব্রুয়ারি ২০২৫' : '18 FEB 2025',
       photosCount: 8,
       thumbnail: '/gallery/album_sports.jpg',
-      description:
-        'Vibrant moments from our Annual Sports Day competitions, track events, and champions celebrating with trophies.',
+      description: isBn
+        ? 'বার্ষিক ক্রীড়া প্রতিযোগিতার বর্ণাঢ্য আয়োজন, দৌড় ও ট্র‍্যাক ইভেন্ট এবং বিজয়ীদের হাতে ট্রফি তুলে দেওয়ার আনন্দঘন মুহূর্ত।'
+        : 'Vibrant moments from our Annual Sports Day competitions, track events, and champions celebrating with trophies.',
       galleryImages: [
         {
           url: '/gallery/album_sports.jpg',
-          caption: 'Proud champions holding the championship trophy on the athletic field.',
+          caption: isBn ? 'খেলার মাঠে বিজয়ী দল তাদের চ্যাম্পিয়ন ট্রফি প্রদর্শন করছে।' : 'Proud champions holding the championship trophy on the athletic field.',
         },
         {
           url: '/programs/program_sports.png',
-          caption: 'Athletes competing in sprint and relay events under sunny skies.',
+          caption: isBn ? 'রৌদ্রোজ্জ্বল দিনে দৌড় ও রিলে প্রতিযোগিতায় শিক্ষার্থীদের তীব্র প্রতিদ্বন্দ্বিতা।' : 'Athletes competing in sprint and relay events under sunny skies.',
         },
         {
           url: '/facilities/facility_grounds.png',
-          caption: 'Cheering crowds and house pavilions during the finals.',
+          caption: isBn ? 'ফাইনাল খেলার সময় গ্যালারিতে উপস্থিত শিক্ষক ও শিক্ষার্থীদের করতালি।' : 'Cheering crowds and house pavilions during the finals.',
         },
       ],
     },
     {
       id: '2',
-      title: 'Science Fair & Exhibition',
-      category: 'Academic & Labs',
-      date: '20 JAN 2025',
+      title: isBn ? 'বিজ্ঞান মেলা ও উদ্ভাবনী প্রদর্শনী' : 'Science Fair & Exhibition',
+      category: isBn ? 'ল্যাব ও পাঠদান' : 'Academic & Labs',
+      filterGroup: 'Academic & Labs',
+      date: isBn ? '২০ জানুয়ারি ২০২৫' : '20 JAN 2025',
       photosCount: 7,
       thumbnail: '/gallery/album_science.jpg',
-      description:
-        'Young innovators demonstrating practical scientific experiments, robotics models, and research projects in the chemistry lab.',
+      description: isBn
+        ? 'তরুণ বিজ্ঞানীদের স্বনির্মিত রোবটিক্স প্রজেক্ট, রসায়ন ল্যাবে ব্যবহারিক পরীক্ষা এবং উদ্ভাবনী প্রদর্শন।'
+        : 'Young innovators demonstrating practical scientific experiments, robotics models, and research projects in the chemistry lab.',
       galleryImages: [
         {
           url: '/gallery/album_science.jpg',
-          caption: 'Secondary section students testing chemical reactions and analyzing solutions.',
+          caption: isBn ? 'মাধ্যমিক শাখার শিক্ষার্থীরা রাসায়নিক বিক্রিয়া ও উপাদান বিশ্লেষণ করছে।' : 'Secondary section students testing chemical reactions and analyzing solutions.',
         },
         {
           url: '/facilities/facility_science.png',
-          caption: 'State-of-the-art laboratory benches equipped with modern glassware and equipment.',
+          caption: isBn ? 'আধুনিক যন্ত্রপাতি ও গ্লাসওয়্যার সমৃদ্ধ সুসজ্জিত বিজ্ঞানাগার।' : 'State-of-the-art laboratory benches equipped with modern glassware and equipment.',
         },
         {
           url: '/programs/program_academic.png',
-          caption: 'Teachers evaluating scientific research abstracts and interactive exhibits.',
+          caption: isBn ? 'শিক্ষকবৃন্দ বিজ্ঞান মেলায় প্রদর্শিত বৈজ্ঞানিক পোস্টার ও প্রজেক্ট মূল্যায়ন করছেন।' : 'Teachers evaluating scientific research abstracts and interactive exhibits.',
         },
       ],
     },
     {
       id: '3',
-      title: 'Prize Giving Ceremony 2025',
-      category: 'Sports & Awards',
-      date: '22 JAN 2025',
+      title: isBn ? 'পুরস্কার বিতরণী ও কৃতি সংবর্ধনা ২০২৫' : 'Prize Giving Ceremony 2025',
+      category: isBn ? 'ক্রীড়া ও পুরস্কার' : 'Sports & Awards',
+      filterGroup: 'Sports & Awards',
+      date: isBn ? '২২ জানুয়ারি ২০২৫' : '22 JAN 2025',
       photosCount: 7,
       thumbnail: '/gallery/album_prize.jpg',
-      description:
-        'Prestigious award presentation acknowledging board exam GPA-5.00 achievers, house champions, and faculty milestones.',
+      description: isBn
+        ? 'বোর্ড পরীক্ষায় জিপিএ-৫ প্রাপ্ত কৃতি শিক্ষার্থী, হাউস চ্যাম্পিয়ন এবং বিশিষ্ট শিক্ষকবৃন্দের সম্মাননা প্রদান।'
+        : 'Prestigious award presentation acknowledging board exam GPA-5.00 achievers, house champions, and faculty milestones.',
       galleryImages: [
         {
           url: '/gallery/album_prize.jpg',
-          caption: 'Official institutional merit crests, crest plaques, and special achievement awards.',
+          caption: isBn ? 'অফিসিয়াল মেধা স্মারক ক্রেস্ট ও সম্মাননা সনদ।' : 'Official institutional merit crests, crest plaques, and special achievement awards.',
         },
         {
           url: '/programs/program_sports_clean.png',
-          caption: 'Chief guest handing over certificates and academic excellence medals.',
+          caption: isBn ? 'প্রধান অতিথি কৃতি শিক্ষার্থীদের হাতে সনদ ও স্বর্ণপদক তুলে দিচ্ছেন।' : 'Chief guest handing over certificates and academic excellence medals.',
         },
       ],
     },
     {
       id: '4',
-      title: 'Classroom Activities',
-      category: 'Academic & Labs',
-      date: '15 JAN 2025',
+      title: isBn ? 'শ্রেণিকক্ষে শিখন ও আনন্দঘন পাঠদান' : 'Classroom Activities',
+      category: isBn ? 'ল্যাব ও পাঠদান' : 'Academic & Labs',
+      filterGroup: 'Academic & Labs',
+      date: isBn ? '১৫ জানুয়ারি ২০২৫' : '15 JAN 2025',
       photosCount: 6,
       thumbnail: '/gallery/album_classroom.jpg',
-      description:
-        'Enthusiastic learners actively participating, raising hands, and engaging in collaborative problem solving.',
+      description: isBn
+        ? 'মনোযোগী শিক্ষার্থীদের স্বতঃস্ফূর্ত অংশগ্রহণ, প্রশ্নোত্তরে হাত তোলা এবং দলগত সমস্যা সমাধান কার্যক্রম।'
+        : 'Enthusiastic learners actively participating, raising hands, and engaging in collaborative problem solving.',
       galleryImages: [
         {
           url: '/gallery/album_classroom.jpg',
-          caption: 'Students raising hands during an interactive mathematics problem-solving session.',
+          caption: isBn ? 'গণিতের ক্লাসে শিক্ষককে উত্তর প্রদানের জন্য শিক্ষার্থীদের হাত তোলার দৃশ্য।' : 'Students raising hands during an interactive mathematics problem-solving session.',
         },
         {
           url: '/hero_slider_2.jpg',
-          caption: 'Modern interactive multimedia classroom environment.',
+          caption: isBn ? 'আধুনিক মাল্টিমিডিয়া প্রজেক্টরে সমৃদ্ধ শ্রেণিকক্ষের পাঠদান পরিবেশ।' : 'Modern interactive multimedia classroom environment.',
         },
       ],
     },
     {
       id: '5',
-      title: 'Assembly Programs & Special Events',
-      category: 'Assembly',
-      date: '15 JAN 2025',
+      title: isBn ? 'প্রাত্যহিক সমাবেশ ও বিশেষ অনুষ্ঠান' : 'Assembly Programs & Special Events',
+      category: isBn ? 'সমাবেশ ও অনুষ্ঠান' : 'Assembly',
+      filterGroup: 'Assembly',
+      date: isBn ? '১৫ জানুয়ারি ২০২৫' : '15 JAN 2025',
       photosCount: 5,
       thumbnail: '/gallery/album_assembly.jpg',
-      description:
-        'Colorful cultural showcase with traditional classical dance recitals, drama performances, and musical chorus on auditorium stage.',
+      description: isBn
+        ? 'অডিটোরিয়াম মঞ্চে ঐতিহ্যবাহী শাস্ত্রীয় নৃত্য, একাঙ্ক নাটক ও দেশাত্মবোধক সমবেত সঙ্গীত পরিবেশনা।'
+        : 'Colorful cultural showcase with traditional classical dance recitals, drama performances, and musical chorus on auditorium stage.',
       galleryImages: [
         {
           url: '/gallery/album_assembly.jpg',
-          caption: 'Students performing traditional cultural dance recital in vivid festive attire.',
+          caption: isBn ? 'উৎসবমুখর পোশাকে শিক্ষার্থীদের ঐতিহ্যবাহী নৃত্য পরিবেশন।' : 'Students performing traditional cultural dance recital in vivid festive attire.',
         },
         {
           url: '/programs/program_cultural.png',
-          caption: 'Chorus singing patriotic songs in commemoration of institutional celebrations.',
+          caption: isBn ? 'প্রাতিষ্ঠানিক দিবসে শিক্ষার্থীদের দেশাত্মবোধক গান পরিবেশনা।' : 'Chorus singing patriotic songs in commemoration of institutional celebrations.',
         },
       ],
     },
     {
       id: '6',
-      title: 'Open Air Cultural Festival & Fair',
-      category: 'Jayanti 2026',
-      date: '18 JAN 2025',
+      title: isBn ? 'উন্মুক্ত সাংস্কৃতিক উৎসব ও মেলা' : 'Open Air Cultural Festival & Fair',
+      category: isBn ? 'জয়ন্তী ২০২৬' : 'Jayanti 2026',
+      filterGroup: 'Jayanti 2026',
+      date: isBn ? '১৮ জানুয়ারি ২০২৫' : '18 JAN 2025',
       photosCount: 4,
       thumbnail: '/gallery/album_fair.jpg',
-      description:
-        'Open-air cultural excursion and youth leadership camp celebrating natural heritage and student camaraderie at sunrise.',
+      description: isBn
+        ? 'ক্যাম্পাসের উন্মুক্ত চত্বরে সাংস্কৃতিক অনুষ্ঠান, তারুণ্যের নেতৃত্ব ক্যাম্প ও ঐতিহ্যবাহী মেলার আয়োজন।'
+        : 'Open-air cultural excursion and youth leadership camp celebrating natural heritage and student camaraderie at sunrise.',
       galleryImages: [
         {
           url: '/gallery/album_fair.jpg',
-          caption: 'Silhouette of students greeting the sunrise during outdoor environmental excursion.',
+          caption: isBn ? 'ভোরের মিষ্টি আলোয় ক্যাম্পাসে প্রকৃতির সাথে একাত্ম হওয়া শিক্ষার্থীদের দৃশ্য।' : 'Silhouette of students greeting the sunrise during outdoor environmental excursion.',
         },
         {
           url: '/programs/program_clubs.png',
-          caption: 'Scouts and youth club members setting up eco-friendly pavilions.',
+          caption: isBn ? 'স্কাউট ও পরিবেশ ক্লাবের সদস্যদের পরিবেশবান্ধব প্রদর্শনী মণ্ডপ।' : 'Scouts and youth club members setting up eco-friendly pavilions.',
         },
       ],
     },
     {
       id: '7',
-      title: 'Central Library & Study Circles',
-      category: 'Campus Grounds',
-      date: '12 JAN 2025',
+      title: isBn ? 'কেন্দ্রীয় লাইব্রেরি ও পাঠচক্র' : 'Central Library & Study Circles',
+      category: isBn ? 'ক্যাম্পাস প্রাঙ্গণ' : 'Campus Grounds',
+      filterGroup: 'Campus Grounds',
+      date: isBn ? '১২ জানুয়ারি ২০২৫' : '12 JAN 2025',
       photosCount: 3,
       thumbnail: '/gallery/album_library.jpg',
-      description:
-        'Quiet study hall, group research discussions, and extensive literary collection in the institutional central library.',
+      description: isBn
+        ? 'শান্ত ও নিবিড় পরিবেশে পড়াশোনা, দলগত বিষয়ভিত্তিক আলোচনা এবং লাইব্রেরির সমৃদ্ধ গ্রন্থসম্ভার।'
+        : 'Quiet study hall, group research discussions, and extensive literary collection in the institutional central library.',
       galleryImages: [
         {
           url: '/gallery/album_library.jpg',
-          caption: 'Students collaborating in literature review and textbook research at study desks.',
+          caption: isBn ? 'লাইব্রেরি ডেস্কে রেফারেন্স বই নিয়ে অধ্যয়নরত শিক্ষার্থীরা।' : 'Students collaborating in literature review and textbook research at study desks.',
         },
         {
           url: '/facilities/facility_library.png',
-          caption: 'Spacious reading hall housing more than 12,000 academic titles and journals.',
+          caption: isBn ? '১২,০০০ এর বেশি বই সমৃদ্ধ কেন্দ্রীয় পাঠকক্ষ।' : 'Spacious reading hall housing more than 12,000 academic titles and journals.',
         },
       ],
     },
     {
       id: '8',
-      title: "Campus Life - Students' Team Success",
-      category: 'Leadership',
-      date: '10 JAN 2025',
+      title: isBn ? 'ক্যাম্পাস জীবন - শিক্ষার্থীদের সাফল্য' : "Campus Life - Students' Team Success",
+      category: isBn ? 'নেতৃত্ব ও পরিষদ' : 'Leadership',
+      filterGroup: 'Leadership',
+      date: isBn ? '১০ জানুয়ারি ২০২৫' : '10 JAN 2025',
       photosCount: 4,
       thumbnail: '/gallery/album_campus.jpg',
-      description:
-        'Graduating batch and faculty members proudly gathered at the official SOS Hermann Gmeiner monument campus entrance.',
+      description: isBn
+        ? 'এস ও এস হারম্যান মেইনার স্কুলের মূল ফটকের সম্মুখে বিদায়ী ব্যাচের শিক্ষার্থী ও সম্মানিত শিক্ষকবৃন্দ।'
+        : 'Graduating batch and faculty members proudly gathered at the official SOS Hermann Gmeiner monument campus entrance.',
       galleryImages: [
         {
           url: '/gallery/album_campus.jpg',
-          caption: 'Class 10 students and faculty mentors posing at the institutional entrance gate.',
+          caption: isBn ? 'দশম শ্রেণির শিক্ষার্থী ও শিক্ষকবৃন্দের স্মৃতিময় গ্রুপ ফটো।' : 'Class 10 students and faculty mentors posing at the institutional entrance gate.',
         },
         {
           url: '/campus_main.png',
-          caption: 'Lush green front lawn and modern academic school facade.',
+          caption: isBn ? 'সুদৃশ্য সবুজ মাঠ ও আধুনিক মূল একাডেমিক ভবন।' : 'Lush green front lawn and modern academic school facade.',
         },
       ],
     },
-    // Albums 9-12 to complete the 12 Albums matching reference
     {
       id: '9',
-      title: 'Founders Jayanti 2026 Commemoration',
-      category: 'Jayanti 2026',
-      date: '08 JAN 2025',
+      title: isBn ? 'প্রতিষ্ঠাতা ড. হারম্যান মেইনার জয়ন্তী' : 'Founders Jayanti 2026 Commemoration',
+      category: isBn ? 'জয়ন্তী ২০২৬' : 'Jayanti 2026',
+      filterGroup: 'Jayanti 2026',
+      date: isBn ? '০৮ জানুয়ারি ২০২৫' : '08 JAN 2025',
       photosCount: 6,
       thumbnail: '/campus_main.png',
-      description:
-        'Paying tribute to Dr. Hermann Gmeiner with institutional wreath-laying, peace prayers, and social service projects.',
+      description: isBn
+        ? 'ড. হারম্যান মেইনার স্মরণে পুষ্পস্তবক অর্পণ, বিশেষ প্রার্থনা ও সমাজকল্যাণমূলক কর্মসূচি পালন।'
+        : 'Paying tribute to Dr. Hermann Gmeiner with institutional wreath-laying, peace prayers, and social service projects.',
       galleryImages: [
         {
           url: '/campus_main.png',
-          caption: 'Commemorative assembly on campus honoring Dr. Hermann Gmeiner.',
+          caption: isBn ? 'প্রতিষ্ঠাতার স্মরণে আয়োজিত বিশেষ স্মরণসভা।' : 'Commemorative assembly on campus honoring Dr. Hermann Gmeiner.',
         },
       ],
     },
     {
       id: '10',
-      title: 'Student Prefect Council Induction',
-      category: 'Leadership',
-      date: '05 JAN 2025',
+      title: isBn ? 'শিক্ষার্থী প্রিফেক্ট কাউন্সিলের শপথগ্রহণ' : 'Student Prefect Council Induction',
+      category: isBn ? 'নেতৃত্ব ও পরিষদ' : 'Leadership',
+      filterGroup: 'Leadership',
+      date: isBn ? '০৫ জানুয়ারি ২০২৫' : '05 JAN 2025',
       photosCount: 5,
       thumbnail: '/programs/program_clubs.png',
-      description:
-        'Investiture ceremony for newly elected student council prefects and class monitors taking solemn pledge of honor.',
+      description: isBn
+        ? 'নির্বাচিত শিক্ষার্থী প্রতিনিধি ও শ্রেণি মনিটরদের দায়িত্বভার গ্রহণ ও শপথ অনুষ্ঠান।'
+        : 'Investiture ceremony for newly elected student council prefects and class monitors taking solemn pledge of honor.',
       galleryImages: [
         {
           url: '/programs/program_clubs.png',
-          caption: 'Prefects taking institutional leadership oath before the Principal and teachers.',
+          caption: isBn ? 'অধ্যক্ষ মহোদয়ের সম্মুখে শিক্ষার্থীদের নেতৃত্বের শপথ পাঠ।' : 'Prefects taking institutional leadership oath before the Principal and teachers.',
         },
       ],
     },
     {
       id: '11',
-      title: 'Botanical Garden & Green Campus Walk',
-      category: 'Campus Grounds',
-      date: '03 JAN 2025',
+      title: isBn ? 'বোটানিক্যাল গার্ডেন ও সবুজ ক্যাম্পাস প্রাঙ্গণ' : 'Botanical Garden & Green Campus Walk',
+      category: isBn ? 'ক্যাম্পাস প্রাঙ্গণ' : 'Campus Grounds',
+      filterGroup: 'Campus Grounds',
+      date: isBn ? '০৩ জানুয়ারি ২০২৫' : '03 JAN 2025',
       photosCount: 4,
       thumbnail: '/facilities/facility_grounds.png',
-      description:
-        'Environmental science students documenting native botanical flora, tree plantations, and organic medicinal garden beds.',
+      description: isBn
+        ? 'পরিবেশ সচেতনতা বৃদ্ধি, বৃক্ষরোপণ অভিযান এবং ঔষধি বাগান রক্ষণাবেক্ষণ কার্যক্রম।'
+        : 'Environmental science students documenting native botanical flora, tree plantations, and organic medicinal garden beds.',
       galleryImages: [
         {
           url: '/facilities/facility_grounds.png',
-          caption: 'Tree plantation drive across the perimeter sports grounds and garden courtyards.',
+          caption: isBn ? 'খেলার মাঠের সীমানা প্রাচীর ঘেঁষে বৃক্ষরোপণ কর্মসূচি।' : 'Tree plantation drive across the perimeter sports grounds and garden courtyards.',
         },
       ],
     },
     {
       id: '12',
-      title: 'Inter-School Debate Championship Trophy',
-      category: 'Others',
-      date: '02 JAN 2025',
+      title: isBn ? 'আন্তঃস্কুল বিতর্ক চ্যাম্পিয়নশিপ ট্রফি' : 'Inter-School Debate Championship Trophy',
+      category: isBn ? 'অন্যান্য' : 'Others',
+      filterGroup: 'Others',
+      date: isBn ? '০২ জানুয়ারি ২০২৫' : '02 JAN 2025',
       photosCount: 5,
       thumbnail: '/programs/program_academic.png',
-      description:
-        'Debating club securing champion title at the regional inter-school parliamentary debate competition.',
+      description: isBn
+        ? 'বিভাগীয় আন্তঃস্কুল সংসদীয় বিতর্ক প্রতিযোগিতায় আমাদের বিতার্কিক দলের চ্যাম্পিয়ন হওয়ার গৌরব।'
+        : 'Debating club securing champion title at the regional inter-school parliamentary debate competition.',
       galleryImages: [
         {
           url: '/programs/program_academic.png',
-          caption: 'Debaters receiving the divisional debate championship trophy and best speaker awards.',
+          caption: isBn ? 'বিভাগীয় বিতর্ক চ্যাম্পিয়নশিপ ট্রফি ও সেরা বক্তার পুরস্কার গ্রহণ।' : 'Debaters receiving the divisional debate championship trophy and best speaker awards.',
         },
       ],
     },
-  ];
+  ], [isBn]);
 
   // Dynamic category filter list with exact count calculations
   const categoryFilters = useMemo(() => {
     return [
       {
         id: 'All Albums',
-        label: 'All Albums',
+        label: isBn ? 'সকল অ্যালবাম' : 'All Albums',
         icon: LayoutGrid,
         count: albums.length,
       },
       {
         id: 'Sports & Awards',
-        label: 'Sports & Awards',
+        label: isBn ? 'ক্রীড়া ও পুরস্কার' : 'Sports & Awards',
         icon: Trophy,
-        count: albums.filter((a) => a.category === 'Sports & Awards').length,
+        count: albums.filter((a) => a.filterGroup === 'Sports & Awards').length,
       },
       {
         id: 'Jayanti 2026',
-        label: 'Jayanti 2026',
+        label: isBn ? 'জয়ন্তী ২০২৬' : 'Jayanti 2026',
         icon: Calendar,
-        count: albums.filter((a) => a.category === 'Jayanti 2026').length,
+        count: albums.filter((a) => a.filterGroup === 'Jayanti 2026').length,
       },
       {
         id: 'Leadership',
-        label: 'Leadership',
+        label: isBn ? 'নেতৃত্ব ও পরিষদ' : 'Leadership',
         icon: Users,
-        count: albums.filter((a) => a.category === 'Leadership').length,
+        count: albums.filter((a) => a.filterGroup === 'Leadership').length,
       },
       {
         id: 'Campus Grounds',
-        label: 'Campus Grounds',
+        label: isBn ? 'ক্যাম্পাস প্রাঙ্গণ' : 'Campus Grounds',
         icon: ImageIcon,
-        count: albums.filter((a) => a.category === 'Campus Grounds').length,
+        count: albums.filter((a) => a.filterGroup === 'Campus Grounds').length,
       },
       {
         id: 'Assembly',
-        label: 'Assembly',
+        label: isBn ? 'সমাবেশ ও অনুষ্ঠান' : 'Assembly',
         icon: Megaphone,
-        count: albums.filter((a) => a.category === 'Assembly').length,
+        count: albums.filter((a) => a.filterGroup === 'Assembly').length,
       },
       {
         id: 'Academic & Labs',
-        label: 'Academic & Labs',
+        label: isBn ? 'ল্যাব ও পাঠদান' : 'Academic & Labs',
         icon: FlaskConical,
-        count: albums.filter((a) => a.category === 'Academic & Labs').length,
+        count: albums.filter((a) => a.filterGroup === 'Academic & Labs').length,
       },
       {
         id: 'Others',
-        label: 'Others',
+        label: isBn ? 'অন্যান্য' : 'Others',
         icon: MoreHorizontal,
-        count: albums.filter((a) => a.category === 'Others').length,
+        count: albums.filter((a) => a.filterGroup === 'Others').length,
       },
     ];
-  }, [albums]);
+  }, [albums, isBn]);
 
   // Filtering and sorting logic
   const filteredAndSortedAlbums = useMemo(() => {
     const list = albums.filter((album) => {
       const matchesCategory =
-        selectedCategory === 'All Albums' || album.category === selectedCategory;
+        selectedCategory === 'All Albums' || album.filterGroup === selectedCategory;
       const matchesQuery =
         searchQuery.trim() === '' ||
         album.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -430,10 +452,10 @@ export const Gallery: React.FC = () => {
               className="hover:text-emerald-800 flex items-center gap-1 transition-colors text-emerald-700"
             >
               <Home size={14} />
-              <span>Home</span>
+              <span>{isBn ? 'মূলপাতা' : 'Home'}</span>
             </Link>
             <span className="text-slate-400">›</span>
-            <span className="text-slate-800 font-bold">Photo Albums & Gallery</span>
+            <span className="text-slate-800 font-bold">{isBn ? 'ফটো অ্যালবাম ও গ্যালারি' : 'Photo Albums & Gallery'}</span>
           </div>
 
           {/* Left Narrative Block */}
@@ -441,13 +463,16 @@ export const Gallery: React.FC = () => {
             {/* Tag Pill Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <Camera size={14} />
-              <span>PHOTO GALLERY</span>
+              <span>{isBn ? 'ফটো গ্যালারি' : 'PHOTO GALLERY'}</span>
             </div>
 
             {/* Main Headline (2 lines matching Academic Results & Marksheet) */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              <span className="whitespace-nowrap">Memorable Moments &</span> <br />
-              Albums
+              {isBn ? (
+                <>স্মরণীয় মুহূর্ত ও <br />অ্যালবামসমূহ</>
+              ) : (
+                <><span className="whitespace-nowrap">Memorable Moments &</span> <br />Albums</>
+              )}
             </h1>
 
             {/* Short Green Accent Line Under Title */}
@@ -455,8 +480,9 @@ export const Gallery: React.FC = () => {
 
             {/* Subtitle */}
             <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              Explore photo albums of our sports victories, jubilee celebrations, academic
-              milestones, and campus life.
+              {isBn
+                ? 'আমাদের বার্ষিক ক্রীড়া প্রতিযোগিতা, জয়ন্তী উদযাপন, সাংস্কৃতিক অনুষ্ঠান এবং প্রাত্যহিক ক্যাম্পাস জীবনের বর্ণাঢ্য চিত্রমালা।'
+                : 'Explore photo albums of our sports victories, jubilee celebrations, academic milestones, and campus life.'}
             </p>
           </div>
 
@@ -468,10 +494,10 @@ export const Gallery: React.FC = () => {
               </span>
               <div>
                 <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  Education today for a brighter tomorrow
+                  {isBn ? 'আজকের শিক্ষা, আলোকিত আগামীর প্রত্যয়' : 'Education today for a brighter tomorrow'}
                 </h4>
                 <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — SOS Hermann Gmeiner School
+                  {isBn ? '— এস ও এস হারম্যান মেইনার কলেজ' : '— SOS Hermann Gmeiner School'}
                 </p>
               </div>
             </div>
@@ -503,7 +529,7 @@ export const Gallery: React.FC = () => {
                     isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
                   }`}
                 >
-                  {pill.count}
+                  {toBanglaNum(pill.count)}
                 </span>
               </button>
             );
@@ -520,7 +546,7 @@ export const Gallery: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search albums by title, event or keyword..."
+              placeholder={isBn ? 'অ্যালবাম শিরোনাম, অনুষ্ঠান বা কীওয়ার্ড দিয়ে খুঁজুন...' : 'Search albums by title, event or keyword...'}
               className="w-full px-3.5 py-2 bg-transparent text-xs sm:text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none"
             />
             {searchQuery && (
@@ -528,7 +554,7 @@ export const Gallery: React.FC = () => {
                 onClick={() => setSearchQuery('')}
                 className="pr-3 text-slate-400 hover:text-slate-600 text-xs font-bold"
               >
-                Clear
+                {isBn ? 'মুছুন' : 'Clear'}
               </button>
             )}
           </div>
@@ -538,16 +564,16 @@ export const Gallery: React.FC = () => {
             {/* Sort Dropdown */}
             <div className="relative flex items-center gap-1.5 border border-slate-200 rounded-xl px-3 py-2 bg-white text-xs font-semibold text-slate-700 shadow-2xs">
               <SlidersHorizontal size={13} className="text-slate-500" />
-              <span className="text-slate-400 font-medium">Sort by</span>
+              <span className="text-slate-400 font-medium">{isBn ? 'ক্রমানুসার' : 'Sort by'}</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
                 className="bg-transparent text-slate-800 font-bold focus:outline-none cursor-pointer pr-1"
               >
-                <option value="latest">Latest First</option>
-                <option value="oldest">Oldest First</option>
-                <option value="photos">Most Photos</option>
-                <option value="name">Name (A-Z)</option>
+                <option value="latest">{isBn ? 'সর্বশেষ প্রথম' : 'Latest First'}</option>
+                <option value="oldest">{isBn ? 'প্রাচীনতম প্রথম' : 'Oldest First'}</option>
+                <option value="photos">{isBn ? 'সর্বাধিক ছবি' : 'Most Photos'}</option>
+                <option value="name">{isBn ? 'নাম অনুযায়ী' : 'Name (A-Z)'}</option>
               </select>
             </div>
 
@@ -556,7 +582,7 @@ export const Gallery: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setViewMode('grid')}
-                title="Grid View"
+                title={isBn ? 'গ্রিড ভিউ' : 'Grid View'}
                 className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                   viewMode === 'grid'
                     ? 'bg-[#004d34] text-white shadow-xs'
@@ -568,7 +594,7 @@ export const Gallery: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setViewMode('list')}
-                title="List View"
+                title={isBn ? 'তালিকা ভিউ' : 'List View'}
                 className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                   viewMode === 'list'
                     ? 'bg-[#004d34] text-white shadow-xs'
@@ -608,7 +634,7 @@ export const Gallery: React.FC = () => {
                     {/* Translucent Frosted Glass Camera Badge (Bottom-Left) */}
                     <div className="absolute bottom-2.5 left-2.5 bg-black/60 backdrop-blur-xs text-white px-2.5 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 pointer-events-none shadow-xs">
                       <Camera size={12} className="text-white" />
-                      <span>{album.photosCount} Photos</span>
+                      <span>{toBanglaNum(album.photosCount)} {isBn ? 'টি ছবি' : 'Photos'}</span>
                     </div>
 
                     {/* Floating Top-Right 3-Dots Button */}
@@ -620,7 +646,7 @@ export const Gallery: React.FC = () => {
                           setOpenMenuId(openMenuId === album.id ? null : album.id);
                         }}
                         className="w-7 h-7 rounded-full bg-white/95 backdrop-blur-xs text-slate-700 hover:text-slate-950 flex items-center justify-center shadow-xs transition cursor-pointer"
-                        title="Options"
+                        title={isBn ? 'অপশন' : 'Options'}
                       >
                         <MoreVertical size={13} />
                       </button>
@@ -640,14 +666,18 @@ export const Gallery: React.FC = () => {
                             className="w-full px-3 py-1.5 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
                           >
                             <Eye size={13} className="text-slate-500" />
-                            <span>View Album</span>
+                            <span>{isBn ? 'অ্যালবাম দেখুন' : 'View Album'}</span>
                           </button>
                           <button
                             onClick={() => handleShare(album)}
                             className="w-full px-3 py-1.5 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
                           >
                             <Share2 size={13} className="text-slate-500" />
-                            <span>{copiedId === album.id ? 'Copied!' : 'Share Link'}</span>
+                            <span>
+                              {copiedId === album.id
+                                ? (isBn ? 'কপি হয়েছে!' : 'Copied!')
+                                : (isBn ? 'শেয়ার লিংক কপি' : 'Share Link')}
+                            </span>
                           </button>
                         </div>
                       )}
@@ -693,18 +723,22 @@ export const Gallery: React.FC = () => {
             ) : (
               <div className="col-span-full bg-white rounded-3xl border border-slate-200 p-12 text-center">
                 <AlertCircle size={36} className="mx-auto text-slate-400 mb-2" />
-                <h3 className="text-base font-bold text-slate-800">No albums found</h3>
+                <h3 className="text-base font-bold text-slate-800">
+                  {isBn ? 'কোনো অ্যালবাম পাওয়া যায়নি' : 'No albums found'}
+                </h3>
                 <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
-                  No photo albums match your selected filter or keyword.
+                  {isBn
+                    ? 'আপনার নির্বাচিত ক্যাটাগরি বা কীওয়ার্ডের সাথে কোনো ফটো অ্যালবাম মেলেনি।'
+                    : 'No photo albums match your selected filter or keyword.'}
                 </p>
                 <button
                   onClick={() => {
                     setSelectedCategory('All Albums');
                     setSearchQuery('');
                   }}
-                  className="mt-4 px-4 py-2 rounded-xl bg-[#004d34] text-white text-xs font-bold hover:bg-[#003b28] transition"
+                  className="mt-4 px-4 py-2 rounded-xl bg-[#004d34] text-white text-xs font-bold hover:bg-[#003b28] transition cursor-pointer"
                 >
-                  Reset Filters
+                  {isBn ? 'ফিল্টার রিসেট করুন' : 'Reset Filters'}
                 </button>
               </div>
             )}
@@ -731,7 +765,7 @@ export const Gallery: React.FC = () => {
                         {album.category}
                       </span>
                       <span className="text-xs text-slate-400">
-                        {album.photosCount} Photos
+                        {toBanglaNum(album.photosCount)} {isBn ? 'টি ছবি' : 'Photos'}
                       </span>
                     </div>
                     <h4
@@ -761,7 +795,7 @@ export const Gallery: React.FC = () => {
                     }}
                     className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-[#004d34] text-white hover:bg-[#003b28] transition cursor-pointer shadow-xs"
                   >
-                    <span>View Photos</span>
+                    <span>{isBn ? 'ছবি দেখুন' : 'View Photos'}</span>
                     <ArrowRight size={13} />
                   </button>
                 </div>
@@ -795,7 +829,7 @@ export const Gallery: React.FC = () => {
               <button
                 onClick={() => setActiveAlbum(null)}
                 className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition cursor-pointer"
-                title="Close"
+                title={isBn ? 'বন্ধ করুন' : 'Close'}
               >
                 <X size={18} />
               </button>
@@ -821,7 +855,7 @@ export const Gallery: React.FC = () => {
                     )
                   }
                   className="absolute left-4 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/50 hover:bg-black/80 text-white transition cursor-pointer"
-                  title="Previous Photo"
+                  title={isBn ? 'পূর্ববর্তী ছবি' : 'Previous Photo'}
                 >
                   <ChevronLeft size={20} />
                 </button>
@@ -837,7 +871,7 @@ export const Gallery: React.FC = () => {
                     )
                   }
                   className="absolute right-4 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/50 hover:bg-black/80 text-white transition cursor-pointer"
-                  title="Next Photo"
+                  title={isBn ? 'পরবর্তী ছবি' : 'Next Photo'}
                 >
                   <ChevronRight size={20} />
                 </button>
@@ -850,7 +884,7 @@ export const Gallery: React.FC = () => {
                     activeAlbum.description}
                 </span>
                 <span className="text-xs text-slate-300 font-bold shrink-0 ml-4">
-                  {activePhotoIndex + 1} / {activeAlbum.galleryImages.length}
+                  {toBanglaNum(activePhotoIndex + 1)} / {toBanglaNum(activeAlbum.galleryImages.length)}
                 </span>
               </div>
             </div>
@@ -859,7 +893,7 @@ export const Gallery: React.FC = () => {
             <div className="bg-slate-50 px-6 py-3.5 border-t border-slate-200 flex items-center justify-between">
               <div className="flex items-center gap-2 text-xs text-slate-500 font-semibold">
                 <Calendar size={14} className="text-emerald-700" />
-                <span>Event Date: {activeAlbum.date}</span>
+                <span>{isBn ? 'অনুষ্ঠানের তারিখ:' : 'Event Date:'} {activeAlbum.date}</span>
               </div>
 
               <div className="flex items-center gap-2">
@@ -869,14 +903,18 @@ export const Gallery: React.FC = () => {
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-700 bg-white border border-slate-200 hover:bg-slate-100 transition cursor-pointer"
                 >
                   <Share2 size={13} />
-                  <span>{copiedId === activeAlbum.id ? 'Copied Link' : 'Share'}</span>
+                  <span>
+                    {copiedId === activeAlbum.id
+                      ? (isBn ? 'লিংক কপি হয়েছে!' : 'Copied Link')
+                      : (isBn ? 'শেয়ার' : 'Share')}
+                  </span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setActiveAlbum(null)}
                   className="px-4 py-1.5 rounded-xl bg-[#004d34] text-white text-xs font-bold hover:bg-[#003b28] transition cursor-pointer shadow-xs"
                 >
-                  Close
+                  {isBn ? 'বন্ধ করুন' : 'Close'}
                 </button>
               </div>
             </div>

@@ -17,7 +17,12 @@ import {
   X
 } from 'lucide-react';
 
+import { useLanguage } from '../contexts/LanguageContext';
+
 export const Contact: React.FC = () => {
+  const { language, toBanglaNum } = useLanguage();
+  const isBn = language === 'bn';
+
   const [formData, setFormData] = useState({
     name: '',
     mobile: '',
@@ -107,10 +112,12 @@ export const Contact: React.FC = () => {
               className="hover:text-emerald-800 flex items-center gap-1 transition-colors text-emerald-700"
             >
               <Home size={14} />
-              <span>Home</span>
+              <span>{isBn ? 'মূলপাতা' : 'Home'}</span>
             </Link>
             <span className="text-slate-400">›</span>
-            <span className="text-slate-800 font-bold">Contact & Campus Location</span>
+            <span className="text-slate-800 font-bold">
+              {isBn ? 'যোগাযোগ ও ক্যাম্পাসের অবস্থান' : 'Contact & Campus Location'}
+            </span>
           </div>
 
           {/* Left Narrative Block */}
@@ -118,12 +125,12 @@ export const Contact: React.FC = () => {
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <MapPin size={14} />
-              <span>GET IN TOUCH</span>
+              <span>{isBn ? 'যোগাযোগ করুন' : 'GET IN TOUCH'}</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              Contact Us
+              {isBn ? 'আমাদের সাথে যোগাযোগ' : 'Contact Us'}
             </h1>
 
             {/* Short Green Accent Line Under Title */}
@@ -131,8 +138,9 @@ export const Contact: React.FC = () => {
 
             {/* Subtitle */}
             <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              We are here to help you. Reach out for any inquiries, suggestions, or general
-              information.
+              {isBn
+                ? 'আমরা সবসময় আপনার সেবায় প্রস্তুত। যেকোনো জিজ্ঞাসা, পরামর্শ বা তথ্যের জন্য সরাসরি আমাদের সাথে যোগাযোগ করুন।'
+                : 'We are here to help you. Reach out for any inquiries, suggestions, or general information.'}
             </p>
           </div>
 
@@ -144,10 +152,10 @@ export const Contact: React.FC = () => {
               </span>
               <div>
                 <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  Education today for a brighter tomorrow
+                  {isBn ? 'আজকের শিক্ষা, আলোকিত আগামীর প্রত্যয়' : 'Education today for a brighter tomorrow'}
                 </h4>
                 <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — SOS Hermann Gmeiner School
+                  {isBn ? '— এস ও এস হারম্যান মেইনার কলেজ' : '— SOS Hermann Gmeiner School'}
                 </p>
               </div>
             </div>
@@ -167,11 +175,13 @@ export const Contact: React.FC = () => {
                   <MapPin size={20} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900 text-sm leading-snug">Our Location</h3>
+                  <h3 className="font-bold text-slate-900 text-sm leading-snug">
+                    {isBn ? 'আমাদের অবস্থান' : 'Our Location'}
+                  </h3>
                   <p className="text-xs text-slate-500 mt-0.5 leading-snug">
-                    Gollamari, Khulna - 9208
+                    {isBn ? 'গল্লামারী, খুলনা - ৯২০৮' : 'Gollamari, Khulna - 9208'}
                   </p>
-                  <p className="text-xs text-slate-400">Bangladesh</p>
+                  <p className="text-xs text-slate-400">{isBn ? 'বাংলাদেশ' : 'Bangladesh'}</p>
                 </div>
               </div>
               <ChevronRight
@@ -187,11 +197,15 @@ export const Contact: React.FC = () => {
                   <Phone size={20} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900 text-sm leading-snug">Call Us</h3>
+                  <h3 className="font-bold text-slate-900 text-sm leading-snug">
+                    {isBn ? 'ফোন করুন' : 'Call Us'}
+                  </h3>
                   <p className="text-xs font-bold text-slate-800 mt-0.5 leading-snug">
-                    024-77726775
+                    {isBn ? '০২৪-৭৭৭২৬৭৭৫' : '024-77726775'}
                   </p>
-                  <p className="text-[11px] text-slate-400 font-medium">EIIN: 117188</p>
+                  <p className="text-[11px] text-slate-400 font-medium">
+                    {isBn ? 'ইআইআইএন: ১১৭১৮৮' : 'EIIN: 117188'}
+                  </p>
                 </div>
               </div>
               <ChevronRight
@@ -207,12 +221,14 @@ export const Contact: React.FC = () => {
                   <Mail size={20} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900 text-sm leading-snug">Email Us</h3>
+                  <h3 className="font-bold text-slate-900 text-sm leading-snug">
+                    {isBn ? 'ইমেইল করুন' : 'Email Us'}
+                  </h3>
                   <p className="text-xs font-bold text-slate-800 mt-0.5 leading-snug break-all">
                     soshgskhu@sos-bangladesh.org
                   </p>
                   <p className="text-[11px] text-slate-400 mt-0.5">
-                    We usually respond within 24 hours
+                    {isBn ? 'আমরা সাধারণত ২৪ ঘণ্টার মধ্যে উত্তর দিয়ে থাকি' : 'We usually respond within 24 hours'}
                   </p>
                 </div>
               </div>
@@ -228,11 +244,15 @@ export const Contact: React.FC = () => {
                 <Clock size={20} />
               </div>
               <div>
-                <h3 className="font-bold text-slate-900 text-sm leading-snug">Office Hours</h3>
+                <h3 className="font-bold text-slate-900 text-sm leading-snug">
+                  {isBn ? 'অফিস সময়সূচি' : 'Office Hours'}
+                </h3>
                 <p className="text-xs text-slate-600 mt-0.5 leading-snug">
-                  Sunday - Thursday: 9:00 AM - 4:00 PM
+                  {isBn ? 'রবিবার - বৃহস্পতিবার: সকাল ৯:০০ - বিকাল ৪:০০' : 'Sunday - Thursday: 9:00 AM - 4:00 PM'}
                 </p>
-                <p className="text-xs font-bold text-red-500 mt-1">Friday: Closed</p>
+                <p className="text-xs font-bold text-red-500 mt-1">
+                  {isBn ? 'শুক্রবার: সাপ্তাহিক ছুটি' : 'Friday: Closed'}
+                </p>
               </div>
             </div>
 
@@ -241,7 +261,7 @@ export const Contact: React.FC = () => {
               <div className="flex items-center gap-2">
                 <MapPin size={15} className="text-emerald-700" />
                 <h3 className="font-bold text-slate-900 text-xs uppercase tracking-wider">
-                  Find Us on Map
+                  {isBn ? 'মানচিত্রে খুঁজুন' : 'Find Us on Map'}
                 </h3>
               </div>
 
@@ -329,7 +349,7 @@ export const Contact: React.FC = () => {
                 {/* Animated Red Pin Indicator */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full flex flex-col items-center pointer-events-none">
                   <div className="bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-md shadow-md border border-slate-200 text-[10px] font-bold text-slate-800 whitespace-nowrap mb-1">
-                    SOS Hermann Gmeiner School Khulna
+                    {isBn ? 'এস ও এস হারম্যান মেইনার কলেজ খুলনা' : 'SOS Hermann Gmeiner School Khulna'}
                   </div>
                   <div className="w-5 h-5 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg ring-4 ring-red-400/40 animate-bounce">
                     <div className="w-1.5 h-1.5 rounded-full bg-white" />
@@ -344,7 +364,7 @@ export const Contact: React.FC = () => {
                   className="absolute bottom-2.5 right-2.5 bg-[#007a4d] hover:bg-[#004d34] text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition active:scale-95"
                 >
                   <ExternalLink size={12} />
-                  <span>Open in Google Maps</span>
+                  <span>{isBn ? 'গুগল ম্যাপে দেখুন' : 'Open in Google Maps'}</span>
                 </a>
               </div>
             </div>
@@ -360,10 +380,12 @@ export const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h2 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight leading-snug">
-                    Send us a Message
+                    {isBn ? 'বার্তা পাঠান' : 'Send us a Message'}
                   </h2>
                   <p className="text-xs sm:text-sm text-slate-500 mt-0.5 font-medium">
-                    Fill out the form below and we will get back to you as soon as possible.
+                    {isBn
+                      ? 'নিচের ফরমটি পূরণ করুন, আমরা দ্রুত আপনার সাথে যোগাযোগ করব।'
+                      : 'Fill out the form below and we will get back to you as soon as possible.'}
                   </p>
                 </div>
               </div>
@@ -371,7 +393,11 @@ export const Contact: React.FC = () => {
               {/* Blue Alert Pill Banner */}
               <div className="bg-[#edf5ff] border border-[#d6e7ff] text-[#0052cc] rounded-2xl p-3 sm:p-3.5 flex items-center gap-2.5 text-xs font-semibold">
                 <Info size={16} className="text-blue-600 shrink-0" />
-                <span>For urgent inquiries, please call us directly during office hours.</span>
+                <span>
+                  {isBn
+                    ? 'জরুরি প্রয়োজনে অফিস চলাকালীন সরাসরি আমাদের হটলাইনে ফোন করার অনুরোধ করা হচ্ছে।'
+                    : 'For urgent inquiries, please call us directly during office hours.'}
+                </span>
               </div>
 
               {/* Main Interactive Form */}
@@ -381,7 +407,7 @@ export const Contact: React.FC = () => {
                   {/* Your Name */}
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-slate-700 block">
-                      Your Name <span className="text-red-500">*</span>
+                      {isBn ? 'আপনার পূর্ণ নাম' : 'Your Name'} <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
                       <User
@@ -394,7 +420,7 @@ export const Contact: React.FC = () => {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        placeholder="Enter your full name"
+                        placeholder={isBn ? 'আপনার নাম লিখুন' : 'Enter your full name'}
                         className="w-full pl-9 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#004d34] focus:ring-1 focus:ring-[#004d34] transition"
                       />
                     </div>
@@ -403,7 +429,7 @@ export const Contact: React.FC = () => {
                   {/* Mobile Number */}
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-slate-700 block">
-                      Mobile Number <span className="text-red-500">*</span>
+                      {isBn ? 'মোবাইল নম্বর' : 'Mobile Number'} <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
                       <Phone
@@ -416,7 +442,7 @@ export const Contact: React.FC = () => {
                         required
                         value={formData.mobile}
                         onChange={handleChange}
-                        placeholder="017XXXXXXXX"
+                        placeholder={isBn ? '০১XXXXXXXXX' : '017XXXXXXXX'}
                         className="w-full pl-9 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#004d34] focus:ring-1 focus:ring-[#004d34] transition"
                       />
                     </div>
@@ -428,7 +454,7 @@ export const Contact: React.FC = () => {
                   {/* Email Address */}
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-slate-700 block">
-                      Email Address
+                      {isBn ? 'ইমেইল ঠিকানা' : 'Email Address'}
                     </label>
                     <div className="relative">
                       <Mail
@@ -449,7 +475,7 @@ export const Contact: React.FC = () => {
                   {/* Subject Dropdown */}
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-slate-700 block">
-                      Subject <span className="text-red-500">*</span>
+                      {isBn ? 'বিষয়' : 'Subject'} <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
                       <List
@@ -463,16 +489,20 @@ export const Contact: React.FC = () => {
                         onChange={handleChange}
                         className="w-full pl-9 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-800 focus:outline-none focus:border-[#004d34] focus:ring-1 focus:ring-[#004d34] transition appearance-none cursor-pointer"
                       >
-                        <option value="">Select or type your subject</option>
-                        <option value="Admission Inquiry">Admission Inquiry</option>
+                        <option value="">{isBn ? 'বিষয় নির্বাচন করুন' : 'Select or type your subject'}</option>
+                        <option value="Admission Inquiry">{isBn ? 'ভর্তি সংক্রান্ত তথ্য' : 'Admission Inquiry'}</option>
                         <option value="Academic Curriculum & Routine">
-                          Academic Curriculum & Routine
+                          {isBn ? 'সিলেবাস ও ক্লাস রুটিন' : 'Academic Curriculum & Routine'}
                         </option>
-                        <option value="Fee Payment & Accounts">Fee Payment & Accounts</option>
+                        <option value="Fee Payment & Accounts">
+                          {isBn ? 'বেতন ও হিসাব শাখা' : 'Fee Payment & Accounts'}
+                        </option>
                         <option value="Transfer Certificate (TC)">
-                          Transfer Certificate (TC)
+                          {isBn ? 'ছাড়পত্র বা টিসি (TC)' : 'Transfer Certificate (TC)'}
                         </option>
-                        <option value="General Query or Feedback">General Query or Feedback</option>
+                        <option value="General Query or Feedback">
+                          {isBn ? 'সাধারণ জিজ্ঞাসা বা মতামত' : 'General Query or Feedback'}
+                        </option>
                       </select>
                       <ChevronRight
                         size={15}
@@ -485,7 +515,7 @@ export const Contact: React.FC = () => {
                 {/* Row 3: Message Textarea */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-700 block">
-                    Message <span className="text-red-500">*</span>
+                    {isBn ? 'আপনার বার্তা' : 'Message'} <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <Send
@@ -499,11 +529,11 @@ export const Contact: React.FC = () => {
                       maxLength={500}
                       value={formData.message}
                       onChange={handleChange}
-                      placeholder="Write your message here..."
+                      placeholder={isBn ? 'আপনার বার্তাটি এখানে লিখুন...' : 'Write your message here...'}
                       className="w-full pl-9 pr-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#004d34] focus:ring-1 focus:ring-[#004d34] transition resize-none"
                     />
                     <div className="text-right text-[11px] text-slate-400 mt-1 font-medium">
-                      {formData.message.length}/500
+                      {toBanglaNum(formData.message.length)}/{toBanglaNum('500')}
                     </div>
                   </div>
                 </div>
@@ -514,7 +544,7 @@ export const Contact: React.FC = () => {
                   className="w-full py-3.5 px-6 rounded-2xl bg-[#004d34] hover:bg-[#003b28] text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-xs transition-all active:scale-[0.99] cursor-pointer"
                 >
                   <Send size={16} />
-                  <span>Send Message</span>
+                  <span>{isBn ? 'বার্তা পাঠান' : 'Send Message'}</span>
                 </button>
               </form>
             </div>
@@ -537,17 +567,25 @@ export const Contact: React.FC = () => {
             </div>
 
             <h3 className="text-xl font-black text-slate-900 tracking-tight">
-              Message Sent Successfully!
+              {isBn ? 'বার্তা সফলভাবে পাঠানো হয়েছে!' : 'Message Sent Successfully!'}
             </h3>
 
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Thank you, <strong className="text-slate-900">{formData.name}</strong>. Your message
-              has been received. Our administrative desk will reach back to you at{' '}
-              <strong className="text-slate-900">{formData.mobile}</strong> shortly.
+              {isBn ? (
+                <>
+                  ধন্যবাদ, <strong className="text-slate-900">{formData.name}</strong>। আপনার বার্তাটি আমরা পেয়েছি। আমাদের প্রশাসনিক দল খুব শীঘ্রই <strong className="text-slate-900">{toBanglaNum(formData.mobile)}</strong> নম্বরে আপনার সাথে যোগাযোগ করবে।
+                </>
+              ) : (
+                <>
+                  Thank you, <strong className="text-slate-900">{formData.name}</strong>. Your message
+                  has been received. Our administrative desk will reach back to you at{' '}
+                  <strong className="text-slate-900">{formData.mobile}</strong> shortly.
+                </>
+              )}
             </p>
 
             <div className="bg-slate-50 rounded-2xl p-3.5 border border-slate-200 text-xs text-slate-600">
-              <span>Tracking Reference: </span>
+              <span>{isBn ? 'ট্র্যাকিং রেফারেন্স: ' : 'Tracking Reference: '}</span>
               <strong className="text-emerald-800 font-mono font-bold">{ticketId}</strong>
             </div>
 
@@ -556,7 +594,7 @@ export const Contact: React.FC = () => {
               onClick={handleReset}
               className="w-full py-3 rounded-xl bg-[#004d34] text-white text-xs font-bold hover:bg-[#003b28] transition cursor-pointer shadow-xs"
             >
-              Done & Close
+              {isBn ? 'ঠিক আছে ও বন্ধ করুন' : 'Done & Close'}
             </button>
           </div>
         </div>

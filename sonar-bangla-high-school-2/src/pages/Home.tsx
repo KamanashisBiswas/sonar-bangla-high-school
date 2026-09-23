@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
-  Sparkles,
   BookOpen,
   Calendar,
   Bell,
@@ -11,21 +10,16 @@ import {
   Play,
   Heart,
   Globe,
-  Quote,
   Megaphone,
   ChevronLeft,
   ChevronRight,
   GraduationCap,
   Users,
   ShieldCheck,
-  Trophy,
   Activity,
-  Palette,
-  Eye,
 } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 import {
-  SCHOOL_INFO,
-  PROGRAMS,
   CAMPUS_LIFE_PHOTOS,
   LEADERSHIP,
   NEWS_EVENTS,
@@ -33,9 +27,23 @@ import {
 } from '../data/schoolData';
 
 export const Home: React.FC = () => {
+  const { language, t, toBanglaNum } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const heroQuotes = [
+  const heroQuotes = language === 'bn' ? [
+    {
+      quote: 'প্রতিটি শিশুর ভালোবাসাপূর্ণ একটি ঘর এবং একটি উজ্জ্বল ভবিষ্যৎ গড়ার সুযোগ পাওয়ার অধিকার রয়েছে।',
+      author: 'ড. হারম্যান মেইনার',
+    },
+    {
+      quote: 'শিক্ষা হলো সবচেয়ে শক্তিশালী হাতিয়ার যা আপনি বিশ্বকে পরিবর্তন করতে ব্যবহার করতে পারেন।',
+      author: 'নেলসন ম্যান্ডেলা',
+    },
+    {
+      quote: 'প্রতিটি শিশুর জন্য একটি ভালোবাসাপূর্ণ ঘর, আলোকিত ভবিষ্যতের জন্য মানসম্মত শিক্ষা।',
+      author: 'এস ও এস চিলড্রেনস ভিলেজেস',
+    },
+  ] : [
     {
       quote:
         'Every child deserves a loving home and the chance to build a brighter tomorrow.',
@@ -53,7 +61,33 @@ export const Home: React.FC = () => {
     },
   ];
 
-  const tickerNotices = [
+  const tickerNotices = language === 'bn' ? [
+    {
+      title: '২০২৬ শিক্ষাবর্ষে প্রেপ-১ ও ১ম শ্রেণিতে অনলাইন ভর্তি আবেদন কার্যক্রম চলছে।',
+      date: '০১ সেপ্টেম্বর ২০২৫',
+      link: '/admission',
+    },
+    {
+      title: 'গ্রীষ্মকালীন অবকাশ ও ছুটির বিজ্ঞপ্তি ২০২৫।',
+      date: '১২ সেপ্টেম্বর ২০২৫',
+      link: '/notices',
+    },
+    {
+      title: 'এস.এস.সি পরীক্ষা ২০২৫ এর ফলাফল ও মার্কশিট সংগ্রহ সংক্রান্ত।',
+      date: '১০ সেপ্টেম্বর ২০২৫',
+      link: '/notices',
+    },
+    {
+      title: 'বার্ষিক ক্রীড়া ও সাংস্কৃতিক প্রতিযোগিতা ২০২৫ এর সময়সূচি প্রকাশ।',
+      date: '২০ সেপ্টেম্বর ২০২৫',
+      link: '/notices',
+    },
+    {
+      title: 'বিজ্ঞান মেলা ও আইসিটি উদ্ভাবন প্রদর্শনীর নিবন্ধন চলছে।',
+      date: '০৫ অক্টোবর ২০২৫',
+      link: '/notices',
+    },
+  ] : [
     {
       title: 'Online Admission for Class 1 (Session 2026) is now open.',
       date: '01 Sep 2025',
@@ -98,58 +132,44 @@ export const Home: React.FC = () => {
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                'linear-gradient(to right, #ffffff 0%, #ffffff 28%, rgba(255,255,255,0.96) 36%, rgba(255,255,255,0.6) 44%, rgba(255,255,255,0.15) 52%, rgba(255,255,255,0) 60%)',
+                'linear-gradient(to right, #ffffff 0%, #ffffff 32%, rgba(255,255,255,0.92) 48%, rgba(255,255,255,0.45) 68%, rgba(255,255,255,0) 88%)',
             }}
           />
 
-          {/* 2. Bottom Stats White Fade: Solid up to 100% Heart for Children box (52%), then gradually decreasing opacity to 75% */}
-          <div
-            className="absolute bottom-0 left-0 w-full h-[260px] sm:h-[290px] lg:h-[320px] pointer-events-none"
-            style={{
-              background:
-                'linear-gradient(to right, #ffffff 0%, #ffffff 52%, rgba(255,255,255,0.92) 57%, rgba(255,255,255,0.6) 64%, rgba(255,255,255,0.2) 71%, rgba(255,255,255,0) 77%)',
-              WebkitMaskImage:
-                'linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0.92) 55%, rgba(0,0,0,0.55) 75%, rgba(0,0,0,0.15) 90%, rgba(0,0,0,0) 100%)',
-              maskImage:
-                'linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0.92) 55%, rgba(0,0,0,0.55) 75%, rgba(0,0,0,0.15) 90%, rgba(0,0,0,0) 100%)',
-            }}
-          />
-
-          {/* 3. Soft upward blend feathering into building stairs alcove */}
-          <div
-            className="absolute bottom-0 left-0 w-[65%] h-[340px] pointer-events-none"
-            style={{
-              background:
-                'radial-gradient(ellipse 90% 70% at 25% 100%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 45%, rgba(255,255,255,0.3) 70%, rgba(255,255,255,0) 100%)',
-            }}
-          />
+          {/* 2. Bottom Vertical White Fade (Soft blend into page body) */}
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white via-white/70 to-transparent pointer-events-none" />
         </div>
 
-        {/* Hero Content Container */}
-        <div className="container mx-auto relative z-10 pt-12 sm:pt-16 pb-8 flex-1 flex flex-col justify-between">
-          {/* Upper Content: Text on Left (Building fully visible in Center & Right) */}
-          <div className="max-w-xl space-y-5">
-            {/* Category Tracker */}
-            <div className="flex items-center gap-2 text-[11px] sm:text-xs font-black uppercase tracking-[0.2em] text-[#059669]">
-              <span>EDUCATION</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#059669]" />
-              <span>CHARACTER</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#059669]" />
-              <span>A BRIGHTER FUTURE</span>
+        {/* Hero Interactive Content Overlay */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-8 relative z-10 flex flex-col justify-between flex-1">
+          {/* Upper Content: Headlines & Call to Actions */}
+          <div className="max-w-xl lg:max-w-2xl space-y-4">
+            {/* Soft Green Pill Tag */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#e8f7ee] border border-[#a7f3d0] text-[#004d34] text-[11px] sm:text-xs font-bold tracking-wide shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-[#059669] animate-pulse" />
+              <span>{t.home.heroBadge}</span>
             </div>
 
             {/* Big Bold Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[56px] xl:text-[62px] font-black text-slate-900 tracking-tight leading-[1.04]">
-              Nurturing <br />
-              Young Minds <br />
-              <span className="text-[#058c58]">for a Better World</span>
+              {language === 'bn' ? (
+                <>
+                  জ্ঞানের আলোয় <br />
+                  আলোকিত শিশু <br />
+                  <span className="text-[#058c58]">উন্নত আগামীর প্রত্যয়</span>
+                </>
+              ) : (
+                <>
+                  Nurturing <br />
+                  Young Minds <br />
+                  <span className="text-[#058c58]">for a Better World</span>
+                </>
+              )}
             </h1>
 
             {/* Subtitle */}
             <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed max-w-md font-normal">
-              SOS Hermann Gmeiner School Khulna provides quality education,
-              care and a values-based learning environment to help children grow
-              into responsible global citizens.
+              {t.home.heroSubtitle}
             </p>
 
             {/* Action Buttons */}
@@ -158,7 +178,7 @@ export const Home: React.FC = () => {
                 to="/admission"
                 className="inline-flex items-center gap-2 bg-[#004d34] hover:bg-[#064e3b] text-white px-6 py-3.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-md hover:shadow-lg cursor-pointer"
               >
-                <span>Apply for Admission</span>
+                <span>{t.home.applyNow}</span>
                 <ArrowRight size={14} />
               </Link>
 
@@ -166,7 +186,7 @@ export const Home: React.FC = () => {
                 to="/about"
                 className="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-7 py-3.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-2xs hover:shadow cursor-pointer"
               >
-                <span>Learn More</span>
+                <span>{language === 'bn' ? 'বিদ্যালয়ের পরিচিতি' : 'Learn More'}</span>
               </Link>
             </div>
           </div>
@@ -182,10 +202,10 @@ export const Home: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight leading-none">
-                    1987
+                    {toBanglaNum('1987')}
                   </h4>
                   <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                    Established
+                    {language === 'bn' ? 'স্থাপিত' : 'Established'}
                   </p>
                 </div>
               </div>
@@ -197,10 +217,10 @@ export const Home: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight leading-none">
-                    117188+
+                    {toBanglaNum('117188')}
                   </h4>
                   <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                    Lives Touched
+                    {language === 'bn' ? 'EIIN নম্বর' : 'EIIN Number'}
                   </p>
                 </div>
               </div>
@@ -212,10 +232,10 @@ export const Home: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight leading-none">
-                    25+
+                    {toBanglaNum('25+')}
                   </h4>
                   <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                    Qualified Teachers
+                    {t.home.teachersCount}
                   </p>
                 </div>
               </div>
@@ -227,10 +247,10 @@ export const Home: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight leading-none">
-                    1200+
+                    {toBanglaNum('1200+')}
                   </h4>
                   <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                    Students
+                    {t.home.studentsCount}
                   </p>
                 </div>
               </div>
@@ -242,10 +262,10 @@ export const Home: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight leading-none">
-                    100%
+                    {toBanglaNum('100%')}
                   </h4>
                   <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                    Heart for Children
+                    {t.home.passRate}
                   </p>
                 </div>
               </div>
@@ -257,10 +277,10 @@ export const Home: React.FC = () => {
                 <span className="text-2xl font-serif text-white/90 leading-none select-none">“</span>
                 <div>
                   <p className="text-xs font-medium leading-snug text-emerald-50">
-                    {heroQuotes[currentSlide].quote}
+                    {heroQuotes[currentSlide % heroQuotes.length].quote}
                   </p>
                   <p className="text-[10px] text-emerald-300 font-semibold mt-1.5">
-                    — {heroQuotes[currentSlide].author}
+                    — {heroQuotes[currentSlide % heroQuotes.length].author}
                   </p>
                 </div>
               </div>
@@ -276,11 +296,11 @@ export const Home: React.FC = () => {
                 </button>
 
                 <div className="flex items-center gap-1.5">
-                  {[0, 1, 2, 3].map((idx) => (
+                  {[0, 1, 2].map((idx) => (
                     <span
                       key={idx}
                       className={`h-1.5 rounded-full transition-all ${
-                        idx === currentSlide % 4
+                        idx === currentSlide % 3
                           ? 'bg-white w-4'
                           : 'bg-white/40 w-1.5'
                       }`}
@@ -302,7 +322,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 3. 5-CARD QUICK ACTION ROW (Exact matching Image) */}
-      <div className="container mx-auto mt-8">
+      <div className="container mx-auto mt-8 px-4 sm:px-6 lg:px-8">
         <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
           {/* Card 1: Online Admission */}
           <Link
@@ -315,10 +335,10 @@ export const Home: React.FC = () => {
               </div>
               <div className="min-w-0">
                 <h4 className="font-bold text-slate-900 text-xs sm:text-sm truncate group-hover:text-[#004d34]">
-                  Online Admission
+                  {t.home.quickOnlineAdmission}
                 </h4>
                 <p className="text-[10px] text-slate-400 truncate">
-                  Apply in a few steps
+                  {t.home.quickOnlineAdmissionDesc}
                 </p>
               </div>
             </div>
@@ -338,10 +358,10 @@ export const Home: React.FC = () => {
               </div>
               <div className="min-w-0">
                 <h4 className="font-bold text-slate-900 text-xs sm:text-sm truncate group-hover:text-[#004d34]">
-                  Class Routine
+                  {t.home.quickClassRoutine}
                 </h4>
                 <p className="text-[10px] text-slate-400 truncate">
-                  View class schedules
+                  {t.home.quickClassRoutineDesc}
                 </p>
               </div>
             </div>
@@ -361,10 +381,10 @@ export const Home: React.FC = () => {
               </div>
               <div className="min-w-0">
                 <h4 className="font-bold text-slate-900 text-xs sm:text-sm truncate group-hover:text-[#004d34]">
-                  Notice Board
+                  {t.home.quickNoticeBoard}
                 </h4>
                 <p className="text-[10px] text-slate-400 truncate">
-                  Latest announcements
+                  {t.home.quickNoticeBoardDesc}
                 </p>
               </div>
             </div>
@@ -384,10 +404,10 @@ export const Home: React.FC = () => {
               </div>
               <div className="min-w-0">
                 <h4 className="font-bold text-slate-900 text-xs sm:text-sm truncate group-hover:text-[#004d34]">
-                  Academic Calendar
+                  {t.home.quickAcademicCalendar}
                 </h4>
                 <p className="text-[10px] text-slate-400 truncate">
-                  Important dates
+                  {t.home.quickAcademicCalendarDesc}
                 </p>
               </div>
             </div>
@@ -407,10 +427,10 @@ export const Home: React.FC = () => {
               </div>
               <div className="min-w-0">
                 <h4 className="font-bold text-slate-900 text-xs sm:text-sm truncate group-hover:text-[#004d34]">
-                  Contact & Support
+                  {t.home.quickContactSupport}
                 </h4>
                 <p className="text-[10px] text-slate-400 truncate">
-                  We're here to help
+                  {t.home.quickContactSupportDesc}
                 </p>
               </div>
             </div>
@@ -422,7 +442,7 @@ export const Home: React.FC = () => {
       </div>
 
       {/* 4. ABOUT OUR SCHOOL: A HOME FOR LEARNING, A FUTURE OF POSSIBILITIES */}
-      <div className="container mx-auto mt-14">
+      <div className="container mx-auto mt-14 px-4 sm:px-6 lg:px-8">
         <section className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-xs">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             {/* Left: Video Thumbnail */}
@@ -437,30 +457,24 @@ export const Home: React.FC = () => {
                   <Play size={20} className="fill-white translate-x-0.5" />
                 </div>
                 <span className="text-xs font-bold tracking-wider">
-                  Watch Our Story
+                  {t.home.watchVideo}
                 </span>
-                <span className="text-[10px] text-slate-300">1:45 minutes</span>
+                <span className="text-[10px] text-slate-300">{t.home.videoDuration}</span>
               </div>
             </div>
 
             {/* Middle: Narrative & CTA */}
             <div className="lg:col-span-4 space-y-3.5">
               <div className="inline-flex items-center gap-1.5 text-[#059669] text-[11px] font-extrabold uppercase tracking-wider">
-                <span>ABOUT OUR SCHOOL</span>
+                <span>{t.home.aboutTag}</span>
               </div>
 
               <h3 className="text-2xl font-black text-slate-900 tracking-tight leading-snug">
-                A Home for Learning, <br />
-                A Future of Possibilities
+                {t.home.aboutTitle}
               </h3>
 
               <p className="text-xs text-slate-600 leading-relaxed font-normal">
-                SOS Hermann Gmeiner School Khulna is a premier educational
-                institution founded in <strong className="text-slate-900">1987</strong> at
-                Gollamari, Khulna under SOS Children's Villages International.
-                We provide a safe, loving and disciplined environment with modern
-                education, moral values and co-curricular activities for holistic
-                development.
+                {t.home.aboutDesc}
               </p>
 
               <div className="pt-2">
@@ -468,7 +482,7 @@ export const Home: React.FC = () => {
                   to="/about"
                   className="inline-flex items-center gap-1.5 bg-white hover:bg-emerald-50 text-[#004d34] border border-slate-300/80 px-4 py-2 rounded-xl text-xs font-bold transition shadow-2xs"
                 >
-                  <span>Read Full History</span>
+                  <span>{t.home.readHistory}</span>
                   <ArrowRight size={13} />
                 </Link>
               </div>
@@ -479,23 +493,23 @@ export const Home: React.FC = () => {
               {[
                 {
                   icon: <Users size={16} />,
-                  title: 'Value-Based Education',
-                  desc: 'Integrity, respect, empathy',
+                  title: t.home.featureValTitle,
+                  desc: t.home.featureValDesc,
                 },
                 {
                   icon: <Activity size={16} />,
-                  title: 'Holistic Development',
-                  desc: 'Academic, sports, arts & life skills',
+                  title: t.home.featureDevTitle,
+                  desc: t.home.featureDevDesc,
                 },
                 {
                   icon: <ShieldCheck size={16} />,
-                  title: 'Safe & Green Campus',
-                  desc: 'A secure and nurturing environment',
+                  title: t.home.featureCampusTitle,
+                  desc: t.home.featureCampusDesc,
                 },
                 {
                   icon: <Globe size={16} />,
-                  title: 'Global Perspective',
-                  desc: 'Preparing responsible global citizens',
+                  title: t.home.featureGlobalTitle,
+                  desc: t.home.featureGlobalDesc,
                 },
               ].map((val, idx) => (
                 <div
@@ -520,26 +534,28 @@ export const Home: React.FC = () => {
         </section>
       </div>
 
-      {/* 5. OUR PROGRAMS: ACADEMIC & CO-CURRICULAR EXCELLENCE (Exact Match to Reference Screenshot) */}
-      <section className="w-full bg-[#f0faf5] pt-16 pb-14 mt-16 border-t border-emerald-100/40">
-        <div className="container mx-auto">
+      {/* 5. OUR PROGRAMS: ACADEMIC & CO-CURRICULAR EXCELLENCE */}
+      <div className="container mx-auto mt-14 sm:mt-16 px-4 sm:px-6 lg:px-8">
+        <section>
           {/* Centered Heading Block */}
           <div className="text-center max-w-2xl mx-auto space-y-1.5">
             <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
-              OUR PROGRAMS
+              {language === 'bn' ? 'আমাদের কার্যক্রম' : 'OUR PROGRAMS'}
             </span>
             <h2 className="text-3xl lg:text-[34px] font-black text-slate-900 tracking-tight leading-snug">
-              Academic & Co-Curricular Excellence
+              {language === 'bn' ? 'একাডেমিক ও সহশিক্ষা উৎকর্ষ' : 'Academic & Co-Curricular Excellence'}
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 font-normal">
-              We offer a well-rounded learning experience that goes beyond textbooks.
+              {language === 'bn'
+                ? 'আমরা পাঠ্যবইয়ের পাশাপাশি শিক্ষার্থীদের সার্বিক মেধা ও সুপ্ত প্রতিভা বিকাশে প্রতিশ্রুতিবদ্ধ।'
+                : 'We offer a well-rounded learning experience that goes beyond textbooks.'}
             </p>
           </div>
 
           {/* 4 Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
             {/* Card 1: Academic Programs */}
-            <div className="bg-white rounded-[24px] p-3.5 sm:p-4 pb-6 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+            <div className="bg-white rounded-[24px] p-3.5 sm:p-4 pb-6 border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
               <div>
                 <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 relative">
                   <img
@@ -549,7 +565,6 @@ export const Home: React.FC = () => {
                   />
                 </div>
 
-                {/* Floating Circular Badge Overlapping Bottom-Left of Photo */}
                 <div className="-mt-6 ml-3 w-12 h-12 rounded-full bg-[#004d34] border-[3.5px] border-white text-white flex items-center justify-center shadow-md relative z-10">
                   <svg className="w-5 h-5 text-white stroke-current fill-none" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
@@ -557,31 +572,29 @@ export const Home: React.FC = () => {
                   </svg>
                 </div>
 
-                {/* Text Content */}
                 <div className="px-2 mt-2.5">
                   <h4 className="font-bold text-slate-900 text-base leading-snug group-hover:text-[#004d34] transition-colors">
-                    Academic Programs
+                    {language === 'bn' ? 'একাডেমিক কার্যক্রম' : 'Academic Programs'}
                   </h4>
                   <p className="text-xs text-slate-500 font-normal mt-1.5 leading-relaxed">
-                    Strong foundation with modern teaching methods.
+                    {language === 'bn' ? 'আধুনিক স্মার্ট পাঠদান পদ্ধতির মাধ্যমে শক্তিশালী ভিত্তি।' : 'Strong foundation with modern teaching methods.'}
                   </p>
                 </div>
               </div>
 
-              {/* Action Link */}
               <div className="px-2 pt-5">
                 <Link
                   to="/academic-programs"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-[#064e3b] group/link"
                 >
-                  <span>Learn More</span>
+                  <span>{t.common.readMore}</span>
                   <span className="group-hover/link:translate-x-1 transition-transform">→</span>
                 </Link>
               </div>
             </div>
 
             {/* Card 2: Sports & Athletics */}
-            <div className="bg-white rounded-[24px] p-3.5 sm:p-4 pb-6 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+            <div className="bg-white rounded-[24px] p-3.5 sm:p-4 pb-6 border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
               <div>
                 <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 relative">
                   <img
@@ -591,7 +604,6 @@ export const Home: React.FC = () => {
                   />
                 </div>
 
-                {/* Floating Circular Badge Overlapping Bottom-Left of Photo */}
                 <div className="-mt-6 ml-3 w-12 h-12 rounded-full bg-[#004d34] border-[3.5px] border-white text-white flex items-center justify-center shadow-md relative z-10">
                   <svg className="w-5 h-5 text-white stroke-current fill-none" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="13" r="8"/>
@@ -601,31 +613,29 @@ export const Home: React.FC = () => {
                   </svg>
                 </div>
 
-                {/* Text Content */}
                 <div className="px-2 mt-2.5">
                   <h4 className="font-bold text-slate-900 text-base leading-snug group-hover:text-[#004d34] transition-colors">
-                    Sports & Athletics
+                    {language === 'bn' ? 'খেলাধুলা ও শরীরচর্চা' : 'Sports & Athletics'}
                   </h4>
                   <p className="text-xs text-slate-500 font-normal mt-1.5 leading-relaxed">
-                    Building discipline through sports and teamwork.
+                    {language === 'bn' ? 'খেলাধুলা ও দলগত চর্চার মাধ্যমে শৃঙ্খলা ও মনোবল গঠন।' : 'Building discipline through sports and teamwork.'}
                   </p>
                 </div>
               </div>
 
-              {/* Action Link */}
               <div className="px-2 pt-5">
                 <Link
                   to="/sports-athletics"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-[#064e3b] group/link"
                 >
-                  <span>Learn More</span>
+                  <span>{t.common.readMore}</span>
                   <span className="group-hover/link:translate-x-1 transition-transform">→</span>
                 </Link>
               </div>
             </div>
 
             {/* Card 3: Cultural Activities */}
-            <div className="bg-white rounded-[24px] p-3.5 sm:p-4 pb-6 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+            <div className="bg-white rounded-[24px] p-3.5 sm:p-4 pb-6 border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
               <div>
                 <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 relative">
                   <img
@@ -635,7 +645,6 @@ export const Home: React.FC = () => {
                   />
                 </div>
 
-                {/* Floating Circular Badge Overlapping Bottom-Left of Photo */}
                 <div className="-mt-6 ml-3 w-12 h-12 rounded-full bg-[#004d34] border-[3.5px] border-white text-white flex items-center justify-center shadow-md relative z-10">
                   <svg className="w-5 h-5 text-white stroke-current fill-none" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="8" cy="8" r="3"/>
@@ -645,31 +654,29 @@ export const Home: React.FC = () => {
                   </svg>
                 </div>
 
-                {/* Text Content */}
                 <div className="px-2 mt-2.5">
                   <h4 className="font-bold text-slate-900 text-base leading-snug group-hover:text-[#004d34] transition-colors">
-                    Cultural Activities
+                    {language === 'bn' ? 'সাংস্কৃতিক কার্যক্রম' : 'Cultural Activities'}
                   </h4>
                   <p className="text-xs text-slate-500 font-normal mt-1.5 leading-relaxed">
-                    Nurturing creativity and talent in every child.
+                    {language === 'bn' ? 'প্রত্যেক শিক্ষার্থীর সুপ্ত প্রতিভা ও সৃজনশীলতার বিকাশ।' : 'Nurturing creativity and talent in every child.'}
                   </p>
                 </div>
               </div>
 
-              {/* Action Link */}
               <div className="px-2 pt-5">
                 <Link
                   to="/cultural-activities"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-[#064e3b] group/link"
                 >
-                  <span>Learn More</span>
+                  <span>{t.common.readMore}</span>
                   <span className="group-hover/link:translate-x-1 transition-transform">→</span>
                 </Link>
               </div>
             </div>
 
             {/* Card 4: Clubs & Societies */}
-            <div className="bg-white rounded-[24px] p-3.5 sm:p-4 pb-6 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+            <div className="bg-white rounded-[24px] p-3.5 sm:p-4 pb-6 border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
               <div>
                 <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 relative">
                   <img
@@ -679,45 +686,42 @@ export const Home: React.FC = () => {
                   />
                 </div>
 
-                {/* Floating Circular Badge Overlapping Bottom-Left of Photo */}
                 <div className="-mt-6 ml-3 w-12 h-12 rounded-full bg-[#004d34] border-[3.5px] border-white text-white flex items-center justify-center shadow-md relative z-10">
                   <Users size={20} className="text-white" />
                 </div>
 
-                {/* Text Content */}
                 <div className="px-2 mt-2.5">
                   <h4 className="font-bold text-slate-900 text-base leading-snug group-hover:text-[#004d34] transition-colors">
-                    Clubs & Societies
+                    {language === 'bn' ? 'ক্লাব ও সোসাইটি' : 'Clubs & Societies'}
                   </h4>
                   <p className="text-xs text-slate-500 font-normal mt-1.5 leading-relaxed">
-                    Leadership through engagement and service.
+                    {language === 'bn' ? 'সামাজিক দায়িত্ববোধ ও নেতৃত্বগুণের ধারাবাহিক বিকাশ।' : 'Leadership through engagement and service.'}
                   </p>
                 </div>
               </div>
 
-              {/* Action Link */}
               <div className="px-2 pt-5">
                 <Link
                   to="/clubs-societies"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-[#064e3b] group/link"
                 >
-                  <span>Learn More</span>
+                  <span>{t.common.readMore}</span>
                   <span className="group-hover/link:translate-x-1 transition-transform">→</span>
                 </Link>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      {/* 6. LATEST NOTICE TICKER BAR (Pixel-Perfect Full-Bleed Matching Reference Screenshot) */}
+      {/* 6. LATEST NOTICE TICKER BAR */}
       <div className="w-full bg-[#004d34] text-white py-3.5 sm:py-4 shadow-sm relative z-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 sm:gap-6">
           {/* Left: Megaphone Icon + Latest Notice Label */}
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <Megaphone size={19} className="text-white shrink-0" />
             <span className="font-bold text-white text-xs sm:text-[13px] tracking-wide whitespace-nowrap">
-              Latest Notice:
+              {language === 'bn' ? 'সর্বশেষ নোটিশ:' : 'Latest Notice:'}
             </span>
           </div>
 
@@ -756,25 +760,27 @@ export const Home: React.FC = () => {
             to="/notices"
             className="text-xs sm:text-[13px] font-semibold text-white/95 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap transition-colors"
           >
-            <span>View All Notices</span>
+            <span>{t.home.allNotices}</span>
             <ArrowRight size={14} />
           </Link>
         </div>
       </div>
 
       {/* 7. CAMPUS LIFE: MOMENTS THAT MAKE US PROUD */}
-      <div className="container mx-auto mt-12 sm:mt-14">
+      <div className="container mx-auto mt-12 sm:mt-14 px-4 sm:px-6 lg:px-8">
         <section className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <div className="text-xs font-extrabold text-[#059669] uppercase tracking-wider mb-1">
-                <span>CAMPUS LIFE</span>
+                <span>{language === 'bn' ? 'ক্যাম্পাস জীবন' : 'CAMPUS LIFE'}</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                Moments That Make Us Proud
+                {language === 'bn' ? 'আমাদের আনন্দঘন মুহূর্ত' : 'Moments That Make Us Proud'}
               </h2>
               <p className="text-xs text-slate-500 font-medium">
-                A glimpse into our vibrant campus life, achievements, and unforgettable moments.
+                {language === 'bn'
+                  ? 'বিদ্যালয়ের সমৃদ্ধ ক্যাম্পাস জীবন, সাফল্য ও অবিস্মরণীয় মুহূর্তসমূহ।'
+                  : 'A glimpse into our vibrant campus life, achievements, and unforgettable moments.'}
               </p>
             </div>
 
@@ -782,7 +788,7 @@ export const Home: React.FC = () => {
               to="/gallery"
               className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-[#004d34] hover:text-emerald-800 border border-emerald-600/70 hover:border-emerald-700 bg-white hover:bg-emerald-50/60 px-4 py-2 rounded-xl transition shadow-2xs self-start sm:self-auto"
             >
-              <span>View Full Gallery</span>
+              <span>{language === 'bn' ? 'পূর্ণাঙ্গ গ্যালারি দেখুন' : 'View Full Gallery'}</span>
               <ArrowRight size={13} />
             </Link>
           </div>
@@ -813,7 +819,7 @@ export const Home: React.FC = () => {
       </div>
 
       {/* 8. LEADERSHIP MESSAGES: DUAL CARDS */}
-      <div className="container mx-auto mt-14">
+      <div className="container mx-auto mt-14 px-4 sm:px-6 lg:px-8">
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Chairman Card */}
           <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
@@ -822,7 +828,7 @@ export const Home: React.FC = () => {
                 <span className="w-5 h-5 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-[10px]">
                   ★
                 </span>
-                <span>Message from the Chairman</span>
+                <span>{language === 'bn' ? 'সভাপতির বাণী' : 'Message from the Chairman'}</span>
               </div>
 
               <div className="flex items-start gap-4 mb-4">
@@ -842,16 +848,18 @@ export const Home: React.FC = () => {
                 </Link>
                 <div className="flex-1">
                   <p className="text-xs text-slate-600 italic leading-relaxed">
-                    "{LEADERSHIP.chairman.quote}"
+                    "{language === 'bn'
+                      ? 'একটি মানসম্মত শিক্ষাপ্রতিষ্ঠান শুধু পাঠ্যপুস্তকের জ্ঞান নয়, বরং চরিত্র গঠন ও নৈতিকতার আলোকবর্তিকা হিসেবে কাজ করে।'
+                      : LEADERSHIP.chairman.quote}"
                   </p>
                   <div className="mt-3">
                     <Link to="/profile/chairman" className="hover:text-amber-800 transition-colors">
                       <h4 className="font-extrabold text-slate-900 text-sm">
-                        {LEADERSHIP.chairman.name}
+                        {language === 'bn' ? 'ড. মোঃ রফিকুল ইসলাম' : LEADERSHIP.chairman.name}
                       </h4>
                     </Link>
                     <p className="text-[11px] text-amber-700 font-bold">
-                      Chairman, Governing Body
+                      {language === 'bn' ? 'সভাপতি, পরিচালনা পর্ষদ' : 'Chairman, Governing Body'}
                     </p>
                   </div>
                 </div>
@@ -876,7 +884,7 @@ export const Home: React.FC = () => {
                 <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-[10px]">
                   🎓
                 </span>
-                <span>Message from the Principal</span>
+                <span>{t.home.headmasterTitle}</span>
               </div>
 
               <div className="flex items-start gap-4 mb-4">
@@ -896,16 +904,18 @@ export const Home: React.FC = () => {
                 </Link>
                 <div className="flex-1">
                   <p className="text-xs text-slate-600 italic leading-relaxed">
-                    "{LEADERSHIP.principal.quote}"
+                    "{language === 'bn'
+                      ? 'প্রতিটি শিশুর মধ্যে রয়েছে অপার সম্ভাবনা। আমাদের দায়িত্ব হলো ভালোবাসাপূর্ণ পরিবেশে সেই সম্ভাবনাকে প্রস্ফুটিত করা।'
+                      : LEADERSHIP.principal.quote}"
                   </p>
                   <div className="mt-3">
                     <Link to="/profile/principal" className="hover:text-emerald-800 transition-colors">
                       <h4 className="font-extrabold text-slate-900 text-sm">
-                        {LEADERSHIP.principal.name}
+                        {language === 'bn' ? 'মাকসুদা সুলতানা' : LEADERSHIP.principal.name}
                       </h4>
                     </Link>
                     <p className="text-[11px] text-emerald-800 font-bold">
-                      Principal
+                      {t.adminPage.headmaster}
                     </p>
                   </div>
                 </div>
@@ -926,7 +936,7 @@ export const Home: React.FC = () => {
       </div>
 
       {/* 9. 3-COLUMN BOTTOM SECTION: NEWS & EVENTS | UPCOMING EVENTS | QUICK LINKS */}
-      <div className="container mx-auto mt-14">
+      <div className="container mx-auto mt-14 px-4 sm:px-6 lg:px-8">
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
           {/* Column 1: News & Events (4 Cols) */}
           <div className="lg:col-span-4 bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-4">
@@ -934,14 +944,14 @@ export const Home: React.FC = () => {
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
                 <h3 className="font-extrabold text-slate-900 text-sm sm:text-base">
-                  News & Events
+                  {language === 'bn' ? 'সংবাদ ও নোটিশ' : 'News & Events'}
                 </h3>
               </div>
               <Link
                 to="/notices"
                 className="text-xs font-bold text-emerald-700 hover:underline flex items-center gap-1"
               >
-                <span>View All</span>
+                <span>{language === 'bn' ? 'সকল দেখুন' : 'View All'}</span>
                 <span>→</span>
               </Link>
             </div>
@@ -950,7 +960,7 @@ export const Home: React.FC = () => {
               {NEWS_EVENTS.map((item, idx) => (
                 <div key={idx} className="flex items-start gap-3 group cursor-pointer">
                   <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-800 flex flex-col items-center justify-center shrink-0 border border-emerald-100 group-hover:bg-[#004d34] group-hover:text-white transition">
-                    <span className="text-xs font-black leading-none">{item.day}</span>
+                    <span className="text-xs font-black leading-none">{toBanglaNum(item.day)}</span>
                     <span className="text-[9px] font-bold uppercase">{item.month}</span>
                   </div>
                   <div className="flex-1 min-w-0">
@@ -960,7 +970,7 @@ export const Home: React.FC = () => {
                     <h5 className="text-xs font-bold text-slate-900 group-hover:text-emerald-800 transition truncate">
                       {item.title}
                     </h5>
-                    <p className="text-[10px] text-slate-400 font-medium">{item.date}</p>
+                    <p className="text-[10px] text-slate-400 font-medium">{toBanglaNum(item.date)}</p>
                   </div>
                 </div>
               ))}
@@ -973,14 +983,14 @@ export const Home: React.FC = () => {
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                 <h3 className="font-extrabold text-slate-900 text-sm sm:text-base">
-                  Upcoming Events
+                  {language === 'bn' ? 'আসন্ন অনুষ্ঠানসমূহ' : 'Upcoming Events'}
                 </h3>
               </div>
               <Link
                 to="/notices"
                 className="text-xs font-bold text-amber-700 hover:underline flex items-center gap-1"
               >
-                <span>View Calendar</span>
+                <span>{language === 'bn' ? 'ক্যালেন্ডার দেখুন' : 'View Calendar'}</span>
                 <span>→</span>
               </Link>
             </div>
@@ -989,7 +999,7 @@ export const Home: React.FC = () => {
               {UPCOMING_EVENTS.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3 group cursor-pointer">
                   <div className="w-11 h-11 rounded-xl bg-purple-50 text-purple-800 flex flex-col items-center justify-center shrink-0 border border-purple-100 group-hover:bg-purple-700 group-hover:text-white transition">
-                    <span className="text-xs font-black leading-none">{item.day}</span>
+                    <span className="text-xs font-black leading-none">{toBanglaNum(item.day)}</span>
                     <span className="text-[9px] font-bold uppercase">{item.month}</span>
                   </div>
                   <h5 className="text-xs font-bold text-slate-900 group-hover:text-purple-800 transition truncate">
@@ -1005,20 +1015,20 @@ export const Home: React.FC = () => {
             <div className="border-b border-slate-100 pb-3">
               <h3 className="font-extrabold text-slate-900 text-sm sm:text-base flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-cyan-600" />
-                <span>Quick Links</span>
+                <span>{t.home.quickLinks}</span>
               </h3>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {[
-                { label: 'Student Portal', path: '/students' },
-                { label: 'Teacher Portal', path: '/faculty' },
-                { label: 'Library', path: '/academic' },
-                { label: 'Downloads', path: '/downloads' },
-                { label: 'Academic Calendar', path: '/academic' },
-                { label: 'Rules & Policies', path: '/about' },
-                { label: 'Alumni', path: '/about' },
-                { label: 'Contact Us', path: '/contact' },
+                { label: t.topbar.studentPortal, path: '/students' },
+                { label: t.topbar.teacherPortal, path: '/faculty' },
+                { label: t.nav.academic, path: '/academic' },
+                { label: t.nav.downloads, path: '/downloads' },
+                { label: language === 'bn' ? 'একাডেমিক ক্যালেন্ডার' : 'Academic Calendar', path: '/academic' },
+                { label: language === 'bn' ? 'নিয়ম ও নীতিমালা' : 'Rules & Policies', path: '/about' },
+                { label: t.topbar.alumni, path: '/about' },
+                { label: t.nav.contact, path: '/contact' },
               ].map((lnk) => (
                 <Link
                   key={lnk.label}
@@ -1034,27 +1044,26 @@ export const Home: React.FC = () => {
         </section>
       </div>
 
-      {/* 10. BE A PART OF OUR JOURNEY CTA BANNER (Pixel-Perfect Match to media_1790093511919.png) */}
+      {/* 10. BE A PART OF OUR JOURNEY CTA BANNER */}
       <section className="w-full relative overflow-hidden bg-[#004d34] border-b border-emerald-900/60 mt-16">
-        {/* Background Image of Students Matching Reference */}
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <img
             src="/journey_bg.png"
             alt="SOS Hermann Gmeiner School Journey"
             className="w-full h-full object-cover object-center select-none brightness-105 contrast-105"
           />
-          {/* Subtle contrast gradient ensuring 100% text legibility while keeping the background image prominently visible */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#004d34]/70 via-[#004d34]/35 to-[#004d34]/65 pointer-events-none" />
         </div>
 
-        {/* Content Container */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="max-w-xl">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
-              Be a Part of Our Journey
+              {language === 'bn' ? 'আমাদের পথচলার অংশ হোন' : 'Be a Part of Our Journey'}
             </h2>
             <p className="text-xs sm:text-[13px] text-emerald-100/90 leading-relaxed font-normal mt-1.5">
-              Together we can create a brighter, kinder and more inclusive future for our children.
+              {language === 'bn'
+                ? 'একসাথে আমরা ভবিষ্যৎ প্রজন্মের জন্য একটি সুন্দর, মানবিক ও আলোকিত ভবিষ্যৎ গড়ে তুলতে পারি।'
+                : 'Together we can create a brighter, kinder and more inclusive future for our children.'}
             </p>
           </div>
 
@@ -1063,14 +1072,14 @@ export const Home: React.FC = () => {
               to="/admission"
               className="bg-white hover:bg-slate-100 text-[#004d34] font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center gap-2 cursor-pointer"
             >
-              <span>Apply for Admission</span>
+              <span>{t.home.applyNow}</span>
               <ArrowRight size={15} className="text-[#004d34]" />
             </Link>
             <Link
               to="/contact"
               className="border border-white/60 hover:border-white text-white hover:bg-white/10 font-bold text-xs sm:text-sm px-6 py-3 rounded-xl transition-all cursor-pointer"
             >
-              Contact Us
+              {language === 'bn' ? 'যোগাযোগ করুন' : 'Contact Us'}
             </Link>
           </div>
         </div>

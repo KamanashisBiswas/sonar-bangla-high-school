@@ -1,31 +1,33 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Search, GraduationCap, Award, Menu, X } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 import { SCHOOL_INFO } from '../data/schoolData';
 
 interface NavbarProps {
-  language: 'en' | 'bn';
-  setLanguage: (lang: 'en' | 'bn') => void;
+  language?: 'en' | 'bn';
+  setLanguage?: (lang: 'en' | 'bn') => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ language, setLanguage }) => {
+export const Navbar: React.FC<NavbarProps> = () => {
+  const { language, setLanguage, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
   // Direct flat navigation links matching reference mockup exactly (12 direct flat links, NO DROPDOWNS)
   const navLinks = [
-    { label: 'Home', path: '/' },
-    { label: 'About Us', path: '/about' },
-    { label: 'Administration', path: '/administration' },
-    { label: 'Faculty', path: '/faculty' },
-    { label: 'Students', path: '/students' },
-    { label: 'Academic', path: '/academic' },
-    { label: 'Admission', path: '/admission' },
-    { label: 'Result', path: '/result' },
-    { label: 'Notices', path: '/notices' },
-    { label: 'Downloads', path: '/downloads' },
-    { label: 'Gallery', path: '/gallery' },
-    { label: 'Contact', path: '/contact' },
+    { label: t.nav.home, path: '/' },
+    { label: t.nav.about, path: '/about' },
+    { label: t.nav.administration, path: '/administration' },
+    { label: t.nav.faculty, path: '/faculty' },
+    { label: t.nav.students, path: '/students' },
+    { label: t.nav.academic, path: '/academic' },
+    { label: t.nav.admission, path: '/admission' },
+    { label: t.nav.result, path: '/result' },
+    { label: t.nav.notices, path: '/notices' },
+    { label: t.nav.downloads, path: '/downloads' },
+    { label: t.nav.gallery, path: '/gallery' },
+    { label: t.nav.contact, path: '/contact' },
   ];
 
   return (
@@ -45,10 +47,10 @@ export const Navbar: React.FC<NavbarProps> = ({ language, setLanguage }) => {
                 {language === 'bn' ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}
               </span>
               <span className="block text-[10px] sm:text-[11px] font-bold text-[#059669] leading-tight mt-0.5">
-                Gollamari, Khulna - 9208
+                {language === 'bn' ? SCHOOL_INFO.addressBn : SCHOOL_INFO.address}
               </span>
               <span className="block text-[8px] sm:text-[8.5px] font-bold text-slate-400 tracking-wider uppercase mt-0.5">
-                {SCHOOL_INFO.tagline}
+                {language === 'bn' ? 'জ্ঞানের আলোয় আলোকিত ভবিষ্যৎ' : SCHOOL_INFO.tagline}
               </span>
             </div>
           </Link>
@@ -71,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({ language, setLanguage }) => {
               className="hidden sm:inline-flex items-center gap-1.5 bg-[#e8f7ee] hover:bg-[#d1fae5] border border-emerald-300/80 text-[#004d34] px-3.5 py-1.5 rounded-xl text-xs font-bold transition shadow-2xs hover:shadow-xs whitespace-nowrap cursor-pointer"
             >
               <GraduationCap size={15} className="text-[#059669]" />
-              <span>Online Admission</span>
+              <span>{t.topbar.onlineAdmission}</span>
             </Link>
 
             {/* Result Button (Amber/Orange rounded pill button) */}
@@ -80,7 +82,7 @@ export const Navbar: React.FC<NavbarProps> = ({ language, setLanguage }) => {
               className="hidden sm:inline-flex items-center gap-1.5 bg-[#fffbeb] hover:bg-[#fef3c7] border border-amber-300/80 text-[#b45309] px-3.5 py-1.5 rounded-xl text-xs font-bold transition shadow-2xs hover:shadow-xs whitespace-nowrap cursor-pointer"
             >
               <Award size={15} className="text-[#d97706]" />
-              <span>Result</span>
+              <span>{t.topbar.result}</span>
             </Link>
 
             {/* Mobile Hamburger Menu Button */}
@@ -103,7 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({ language, setLanguage }) => {
             <div className="relative max-w-md mx-auto">
               <input
                 type="text"
-                placeholder="Search notices, faculty, students, curriculum..."
+                placeholder={t.nav.searchPlaceholder}
                 className="w-full bg-white border border-slate-200 rounded-xl py-2 pl-9 pr-4 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34] focus:border-transparent shadow-xs"
                 autoFocus
               />
@@ -176,7 +178,7 @@ export const Navbar: React.FC<NavbarProps> = ({ language, setLanguage }) => {
                 className="flex items-center justify-center gap-1.5 bg-[#e8f7ee] text-[#004d34] py-2 rounded-xl text-xs font-bold"
               >
                 <GraduationCap size={15} />
-                <span>Online Admission</span>
+                <span>{t.topbar.onlineAdmission}</span>
               </Link>
               <Link
                 to="/result"
@@ -184,7 +186,7 @@ export const Navbar: React.FC<NavbarProps> = ({ language, setLanguage }) => {
                 className="flex items-center justify-center gap-1.5 bg-[#fffbeb] text-[#b45309] py-2 rounded-xl text-xs font-bold"
               >
                 <Award size={15} />
-                <span>Result</span>
+                <span>{t.topbar.result}</span>
               </Link>
             </div>
 

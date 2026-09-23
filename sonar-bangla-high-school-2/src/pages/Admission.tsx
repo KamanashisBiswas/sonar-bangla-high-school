@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 import {
   Home,
   GraduationCap,
-  Users,
-  ShieldCheck,
-  Clock,
   FileText,
   CheckCircle2,
   User,
@@ -20,9 +17,15 @@ import {
   X,
   Printer,
   Check,
+  ShieldCheck,
+  Clock,
 } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { SCHOOL_INFO } from '../data/schoolData';
 
 export const Admission: React.FC = () => {
+  const { language, t, toBanglaNum } = useLanguage();
+
   const [formData, setFormData] = useState({
     nameBn: '',
     nameEn: '',
@@ -72,9 +75,8 @@ export const Admission: React.FC = () => {
 
   return (
     <div className="bg-[#fcfdfd] pb-20 overflow-hidden">
-      {/* 1. Hero Section: Full-Width Campus Background with Left-to-Right White Fade (Matching media_1790107723010.jpg) */}
+      {/* 1. Hero Section: Full-Width Campus Background with Left-to-Right White Fade */}
       <div className="relative w-full bg-white overflow-hidden min-h-[460px] sm:min-h-[500px] lg:min-h-[520px] flex flex-col justify-between border-b border-slate-100">
-        {/* Full-bleed Two-Story Campus Background Photo */}
         <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
           <img
             src="/campus_main.png"
@@ -85,7 +87,6 @@ export const Admission: React.FC = () => {
             }}
           />
 
-          {/* Precision Left-to-Right White Gradient Overlay */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -93,23 +94,6 @@ export const Admission: React.FC = () => {
                 'linear-gradient(to right, #ffffff 0%, #ffffff 38%, rgba(255, 255, 255, 0.96) 48%, rgba(255, 255, 255, 0.45) 66%, rgba(255, 255, 255, 0) 84%)',
             }}
           />
-
-          {/* Decorative Subtle Botanical / Leaf Watermark on Far Left */}
-          <div className="absolute left-0 top-1/4 -translate-y-1/2 w-48 h-80 opacity-[0.07] pointer-events-none text-emerald-700">
-            <svg viewBox="0 0 200 350" fill="currentColor">
-              <path d="M50 300 C20 220 30 140 100 80 C110 140 100 220 50 300 Z" />
-              <path d="M120 250 C160 190 150 120 90 70 C100 130 110 190 120 250 Z" />
-              <path d="M30 170 C10 120 20 60 70 20 C75 60 70 120 30 170 Z" />
-            </svg>
-          </div>
-
-          {/* Decorative Subtle Botanical Watermark on Far Right */}
-          <div className="absolute right-0 bottom-10 w-44 h-72 opacity-[0.06] pointer-events-none text-emerald-800 rotate-45">
-            <svg viewBox="0 0 200 350" fill="currentColor">
-              <path d="M50 300 C20 220 30 140 100 80 C110 140 100 220 50 300 Z" />
-              <path d="M120 250 C160 190 150 120 90 70 C100 130 110 190 120 250 Z" />
-            </svg>
-          </div>
         </div>
 
         {/* Hero Content Container */}
@@ -121,17 +105,17 @@ export const Admission: React.FC = () => {
               className="hover:text-emerald-800 flex items-center gap-1 transition-colors text-emerald-700"
             >
               <Home size={14} />
-              <span>Home</span>
+              <span>{t.nav.home}</span>
             </Link>
             <span className="text-slate-400">›</span>
             <Link
               to="/admission"
               className="hover:text-emerald-800 transition-colors text-slate-600"
             >
-              Admission
+              {t.nav.admission}
             </Link>
             <span className="text-slate-400">›</span>
-            <span className="text-slate-800 font-bold">Online Admission Portal</span>
+            <span className="text-slate-800 font-bold">{t.admission.title}</span>
           </div>
 
           {/* Left Narrative Block */}
@@ -139,13 +123,22 @@ export const Admission: React.FC = () => {
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <GraduationCap size={15} />
-              <span>ADMISSION PORTAL 2026</span>
+              <span>{t.admission.badge}</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              Online Admission <br />
-              Portal
+              {language === 'bn' ? (
+                <>
+                  অনলাইন ভর্তি <br />
+                  আবেদন কার্যক্রম
+                </>
+              ) : (
+                <>
+                  Online Admission <br />
+                  Portal
+                </>
+              )}
             </h1>
 
             {/* Short Green Accent Line Under Title */}
@@ -153,12 +146,11 @@ export const Admission: React.FC = () => {
 
             {/* Subtitle */}
             <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              Take the next step towards a brighter future. Complete your admission application easily,
-              securely and from the comfort of your home.
+              {t.admission.subtitle}
             </p>
           </div>
 
-          {/* Floating White Quote Card on the Right (Matching media_1790107723010.jpg) */}
+          {/* Floating White Quote Card on the Right */}
           <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
             <div className="flex items-start gap-3">
               <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
@@ -166,10 +158,10 @@ export const Admission: React.FC = () => {
               </span>
               <div>
                 <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  Education today for a brighter tomorrow
+                  {language === 'bn' ? 'আলোকিত আগামীর জন্য আজকের শিক্ষা' : 'Education today for a brighter tomorrow'}
                 </h4>
                 <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — SOS Hermann Gmeiner School
+                  — {language === 'bn' ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
                 </p>
               </div>
             </div>
@@ -177,7 +169,7 @@ export const Admission: React.FC = () => {
         </div>
       </div>
 
-      {/* 2. Important Instructions & Guidelines Card (Matching media_1790107723010.jpg) */}
+      {/* 2. Important Instructions & Guidelines Card */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-10">
         <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-7 space-y-5">
           {/* Header Row */}
@@ -188,10 +180,12 @@ export const Admission: React.FC = () => {
               </div>
               <div>
                 <h2 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
-                  Important Instructions & Guidelines
+                  {t.admission.guidelinesTitle}
                 </h2>
                 <p className="text-xs text-slate-500 font-medium">
-                  Please read the following instructions carefully before submitting your application.
+                  {language === 'bn'
+                    ? 'আবেদনপত্র জমা দেওয়ার পূর্বে অনুগ্রহ করে নিম্নোক্ত নির্দেশাবলি মনোযোগ সহকারে পড়ুন।'
+                    : 'Please read the following instructions carefully before submitting your application.'}
                 </p>
               </div>
             </div>
@@ -201,49 +195,37 @@ export const Admission: React.FC = () => {
               onClick={() => setShowGuidelinesModal(true)}
               className="inline-flex items-center gap-1.5 bg-[#e8f7ee] hover:bg-[#d1fae5] text-[#004d34] font-bold text-xs px-3.5 py-1.5 rounded-xl transition cursor-pointer self-start sm:self-auto"
             >
-              <span>View Detailed Guidelines</span>
+              <span>{language === 'bn' ? 'বিস্তারিত নির্দেশাবলি দেখুন' : 'View Detailed Guidelines'}</span>
               <ArrowRight size={13} />
             </button>
           </div>
 
           {/* 4 Instruction Columns */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pt-2 text-xs text-slate-700 font-medium leading-relaxed">
-            {/* Instruction 1 */}
             <div className="flex items-start gap-2.5">
               <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-              <span>
-                Provide authentic information according to the student birth certificate and previous transfer certificate.
-              </span>
+              <span>{t.admission.rule1}</span>
             </div>
 
-            {/* Instruction 2 */}
             <div className="flex items-start gap-2.5">
               <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-              <span>
-                Print the completed application slip and submit it to the school office with required documents.
-              </span>
+              <span>{t.admission.rule3}</span>
             </div>
 
-            {/* Instruction 3 */}
             <div className="flex items-start gap-2.5">
               <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-              <span>
-                Provide an active parent/guardian mobile number for SMS notifications and updates.
-              </span>
+              <span>{t.admission.rule2}</span>
             </div>
 
-            {/* Instruction 4 */}
             <div className="flex items-start gap-2.5">
               <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-              <span>
-                For any technical support or queries, contact our helpline directly.
-              </span>
+              <span>{t.admission.rule4}</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 3. Fill in Admission Application Form Card (Matching media_1790107723010.jpg) */}
+      {/* 3. Fill in Admission Application Form Card */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-8 space-y-6">
           {/* Header Row */}
@@ -253,10 +235,10 @@ export const Admission: React.FC = () => {
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
-                Fill in Admission Application
+                {t.admission.formTitle}
               </h2>
               <p className="text-xs text-slate-500 font-medium">
-                All fields marked with * are required.
+                {language === 'bn' ? '* চিহ্নিত প্রতিটি তথ্য পূরণ করা আবশ্যক।' : 'All fields marked with * are required.'}
               </p>
             </div>
           </div>
@@ -269,10 +251,10 @@ export const Admission: React.FC = () => {
               </div>
               <div className="space-y-1">
                 <h3 className="text-2xl font-black text-slate-900 tracking-tight">
-                  Application Submitted Successfully!
+                  {t.admission.successTitle}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600">
-                  Your application has been received and registered under tracking ID:
+                  {t.admission.successSubtitle}
                 </p>
                 <div className="inline-block mt-2 bg-white border-2 border-emerald-500 px-5 py-2 rounded-2xl text-emerald-800 font-black text-lg sm:text-xl shadow-xs tracking-wider">
                   {submissionId}
@@ -282,20 +264,20 @@ export const Admission: React.FC = () => {
               {/* Summary Box */}
               <div className="bg-white rounded-2xl p-5 max-w-lg mx-auto text-left text-xs text-slate-700 space-y-2 border border-slate-200/80 shadow-2xs">
                 <div className="flex justify-between border-b border-slate-100 pb-2">
-                  <span className="text-slate-500">Student Name:</span>
+                  <span className="text-slate-500">{language === 'bn' ? 'শিক্ষার্থীর নাম:' : 'Student Name:'}</span>
                   <span className="font-bold text-slate-900">{formData.nameEn || formData.nameBn}</span>
                 </div>
                 <div className="flex justify-between border-b border-slate-100 pb-2">
-                  <span className="text-slate-500">Applied Class:</span>
+                  <span className="text-slate-500">{language === 'bn' ? 'আবেদিত শ্রেণি:' : 'Applied Class:'}</span>
                   <span className="font-bold text-slate-900">{formData.admissionClass}</span>
                 </div>
                 <div className="flex justify-between border-b border-slate-100 pb-2">
-                  <span className="text-slate-500">Guardian Contact:</span>
+                  <span className="text-slate-500">{language === 'bn' ? 'অভিভাবকের নম্বর:' : 'Guardian Contact:'}</span>
                   <span className="font-bold text-slate-900">{formData.mobile}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Application Date:</span>
-                  <span className="font-bold text-slate-900">23 September 2026</span>
+                  <span className="text-slate-500">{language === 'bn' ? 'আবেদনের তারিখ:' : 'Application Date:'}</span>
+                  <span className="font-bold text-slate-900">{toBanglaNum('2026')}</span>
                 </div>
               </div>
 
@@ -306,14 +288,14 @@ export const Admission: React.FC = () => {
                   className="inline-flex items-center gap-2 bg-white border border-slate-300 text-slate-800 hover:bg-slate-50 px-5 py-2.5 rounded-xl font-bold text-xs transition cursor-pointer"
                 >
                   <Printer size={15} />
-                  <span>Print Application Slip</span>
+                  <span>{t.admission.printReceipt}</span>
                 </button>
                 <button
                   type="button"
                   onClick={handleResetForm}
                   className="inline-flex items-center gap-2 bg-[#004d34] hover:bg-[#003826] text-white px-5 py-2.5 rounded-xl font-bold text-xs transition cursor-pointer"
                 >
-                  <span>Submit Another Application</span>
+                  <span>{t.admission.applyAnother}</span>
                 </button>
               </div>
             </div>
@@ -321,10 +303,9 @@ export const Admission: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Row 1: Student Names */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {/* Student Name Bangla */}
                 <div>
                   <label className="block text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                    STUDENT NAME (BANGLA) *
+                    {t.admission.studentNameBn}
                   </label>
                   <div className="relative">
                     <User
@@ -337,16 +318,15 @@ export const Admission: React.FC = () => {
                       name="nameBn"
                       value={formData.nameBn}
                       onChange={handleChange}
-                      placeholder="ছাত্র/ছাত্রীর নাম বাংলায় লিখুন"
+                      placeholder={language === 'bn' ? 'ছাত্র/ছাত্রীর নাম বাংলায় লিখুন' : 'Enter student name in Bangla'}
                       className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34] shadow-2xs"
                     />
                   </div>
                 </div>
 
-                {/* Student Name English Capital */}
                 <div>
                   <label className="block text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                    STUDENT NAME (ENGLISH CAPITAL) *
+                    {t.admission.studentNameEn}
                   </label>
                   <div className="relative">
                     <User
@@ -359,7 +339,7 @@ export const Admission: React.FC = () => {
                       name="nameEn"
                       value={formData.nameEn}
                       onChange={handleChange}
-                      placeholder="Enter name in English (capital letters)"
+                      placeholder="ENTER STUDENT NAME IN CAPITAL LETTERS"
                       className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 uppercase focus:outline-none focus:ring-2 focus:ring-[#004d34] shadow-2xs"
                     />
                   </div>
@@ -368,10 +348,9 @@ export const Admission: React.FC = () => {
 
               {/* Row 2: Seeking Admission Class & Date of Birth */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {/* Seeking Admission in Class */}
                 <div>
                   <label className="block text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                    SEEKING ADMISSION IN CLASS *
+                    {t.admission.desiredClass}
                   </label>
                   <div className="relative">
                     <GraduationCap
@@ -385,19 +364,19 @@ export const Admission: React.FC = () => {
                       onChange={handleChange}
                       className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-9 py-2.5 text-xs font-medium text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
                     >
-                      <option value="">Select Class</option>
-                      <option value="Play">Play</option>
-                      <option value="Nursery">Nursery</option>
-                      <option value="KG">KG</option>
-                      <option value="Class 1">Class 1</option>
-                      <option value="Class 2">Class 2</option>
-                      <option value="Class 3">Class 3</option>
-                      <option value="Class 4">Class 4</option>
-                      <option value="Class 5">Class 5</option>
-                      <option value="Class 6">Class 6</option>
-                      <option value="Class 7">Class 7</option>
-                      <option value="Class 8">Class 8</option>
-                      <option value="Class 9">Class 9 (Science / Business Studies / Humanities)</option>
+                      <option value="">{language === 'bn' ? 'শ্রেণি নির্বাচন করুন' : 'Select Class'}</option>
+                      <option value="Play">{language === 'bn' ? 'প্লে (Play)' : 'Play'}</option>
+                      <option value="Nursery">{language === 'bn' ? 'নার্সারি (Nursery)' : 'Nursery'}</option>
+                      <option value="KG">{language === 'bn' ? 'কেজি (KG)' : 'KG'}</option>
+                      <option value="Class 1">{language === 'bn' ? '১ম শ্রেণি' : 'Class 1'}</option>
+                      <option value="Class 2">{language === 'bn' ? '২য় শ্রেণি' : 'Class 2'}</option>
+                      <option value="Class 3">{language === 'bn' ? '৩য় শ্রেণি' : 'Class 3'}</option>
+                      <option value="Class 4">{language === 'bn' ? '৪র্থ শ্রেণি' : 'Class 4'}</option>
+                      <option value="Class 5">{language === 'bn' ? '৫ম শ্রেণি' : 'Class 5'}</option>
+                      <option value="Class 6">{language === 'bn' ? '৬ষ্ঠ শ্রেণি' : 'Class 6'}</option>
+                      <option value="Class 7">{language === 'bn' ? '৭ম শ্রেণি' : 'Class 7'}</option>
+                      <option value="Class 8">{language === 'bn' ? '৮ম শ্রেণি' : 'Class 8'}</option>
+                      <option value="Class 9">{language === 'bn' ? '৯ম শ্রেণি' : 'Class 9'}</option>
                     </select>
                     <ChevronDown
                       size={14}
@@ -406,10 +385,9 @@ export const Admission: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Date of Birth */}
                 <div>
                   <label className="block text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                    DATE OF BIRTH *
+                    {t.admission.dob}
                   </label>
                   <div className="relative">
                     <Calendar
@@ -431,10 +409,9 @@ export const Admission: React.FC = () => {
 
               {/* Row 3: Father's Name & Mother's Name */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {/* Father's Name */}
                 <div>
                   <label className="block text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                    FATHER'S NAME *
+                    {t.admission.fatherName}
                   </label>
                   <div className="relative">
                     <User
@@ -447,16 +424,15 @@ export const Admission: React.FC = () => {
                       name="fatherName"
                       value={formData.fatherName}
                       onChange={handleChange}
-                      placeholder="Enter father's name"
+                      placeholder={language === 'bn' ? 'পিতার নাম লিখুন' : "Enter father's name"}
                       className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34] shadow-2xs"
                     />
                   </div>
                 </div>
 
-                {/* Mother's Name */}
                 <div>
                   <label className="block text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                    MOTHER'S NAME *
+                    {t.admission.motherName}
                   </label>
                   <div className="relative">
                     <User
@@ -469,7 +445,7 @@ export const Admission: React.FC = () => {
                       name="motherName"
                       value={formData.motherName}
                       onChange={handleChange}
-                      placeholder="Enter mother's name"
+                      placeholder={language === 'bn' ? 'মাতার নাম লিখুন' : "Enter mother's name"}
                       className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34] shadow-2xs"
                     />
                   </div>
@@ -478,10 +454,9 @@ export const Admission: React.FC = () => {
 
               {/* Row 4: Guardian Mobile Number & Guardian NID Number */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {/* Guardian Mobile Number */}
                 <div>
                   <label className="block text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                    GUARDIAN MOBILE NUMBER *
+                    {t.admission.mobile}
                   </label>
                   <div className="relative">
                     <Phone
@@ -500,10 +475,9 @@ export const Admission: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Guardian NID Number */}
                 <div>
                   <label className="block text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                    GUARDIAN NID NUMBER *
+                    {language === 'bn' ? 'অভিভাবকের এনআইডি / জন্মনিবন্ধন নম্বর *' : 'GUARDIAN NID NUMBER *'}
                   </label>
                   <div className="relative">
                     <CreditCard
@@ -516,7 +490,7 @@ export const Admission: React.FC = () => {
                       name="nid"
                       value={formData.nid}
                       onChange={handleChange}
-                      placeholder="NID or Birth Certificate Number"
+                      placeholder={language === 'bn' ? 'এনআইডি বা জন্ম নিবন্ধন নম্বর দিন' : 'NID or Birth Certificate Number'}
                       className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34] shadow-2xs"
                     />
                   </div>
@@ -526,7 +500,7 @@ export const Admission: React.FC = () => {
               {/* Row 5: Current Address */}
               <div>
                 <label className="block text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                  CURRENT ADDRESS *
+                  {t.admission.presentAddress}
                 </label>
                 <div className="relative">
                   <MapPin
@@ -539,20 +513,20 @@ export const Admission: React.FC = () => {
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    placeholder="Village/Road, Post Office, Upazila, District"
+                    placeholder={language === 'bn' ? 'গ্রাম/সড়ক, ডাকঘর, উপজেলা, জেলা' : 'Village/Road, Post Office, Upazila, District'}
                     className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34] shadow-2xs resize-none"
                   />
                 </div>
               </div>
 
-              {/* Full Width Submit Button (Matching media_1790107723010.jpg) */}
+              {/* Full Width Submit Button */}
               <div className="pt-2">
                 <button
                   type="submit"
                   className="w-full bg-[#004d34] hover:bg-[#003826] text-white py-3.5 px-6 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-xs hover:shadow cursor-pointer"
                 >
                   <Send size={15} />
-                  <span>Submit Application</span>
+                  <span>{t.admission.submitBtn}</span>
                   <ArrowRight size={15} />
                 </button>
               </div>
@@ -561,65 +535,61 @@ export const Admission: React.FC = () => {
         </div>
       </div>
 
-      {/* 4. Bottom 4 Feature Cards (Matching media_1790107723010.jpg) */}
+      {/* 4. Bottom 4 Feature Cards */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-          {/* Card 1: Secure & Reliable */}
           <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-5 flex items-center gap-4 hover:shadow-xs transition">
             <div className="w-12 h-12 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
               <ShieldCheck size={22} />
             </div>
             <div>
               <h4 className="text-sm font-black text-slate-900 leading-tight">
-                Secure & Reliable
+                {language === 'bn' ? 'নিরাপদ ও সুরক্ষিত' : 'Secure & Reliable'}
               </h4>
               <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                Your information is safe and protected.
+                {language === 'bn' ? 'আপনার সকল তথ্য শতভাগ সুরক্ষিত।' : 'Your information is safe and protected.'}
               </p>
             </div>
           </div>
 
-          {/* Card 2: Save Time */}
           <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-5 flex items-center gap-4 hover:shadow-xs transition">
             <div className="w-12 h-12 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
               <Clock size={22} />
             </div>
             <div>
               <h4 className="text-sm font-black text-slate-900 leading-tight">
-                Save Time
+                {language === 'bn' ? 'সময় সাশ্রয়ী' : 'Save Time'}
               </h4>
               <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                Apply online from the comfort of your home.
+                {language === 'bn' ? 'ঘরে বসেই সহজে আবেদন সম্পন্ন করুন।' : 'Apply online from the comfort of your home.'}
               </p>
             </div>
           </div>
 
-          {/* Card 3: Easy Process */}
           <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-5 flex items-center gap-4 hover:shadow-xs transition">
             <div className="w-12 h-12 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
               <FileText size={22} />
             </div>
             <div>
               <h4 className="text-sm font-black text-slate-900 leading-tight">
-                Easy Process
+                {language === 'bn' ? 'সহজ প্রক্রিয়া' : 'Easy Process'}
               </h4>
               <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                Simple steps to complete your application.
+                {language === 'bn' ? 'কয়েকটি সহজ ধাপে আবেদনপত্র দাখিল করুন।' : 'Simple steps to complete your application.'}
               </p>
             </div>
           </div>
 
-          {/* Card 4: Help & Support */}
           <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-5 flex items-center gap-4 hover:shadow-xs transition">
             <div className="w-12 h-12 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
               <Headphones size={22} />
             </div>
             <div>
               <h4 className="text-sm font-black text-slate-900 leading-tight">
-                Help & Support
+                {language === 'bn' ? 'সহায়তা ও হেল্পলাইন' : 'Help & Support'}
               </h4>
               <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                We're here to assist you at every step.
+                {language === 'bn' ? 'যেকোনো প্রয়োজনে আমাদের সাপোর্ট টিম পাশে রয়েছে।' : "We're here to assist you at every step."}
               </p>
             </div>
           </div>
@@ -634,7 +604,7 @@ export const Admission: React.FC = () => {
               <div className="flex items-center gap-2.5 text-[#004d34]">
                 <FileText size={20} />
                 <h3 className="font-extrabold text-base text-slate-900">
-                  Admission Eligibility & Required Documents
+                  {language === 'bn' ? 'ভর্তি যোগ্যতা ও প্রয়োজনীয় কাগজপত্র' : 'Admission Eligibility & Required Documents'}
                 </h3>
               </div>
               <button
@@ -649,36 +619,36 @@ export const Admission: React.FC = () => {
             <div className="text-xs text-slate-600 space-y-3 leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
               <div>
                 <h5 className="font-bold text-slate-800 text-xs mb-1">
-                  1. Age Criteria for Admission (as on 1st January 2026):
+                  {language === 'bn' ? '১. ভর্তির বয়সসীমা (১ জানুয়ারি ২০২৬ অনুযায়ী):' : '1. Age Criteria for Admission (as on 1st January 2026):'}
                 </h5>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li>Play Group: 4+ Years</li>
-                  <li>Nursery: 5+ Years</li>
-                  <li>Class 1: 6+ Years</li>
-                  <li>Other classes as per government age regulations.</li>
+                  <li>{language === 'bn' ? 'প্লে গ্রুপ: ৪+ বছর' : 'Play Group: 4+ Years'}</li>
+                  <li>{language === 'bn' ? 'নার্সারি: ৫+ বছর' : 'Nursery: 5+ Years'}</li>
+                  <li>{language === 'bn' ? '১ম শ্রেণি: ৬+ বছর' : 'Class 1: 6+ Years'}</li>
+                  <li>{language === 'bn' ? 'অন্যান্য শ্রেণিতে সরকারি নীতিমালা প্রযোজ্য।' : 'Other classes as per government age regulations.'}</li>
                 </ul>
               </div>
 
               <div>
                 <h5 className="font-bold text-slate-800 text-xs mb-1">
-                  2. Mandatory Documents to be attached:
+                  {language === 'bn' ? '২. প্রয়োজনীয় কাগজপত্র:' : '2. Mandatory Documents to be attached:'}
                 </h5>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li>Original and photocopy of online verified Digital Birth Registration Certificate.</li>
-                  <li>Recent passport size color photograph (3 copies) of the student with white background.</li>
-                  <li>Photocopy of Parent's National Identity Card (NID).</li>
-                  <li>Original Transfer Certificate (TC) & previous mark sheet for Class 2 to Class 9.</li>
+                  <li>{language === 'bn' ? 'অনলাইন যাচাইকৃত ডিজিটাল জন্ম নিবন্ধন সনদের মূল ও ফটোকপি।' : 'Original and photocopy of online verified Digital Birth Registration Certificate.'}</li>
+                  <li>{language === 'bn' ? 'শিক্ষার্থীর সদ্য তোলা পাসপোর্ট সাইজের রঙিন ছবি (৩ কপি)।' : 'Recent passport size color photograph (3 copies) of the student with white background.'}</li>
+                  <li>{language === 'bn' ? 'পিতা-মাতার জাতীয় পরিচয়পত্রের (NID) ফটোকপি।' : "Photocopy of Parent's National Identity Card (NID)."}</li>
+                  <li>{language === 'bn' ? 'পূর্ববর্তী বিদ্যালয়ের ছাড়পত্র (TC) ও মার্কশিট (২য় থেকে ৯ম শ্রেণির জন্য)।' : 'Original Transfer Certificate (TC) & previous mark sheet for Class 2 to Class 9.'}</li>
                 </ul>
               </div>
 
               <div>
                 <h5 className="font-bold text-slate-800 text-xs mb-1">
-                  3. Helpline & Physical Submission Desk:
+                  {language === 'bn' ? '৩. হেল্পলাইন ও অফিস ডেস্ক:' : '3. Helpline & Physical Submission Desk:'}
                 </h5>
                 <p>
-                  School Office: Gollamari, Khulna - 9208 <br />
-                  Helpline: 024-77726775 (Sunday to Thursday, 9:00 AM – 4:00 PM) <br />
-                  Email: soshgskhu@sos-bangladesh.org
+                  {language === 'bn' ? SCHOOL_INFO.addressBn : SCHOOL_INFO.address} <br />
+                  {language === 'bn' ? 'হেল্পলাইন:' : 'Helpline:'} {toBanglaNum(SCHOOL_INFO.phone)} ({language === 'bn' ? 'রবি থেকে বৃহস্পতি, সকাল ৯টা – বিকাল ৪টা' : 'Sunday to Thursday, 9:00 AM – 4:00 PM'}) <br />
+                  {language === 'bn' ? 'ইমেইল:' : 'Email:'} {SCHOOL_INFO.email}
                 </p>
               </div>
             </div>
@@ -690,7 +660,7 @@ export const Admission: React.FC = () => {
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 cursor-pointer"
               >
                 <Printer size={13} />
-                <span>Print Guidelines</span>
+                <span>{language === 'bn' ? 'নির্দেশিক প্রিন্ট করুন' : 'Print Guidelines'}</span>
               </button>
 
               <button
@@ -698,7 +668,7 @@ export const Admission: React.FC = () => {
                 onClick={() => setShowGuidelinesModal(false)}
                 className="bg-[#004d34] hover:bg-[#003826] text-white px-5 py-2 rounded-xl text-xs font-bold transition cursor-pointer"
               >
-                Got It
+                {language === 'bn' ? 'বুঝেছি' : 'Got It'}
               </button>
             </div>
           </div>

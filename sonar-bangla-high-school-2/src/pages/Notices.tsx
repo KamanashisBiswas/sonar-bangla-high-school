@@ -26,6 +26,7 @@ import {
   Info
 } from 'lucide-react';
 import { SCHOOL_INFO } from '../data/schoolData';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface NoticeItem {
   id: string;
@@ -37,8 +38,11 @@ interface NoticeItem {
   isFeatured?: boolean;
   hasBookmark?: boolean;
   title: string;
+  titleBn?: string;
   excerpt: string;
+  excerptBn?: string;
   publishedBy: string;
+  publishedByBn?: string;
   attachments?: {
     type: 'file' | 'image';
     count: number;
@@ -46,9 +50,146 @@ interface NoticeItem {
   };
   memoNo: string;
   fullBody: string[];
+  fullBodyBn?: string[];
 }
 
+const MONTH_MAP_BN: Record<string, string> = {
+  Jan: 'জানুয়ারি',
+  Feb: 'ফেব্রুয়ারি',
+  Mar: 'মার্চ',
+  Apr: 'এপ্রিল',
+  May: 'মে',
+  Jun: 'জুন',
+  Jul: 'জুলাই',
+  Aug: 'আগস্ট',
+  Sep: 'সেপ্টেম্বর',
+  Oct: 'অক্টোবর',
+  Nov: 'নভেম্বর',
+  Dec: 'ডিসেম্বর',
+};
+
+const CATEGORY_MAP_BN: Record<string, string> = {
+  All: 'সকল',
+  General: 'সাধারণ',
+  Exam: 'পরীক্ষা',
+  Admission: 'ভর্তি',
+  Event: 'অনুষ্ঠান',
+  Others: 'অন্যান্য',
+};
+
+const NOTICE_TRANSLATIONS: Record<string, {
+  titleBn: string;
+  excerptBn: string;
+  publishedByBn: string;
+  fullBodyBn: string[];
+}> = {
+  '1': {
+    titleBn: 'গ্রীষ্মকালীন ছুটি ও অবকাশকালীন নোটিশ ২০২৫',
+    excerptBn: 'সকল শিক্ষার্থী, সম্মানিত অভিভাবক ও শুভানুধ্যায়ীদের অবগতির জন্য জানানো যাচ্ছে যে, আগামী ০১ জুন ২০২৫ থেকে গ্রীষ্মকালীন ছুটি আরম্ভ হবে...',
+    publishedByBn: 'প্রশাসন শাখা',
+    fullBodyBn: [
+      'এস ও এস হারম্যান মেইনার স্কুল খুলনার সকল সম্মানিত অভিভাবক, শিক্ষক ও শিক্ষার্থীদের অবগতির জন্য জানানো যাচ্ছে যে, গ্রীষ্মকালীন অবকাশ ও পবিত্র ঈদুল আজহা উপলক্ষে আগামী ০১ জুন ২০২৫ থেকে ২৫ জুন ২০২৫ পর্যন্ত বিদ্যালয়ের শ্রেণি কার্যক্রম বন্ধ থাকবে।',
+      'আগামী ২৬ জুন ২০২৫ রোজ বৃহস্পতিবার হতে বিদ্যালয়ের নিয়মিত সময়সূচি অনুযায়ী পাঠদান যথারীতি চলবে।',
+      'ছুটিকালীন সময়ে শিক্ষার্থীদের ছুটির নির্ধারিত বাড়ির কাজ ও ব্যবহারিক অ্যাসাইনমেন্ট সম্পন্ন করার নির্দেশ দেওয়া হলো। বিদ্যালয় খোলার প্রথম দিনেই তা সংগ্রহ ও মূল্যায়ন করা হবে।',
+      'জরুরি প্রশাসনিক প্রয়োজনে বিদ্যালয় অফিস নির্দিষ্ট কার্যদিবসে সকাল ১০:০০ থেকে দুপুর ০১:৩০ পর্যন্ত খোলা থাকবে।'
+    ]
+  },
+  '2': {
+    titleBn: 'এসএসসি পরীক্ষা ২০২৫ এর ফলাফল ও মার্কশিট বিতরণ সংক্রান্ত',
+    excerptBn: '২০২৫ সালের মাধ্যমিক স্কুল সার্টিফিকেট (এসএসসি) পরীক্ষার ফলাফল প্রকাশিত হয়েছে। উত্তীর্ণ শিক্ষার্থীরা অফিস থেকে তাদের মার্কশিট সংগ্রহ করতে পারবে...',
+    publishedByBn: 'পরীক্ষা পরিচালনা কমিটি',
+    fullBodyBn: [
+      'অত্যন্ত আনন্দের সাথে জানানো যাচ্ছে যে, মাধ্যমিক ও উচ্চ মাধ্যমিক শিক্ষা বোর্ড যশোরের অধীনে অনুষ্ঠিত ২০২৫ সালের এসএসসি পরীক্ষার ফলাফল প্রকাশিত হয়েছে।',
+      'শিক্ষার্থী ও অভিভাবকবৃন্দ আগামী ১৫ মে ২০২৫ থেকে সকাল ১০:০০ টা হতে দুপুর ২:০০ টার মধ্যে প্রশাসনিক ভবনের ২ নং কাউন্টার থেকে মূল মার্কশিট ও প্রশংসাপত্র সংগ্রহ করতে পারবেন।',
+      'মার্কশিট সংগ্রহের সময় মূল প্রবেশপত্র ও রেজিস্ট্রেশন কার্ড প্রদর্শন করা আবশ্যক।',
+      'শতভাগ পাস ও উল্লেখযোগ্য জিপিএ-৫ অর্জনে সকল শিক্ষার্থী, শিক্ষক ও অভিভাবককে আন্তরিক অভিনন্দন!'
+    ]
+  },
+  '3': {
+    titleBn: '২০২৫ শিক্ষাবর্ষে ১ম ও ৬ষ্ঠ শ্রেণিতে অনলাইন ভর্তি বিজ্ঞপ্তি',
+    excerptBn: 'আগামী ২০২৫ শিক্ষাবর্ষের জন্য ১ম ও ৬ষ্ঠ শ্রেণিতে অনলাইনে ভর্তি আবেদন শুরু হয়েছে। আগ্রহী অভিভাবকগণ নির্ধারিত সময়ের মধ্যে আবেদন সম্পন্ন করুন...',
+    publishedByBn: 'ভর্তি কমিটি',
+    fullBodyBn: [
+      'এস ও এস হারম্যান মেইনার স্কুল খুলনায় ২০২৫ শিক্ষাবর্ষে ১ম ও ৬ষ্ঠ শ্রেণিতে শিক্ষার্থী ভর্তির জন্য অনলাইনে আবেদন আহ্বান করা হচ্ছে।',
+      'আগ্রহী অভিভাবকগণকে আগামী ৩১ মে ২০২৫ তারিখের মধ্যে বিদ্যালয়ের অফিশিয়াল ওয়েবসাইটে প্রবেশ করে নির্ধারিত অনলাইন ভর্তি ফরম পূরণ করতে হবে।',
+      'প্রয়োজনীয় কাগজপত্র: ডিজিটাল জন্মনিবন্ধন সনদের অনলাইন কপি, পাসপোর্ট সাইজের রঙিন ছবি ও ৬ষ্ঠ শ্রেণির জন্য ৫ম শ্রেণির প্রশংসাপত্র।',
+      'লটারি ও ভর্তি পরীক্ষার নির্দিষ্ট তারিখ এসএমএস এর মাধ্যমে অভিভাবকদের জানিয়ে দেওয়া হবে।'
+    ]
+  },
+  '4': {
+    titleBn: 'আন্তর্জাতিক মাতৃভাষা দিবস ও বার্ষিক ক্রীড়া প্রতিযোগিতা',
+    excerptBn: 'যথাযোগ্য মর্যাদায় মহান শহীদ দিবস, আন্তর্জাতিক মাতৃভাষা দিবস ও বার্ষিক ক্রীড়া প্রতিযোগিতা উদযাপিত হতে যাচ্ছে...',
+    publishedByBn: 'সাংস্কৃতিক ও ক্রীড়া কমিটি',
+    fullBodyBn: [
+      'বিদ্যালয় প্রাঙ্গণে মহান শহীদ দিবস ও আন্তর্জাতিক মাতৃভাষা দিবস উপলক্ষে প্রভাতফেরি, আলোচনা সভা ও বার্ষিক ক্রীড়া প্রতিযোগিতার সমাপনী পর্ব অনুষ্ঠিত হবে।',
+      'দৌড় প্রতিযোগিতা, উচ্চ লম্ফ, বিতর্ক প্রতিযোগিতা, দেশাত্মবোধক গান ও সাংস্কৃতিক পরিবেশনায় শিক্ষার্থীরা অংশগ্রহণ করবে।',
+      'সম্মানিত অভিভাবক ও প্রাক্তন শিক্ষার্থীদের বিদ্যালয়ের খেলার মাঠে উপস্থিত থেকে অনুষ্ঠান উপভোগ করার জন্য সাদর আমন্ত্রণ জানানো যাচ্ছে।'
+    ]
+  },
+  '5': {
+    titleBn: 'অর্ধ-বার্ষিক ও প্রাক-নির্বাচনী পরীক্ষা ২০২৫ এর সময়সূচি প্রকাশ',
+    excerptBn: '২০২৫ শিক্ষাবর্ষের অর্ধ-বার্ষিক ও প্রাক-নির্বাচনী পরীক্ষার বিস্তারিত সময়সূচি প্রকাশিত হয়েছে। সকল শিক্ষার্থীকে রুটিন দেখে প্রস্তুতি নেওয়ার নির্দেশ দেওয়া হচ্ছে...',
+    publishedByBn: 'একাডেমিক শাখা',
+    fullBodyBn: [
+      'চলতি শিক্ষাবর্ষের ৬ষ্ঠ থেকে ৮ম শ্রেণির অর্ধ-বার্ষিক এবং ৯ম ও ১০ম শ্রেণির প্রাক-নির্বাচনী পরীক্ষার চূড়ান্ত সময়সূচি প্রকাশিত হয়েছে।',
+      'প্রতিটি পরীক্ষা নির্ধারিত দিনে সকাল ০৯:৩০ মিনিটে শুরু হবে। পরীক্ষার্থীদের অবশ্যই পরীক্ষা শুরুর অন্তত ২০ মিনিট পূর্বে নিজ নিজ আসনে উপস্থিত হতে হবে।',
+      'বৈধ প্রবেশপত্র ও যথাযথ ইউনিফর্ম ব্যতীত কাউকে পরীক্ষা কেন্দ্রে প্রবেশ করতে দেওয়া হবে না।',
+      'নিচের লিংক থেকে পিডিএফ রুটিন ডাউনলোড করা যাবে অথবা একাডেমিক হেল্পডেস্ক থেকে সংগ্রহ করা যাবে।'
+    ]
+  },
+  '6': {
+    titleBn: 'বার্ষিক বিজ্ঞান মেলা ও আইসিটি উদ্ভাবন প্রদর্শনী ২০২৫',
+    excerptBn: 'আগামী ৩০ মার্চ ২০২৫ বিদ্যালয় প্রাঙ্গণে অনুষ্ঠিত হতে যাচ্ছে ১২তম বার্ষিক বিজ্ঞান মেলা ও ডিজিটাল উদ্ভাবন উৎসব...',
+    publishedByBn: 'বিজ্ঞান ক্লাব',
+    fullBodyBn: [
+      'এস ও এস হারম্যান মেইনার সায়েন্স ক্লাবের উদ্যোগে ১২তম বার্ষিক বিজ্ঞান ও আইসিটি উদ্ভাবন প্রদর্শনী ২০২৫ অনুষ্ঠিত হবে।',
+      'জুনিয়র ও সিনিয়র বিভাগের আগ্রহী শিক্ষার্থীরা পদার্থবিজ্ঞান, রসায়ন, জীববিজ্ঞান, রোবোটিক্স ও এআই বিষয়ক প্রজেক্টের প্রস্তাবনা জমা দিতে পারবে।',
+      'সেরা প্রজেক্টসমূহের উদ্ভাবকদের ক্রেস্ট, সনদ ও জাতীয় পর্যায়ে অংশগ্রহণের সুযোগ প্রদান করা হবে।'
+    ]
+  },
+  '7': {
+    titleBn: 'মাসিক বেতন ও পরীক্ষার ফি পরিশোধ সংক্রান্ত জরুরি নোটিশ',
+    excerptBn: 'সকল অভিভাবককে বকেয়া মাসিক বেতন ও পরীক্ষার ফি আগামী ১৫ তারিখের মধ্যে পরিশোধ করার জন্য বিশেষভাবে অনুরোধ করা হচ্ছে...',
+    publishedByBn: 'হিসাব শাখা',
+    fullBodyBn: [
+      'সম্মানিত অভিভাবকবৃন্দের সদয় অবগতির জন্য জানানো যাচ্ছে যে, চলতি মাসের টিউশন ফি ও পরীক্ষার আনুষঙ্গিক চার্জ পরিশোধের শেষ সময়সীমা আগামী ১৫ তারিখ।',
+      'শিক্ষার্থী পোর্টাল অথবা বিকাশ/নগদ গেটওয়ের মাধ্যমে সহজেই ফি পরিশোধ করা যাবে। এছাড়া ব্যাংকের বুথে সরাসরি জমা দেওয়া যাবে।',
+      'বিলম্ব ফি এড়াতে অনুগ্রহ করে নির্ধারিত তারিখের মধ্যে ফি পরিশোধ সম্পন্ন করুন।'
+    ]
+  },
+  '8': {
+    titleBn: 'নবীন শিক্ষার্থীদের আইডি কার্ড ও পোশাক সংক্রান্ত নির্দেশনা',
+    excerptBn: '২০২৫ শিক্ষাবর্ষে নবভর্তিপ্রাপ্ত সকল শিক্ষার্থীদের স্মার্ট আইডি কার্ড সংগ্রহ এবং বিদ্যালয়ের নির্ধারিত ড্রেসকোড অনুসরণের নির্দেশ দেওয়া হচ্ছে...',
+    publishedByBn: 'প্রশাসন শাখা',
+    fullBodyBn: [
+      '২০২৫ শিক্ষাবর্ষে নবভর্তিপ্রাপ্ত সকল শিক্ষার্থীকে প্রশাসনিক ভবনের কাউন্টার থেকে ডিজিটাল আইডি কার্ড সংগ্রহ করার নির্দেশ দেওয়া হচ্ছে।',
+      'বিদ্যালয়ের নির্ধারিত মনোগ্রামযুক্ত ইউনিফর্ম, শোল্ডার ব্যাজ ও কালো জুতো পরিধান করে ক্লাসে উপস্থিত হওয়া বাধ্যতামূলক।',
+      'শ্রেণিভিত্তিক শাখা ও লকার বণ্টনের তালিকা নিচতলার নোটিশ বোর্ডে টানিয়ে দেওয়া হয়েছে।'
+    ]
+  },
+  '9': {
+    titleBn: 'বিনামূল্যে জাতীয় পাঠ্যপুস্তক বিতরণ উৎসব ২০২৫',
+    excerptBn: 'জাতীয় শিক্ষাক্রম ও পাঠ্যপুস্তক বোর্ডের অধীনে শিক্ষার্থীদের মাঝে বিনামূল্যে নতুন পাঠ্যপুস্তক বিতরণ করা হবে...',
+    publishedByBn: 'একাডেমিক কমিটি',
+    fullBodyBn: [
+      'নতুন শিক্ষাবর্ষের শুরুতে শিক্ষার্থীদের হাতে বিনামূল্যে নতুন পাঠ্যপুস্তক তুলে দেওয়ার জন্য পাঠ্যপুস্তক উৎসব উদযাপিত হবে।',
+      'শিক্ষার্থীদের নির্ধারিত সময়সূচি অনুযায়ী ইউনিফর্ম পরিধান করে উপস্থিত হয়ে পাঠ্যপুস্তক সংগ্রহের জন্য বলা হচ্ছে।'
+    ]
+  },
+  '10': {
+    titleBn: 'তীব্র শৈত্যপ্রবাহের কারণে শীতকালীন ছুটি বৃদ্ধি সংক্রান্ত',
+    excerptBn: 'আবহাওয়া অধিদপ্তরের সতর্কবার্তার প্রেক্ষিতে প্রাথমিক ও নিম্ন-মাধ্যমিক শ্রেণির পাঠদান স্থগিত সংক্রান্ত জরুরি ঘোষণা...',
+    publishedByBn: 'অধ্যক্ষের কার্যালয়',
+    fullBodyBn: [
+      'চলমান তীব্র শৈত্যপ্রবাহ ও বৈরী আবহাওয়ার কারণে সরকারি নির্দেশনা মোতাবেক জুনিয়র শাখার ক্লাস ২০ জানুয়ারি পর্যন্ত স্থগিত থাকবে।',
+      'মাধ্যমিক ও দশম শ্রেণির বিশেষ ক্লাস সকাল ১০:০০ টা থেকে সীমিত পরিসরে পরিচালিত হবে।'
+    ]
+  }
+};
+
 export const Notices: React.FC = () => {
+  const { language, toBanglaNum } = useLanguage();
+  const isBn = language === 'bn';
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -265,11 +406,19 @@ export const Notices: React.FC = () => {
     return notices.filter((notice) => {
       const matchesCategory =
         selectedCategory === 'All' || notice.category === selectedCategory;
+      const tr = NOTICE_TRANSLATIONS[notice.id];
+      const titleBn = tr?.titleBn || '';
+      const excerptBn = tr?.excerptBn || '';
+      const pubBn = tr?.publishedByBn || '';
+      const q = searchQuery.toLowerCase().trim();
       const matchesQuery =
-        searchQuery.trim() === '' ||
-        notice.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        notice.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        notice.publishedBy.toLowerCase().includes(searchQuery.toLowerCase());
+        q === '' ||
+        notice.title.toLowerCase().includes(q) ||
+        notice.excerpt.toLowerCase().includes(q) ||
+        notice.publishedBy.toLowerCase().includes(q) ||
+        titleBn.toLowerCase().includes(q) ||
+        excerptBn.toLowerCase().includes(q) ||
+        pubBn.toLowerCase().includes(q);
       return matchesCategory && matchesQuery;
     });
   }, [notices, selectedCategory, searchQuery]);
@@ -309,27 +458,40 @@ export const Notices: React.FC = () => {
   const handlePrintNotice = (notice: NoticeItem) => {
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
-      alert('Please allow popups to print or download this notice.');
+      alert(isBn ? 'নোটিশ প্রিন্ট বা ডাউনলোড করার জন্য পপআপ অনুমতি দিন।' : 'Please allow popups to print or download this notice.');
       return;
     }
+
+    const tr = NOTICE_TRANSLATIONS[notice.id];
+    const noticeTitle = isBn ? (tr?.titleBn || notice.title) : notice.title;
+    const bodyList = (isBn && tr?.fullBodyBn && tr.fullBodyBn.length > 0) ? tr.fullBodyBn : notice.fullBody;
 
     const monthMap: Record<string, string> = {
       Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
       Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
     };
     const monthNum = monthMap[notice.month] || '05';
-    const formattedDate = `${notice.day.padStart(2, '0')}/${monthNum}/${notice.year}`;
-    const memoNo = `SOS/KHULNA/NOTICE/${notice.id}`;
+    const rawFormattedDate = `${notice.day.padStart(2, '0')}/${monthNum}/${notice.year}`;
+    const formattedDate = isBn ? toBanglaNum(rawFormattedDate) : rawFormattedDate;
+    const rawMemoNo = `SOS/KHULNA/NOTICE/${notice.id}`;
+    const memoNo = isBn ? toBanglaNum(rawMemoNo) : rawMemoNo;
 
-    const bodyHtml = notice.id === '1'
-      ? `<p style="margin: 0; line-height: 1.85;">This is to inform all teachers, students, and guardians of SOS Hermann Gmeiner School Khulna that all academic classes will remain closed from 29-05-2025 to 07-06-2025 for summer vacation.</p>`
-      : notice.fullBody.map((p) => `<p style="margin: 0 0 14px 0; line-height: 1.85;">${p}</p>`).join('');
+    const bodyHtml = bodyList.map((p) => `<p style="margin: 0 0 14px 0; line-height: 1.85;">${p}</p>`).join('');
+
+    const categoryMapBn: Record<string, string> = {
+      General: 'সাধারণ',
+      Exam: 'পরীক্ষা',
+      Admission: 'ভর্তি',
+      Event: 'অনুষ্ঠান',
+      Others: 'অন্যান্য',
+    };
+    const categoryDisplay = isBn ? (categoryMapBn[notice.category] || notice.category) : notice.category;
 
     const htmlContent = `<!DOCTYPE html>
-<html lang="en">
+<html lang="${isBn ? 'bn' : 'en'}">
 <head>
   <meta charset="UTF-8">
-  <title>${notice.title} - ${SCHOOL_INFO.name}</title>
+  <title>${noticeTitle} - ${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</title>
   <style>
     @page {
       size: A4 portrait;
@@ -512,26 +674,26 @@ export const Notices: React.FC = () => {
             <img class="logo-img" src="${SCHOOL_INFO.logo}" alt="SOS Logo" />
           </td>
           <td class="info-td">
-            <h1 class="school-title">${SCHOOL_INFO.name}</h1>
-            <div class="school-sub">${SCHOOL_INFO.address} | Phone: ${SCHOOL_INFO.phone} | Email: ${SCHOOL_INFO.email}</div>
+            <h1 class="school-title">${isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}</h1>
+            <div class="school-sub">${isBn ? SCHOOL_INFO.addressBn : SCHOOL_INFO.address} | ${isBn ? 'ফোন' : 'Phone'}: ${toBanglaNum(SCHOOL_INFO.phone)} | ${isBn ? 'ইমেইল' : 'Email'}: ${SCHOOL_INFO.email}</div>
           </td>
           <td class="eiin-td">
-            <div class="eiin-badge">EIIN: ${SCHOOL_INFO.eiin}</div>
-            <div class="est-text">Established: ${SCHOOL_INFO.established}</div>
+            <div class="eiin-badge">EIIN: ${toBanglaNum(SCHOOL_INFO.eiin)}</div>
+            <div class="est-text">${isBn ? 'স্থাপিত' : 'Established'}: ${toBanglaNum(SCHOOL_INFO.established)}</div>
           </td>
         </tr>
       </table>
 
       <div class="meta-bar">
-        <div><strong>Memo No:</strong> ${memoNo}</div>
-        <div><strong>Date:</strong> ${formattedDate}</div>
+        <div><strong>${isBn ? 'স্মারক নং:' : 'Memo No:'}</strong> ${memoNo}</div>
+        <div><strong>${isBn ? 'তারিখ:' : 'Date:'}</strong> ${formattedDate}</div>
       </div>
 
       <div class="category-box">
-        <span class="category-pill">${notice.category}</span>
+        <span class="category-pill">${categoryDisplay}</span>
       </div>
 
-      <h2 class="notice-heading">${notice.title}</h2>
+      <h2 class="notice-heading">${noticeTitle}</h2>
 
       <div class="notice-content">
         ${bodyHtml}
@@ -541,12 +703,12 @@ export const Notices: React.FC = () => {
     <div class="signatures-box">
       <div class="sig-incharge">
         <div class="sig-line"></div>
-        <p class="sig-label">Notice In-Charge</p>
+        <p class="sig-label">${isBn ? 'নোটিশ ইনচার্জ' : 'Notice In-Charge'}</p>
       </div>
       <div class="sig-principal">
         <div class="sig-line"></div>
-        <p class="sig-label">Principal / Headmaster</p>
-        <p class="sig-sub">SOS HERMANN GMEINER SCHOOL<br/>KHULNA</p>
+        <p class="sig-label">${isBn ? 'অধ্যক্ষ / প্রধান শিক্ষক' : 'Principal / Headmaster'}</p>
+        <p class="sig-sub">${isBn ? SCHOOL_INFO.nameBn : 'SOS HERMANN GMEINER SCHOOL<br/>KHULNA'}</p>
       </div>
     </div>
   </div>
@@ -618,17 +780,17 @@ export const Notices: React.FC = () => {
               className="hover:text-emerald-800 flex items-center gap-1 transition-colors text-emerald-700"
             >
               <Home size={14} />
-              <span>Home</span>
+              <span>{isBn ? 'মূলপাতা' : 'Home'}</span>
             </Link>
             <span className="text-slate-400">›</span>
             <Link
               to="/notices"
               className="hover:text-emerald-800 transition-colors text-slate-600"
             >
-              Notices
+              {isBn ? 'নোটিশ' : 'Notices'}
             </Link>
             <span className="text-slate-400">›</span>
-            <span className="text-slate-800 font-bold">Official Notice Board</span>
+            <span className="text-slate-800 font-bold">{isBn ? 'অফিসিয়াল নোটিশ বোর্ড' : 'Official Notice Board'}</span>
           </div>
 
           {/* Left Narrative Block */}
@@ -636,12 +798,12 @@ export const Notices: React.FC = () => {
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <Megaphone size={14} />
-              <span>OFFICIAL NOTICES</span>
+              <span>{isBn ? 'অফিসিয়াল নোটিশ' : 'OFFICIAL NOTICES'}</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              Official Notice Board
+              {isBn ? 'অফিসিয়াল নোটিশ বোর্ড' : 'Official Notice Board'}
             </h1>
 
             {/* Short Green Accent Line Under Title */}
@@ -649,8 +811,9 @@ export const Notices: React.FC = () => {
 
             {/* Subtitle */}
             <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              Stay informed with the latest announcements, official circulars, exam schedules and
-              important updates from SOS Hermann Gmeiner School Khulna.
+              {isBn
+                ? 'এস ও এস হারম্যান মেইনার স্কুল খুলনার সর্বশেষ বিজ্ঞপ্তি, ছুটির ঘোষণা, পরীক্ষার সময়সূচি ও গুরুত্বপূর্ণ প্রাতিষ্ঠানিক নির্দেশনাবলি।'
+                : 'Stay informed with the latest announcements, official circulars, exam schedules and important updates from SOS Hermann Gmeiner School Khulna.'}
             </p>
           </div>
 
@@ -662,10 +825,10 @@ export const Notices: React.FC = () => {
               </span>
               <div>
                 <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  Education today for a brighter tomorrow
+                  {isBn ? 'আজকের মানসম্মত শিক্ষাই আগামীর সম্ভাবনাময় ভবিষ্যৎ' : 'Education today for a brighter tomorrow'}
                 </h4>
                 <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — SOS Hermann Gmeiner School
+                  — {isBn ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
                 </p>
               </div>
             </div>
@@ -696,7 +859,7 @@ export const Notices: React.FC = () => {
                   }`}
                 >
                   <Icon size={13} className={isActive ? 'text-white' : 'text-slate-500'} />
-                  <span>{cat.label}</span>
+                  <span>{isBn ? CATEGORY_MAP_BN[cat.label] || cat.label : cat.label}</span>
                 </button>
               );
             })}
@@ -715,7 +878,7 @@ export const Notices: React.FC = () => {
                 setSearchQuery(e.target.value);
                 setCurrentPage(1);
               }}
-              placeholder="Search notice title or topic..."
+              placeholder={isBn ? 'নোটিশের শিরোনাম বা বিষয় দিয়ে খুঁজুন...' : 'Search notice title or topic...'}
               className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#004d34] focus:ring-1 focus:ring-[#004d34] transition shadow-xs"
             />
           </div>
@@ -724,6 +887,15 @@ export const Notices: React.FC = () => {
           {currentNotices.length > 0 ? (
             currentNotices.map((notice) => {
               const dateClass = getDateBadgeClass(notice.category);
+              const tr = NOTICE_TRANSLATIONS[notice.id];
+              const noticeTitle = isBn && tr?.titleBn ? tr.titleBn : notice.title;
+              const noticeExcerpt = isBn && tr?.excerptBn ? tr.excerptBn : notice.excerpt;
+              const noticePublishedBy = isBn && tr?.publishedByBn ? tr.publishedByBn : notice.publishedBy;
+              const noticeCategory = isBn ? (CATEGORY_MAP_BN[notice.category] || notice.category) : notice.category;
+              const noticeDateStr = isBn
+                ? `${toBanglaNum(notice.day)} ${MONTH_MAP_BN[notice.month] || notice.month} ${toBanglaNum(notice.year)}`
+                : notice.dateStr;
+
               return (
                 <div
                   key={notice.id}
@@ -744,13 +916,13 @@ export const Notices: React.FC = () => {
                         className={`w-14 h-16 sm:w-16 sm:h-18 rounded-xl flex flex-col items-center justify-center border text-center shrink-0 ${dateClass}`}
                       >
                         <span className="text-xl sm:text-2xl font-black leading-none">
-                          {notice.day}
+                          {isBn ? toBanglaNum(notice.day) : notice.day}
                         </span>
                         <span className="text-[11px] font-bold uppercase mt-1 leading-none">
-                          {notice.month}
+                          {isBn ? (MONTH_MAP_BN[notice.month] || notice.month) : notice.month}
                         </span>
                         <span className="text-[10px] text-slate-400 font-medium mt-1 leading-none">
-                          {notice.year}
+                          {isBn ? toBanglaNum(notice.year) : notice.year}
                         </span>
                       </div>
 
@@ -763,13 +935,13 @@ export const Notices: React.FC = () => {
                               notice.category
                             )}`}
                           >
-                            {notice.category}
+                            {noticeCategory}
                           </span>
 
                           {notice.isFeatured && (
                             <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#dcf4e8] text-[#007a4d] border border-[#b8e8d1]">
                               <span className="w-1.5 h-1.5 rounded-full bg-[#007a4d]" />
-                              Featured
+                              {isBn ? 'বিশেষ নোটিশ' : 'Featured'}
                             </span>
                           )}
                         </div>
@@ -779,12 +951,12 @@ export const Notices: React.FC = () => {
                           onClick={() => setActiveNotice(notice)}
                           className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-[#004d34] transition-colors cursor-pointer leading-snug line-clamp-1"
                         >
-                          {notice.title}
+                          {noticeTitle}
                         </h2>
 
                         {/* Excerpt */}
                         <p className="text-xs text-slate-500 line-clamp-1 mt-1">
-                          {notice.excerpt}
+                          {noticeExcerpt}
                         </p>
 
                         {/* Metadata row */}
@@ -792,15 +964,15 @@ export const Notices: React.FC = () => {
                           <div className="flex items-center gap-1.5">
                             <FileText size={12} className="text-slate-400 shrink-0" />
                             <span>
-                              Published by:{' '}
+                              {isBn ? 'প্রকাশনায়: ' : 'Published by: '}
                               <strong className="text-slate-700 font-semibold">
-                                {notice.publishedBy}
+                                {noticePublishedBy}
                               </strong>
                             </span>
                           </div>
                           <div className="flex items-center gap-1.5">
                             <Calendar size={12} className="text-slate-400 shrink-0" />
-                            <span>{notice.dateStr}</span>
+                            <span>{noticeDateStr}</span>
                           </div>
                         </div>
                       </div>
@@ -814,7 +986,7 @@ export const Notices: React.FC = () => {
                         onClick={() => setActiveNotice(notice)}
                         className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#006644] hover:text-[#004d34] hover:underline transition-colors cursor-pointer group/link"
                       >
-                        <span>View Details</span>
+                        <span>{isBn ? 'বিস্তারিত দেখুন' : 'View Details'}</span>
                         <ArrowRight
                           size={14}
                           className="transition-transform group-hover/link:translate-x-0.5"
@@ -828,10 +1000,11 @@ export const Notices: React.FC = () => {
           ) : (
             <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center">
               <AlertCircle size={36} className="mx-auto text-slate-400 mb-3" />
-              <h3 className="text-base font-bold text-slate-800">No notices found</h3>
+              <h3 className="text-base font-bold text-slate-800">{isBn ? 'কোনো নোটিশ পাওয়া যায়নি' : 'No notices found'}</h3>
               <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
-                No circulars match your current filter or search criteria. Try selecting "All" or
-                clearing the search keyword.
+                {isBn
+                  ? 'আপনার অনুসন্ধানের সাথে মিলে এমন কোনো নোটিশ নেই। ফিল্টার রিসেট করে আবার চেষ্টা করুন।'
+                  : 'No circulars match your current filter or search criteria. Try selecting "All" or clearing the search keyword.'}
               </p>
               <button
                 onClick={() => {
@@ -840,7 +1013,7 @@ export const Notices: React.FC = () => {
                 }}
                 className="mt-4 px-4 py-2 rounded-xl bg-[#004d34] text-white text-xs font-bold hover:bg-[#003b28] transition"
               >
-                Reset Filters
+                {isBn ? 'ফিল্টার রিসেট' : 'Reset Filters'}
               </button>
             </div>
           )}
@@ -858,7 +1031,7 @@ export const Notices: React.FC = () => {
                   ? 'border-slate-200 text-slate-300 cursor-not-allowed bg-white/60'
                   : 'border-slate-200 text-slate-700 bg-white hover:bg-slate-50 shadow-xs'
               }`}
-              title="Previous Page"
+              title={isBn ? 'পূর্ববর্তী পাতা' : 'Previous Page'}
             >
               <ChevronLeft size={16} />
             </button>
@@ -872,7 +1045,7 @@ export const Notices: React.FC = () => {
                   : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
               }`}
             >
-              1
+              {isBn ? toBanglaNum(1) : 1}
             </button>
 
             {/* Page 2 if exists */}
@@ -885,7 +1058,7 @@ export const Notices: React.FC = () => {
                     : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
                 }`}
               >
-                2
+                {isBn ? toBanglaNum(2) : 2}
               </button>
             )}
 
@@ -898,7 +1071,7 @@ export const Notices: React.FC = () => {
                   ? 'border-slate-200 text-slate-300 cursor-not-allowed bg-white/60'
                   : 'border-slate-200 text-slate-700 bg-white hover:bg-slate-50 shadow-xs'
               }`}
-              title="Next Page"
+              title={isBn ? 'পরবর্তী পাতা' : 'Next Page'}
             >
               <ChevronRight size={16} />
             </button>
@@ -923,11 +1096,15 @@ export const Notices: React.FC = () => {
                   <Megaphone size={18} />
                 </div>
                 <span className="bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider">
-                  {activeNotice.category}
+                  {isBn ? (CATEGORY_MAP_BN[activeNotice.category] || activeNotice.category) : activeNotice.category}
                 </span>
                 <div className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold ml-1">
                   <Calendar size={14} className="text-slate-400" />
-                  <span>{activeNotice.dateStr}</span>
+                  <span>
+                    {isBn
+                      ? `${toBanglaNum(activeNotice.day)} ${MONTH_MAP_BN[activeNotice.month] || activeNotice.month} ${toBanglaNum(activeNotice.year)}`
+                      : activeNotice.dateStr}
+                  </span>
                 </div>
               </div>
 
@@ -935,7 +1112,7 @@ export const Notices: React.FC = () => {
               <button
                 onClick={() => setActiveNotice(null)}
                 className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 flex items-center justify-center transition cursor-pointer shrink-0"
-                title="Close"
+                title={isBn ? 'বন্ধ করুন' : 'Close'}
               >
                 <X size={16} />
               </button>
@@ -943,10 +1120,14 @@ export const Notices: React.FC = () => {
 
             {/* Title & Subtitle */}
             <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-4 leading-tight">
-              {activeNotice.title}
+              {isBn && NOTICE_TRANSLATIONS[activeNotice.id]?.titleBn
+                ? NOTICE_TRANSLATIONS[activeNotice.id].titleBn
+                : activeNotice.title}
             </h3>
             <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1 mb-4">
-              Notice for all teachers, students and guardians
+              {isBn
+                ? 'সকল শিক্ষক, শিক্ষার্থী ও সম্মানিত অভিভাবকদের জন্য নোটিশ'
+                : 'Notice for all teachers, students and guardians'}
             </p>
 
             {/* Notice Body Card */}
@@ -958,23 +1139,34 @@ export const Notices: React.FC = () => {
                 {activeNotice.id === '1' ? (
                   <>
                     <p>
-                      This is to inform all teachers, students, and guardians of{' '}
-                      <span className="font-bold text-[#059669]">
-                        SOS Hermann Gmeiner School Khulna
-                      </span>{' '}
-                      that all academic classes will remain closed from:
+                      {isBn ? (
+                        <>
+                          এস ও এস হারম্যান মেইনার স্কুল খুলনার সকল সম্মানিত অভিভাবক, শিক্ষক ও শিক্ষার্থীদের অবগতির জন্য জানানো যাচ্ছে যে, গ্রীষ্মকালীন অবকাশ উপলক্ষে আগামী:
+                        </>
+                      ) : (
+                        <>
+                          This is to inform all teachers, students, and guardians of{' '}
+                          <span className="font-bold text-[#059669]">
+                            SOS Hermann Gmeiner School Khulna
+                          </span>{' '}
+                          that all academic classes will remain closed from:
+                        </>
+                      )}
                     </p>
                     <div className="my-3 bg-white rounded-xl py-2.5 px-4 border border-emerald-100/90 flex items-center justify-center gap-3 text-xs sm:text-sm font-black text-slate-800 shadow-2xs">
                       <Calendar size={15} className="text-[#059669]" />
-                      <span>29 July 2025</span>
+                      <span>{isBn ? '০১ জুন ২০২৫' : '29 July 2025'}</span>
                       <span className="text-slate-400 font-normal">—</span>
-                      <span>07 August 2025</span>
+                      <span>{isBn ? '২৫ জুন ২০২৫' : '07 August 2025'}</span>
                     </div>
-                    <p>for summer vacation.</p>
+                    <p>{isBn ? 'পর্যন্ত বিদ্যালয়ের শ্রেণি কার্যক্রম বন্ধ থাকবে।' : 'for summer vacation.'}</p>
                   </>
                 ) : (
                   <div className="space-y-2">
-                    {activeNotice.fullBody.map((paragraph, idx) => (
+                    {(isBn && NOTICE_TRANSLATIONS[activeNotice.id]?.fullBodyBn
+                      ? NOTICE_TRANSLATIONS[activeNotice.id].fullBodyBn
+                      : activeNotice.fullBody
+                    ).map((paragraph, idx) => (
                       <p key={idx}>{paragraph}</p>
                     ))}
                   </div>
@@ -986,12 +1178,24 @@ export const Notices: React.FC = () => {
             <div className="bg-[#f0f7ff] border border-blue-100 rounded-2xl p-4 sm:p-5 mt-4">
               <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-900 mb-2">
                 <Info size={16} className="text-[#0065ff]" />
-                <span>Additional Information</span>
+                <span>{isBn ? 'অতিরিক্ত নির্দেশনাবলি' : 'Additional Information'}</span>
               </div>
               <ul className="space-y-1.5 text-xs text-slate-600 pl-5 list-disc marker:text-slate-400">
-                <li>Regular classes will resume on 10 August 2025 (Sunday).</li>
-                <li>School office will remain open during vacation hours.</li>
-                <li>For any urgent matter, please contact the administration office.</li>
+                <li>
+                  {isBn
+                    ? 'ছুটি শেষে নির্ধারিত তারিখে যথারীতি নিয়মিত ক্লাস পুনরায় শুরু হবে।'
+                    : 'Regular classes will resume on 10 August 2025 (Sunday).'}
+                </li>
+                <li>
+                  {isBn
+                    ? 'ছুটিকালীন সময়ে বিদ্যালয় অফিস নির্দিষ্ট কার্যদিবসে খোলা থাকবে।'
+                    : 'School office will remain open during vacation hours.'}
+                </li>
+                <li>
+                  {isBn
+                    ? 'যেকোনো জরুরি প্রয়োজনে বিদ্যালয়ের প্রশাসনিক হেল্পলাইনে যোগাযোগ করুন।'
+                    : 'For any urgent matter, please contact the administration office.'}
+                </li>
               </ul>
             </div>
 
@@ -999,7 +1203,9 @@ export const Notices: React.FC = () => {
             <div className="mt-5 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center gap-2 text-xs text-slate-500 font-mono">
                 <FileText size={14} className="text-slate-400 shrink-0" />
-                <span>Memo: SOS/KHULNA/NOTICE/{activeNotice.id}</span>
+                <span>
+                  {isBn ? 'স্মারক নং: ' : 'Memo: '}SOS/KHULNA/NOTICE/{isBn ? toBanglaNum(activeNotice.id) : activeNotice.id}
+                </span>
               </div>
 
               <div className="flex items-center gap-2 self-end sm:self-auto">
@@ -1009,7 +1215,7 @@ export const Notices: React.FC = () => {
                   className="px-4 py-2 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold flex items-center gap-1.5 shadow-2xs transition cursor-pointer"
                 >
                   <Printer size={14} />
-                  <span>Print Notice</span>
+                  <span>{isBn ? 'নোটিশ প্রিন্ট' : 'Print Notice'}</span>
                 </button>
                 <button
                   type="button"
@@ -1017,7 +1223,7 @@ export const Notices: React.FC = () => {
                   className="px-4 py-2 rounded-xl bg-[#006644] hover:bg-[#004d34] text-white text-xs font-bold flex items-center gap-1.5 shadow-xs transition cursor-pointer"
                 >
                   <Download size={14} />
-                  <span>Download PDF</span>
+                  <span>{isBn ? 'পিডিএফ ডাউনলোড' : 'Download PDF'}</span>
                 </button>
               </div>
             </div>
