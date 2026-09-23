@@ -49,7 +49,7 @@ const Teachers: React.FC = () => {
       subjectBn: 'রসায়ন / বিজ্ঞান',
       subjectEn: 'Chemistry / Science',
       qualifications: 'M.Sc (Chemistry), B.Ed',
-      image: 'https://soshgskhulna.edu.bd/media/181/Picture_PP.jpg',
+      image: '/head_teacher.jpeg',
     },
     {
       id: '2',
@@ -224,6 +224,7 @@ const Teachers: React.FC = () => {
 
   const teacherList = teachers && teachers.length >= 8 ? teachers.map((t, idx) => ({
     ...t,
+    image: (t.id === '1' || t.name?.includes('ইন্দ্রজিৎ') || (t as any).nameEn?.includes('Indrajit') || (t as any).nameBn?.includes('ইন্দ্রজিৎ')) ? '/head_teacher.jpeg' : t.image,
     name: language === 'bn' ? t.name : (defaultTeachers[idx]?.nameEn || t.name),
     designation: language === 'bn' ? t.designation : (defaultTeachers[idx]?.designationEn || t.designation),
     subject: language === 'bn' ? t.subject : (defaultTeachers[idx]?.subjectEn || t.subject),
@@ -234,7 +235,7 @@ const Teachers: React.FC = () => {
     designation: language === 'bn' ? t.designationBn : t.designationEn,
     subject: language === 'bn' ? t.subjectBn : t.subjectEn,
     qualifications: t.qualifications,
-    image: t.image,
+    image: (t.id === '1' || t.nameBn?.includes('ইন্দ্রজিৎ')) ? '/head_teacher.jpeg' : t.image,
   }));
 
   const staffList = staff && staff.length >= 4 ? staff.map((s, idx) => ({
@@ -331,8 +332,11 @@ const Teachers: React.FC = () => {
           <ScrollStaggerContainer staggerDelay={0.05} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {teacherList.map((teacher) => (
               <ScrollStaggerItem 
-                key={teacher.id} 
-                onClick={() => setSelectedPerson({ ...teacher, roleType: 'teacher' })}
+                key={teacher.id}
+                onClick={() => {
+                  const isIndrajit = teacher.id === '1' || teacher.name?.includes('ইন্দ্রজিৎ') || (teacher as any).nameEn?.includes('Indrajit');
+                  setSelectedPerson({ ...teacher, roleType: 'teacher', image: isIndrajit ? '/head_teacher.jpeg' : teacher.image });
+                }}
                 className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between cursor-pointer group"
               >
                 {/* Top Info with Photo */}
@@ -459,7 +463,7 @@ const Teachers: React.FC = () => {
                 <div className="md:col-span-5 space-y-4">
                   <div className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-xs border border-slate-100 bg-slate-50 w-full">
                     <img 
-                      src={selectedPerson.image} 
+                      src={(selectedPerson.id === '1' || selectedPerson.name?.includes('ইন্দ্রজিৎ') || (selectedPerson as any).nameEn?.includes('Indrajit')) ? '/head_teacher.jpeg' : selectedPerson.image} 
                       alt={selectedPerson.name} 
                       className="w-full h-auto aspect-[3/3.8] object-cover object-top rounded-2xl sm:rounded-3xl"
                     />

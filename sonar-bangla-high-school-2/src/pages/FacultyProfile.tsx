@@ -15,10 +15,6 @@ import {
   Clock,
   MapPin,
   ExternalLink,
-  CheckCircle2,
-  Calendar,
-  Layers,
-  Sparkles,
   ArrowRight
 } from 'lucide-react';
 import { TEACHERS, SCHOOL_INFO, LEADERSHIP_PROFILES } from '../data/schoolData';
@@ -42,7 +38,6 @@ export const FacultyProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { language, toBanglaNum } = useLanguage();
   const isBn = language === 'bn';
-  const [activeTab, setActiveTab] = useState<'overview' | 'education' | 'certifications' | 'publications' | 'teaching' | 'contact'>('overview');
   const [copied, setCopied] = useState(false);
 
   const normalizedId = id?.toLowerCase();
@@ -92,15 +87,6 @@ export const FacultyProfile: React.FC = () => {
       setTimeout(() => setCopied(false), 2000);
     }
   };
-
-  const navTabs = [
-    { id: 'overview', label: isBn ? 'সার্বিক পরিচিতি' : 'Overview', icon: <GraduationCap size={15} /> },
-    { id: 'education', label: isBn ? 'শিক্ষাগত যোগ্যতা' : 'Education', icon: <BookOpen size={15} /> },
-    { id: 'certifications', label: isBn ? 'প্রশিক্ষণ ও সনদ' : 'Certifications', icon: <Award size={15} /> },
-    { id: 'publications', label: isBn ? 'গবেষণা ও প্রকাশনা' : 'Publications', icon: <FileText size={15} /> },
-    { id: 'teaching', label: isBn ? (isLeader ? 'দায়িত্ব ও নেতৃত্ব' : 'পাঠদান ও কোর্স') : (isLeader ? 'Leadership' : 'Teaching'), icon: <Layers size={15} /> },
-    { id: 'contact', label: isBn ? 'যোগাযোগ' : 'Contact', icon: <Mail size={15} /> },
-  ] as const;
 
   return (
     <div className="bg-[#f4faf6] min-h-screen pb-20 text-slate-800">
@@ -271,25 +257,7 @@ export const FacultyProfile: React.FC = () => {
           </div>
         </div>
 
-        {/* 2. Navigation Tabs */}
-        <div className="bg-white rounded-2xl p-1.5 border border-slate-200 mt-6 shadow-2xs flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar">
-          {navTabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer shrink-0 ${
-                activeTab === tab.id
-                  ? 'bg-[#e8f7ee] text-[#004d34] border border-emerald-200 shadow-2xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-              }`}
-            >
-              {tab.icon}
-              <span>{tab.label}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* 3. Detailed Sections Grid (Matching media_1790113355933.jpg) */}
+        {/* 2. Detailed Sections Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
           {/* Card 1: Educational Qualifications */}
           <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs flex flex-col justify-between">

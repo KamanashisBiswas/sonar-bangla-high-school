@@ -188,7 +188,7 @@ export const TEACHERS: Teacher[] = [
     name: 'ইন্দ্রজিৎ কুমার মন্ডল',
     designation: 'অধ্যক্ষ',
     subject: 'রসায়ন / বিজ্ঞান',
-    image: 'https://soshgskhulna.edu.bd/media/163/P.sir...jpg',
+    image: '/head_teacher.jpeg',
     qualifications: 'M.Sc (Chemistry), B.Ed'
   },
   {
@@ -269,7 +269,7 @@ export const COMMITTEE_MEMBERS: CommitteeMember[] = [
     name: 'ইন্দ্রজিৎ কুমার মন্ডল', 
     position: 'সদস্য সচিব (অধ্যক্ষ)', 
     type: 'Member', 
-    image: 'https://soshgskhulna.edu.bd/media/163/P.sir...jpg' 
+    image: '/head_teacher.jpeg' 
   },
   { 
     id: '3', 

@@ -653,9 +653,9 @@ export const Faculty: React.FC = () => {
               </button>
 
               {/* Modal Body Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
                 {/* Left Column: Photo & Brief Info */}
-                <div className="md:col-span-5 lg:col-span-4">
+                <div className="md:col-span-5 lg:col-span-4 flex flex-col justify-between">
                   <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 relative shadow-2xs">
                     <img
                       src={selectedTeacher.image}
@@ -706,9 +706,9 @@ export const Faculty: React.FC = () => {
                 </div>
 
                 {/* Right Column: Tabbed Information */}
-                <div className="md:col-span-7 lg:col-span-8 flex flex-col justify-between">
+                <div className="md:col-span-7 lg:col-span-8 flex flex-col justify-between self-stretch">
                   {/* Top Tabs */}
-                  <div className="flex items-center gap-2 overflow-x-auto no-scrollbar border-b border-slate-100 pb-3">
+                  <div className="flex items-center gap-2 overflow-x-auto no-scrollbar border-b border-slate-100 pb-3 shrink-0">
                     <button
                       type="button"
                       onClick={() => setModalTab('professional')}
@@ -746,6 +746,9 @@ export const Faculty: React.FC = () => {
                       <span>{isBn ? 'অতিরিক্ত তথ্য' : 'Additional Info'}</span>
                     </button>
                   </div>
+
+                  {/* Tab Content Container with fixed minimum height so footer buttons never jump */}
+                  <div className="flex-1 my-3.5 min-h-[460px] flex flex-col justify-start">
 
                   {/* Tab 1: Professional Information */}
                   {modalTab === 'professional' && (
@@ -970,9 +973,10 @@ export const Faculty: React.FC = () => {
                       )}
                     </div>
                   )}
+                  </div>
 
-                  {/* Modal Footer Actions */}
-                  <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+                  {/* Modal Footer Actions - Fixed at Bottom Right */}
+                  <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-end gap-3 shrink-0">
                     <Link
                       to={`/faculty/${selectedTeacher.id}`}
                       className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold flex items-center gap-2 shadow-2xs transition"

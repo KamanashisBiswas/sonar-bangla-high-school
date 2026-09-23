@@ -535,7 +535,7 @@ export const Home: React.FC = () => {
       </div>
 
       {/* 5. OUR PROGRAMS: ACADEMIC & CO-CURRICULAR EXCELLENCE */}
-      <div className="container mx-auto mt-14 sm:mt-16 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto my-14 sm:my-16 px-4 sm:px-6 lg:px-8">
         <section>
           {/* Centered Heading Block */}
           <div className="text-center max-w-2xl mx-auto space-y-1.5">

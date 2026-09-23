@@ -22,6 +22,14 @@ import {
 } from 'lucide-react';
 import { SCHOOL_INFO } from '../data/schoolData';
 import { useLanguage } from '../contexts/LanguageContext';
+import {
+  getStudentName,
+  getGuardianName,
+  getAddress,
+  formatClassLevel,
+  formatGroup,
+  formatSection,
+} from '../data/studentLocalization';
 
 export interface StudentRecord {
   roll: string;
@@ -1203,6 +1211,7 @@ const ITEMS_PER_PAGE = 10;
 
 export const Students: React.FC = () => {
   const { language, t, toBanglaNum } = useLanguage();
+  const isBn = language === 'bn';
   const [students, setStudents] = useState<StudentRecord[]>(ALL_STUDENTS_DATA);
   const [selectedClass, setSelectedClass] = useState<string>('Class 10');
   const [selectedGroup, setSelectedGroup] = useState<string>('All Groups');
@@ -1249,12 +1258,20 @@ export const Students: React.FC = () => {
       const matchSection =
         selectedSection === 'All Sections' || s.section === selectedSection;
 
-      // 4. Search query
+      // 4. Search query (supporting both English and Bengali query and records)
       const q = searchQuery.toLowerCase().trim();
+      const bnName = getStudentName(s.name, true).toLowerCase();
+      const bnFather = getGuardianName(s.fatherName || '', true).toLowerCase();
+      const bnMother = getGuardianName(s.motherName || '', true).toLowerCase();
+      const bnRoll = toBanglaNum(s.roll).toLowerCase();
       const matchSearch =
         !q ||
         s.name.toLowerCase().includes(q) ||
+        bnName.includes(q) ||
+        bnFather.includes(q) ||
+        bnMother.includes(q) ||
         s.roll.toLowerCase().includes(q) ||
+        bnRoll.includes(q) ||
         s.studentId.toLowerCase().includes(q) ||
         s.subId.toLowerCase().includes(q) ||
         s.group.toLowerCase().includes(q) ||
@@ -1263,7 +1280,7 @@ export const Students: React.FC = () => {
 
       return matchClass && matchGroup && matchSection && matchSearch;
     });
-  }, [students, selectedClass, selectedGroup, selectedSection, searchQuery]);
+  }, [students, selectedClass, selectedGroup, selectedSection, searchQuery, toBanglaNum]);
 
   // Paginated students for the current active page
   const totalPages = Math.max(1, Math.ceil(filteredStudents.length / ITEMS_PER_PAGE));
@@ -1339,30 +1356,31 @@ export const Students: React.FC = () => {
 
   // Helper for group pill styling matching reference mockup
   const renderGroupBadge = (group: string) => {
+    const groupLabel = formatGroup(group, isBn);
     switch (group) {
       case 'Science':
         return (
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#eff6ff] text-[#2563eb] border border-blue-100">
-            Science
+            {groupLabel}
           </span>
         );
       case 'Business Studies':
         return (
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#f5f3ff] text-[#7c3aed] border border-purple-100">
-            Business Studies
+            {groupLabel}
           </span>
         );
       case 'Humanities':
         return (
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#fffbeb] text-[#b45309] border border-amber-100">
-            Humanities
+            {groupLabel}
           </span>
         );
       case 'General':
       default:
         return (
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
-            General
+            {groupLabel}
           </span>
         );
     }
@@ -1651,27 +1669,27 @@ export const Students: React.FC = () => {
           {/* Active Filter Pills Bar (When filters are modified) */}
           {(selectedClass !== 'All Classes' || selectedGroup !== 'All Groups' || selectedSection !== 'All Sections' || searchQuery) && (
             <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
-              <span className="text-slate-400 font-medium text-[11px]">Active Filters:</span>
+              <span className="text-slate-400 font-medium text-[11px]">{isBn ? 'সক্রিয় ফিল্টার:' : 'Active Filters:'}</span>
               {selectedClass !== 'All Classes' && (
                 <span className="inline-flex items-center gap-1 bg-emerald-50 text-[#004d34] border border-emerald-100 font-bold px-2.5 py-0.5 rounded-lg text-[11px]">
-                  <span>Class: {selectedClass}</span>
-                  <button type="button" onClick={() => handleClassChange('All Classes')} className="hover:text-emerald-900">
+                  <span>{isBn ? `শ্রেণি: ${formatClassLevel(selectedClass, true)}` : `Class: ${formatClassLevel(selectedClass, false)}`}</span>
+                  <button type="button" onClick={() => handleClassChange('All Classes')} className="hover:text-emerald-900 cursor-pointer">
                     <X size={11} />
                   </button>
                 </span>
               )}
               {selectedGroup !== 'All Groups' && (
                 <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-700 border border-blue-100 font-bold px-2.5 py-0.5 rounded-lg text-[11px]">
-                  <span>Group: {selectedGroup}</span>
-                  <button type="button" onClick={() => handleGroupChange('All Groups')} className="hover:text-blue-900">
+                  <span>{isBn ? `গ্রুপ: ${formatGroup(selectedGroup, true)}` : `Group: ${selectedGroup}`}</span>
+                  <button type="button" onClick={() => handleGroupChange('All Groups')} className="hover:text-blue-900 cursor-pointer">
                     <X size={11} />
                   </button>
                 </span>
               )}
               {selectedSection !== 'All Sections' && (
                 <span className="inline-flex items-center gap-1 bg-purple-50 text-purple-700 border border-purple-100 font-bold px-2.5 py-0.5 rounded-lg text-[11px]">
-                  <span>{selectedSection}</span>
-                  <button type="button" onClick={() => handleSectionChange('All Sections')} className="hover:text-purple-900">
+                  <span>{isBn ? `শাখা: ${formatSection(selectedSection, true, true)}` : selectedSection}</span>
+                  <button type="button" onClick={() => handleSectionChange('All Sections')} className="hover:text-purple-900 cursor-pointer">
                     <X size={11} />
                   </button>
                 </span>
@@ -1679,7 +1697,7 @@ export const Students: React.FC = () => {
               {searchQuery && (
                 <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-800 border border-amber-100 font-bold px-2.5 py-0.5 rounded-lg text-[11px]">
                   <span>"{searchQuery}"</span>
-                  <button type="button" onClick={() => handleSearchChange('')} className="hover:text-amber-950">
+                  <button type="button" onClick={() => handleSearchChange('')} className="hover:text-amber-950 cursor-pointer">
                     <X size={11} />
                   </button>
                 </span>
@@ -1690,7 +1708,7 @@ export const Students: React.FC = () => {
                 className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-500 hover:text-slate-800 underline ml-2 cursor-pointer"
               >
                 <RotateCcw size={10} />
-                <span>{language === 'bn' ? 'সব ফিল্টার রিসেট' : 'Reset all'}</span>
+                <span>{isBn ? 'সব ফিল্টার রিসেট' : 'Reset all'}</span>
               </button>
             </div>
           )}
@@ -1705,8 +1723,8 @@ export const Students: React.FC = () => {
                   <th className="py-3.5 px-4 sm:px-6">{t.studentsPage.nameCol}</th>
                   <th className="py-3.5 px-4 sm:px-6">{t.studentsPage.classCol}</th>
                   <th className="py-3.5 px-4 sm:px-6">{t.studentsPage.groupCol}</th>
-                  <th className="py-3.5 px-4 sm:px-6">{language === 'bn' ? 'শিক্ষার্থী আইডি' : 'STUDENT ID'}</th>
-                  <th className="py-3.5 px-4 sm:px-6 text-center">{t.studentsPage.actionCol}</th>
+                  <th className="py-3.5 px-4 sm:px-6">{isBn ? 'শিক্ষার্থী আইডি' : 'STUDENT ID'}</th>
+                  <th className="py-3.5 px-4 sm:px-6 text-center">{isBn ? 'আইডি কার্ড' : t.studentsPage.actionCol}</th>
                 </tr>
               </thead>
 
@@ -1720,7 +1738,7 @@ export const Students: React.FC = () => {
                     >
                       {/* Roll Column */}
                       <td className="py-3.5 px-4 sm:px-6 font-extrabold text-[#059669]">
-                        {student.roll}
+                        {isBn ? toBanglaNum(student.roll) : student.roll}
                       </td>
 
                       {/* Student Info Column: Avatar + Name + Sub ID */}
@@ -1738,10 +1756,12 @@ export const Students: React.FC = () => {
                           </div>
                           <div>
                             <div className="font-extrabold text-slate-900 group-hover:text-[#004d34] transition-colors leading-tight">
-                              {student.name}
+                              {getStudentName(student.name, isBn)}
                             </div>
                             <div className="text-[10.5px] text-slate-400 font-medium mt-0.5">
-                              {student.subId}
+                              {isBn
+                                ? `আইডি: ${toBanglaNum(student.subId.replace('ID: ', ''))}`
+                                : student.subId}
                             </div>
                           </div>
                         </div>
@@ -1750,7 +1770,7 @@ export const Students: React.FC = () => {
                       {/* Class Column */}
                       <td className="py-3.5 px-4 sm:px-6">
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#e8f7ee] text-[#059669] border border-emerald-100">
-                          {student.classLevel}
+                          {formatClassLevel(student.classLevel, isBn)}
                         </span>
                       </td>
 
@@ -1761,7 +1781,7 @@ export const Students: React.FC = () => {
 
                       {/* Student ID Column */}
                       <td className="py-3.5 px-4 sm:px-6 font-semibold text-slate-600">
-                        {student.studentId}
+                        {isBn ? toBanglaNum(student.studentId) : student.studentId}
                       </td>
 
                       {/* Action Buttons Column */}
@@ -1770,7 +1790,7 @@ export const Students: React.FC = () => {
                           {/* Eye / View Profile */}
                           <button
                             type="button"
-                            title="View Profile"
+                            title={isBn ? 'প্রোফাইল ও আইডি কার্ড দেখুন' : 'View Profile'}
                             onClick={() => setViewingStudent(student)}
                             className="w-7 h-7 rounded-full bg-slate-50 hover:bg-emerald-50 text-slate-500 hover:text-[#004d34] border border-slate-200/80 flex items-center justify-center transition cursor-pointer"
                           >
@@ -1784,14 +1804,16 @@ export const Students: React.FC = () => {
                   <tr>
                     <td colSpan={6} className="py-12 text-center text-slate-400">
                       <p className="text-slate-500 font-medium">
-                        No student records found matching the selected filters.
+                        {isBn
+                          ? 'নির্বাচিত ফিল্টারে কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি।'
+                          : 'No student records found matching the selected filters.'}
                       </p>
                       <button
                         type="button"
                         onClick={handleResetFilters}
-                        className="mt-2 text-xs font-bold text-[#004d34] hover:underline"
+                        className="mt-2 text-xs font-bold text-[#004d34] hover:underline cursor-pointer"
                       >
-                        Reset filters
+                        {isBn ? 'ফিল্টার রিসেট করুন' : 'Reset filters'}
                       </button>
                     </td>
                   </tr>
@@ -1803,9 +1825,9 @@ export const Students: React.FC = () => {
           {/* Table Footer: Pagination & Count (Exact match to media_1790106007535.jpg) */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-slate-100 text-xs">
             <span className="text-slate-500 font-medium">
-              Showing {filteredStudents.length === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1}-
-              {Math.min(currentPage * ITEMS_PER_PAGE, filteredStudents.length)} of{' '}
-              {filteredStudents.length} students
+              {isBn
+                ? `${toBanglaNum(filteredStudents.length)} জন শিক্ষার্থীর মধ্যে ${toBanglaNum(filteredStudents.length === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1)}-${toBanglaNum(Math.min(currentPage * ITEMS_PER_PAGE, filteredStudents.length))} দেখানো হচ্ছে`
+                : `Showing ${filteredStudents.length === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1}-${Math.min(currentPage * ITEMS_PER_PAGE, filteredStudents.length)} of ${filteredStudents.length} students`}
             </span>
 
             {/* Pagination Controls */}
@@ -1835,7 +1857,7 @@ export const Students: React.FC = () => {
                           : 'text-slate-700 hover:bg-slate-50'
                       }`}
                     >
-                      {pageNum}
+                      {isBn ? toBanglaNum(pageNum) : pageNum}
                     </button>
                   );
                 })}
@@ -1864,11 +1886,12 @@ export const Students: React.FC = () => {
             </div>
             <div>
               <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
-                Together for a Brighter Future
+                {isBn ? 'উন্নত আগামীর জন্য আমরা একসাথে' : 'Together for a Brighter Future'}
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 font-normal mt-0.5">
-                Our students are the heart of our school. We are committed to providing a safe, supportive
-                and inspiring environment for every learner.
+                {isBn
+                  ? 'শিক্ষার্থীরাই আমাদের স্কুলের প্রাণ। প্রতিটি শিক্ষার্থীর জন্য একটি নিরাপদ, সহায়ক এবং অনুপ্রেরণাদায়ক শিক্ষার পরিবেশ প্রদানে আমরা নিবেদিতপ্রাণ।'
+                  : 'Our students are the heart of our school. We are committed to providing a safe, supportive and inspiring environment for every learner.'}
               </p>
             </div>
           </div>
@@ -1877,7 +1900,7 @@ export const Students: React.FC = () => {
             to="/admission"
             className="inline-flex items-center gap-2 bg-[#004d34] hover:bg-[#003826] text-white px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-xs hover:shadow whitespace-nowrap cursor-pointer shrink-0"
           >
-            <span>{language === 'bn' ? 'ভর্তি নির্দেশিকা ও তথ্য' : 'Empower Our Students'}</span>
+            <span>{isBn ? 'ভর্তি নির্দেশিকা ও তথ্য' : 'Empower Our Students'}</span>
             <ArrowRight size={14} />
           </Link>
         </section>
@@ -1908,7 +1931,7 @@ export const Students: React.FC = () => {
               {/* Close Button (X in white round button on top right) */}
               <button
                 type="button"
-                aria-label="Close"
+                aria-label={isBn ? 'বন্ধ করুন' : 'Close'}
                 onClick={() => setViewingStudent(null)}
                 className="relative z-20 w-8 h-8 rounded-full bg-white text-slate-800 hover:bg-slate-100 shadow-md flex items-center justify-center transition cursor-pointer"
               >
@@ -1921,7 +1944,7 @@ export const Students: React.FC = () => {
               {/* Left Arrow Button */}
               <button
                 type="button"
-                aria-label="Previous Student"
+                aria-label={isBn ? 'পূর্ববর্তী শিক্ষার্থী' : 'Previous Student'}
                 onClick={handlePrevStudent}
                 className="w-8 h-8 rounded-full bg-white border border-slate-200/90 shadow-sm flex items-center justify-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition cursor-pointer"
               >
@@ -1932,7 +1955,7 @@ export const Students: React.FC = () => {
               <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-white shadow-xl overflow-hidden bg-white shrink-0">
                 <img
                   src={viewingStudent.avatar}
-                  alt={viewingStudent.name}
+                  alt={getStudentName(viewingStudent.name, isBn)}
                   className="w-full h-full object-cover"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = viewingStudent.fallbackAvatar;
@@ -1943,7 +1966,7 @@ export const Students: React.FC = () => {
               {/* Right Arrow Button */}
               <button
                 type="button"
-                aria-label="Next Student"
+                aria-label={isBn ? 'পরবর্তী শিক্ষার্থী' : 'Next Student'}
                 onClick={handleNextStudent}
                 className="w-8 h-8 rounded-full bg-white border border-slate-200/90 shadow-sm flex items-center justify-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition cursor-pointer"
               >
@@ -1956,29 +1979,33 @@ export const Students: React.FC = () => {
               {/* Student Name */}
               <div className="text-center">
                 <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-tight">
-                  {viewingStudent.name}
+                  {getStudentName(viewingStudent.name, isBn)}
                 </h3>
 
                 {/* Roll & ID Pill Badge */}
                 <div className="flex items-center justify-center mt-2">
                   <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#004d34] border border-emerald-200/70 px-3.5 py-1 rounded-full text-xs font-bold shadow-2xs">
                     <User size={13} className="text-[#059669]" />
-                    <span>{language === 'bn' ? `রোল: ${toBanglaNum(viewingStudent.roll)}` : `Roll: ${viewingStudent.roll}`}</span>
+                    <span>{isBn ? `রোল: ${toBanglaNum(viewingStudent.roll)}` : `Roll: ${viewingStudent.roll}`}</span>
                     <span className="text-emerald-300">|</span>
                     <span>
-                      {language === 'bn' ? 'আইডি' : 'ID'}:{' '}
-                      {toBanglaNum(
-                        viewingStudent.subId
-                          ? viewingStudent.subId.replace('ID: ', '')
-                          : viewingStudent.studentId
-                      )}
+                      {isBn ? 'আইডি' : 'ID'}:{' '}
+                      {isBn
+                        ? toBanglaNum(
+                            viewingStudent.subId
+                              ? viewingStudent.subId.replace('ID: ', '')
+                              : viewingStudent.studentId
+                          )
+                        : (viewingStudent.subId
+                            ? viewingStudent.subId.replace('ID: ', '')
+                            : viewingStudent.studentId)}
                     </span>
                   </div>
                 </div>
 
                 {/* School Name Subtext */}
                 <p className="text-[11px] sm:text-xs font-semibold text-slate-400 mt-1.5">
-                  {language === 'bn' ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}
+                  {isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}
                 </p>
               </div>
 
@@ -1990,9 +2017,9 @@ export const Students: React.FC = () => {
                     <GraduationCap size={18} />
                   </div>
                   <div className="min-w-0">
-                    <span className="block text-[10px] font-bold text-slate-400">{language === 'bn' ? 'শ্রেণি' : 'Class'}</span>
+                    <span className="block text-[10px] font-bold text-slate-400">{isBn ? 'শ্রেণি' : 'Class'}</span>
                     <span className="block text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">
-                      {toBanglaNum(viewingStudent.classLevel.replace(' Class', ''))}
+                      {formatClassLevel(viewingStudent.classLevel, isBn)}
                     </span>
                   </div>
                 </div>
@@ -2003,9 +2030,9 @@ export const Students: React.FC = () => {
                     <Users size={18} />
                   </div>
                   <div className="min-w-0">
-                    <span className="block text-[10px] font-bold text-slate-400">{language === 'bn' ? 'শাখা' : 'Section'}</span>
+                    <span className="block text-[10px] font-bold text-slate-400">{isBn ? 'শাখা' : 'Section'}</span>
                     <span className="block text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">
-                      {viewingStudent.section.replace('Section ', '')}
+                      {formatSection(viewingStudent.section, isBn, true)}
                     </span>
                   </div>
                 </div>
@@ -2016,9 +2043,9 @@ export const Students: React.FC = () => {
                     <BookOpen size={18} />
                   </div>
                   <div className="min-w-0">
-                    <span className="block text-[10px] font-bold text-slate-400">{language === 'bn' ? 'বিভাগ' : 'Group'}</span>
+                    <span className="block text-[10px] font-bold text-slate-400">{isBn ? 'বিভাগ' : 'Group'}</span>
                     <span className="block text-xs font-black text-slate-900 tracking-tight truncate">
-                      {viewingStudent.group}
+                      {formatGroup(viewingStudent.group, isBn)}
                     </span>
                   </div>
                 </div>
@@ -2029,7 +2056,7 @@ export const Students: React.FC = () => {
                     <Droplet size={18} />
                   </div>
                   <div className="min-w-0">
-                    <span className="block text-[10px] font-bold text-slate-400">{language === 'bn' ? 'রক্তের গ্রুপ' : 'Blood Group'}</span>
+                    <span className="block text-[10px] font-bold text-slate-400">{isBn ? 'রক্তের গ্রুপ' : 'Blood Group'}</span>
                     <span className="block text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">
                       {viewingStudent.bloodGroup || 'B+'}
                     </span>
@@ -2041,7 +2068,7 @@ export const Students: React.FC = () => {
               <div className="bg-[#f0fdf4]/50 border border-emerald-100/90 rounded-2xl p-3.5 sm:p-4 space-y-2.5 shadow-2xs">
                 <div className="flex items-center gap-2 text-[#004d34] font-extrabold text-xs sm:text-sm pb-2 border-b border-emerald-100/80">
                   <UserCheck size={16} className="text-[#059669]" />
-                  <span>{language === 'bn' ? 'অভিভাবক ও যোগাযোগের তথ্য' : 'Guardian & Contact Details'}</span>
+                  <span>{isBn ? 'অভিভাবক ও যোগাযোগের তথ্য' : 'Guardian & Contact Details'}</span>
                 </div>
 
                 <div className="space-y-2 text-xs">
@@ -2053,7 +2080,7 @@ export const Students: React.FC = () => {
                     </div>
                     <div className="col-span-1 text-slate-400 font-bold text-center">:</div>
                     <div className="col-span-6 font-bold text-slate-900 truncate">
-                      {viewingStudent.fatherName || viewingStudent.guardianName || 'Md. Abdul Quader'}
+                      {getGuardianName(viewingStudent.fatherName || viewingStudent.guardianName || 'Md. Abdul Quader', isBn)}
                     </div>
                   </div>
 
@@ -2065,7 +2092,7 @@ export const Students: React.FC = () => {
                     </div>
                     <div className="col-span-1 text-slate-400 font-bold text-center">:</div>
                     <div className="col-span-6 font-bold text-slate-900 truncate">
-                      {viewingStudent.motherName || 'Sufia Khatun'}
+                      {getGuardianName(viewingStudent.motherName || 'Sufia Khatun', isBn)}
                     </div>
                   </div>
 
@@ -2089,7 +2116,7 @@ export const Students: React.FC = () => {
                     </div>
                     <div className="col-span-1 text-slate-400 font-bold text-center">:</div>
                     <div className="col-span-6 font-bold text-slate-900 truncate">
-                      {viewingStudent.address || (language === 'bn' ? 'গল্লামারী, খুলনা – ৯২০৮' : 'Gollamari, Khulna - 9208')}
+                      {getAddress(viewingStudent.address, isBn)}
                     </div>
                   </div>
                 </div>
@@ -2102,7 +2129,7 @@ export const Students: React.FC = () => {
                 className="w-full bg-[#004d34] hover:bg-[#003826] text-white py-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-xs hover:shadow cursor-pointer mt-3"
               >
                 <UserCheck size={16} />
-                <span>{language === 'bn' ? 'প্রোফাইল বন্ধ করুন' : 'Close Profile'}</span>
+                <span>{isBn ? 'প্রোফাইল বন্ধ করুন' : 'Close Profile'}</span>
               </button>
             </div>
           </div>

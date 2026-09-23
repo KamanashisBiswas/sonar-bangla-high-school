@@ -52,7 +52,7 @@ interface DataContextType {
 
 const DataContext = createContext<DataContextType>(null!);
 
-const CURRENT_DATA_VERSION = 'v14_soshgs_gallery_stack_fix';
+const CURRENT_DATA_VERSION = 'v15_head_teacher_photo';
 
 // Clean outdated localStorage data on version mismatch
 if (typeof window !== 'undefined') {
@@ -106,6 +106,28 @@ const loadData = <T,>(key: string, defaultData: T): T => {
 
       return [...newItems, ...updatedExisting] as unknown as T;
     }
+    if (key === 'teachers' && Array.isArray(parsed)) {
+      return parsed.map((item: any) => {
+        if (item.id === '1' || item.name?.includes('ইন্দ্রজিৎ') || item.nameEn?.includes('Indrajit')) {
+          return { ...item, image: '/head_teacher.jpeg' };
+        }
+        return item;
+      }) as unknown as T;
+    }
+    if (key === 'committee' && Array.isArray(parsed)) {
+      return parsed.map((item: any) => {
+        if (item.id === '2' || item.name?.includes('ইন্দ্রজিৎ') || item.nameEn?.includes('Indrajit')) {
+          return { ...item, image: '/head_teacher.jpeg' };
+        }
+        return item;
+      }) as unknown as T;
+    }
+    if (key === 'settings' && parsed && typeof parsed === 'object') {
+      return {
+        ...parsed,
+        headmasterImage: '/head_teacher.jpeg'
+      } as unknown as T;
+    }
     return parsed as unknown as T;
   } catch (e) {
     return defaultData;
@@ -158,7 +180,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     headmasterMessage: `এস ও এস হারম্যান মেইনার স্কুল খুলনা মানসম্মত শিক্ষা নিশ্চিতকরণের প্রতিশ্রুতি নিয়ে ১৯৮৭ সালে প্রতিষ্ঠিত হয়। বিদ্যালয়টি পরিচালনায় রয়েছে দক্ষ গভর্নিং বডি ও প্রশিক্ষণপ্রাপ্ত নিবেদিতপ্রাণ শিক্ষকবৃন্দ।
 
 বিদ্যালয়ে শিক্ষার্থীবান্ধব ও আনন্দময় পাঠদান উপযোগী পরিবেশ নিশ্চিত করা হয়েছে। শিক্ষক, শিক্ষার্থী, অভিভাবক ও শুভানুধ্যায়ীদের সহযোগিতায় নৈতিক মূল্যবোধসম্পন্ন, সৎ, যোগ্য, দক্ষ ও দেশপ্রেমিক মানবসম্পদ সৃষ্টিই আমাদের মূল লক্ষ্য।`,
-    headmasterImage: 'https://soshgskhulna.edu.bd/media/163/P.sir...jpg',
+    headmasterImage: '/head_teacher.jpeg',
     chairmanName: 'মাকসুদা সুলতানা',
     chairmanTitle: 'সভাপতি (Chairman) ও প্রকল্প পরিচালক, এস ও এস চিলড্রেন্স ভিলেজ খুলনা',
     chairmanImage: 'https://soshgskhulna.edu.bd/media/180/Picture_PP.jpg',

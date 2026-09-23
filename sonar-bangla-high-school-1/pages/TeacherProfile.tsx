@@ -25,7 +25,7 @@ const TeacherProfile: React.FC = () => {
       designationEn: 'Assistant Teacher (Chemistry & Science)',
       subjectBn: 'রসায়ন / সাধারণ বিজ্ঞান',
       subjectEn: 'Chemistry & General Science',
-      image: 'https://soshgskhulna.edu.bd/media/181/Picture_PP.jpg',
+      image: '/head_teacher.jpeg',
       experience: '12+',
       studentsMentored: '350+',
       email: 'indrajit.mondal@soshgskhulna.edu.bd',

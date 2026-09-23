@@ -96,7 +96,7 @@ export const TEACHERS: Teacher[] = [
     subject: "Chemistry / Science",
     subjectCategory: "Science",
     qualifications: "M.Sc (Chemistry), B.Ed",
-    image: "https://soshgskhulna.edu.bd/media/163/P.sir...jpg",
+    image: "/head_teacher.jpeg",
     email: "indrajit.mondal@soshgskhulna.edu.bd",
     phone: "024-77726775",
     experience: "08+ Years",
@@ -431,7 +431,7 @@ export const LEADERSHIP = {
     subtitle: "Principal & Member Secretary, Governing Body",
     description: "Leading with dedication to foster a safe, inclusive and inspiring learning environment for all students.",
     quote: "Here we believe education is a journey of self-discovery. Our goal is to inspire students to think, learn, and grow into empathetic, capable and future-ready individuals.",
-    image: "https://soshgskhulna.edu.bd/media/163/P.sir...jpg",
+    image: "/head_teacher.jpeg",
   }
 };
 
@@ -481,7 +481,7 @@ export const LEADERSHIP_PROFILES: Record<string, Teacher> = {
     subject: "Institutional Leadership & Science",
     subjectCategory: "Administration",
     qualifications: "M.Sc, B.Ed (Advanced Educational Management)",
-    image: "https://soshgskhulna.edu.bd/media/163/P.sir...jpg",
+    image: "/head_teacher.jpeg",
     email: "principal@soshgskhulna.edu.bd",
     phone: "024-77726775",
     experience: "18+ Years",
@@ -528,7 +528,7 @@ export const GOVERNING_BODY: CommitteeMember[] = [
     name: "Indrajit Kumar Mondal",
     role: "Member Secretary (Acting)",
     type: "MEMBER",
-    image: "https://soshgskhulna.edu.bd/media/163/P.sir...jpg",
+    image: "/head_teacher.jpeg",
   },
   {
     id: "3",

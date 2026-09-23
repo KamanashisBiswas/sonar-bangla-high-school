@@ -63,7 +63,7 @@ const Administration: React.FC = () => {
       name: 'ইন্দ্রজিৎ কুমার মণ্ডল',
       position: 'সদস্য সচিব (ভারপ্রাপ্ত)',
       type: 'Member',
-      image: settings.headmasterImage || 'https://soshgskhulna.edu.bd/media/181/Picture_PP.jpg',
+      image: settings.headmasterImage || '/head_teacher.jpeg',
     },
     {
       id: '3',
@@ -83,8 +83,10 @@ const Administration: React.FC = () => {
 
   const governingBodyList = rawList.map(member => {
     const translated = translateMember(member.name, member.position);
+    const isIndrajit = member.id === '2' || member.name?.includes('ইন্দ্রজিৎ') || (member as any).nameEn?.includes('Indrajit');
     return {
       ...member,
+      image: isIndrajit ? '/head_teacher.jpeg' : member.image,
       displayName: translated.name,
       displayPosition: translated.position,
     };
@@ -175,7 +177,7 @@ const Administration: React.FC = () => {
             {/* Principal Leadership Card */}
             <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-sm flex flex-col sm:flex-row items-center sm:items-start gap-5 hover:shadow-md transition">
               <img 
-                src={settings.headmasterImage || "https://soshgskhulna.edu.bd/media/181/Picture_PP.jpg"} 
+                src="/head_teacher.jpeg" 
                 alt="Principal" 
                 className="w-22 h-26 sm:w-24 sm:h-30 rounded-2xl object-cover shadow-sm border border-slate-200 flex-shrink-0"
               />
