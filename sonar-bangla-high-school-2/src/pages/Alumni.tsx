@@ -9,7 +9,6 @@ import {
   Heart,
   Calendar,
   Search,
-  CheckCircle2,
   ArrowRight,
   Mail,
   Phone,
@@ -17,13 +16,18 @@ import {
   MapPin,
   Sparkles,
   ChevronDown,
-  UserCheck,
-  Send,
   BookOpen,
   Trophy,
   ShieldCheck,
 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import {
+  ScrollReveal,
+  ScrollScale,
+  ScrollStaggerContainer,
+  ScrollStaggerItem,
+  HoverCard,
+} from '../components/ui/MotionComponents';
 
 interface CommitteeMember {
   id: string;
@@ -457,36 +461,16 @@ export const Alumni: React.FC = () => {
   const [selectedBatchRange, setSelectedBatchRange] = useState('All');
   const [selectedField, setSelectedField] = useState('All');
 
-  // Registration Form State
-  const [regForm, setRegForm] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    batchYear: '2016',
-    higherEd: '',
-    profession: '',
-    company: '',
-    location: '',
-    willingToMentor: true,
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
   // Active Tab for Hero Quick Nav
-  const [activeNavTab, setActiveNavTab] = useState<'committee' | 'register' | 'directory'>('committee');
+  const [activeNavTab, setActiveNavTab] = useState<'committee' | 'directory'>('committee');
 
-  const scrollToSection = (id: 'committee' | 'register' | 'directory') => {
+  const scrollToSection = (id: 'committee' | 'directory') => {
     setActiveNavTab(id);
     const el = document.getElementById(id);
     if (el) {
       const yOffset = -90;
       const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
-      if (id === 'register') {
-        setTimeout(() => {
-          const input = document.getElementById('reg-fullName') as HTMLInputElement | null;
-          if (input) input.focus();
-        }, 500);
-      }
     }
   };
 
@@ -521,16 +505,6 @@ export const Alumni: React.FC = () => {
 
     return matchesSearch && matchesBatch && matchesField;
   });
-
-  const handleRegisterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!regForm.fullName || !regForm.email || !regForm.phone) return;
-    setIsSubmitted(true);
-    setTimeout(() => {
-      const el = document.getElementById('alumni-success-msg');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
-  };
 
   return (
     <div className="bg-[#fcfdfd] pb-24 overflow-hidden">
@@ -572,7 +546,7 @@ export const Alumni: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3.5 pt-12 sm:pt-16 lg:pt-20">
+          <ScrollReveal duration={0.6} distance={25} className="max-w-xl space-y-3.5 pt-12 sm:pt-16 lg:pt-20">
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#004d34] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <GraduationCap size={15} className="text-[#059669]" />
               <span>{isBn ? 'গৌরবময় প্রাক্তন শিক্ষার্থী নেটওয়ার্ক' : 'GLOBAL ALUMNI NETWORK'}</span>
@@ -616,18 +590,6 @@ export const Alumni: React.FC = () => {
               </button>
               <button
                 type="button"
-                onClick={() => scrollToSection('register')}
-                className={`inline-flex items-center gap-2 font-bold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer ${
-                  activeNavTab === 'register'
-                    ? 'bg-[#004d34] text-white shadow-xs'
-                    : 'bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 shadow-2xs'
-                }`}
-              >
-                <UserCheck size={14} className={activeNavTab === 'register' ? 'text-emerald-300' : 'text-[#059669]'} />
-                <span>{isBn ? 'নিবন্ধন করুন' : 'Join Network'}</span>
-              </button>
-              <button
-                type="button"
                 onClick={() => scrollToSection('directory')}
                 className={`inline-flex items-center gap-2 font-bold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer ${
                   activeNavTab === 'directory'
@@ -639,10 +601,10 @@ export const Alumni: React.FC = () => {
                 <span>{isBn ? 'প্রাক্তনীদের তালিকা' : 'Alumni Directory'}</span>
               </button>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Floating Quote Card */}
-          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
+          <ScrollScale delay={0.2} className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
             <div className="flex items-start gap-3">
               <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
                 “
@@ -656,13 +618,13 @@ export const Alumni: React.FC = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </ScrollScale>
         </div>
       </div>
 
       {/* 2. STATS BAR: Key Impact & Alumni Reach */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-4">
+        <ScrollStaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-4">
           {[
             {
               val: '12,500+',
@@ -693,31 +655,32 @@ export const Alumni: React.FC = () => {
               color: 'text-rose-700 bg-rose-50',
             },
           ].map((stat, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-4 sm:p-5 flex items-center gap-3.5"
-            >
-              <div
-                className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${stat.color}`}
-              >
-                <stat.icon size={20} />
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
-                  {isBn ? stat.valBn : stat.val}
+            <ScrollStaggerItem key={idx}>
+              <HoverCard className="h-full">
+                <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-4 sm:p-5 flex items-center gap-3.5 h-full">
+                  <div
+                    className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${stat.color}`}
+                  >
+                    <stat.icon size={20} />
+                  </div>
+                  <div>
+                    <div className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
+                      {isBn ? stat.valBn : stat.val}
+                    </div>
+                    <div className="text-[11px] sm:text-xs text-slate-500 font-semibold mt-0.5">
+                      {stat.label}
+                    </div>
+                  </div>
                 </div>
-                <div className="text-[11px] sm:text-xs text-slate-500 font-semibold mt-0.5">
-                  {stat.label}
-                </div>
-              </div>
-            </div>
+              </HoverCard>
+            </ScrollStaggerItem>
           ))}
-        </div>
+        </ScrollStaggerContainer>
       </div>
 
       {/* 3. EXECUTIVE COMMITTEE SECTION (Requested by User) */}
       <div id="committee" className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24 scroll-mt-20">
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+        <ScrollReveal duration={0.6} className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-1.5 bg-[#e8f7ee] text-[#004d34] px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-2">
             <ShieldCheck size={14} className="text-[#059669]" />
             <span>{isBn ? 'কার্যনির্বাহী পরিষদ (২০২৫–২০২৭)' : 'EXECUTIVE COMMITTEE (2025–2027)'}</span>
@@ -730,72 +693,73 @@ export const Alumni: React.FC = () => {
               ? 'আমাদের প্রাক্তন শিক্ষার্থীদের মেলবন্ধন সুদৃঢ় করতে ও স্কুল পরিবারের পাশে থাকতে নিবেদিতপ্রাণ পরিষদ।'
               : 'Dedicated alumni serving to strengthen the community, mentor students, and support our alma mater.'}
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* Committee Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+        <ScrollStaggerContainer className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
           {EXECUTIVE_COMMITTEE.map((member) => (
-            <div
-              key={member.id}
-              className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs hover:shadow-md transition-all duration-300 p-5 flex flex-col items-center text-center group hover:border-emerald-300"
-            >
-              {/* Photo with zoom hover */}
-              <div className="w-24 h-24 rounded-full overflow-hidden mb-3.5 border-3 border-emerald-50 shadow-md group-hover:scale-105 transition-transform duration-300 relative bg-slate-100">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-full object-cover object-top"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&fit=crop&q=80';
-                  }}
-                />
-              </div>
+            <ScrollStaggerItem key={member.id}>
+              <HoverCard className="h-full">
+                <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs hover:shadow-md transition-all duration-300 p-5 flex flex-col items-center text-center group hover:border-emerald-300 h-full">
+                  {/* Photo with zoom hover */}
+                  <div className="w-24 h-24 rounded-full overflow-hidden mb-3.5 border-3 border-emerald-50 shadow-md group-hover:scale-105 transition-transform duration-300 relative bg-slate-100">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src =
+                          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&fit=crop&q=80';
+                      }}
+                    />
+                  </div>
 
-              {/* Designation Badge */}
-              <span className="inline-block bg-[#e8f7ee] text-[#004d34] text-[10.5px] font-black px-2.5 py-0.5 rounded-full mb-2 border border-emerald-100">
-                {isBn ? member.designationBn : member.designation}
-              </span>
+                  {/* Designation Badge */}
+                  <span className="inline-block bg-[#e8f7ee] text-[#004d34] text-[10.5px] font-black px-2.5 py-0.5 rounded-full mb-2 border border-emerald-100">
+                    {isBn ? member.designationBn : member.designation}
+                  </span>
 
-              {/* Name */}
-              <h3 className="font-extrabold text-sm text-slate-900 leading-tight group-hover:text-[#004d34] transition-colors">
-                {isBn ? member.nameBn : member.name}
-              </h3>
+                  {/* Name */}
+                  <h3 className="font-extrabold text-sm text-slate-900 leading-tight group-hover:text-[#004d34] transition-colors">
+                    {isBn ? member.nameBn : member.name}
+                  </h3>
 
-              {/* Batch Tag */}
-              <span className="text-[11px] font-bold text-[#059669] mt-0.5">
-                {isBn ? `ব্যাচ ${toBanglaNum(member.batch)}` : `Batch ${member.batch}`}
-              </span>
+                  {/* Batch Tag */}
+                  <span className="text-[11px] font-bold text-[#059669] mt-0.5">
+                    {isBn ? `ব্যাচ ${toBanglaNum(member.batch)}` : `Batch ${member.batch}`}
+                  </span>
 
-              {/* Professional Role */}
-              <div className="text-[11px] text-slate-600 font-semibold mt-2 line-clamp-1">
-                {isBn ? member.professionBn : member.profession}
-              </div>
+                  {/* Professional Role */}
+                  <div className="text-[11px] text-slate-600 font-semibold mt-2 line-clamp-1">
+                    {isBn ? member.professionBn : member.profession}
+                  </div>
 
-              {/* Organization */}
-              <div className="text-[10.5px] text-slate-400 font-medium line-clamp-1">
-                {isBn ? member.organizationBn : member.organization}
-              </div>
+                  {/* Organization */}
+                  <div className="text-[10.5px] text-slate-400 font-medium line-clamp-1">
+                    {isBn ? member.organizationBn : member.organization}
+                  </div>
 
-              {/* Email Contact */}
-              <div className="mt-3.5 pt-3 border-t border-slate-100 w-full flex items-center justify-center">
-                <a
-                  href={`mailto:${member.email}`}
-                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500 hover:text-[#004d34] transition"
-                  title={member.email}
-                >
-                  <Mail size={12} className="text-[#059669]" />
-                  <span>{isBn ? 'ইমেইল' : 'Email'}</span>
-                </a>
-              </div>
-            </div>
+                  {/* Email Contact */}
+                  <div className="mt-auto pt-3.5 border-t border-slate-100 w-full flex items-center justify-center">
+                    <a
+                      href={`mailto:${member.email}`}
+                      className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500 hover:text-[#004d34] transition"
+                      title={member.email}
+                    >
+                      <Mail size={12} className="text-[#059669]" />
+                      <span>{isBn ? 'ইমেইল' : 'Email'}</span>
+                    </a>
+                  </div>
+                </div>
+              </HoverCard>
+            </ScrollStaggerItem>
           ))}
-        </div>
+        </ScrollStaggerContainer>
       </div>
 
       {/* 4. DISTINGUISHED ALUMNI SPOTLIGHT (With Personal Images) */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24">
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+        <ScrollReveal duration={0.6} className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-1.5 bg-[#e8f7ee] text-[#059669] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
             <Sparkles size={13} />
             <span>{isBn ? 'কৃতি প্রাক্তনীদের অর্জন' : 'HALL OF EXCELLENCE'}</span>
@@ -808,80 +772,81 @@ export const Alumni: React.FC = () => {
               ? 'সিভিল প্রশাসন, চিকিৎসা, তথ্যপ্রযুক্তি, গবেষণা ও শিল্পোদ্যোগে অনন্য অবদান রেখে চলা আমাদের কৃতী শিক্ষার্থীরা।'
               : 'Celebrating graduates who are shaping industries, leading institutions, and making a lasting difference.'}
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* Distinguished Cards Grid with Real Photos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <ScrollStaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {ALUMNI_DATABASE.filter((a) => a.isDistinguished).map((alumni) => (
-            <div
-              key={alumni.id}
-              className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs hover:shadow-md transition-all duration-300 p-6 flex flex-col justify-between group hover:border-emerald-300"
-            >
-              <div>
-                {/* Top Badge & Batch */}
-                <div className="flex items-center justify-between gap-2 mb-4">
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#e8f7ee] text-[#004d34] border border-emerald-100">
-                    <Award size={12} />
-                    <span>{isBn ? `ব্যাচ ${toBanglaNum(alumni.batch)}` : `Batch ${alumni.batch}`}</span>
-                  </span>
-                  <span className="text-[11px] font-semibold text-slate-500">
-                    {isBn ? alumni.fieldBn : alumni.field}
-                  </span>
-                </div>
-
-                {/* Identity Header with Personal Image */}
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-2xl overflow-hidden shrink-0 shadow-md border-2 border-emerald-100 bg-slate-100 group-hover:scale-105 transition-transform">
-                    <img
-                      src={alumni.image}
-                      alt={alumni.name}
-                      className="w-full h-full object-cover object-top"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src =
-                          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80';
-                      }}
-                    />
-                  </div>
+            <ScrollStaggerItem key={alumni.id}>
+              <HoverCard className="h-full">
+                <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs hover:shadow-md transition-all duration-300 p-6 flex flex-col justify-between group hover:border-emerald-300 h-full">
                   <div>
-                    <h3 className="font-extrabold text-base text-slate-900 group-hover:text-[#004d34] transition-colors leading-tight">
-                      {isBn ? alumni.nameBn : alumni.name}
-                    </h3>
-                    <p className="text-xs font-bold text-[#059669] mt-0.5">
-                      {isBn ? alumni.roleBn : alumni.role}
-                    </p>
-                    <p className="text-[11px] text-slate-500 font-medium">
-                      {isBn ? alumni.organizationBn : alumni.organization}
-                    </p>
+                    {/* Top Badge & Batch */}
+                    <div className="flex items-center justify-between gap-2 mb-4">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#e8f7ee] text-[#004d34] border border-emerald-100">
+                        <Award size={12} />
+                        <span>{isBn ? `ব্যাচ ${toBanglaNum(alumni.batch)}` : `Batch ${alumni.batch}`}</span>
+                      </span>
+                      <span className="text-[11px] font-semibold text-slate-500">
+                        {isBn ? alumni.fieldBn : alumni.field}
+                      </span>
+                    </div>
+
+                    {/* Identity Header with Personal Image */}
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-14 h-14 rounded-2xl overflow-hidden shrink-0 shadow-md border-2 border-emerald-100 bg-slate-100 group-hover:scale-105 transition-transform">
+                        <img
+                          src={alumni.image}
+                          alt={alumni.name}
+                          className="w-full h-full object-cover object-top"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src =
+                              'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80';
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-extrabold text-base text-slate-900 group-hover:text-[#004d34] transition-colors leading-tight">
+                          {isBn ? alumni.nameBn : alumni.name}
+                        </h3>
+                        <p className="text-xs font-bold text-[#059669] mt-0.5">
+                          {isBn ? alumni.roleBn : alumni.role}
+                        </p>
+                        <p className="text-[11px] text-slate-500 font-medium">
+                          {isBn ? alumni.organizationBn : alumni.organization}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Quote Box */}
+                    {alumni.quote && (
+                      <div className="bg-[#f8fafc] border border-slate-100 rounded-2xl p-3.5 text-xs text-slate-600 italic font-medium leading-relaxed mb-4">
+                        “{isBn ? alumni.quoteBn : alumni.quote}”
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Bottom Meta */}
+                  <div className="pt-3 border-t border-slate-100 space-y-1.5 text-[11px] text-slate-500 font-medium">
+                    <div className="flex items-center gap-2">
+                      <GraduationCap size={13} className="text-slate-400 shrink-0" />
+                      <span className="truncate">{isBn ? alumni.higherEdBn : alumni.higherEd}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin size={13} className="text-slate-400 shrink-0" />
+                      <span>{isBn ? alumni.locationBn : alumni.location}</span>
+                    </div>
                   </div>
                 </div>
-
-                {/* Quote Box */}
-                {alumni.quote && (
-                  <div className="bg-[#f8fafc] border border-slate-100 rounded-2xl p-3.5 text-xs text-slate-600 italic font-medium leading-relaxed mb-4">
-                    “{isBn ? alumni.quoteBn : alumni.quote}”
-                  </div>
-                )}
-              </div>
-
-              {/* Bottom Meta */}
-              <div className="pt-3 border-t border-slate-100 space-y-1.5 text-[11px] text-slate-500 font-medium">
-                <div className="flex items-center gap-2">
-                  <GraduationCap size={13} className="text-slate-400 shrink-0" />
-                  <span className="truncate">{isBn ? alumni.higherEdBn : alumni.higherEd}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={13} className="text-slate-400 shrink-0" />
-                  <span>{isBn ? alumni.locationBn : alumni.location}</span>
-                </div>
-              </div>
-            </div>
+              </HoverCard>
+            </ScrollStaggerItem>
           ))}
-        </div>
+        </ScrollStaggerContainer>
       </div>
 
       {/* 5. ALUMNI INITIATIVES & STUDENT WELFARE */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24">
-        <div className="bg-gradient-to-br from-[#003826] to-[#004d34] rounded-3xl p-6 sm:p-10 lg:p-12 text-white shadow-lg relative overflow-hidden">
+        <ScrollReveal duration={0.65} distance={30} className="bg-gradient-to-br from-[#003826] to-[#004d34] rounded-3xl p-6 sm:p-10 lg:p-12 text-white shadow-lg relative overflow-hidden">
           <div className="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-white/5 pointer-events-none" />
           <div className="absolute right-40 top-0 w-60 h-60 rounded-full bg-white/5 pointer-events-none" />
 
@@ -899,7 +864,7 @@ export const Alumni: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <ScrollStaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               {
                 title: isBn ? 'ক্যারিয়ার মেন্টরশিপ' : 'Career Mentoring',
@@ -930,95 +895,98 @@ export const Alumni: React.FC = () => {
                 icon: Award,
               },
             ].map((init, i) => (
-              <div
-                key={i}
-                className="bg-white/10 hover:bg-white/15 border border-white/15 rounded-2xl p-5 transition backdrop-blur-xs flex flex-col justify-between"
-              >
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-white/20 text-emerald-200 flex items-center justify-center mb-3.5">
-                    <init.icon size={20} />
+              <ScrollStaggerItem key={i}>
+                <HoverCard className="h-full">
+                  <div className="bg-white/10 hover:bg-white/15 border border-white/15 rounded-2xl p-5 transition backdrop-blur-xs flex flex-col justify-between h-full">
+                    <div>
+                      <div className="w-10 h-10 rounded-xl bg-white/20 text-emerald-200 flex items-center justify-center mb-3.5">
+                        <init.icon size={20} />
+                      </div>
+                      <h3 className="font-extrabold text-sm sm:text-base text-white mb-1.5">
+                        {init.title}
+                      </h3>
+                      <p className="text-xs text-emerald-100/80 leading-relaxed font-normal">
+                        {init.desc}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="font-extrabold text-sm sm:text-base text-white mb-1.5">
-                    {init.title}
-                  </h3>
-                  <p className="text-xs text-emerald-100/80 leading-relaxed font-normal">
-                    {init.desc}
-                  </p>
-                </div>
-              </div>
+                </HoverCard>
+              </ScrollStaggerItem>
             ))}
-          </div>
-        </div>
+          </ScrollStaggerContainer>
+        </ScrollReveal>
       </div>
 
       {/* 6. INTERACTIVE ALUMNI DIRECTORY (With Photos) */}
       <div id="directory" className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24 scroll-mt-20">
         <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-8 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
-            <div>
-              <div className="inline-flex items-center gap-1.5 bg-[#e8f7ee] text-[#004d34] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-1">
-                <Users size={13} className="text-[#059669]" />
-                <span>{isBn ? 'সদস্য তালিকা ও অনুসন্ধান' : 'ALUMNI DIRECTORY'}</span>
+          <ScrollReveal duration={0.5} className="space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+              <div>
+                <div className="inline-flex items-center gap-1.5 bg-[#e8f7ee] text-[#004d34] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-1">
+                  <Users size={13} className="text-[#059669]" />
+                  <span>{isBn ? 'সদস্য তালিকা ও অনুসন্ধান' : 'ALUMNI DIRECTORY'}</span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                  {isBn ? 'প্রাক্তনীদের অনুসন্ধান ও সংযোগ' : 'Search & Connect with Graduates'}
+                </h2>
               </div>
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                {isBn ? 'প্রাক্তনীদের অনুসন্ধান ও সংযোগ' : 'Search & Connect with Graduates'}
-              </h2>
-            </div>
-            <div className="text-xs text-slate-500 font-semibold">
-              {isBn
-                ? `মোট তালিকাভুক্ত: ${toBanglaNum(filteredAlumni.length)} জন`
-                : `Showing ${filteredAlumni.length} Alumni Profiles`}
-            </div>
-          </div>
-
-          {/* Filter Toolbar */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-            <div className="relative">
-              <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={isBn ? 'নাম, পদবি বা প্রতিষ্ঠান দিয়ে খুঁজুন...' : 'Search by name, role or company...'}
-                className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-xs font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-              />
+              <div className="text-xs text-slate-500 font-semibold">
+                {isBn
+                  ? `মোট তালিকাভুক্ত: ${toBanglaNum(filteredAlumni.length)} জন`
+                  : `Showing ${filteredAlumni.length} Alumni Profiles`}
+              </div>
             </div>
 
-            <div className="relative">
-              <Calendar size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-              <select
-                value={selectedBatchRange}
-                onChange={(e) => setSelectedBatchRange(e.target.value)}
-                className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl pl-9 pr-8 py-2.5 text-xs font-semibold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer"
-              >
-                <option value="All">{isBn ? 'সকল ব্যাচ (১৯৮৭ - ২০২৬)' : 'All Batches (1987 - 2026)'}</option>
-                <option value="1990-1999">{isBn ? '১৯৯০ - ১৯৯৯ ব্যাচ' : '1990 - 1999 Batches'}</option>
-                <option value="2000-2009">{isBn ? '২০০০ - ২০০৯ ব্যাচ' : '2000 - 2009 Batches'}</option>
-                <option value="2010-2019">{isBn ? '২০১০ - ২০১৯ ব্যাচ' : '2010 - 2019 Batches'}</option>
-                <option value="2020-2026">{isBn ? '২০২০ - ২০২৬ ব্যাচ' : '2020 - 2026 Batches'}</option>
-              </select>
-              <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-            </div>
+            {/* Filter Toolbar */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              <div className="relative">
+                <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={isBn ? 'নাম, পদবি বা প্রতিষ্ঠান দিয়ে খুঁজুন...' : 'Search by name, role or company...'}
+                  className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-xs font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
+                />
+              </div>
 
-            <div className="relative">
-              <Briefcase size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-              <select
-                value={selectedField}
-                onChange={(e) => setSelectedField(e.target.value)}
-                className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl pl-9 pr-8 py-2.5 text-xs font-semibold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer"
-              >
-                <option value="All">{isBn ? 'সকল পেশা ও ক্ষেত্র' : 'All Professional Fields'}</option>
-                <option value="Civil Service & Engineering">{isBn ? 'পাবলিক সার্ভিস ও প্রকৌশল' : 'Civil Service & Engineering'}</option>
-                <option value="Medical & Healthcare">{isBn ? 'চিকিৎসা ও স্বাস্থ্যসেবা' : 'Medical & Healthcare'}</option>
-                <option value="Technology & AI">{isBn ? 'প্রযুক্তি ও এআই' : 'Technology & AI'}</option>
-                <option value="Civil Service & Governance">{isBn ? 'সিভিল প্রশাসন ও শাসন' : 'Civil Service & Governance'}</option>
-                <option value="Academics & Research">{isBn ? 'উচ্চশিক্ষা ও গবেষণা' : 'Academics & Research'}</option>
-                <option value="Finance & Banking">{isBn ? 'অর্থনীতি ও ব্যাংকিং' : 'Finance & Banking'}</option>
-                <option value="Entrepreneurship">{isBn ? 'উদ্যোক্তা' : 'Entrepreneurship'}</option>
-              </select>
-              <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+              <div className="relative">
+                <Calendar size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <select
+                  value={selectedBatchRange}
+                  onChange={(e) => setSelectedBatchRange(e.target.value)}
+                  className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl pl-9 pr-8 py-2.5 text-xs font-semibold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer"
+                >
+                  <option value="All">{isBn ? 'সকল ব্যাচ (১৯৮৭ - ২০২৬)' : 'All Batches (1987 - 2026)'}</option>
+                  <option value="1990-1999">{isBn ? '১৯৯০ - ১৯৯৯ ব্যাচ' : '1990 - 1999 Batches'}</option>
+                  <option value="2000-2009">{isBn ? '২০০০ - ২০০৯ ব্যাচ' : '2000 - 2009 Batches'}</option>
+                  <option value="2010-2019">{isBn ? '২০১০ - ২০১৯ ব্যাচ' : '2010 - 2019 Batches'}</option>
+                  <option value="2020-2026">{isBn ? '২০২০ - ২০২৬ ব্যাচ' : '2020 - 2026 Batches'}</option>
+                </select>
+                <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+              </div>
+
+              <div className="relative">
+                <Briefcase size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <select
+                  value={selectedField}
+                  onChange={(e) => setSelectedField(e.target.value)}
+                  className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl pl-9 pr-8 py-2.5 text-xs font-semibold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer"
+                >
+                  <option value="All">{isBn ? 'সকল পেশা ও ক্ষেত্র' : 'All Professional Fields'}</option>
+                  <option value="Civil Service & Engineering">{isBn ? 'পাবলিক সার্ভিস ও প্রকৌশল' : 'Civil Service & Engineering'}</option>
+                  <option value="Medical & Healthcare">{isBn ? 'চিকিৎসা ও স্বাস্থ্যসেবা' : 'Medical & Healthcare'}</option>
+                  <option value="Technology & AI">{isBn ? 'প্রযুক্তি ও এআই' : 'Technology & AI'}</option>
+                  <option value="Civil Service & Governance">{isBn ? 'সিভিল প্রশাসন ও শাসন' : 'Civil Service & Governance'}</option>
+                  <option value="Academics & Research">{isBn ? 'উচ্চশিক্ষা ও গবেষণা' : 'Academics & Research'}</option>
+                  <option value="Finance & Banking">{isBn ? 'অর্থনীতি ও ব্যাংকিং' : 'Finance & Banking'}</option>
+                  <option value="Entrepreneurship">{isBn ? 'উদ্যোক্তা' : 'Entrepreneurship'}</option>
+                </select>
+                <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Directory Grid */}
           {filteredAlumni.length === 0 ? (
@@ -1032,77 +1000,78 @@ export const Alumni: React.FC = () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <ScrollStaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredAlumni.map((alm) => (
-                <div
-                  key={alm.id}
-                  className="bg-white rounded-2xl border border-slate-200/90 p-4 hover:border-emerald-300 transition shadow-2xs hover:shadow-xs flex flex-col justify-between group"
-                >
-                  <div className="space-y-3">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 shadow-2xs border border-emerald-100 bg-slate-100 group-hover:scale-105 transition-transform">
-                          <img
-                            src={alm.image}
-                            alt={alm.name}
-                            className="w-full h-full object-cover object-top"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src =
-                                'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80';
-                            }}
-                          />
-                        </div>
-                        <div>
-                          <h4 className="font-extrabold text-sm text-slate-900 leading-tight group-hover:text-[#004d34] transition-colors">
-                            {isBn ? alm.nameBn : alm.name}
-                          </h4>
-                          <span className="text-[11px] font-semibold text-[#059669]">
-                            {isBn ? `এসএসসি ব্যাচ ${toBanglaNum(alm.batch)}` : `SSC Batch ${alm.batch}`}
+                <ScrollStaggerItem key={alm.id}>
+                  <HoverCard className="h-full">
+                    <div className="bg-white rounded-2xl border border-slate-200/90 p-4 hover:border-emerald-300 transition shadow-2xs hover:shadow-xs flex flex-col justify-between group h-full">
+                      <div className="space-y-3">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 shadow-2xs border border-emerald-100 bg-slate-100 group-hover:scale-105 transition-transform">
+                              <img
+                                src={alm.image}
+                                alt={alm.name}
+                                className="w-full h-full object-cover object-top"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src =
+                                    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&fit=crop&q=80';
+                                }}
+                              />
+                            </div>
+                            <div>
+                              <h4 className="font-extrabold text-sm text-slate-900 leading-tight group-hover:text-[#004d34] transition-colors">
+                                {isBn ? alm.nameBn : alm.name}
+                              </h4>
+                              <span className="text-[11px] font-semibold text-[#059669]">
+                                {isBn ? `এসএসসি ব্যাচ ${toBanglaNum(alm.batch)}` : `SSC Batch ${alm.batch}`}
+                              </span>
+                            </div>
+                          </div>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 shrink-0">
+                            {isBn ? alm.fieldBn.split(' ')[0] : alm.field.split(' ')[0]}
                           </span>
                         </div>
-                      </div>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 shrink-0">
-                        {isBn ? alm.fieldBn.split(' ')[0] : alm.field.split(' ')[0]}
-                      </span>
-                    </div>
 
-                    <div className="space-y-1 text-xs">
-                      <div className="font-bold text-slate-800">
-                        {isBn ? alm.roleBn : alm.role}
+                        <div className="space-y-1 text-xs">
+                          <div className="font-bold text-slate-800">
+                            {isBn ? alm.roleBn : alm.role}
+                          </div>
+                          <div className="text-slate-500 font-medium">
+                            {isBn ? alm.organizationBn : alm.organization}
+                          </div>
+                          <div className="text-[11px] text-slate-400">
+                            {isBn ? alm.higherEdBn : alm.higherEd}
+                          </div>
+                        </div>
                       </div>
-                      <div className="text-slate-500 font-medium">
-                        {isBn ? alm.organizationBn : alm.organization}
-                      </div>
-                      <div className="text-[11px] text-slate-400">
-                        {isBn ? alm.higherEdBn : alm.higherEd}
+
+                      <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                        <span className="flex items-center gap-1 text-slate-500 font-medium">
+                          <MapPin size={12} className="text-slate-400" />
+                          <span>{isBn ? alm.locationBn : alm.location}</span>
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => alert(isBn ? 'যোগাযোগের লিংক শীঘ্রই সক্রিয় করা হবে।' : 'Alumni direct messaging will be available soon.')}
+                          className="text-[#004d34] hover:text-[#003826] font-bold inline-flex items-center gap-1 transition cursor-pointer"
+                        >
+                          <span>{isBn ? 'যোগাযোগ' : 'Connect'}</span>
+                          <ArrowRight size={11} />
+                        </button>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                    <span className="flex items-center gap-1 text-slate-500 font-medium">
-                      <MapPin size={12} className="text-slate-400" />
-                      <span>{isBn ? alm.locationBn : alm.location}</span>
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => alert(isBn ? 'যোগাযোগের লিংক শীঘ্রই সক্রিয় করা হবে।' : 'Alumni direct messaging will be available soon.')}
-                      className="text-[#004d34] hover:text-[#003826] font-bold inline-flex items-center gap-1 transition cursor-pointer"
-                    >
-                      <span>{isBn ? 'যোগাযোগ' : 'Connect'}</span>
-                      <ArrowRight size={11} />
-                    </button>
-                  </div>
-                </div>
+                  </HoverCard>
+                </ScrollStaggerItem>
               ))}
-            </div>
+            </ScrollStaggerContainer>
           )}
         </div>
       </div>
 
       {/* 7. UPCOMING GRAND REUNION 2026 */}
       <div id="reunion" className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24 scroll-mt-20">
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-md overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+        <ScrollReveal duration={0.65} distance={30} className="bg-white rounded-3xl border border-slate-200/90 shadow-md overflow-hidden grid grid-cols-1 lg:grid-cols-12">
           <div className="lg:col-span-5 bg-gradient-to-br from-[#004d34] to-[#00281b] p-8 sm:p-10 text-white flex flex-col justify-between relative overflow-hidden">
             <div className="space-y-4 relative z-10">
               <span className="inline-block bg-amber-400 text-slate-950 font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-xs">
@@ -1169,207 +1138,18 @@ export const Alumni: React.FC = () => {
             </div>
 
             <div className="pt-2 flex flex-wrap items-center gap-3">
-              <button
-                type="button"
-                onClick={() => scrollToSection('register')}
-                className="bg-[#004d34] hover:bg-[#003826] text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-xs cursor-pointer"
+              <Link
+                to="/contact"
+                className="bg-[#004d34] hover:bg-[#003826] text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-xs cursor-pointer inline-flex items-center gap-2"
               >
-                {isBn ? 'রিইউনিয়ন রেজিস্ট্রেশন সম্পন্ন করুন' : 'Confirm Reunion Attendance'}
-              </button>
+                <span>{isBn ? 'যোগাযোগ ও বিস্তারিত জানুন' : 'Contact & Inquiries'}</span>
+              </Link>
               <span className="text-xs text-slate-500 font-medium">
-                {isBn ? 'রেজিস্ট্রেশনের শেষ সময়: ৩০ নভেম্বর ২০২৬' : 'Registration Deadline: Nov 30, 2026'}
+                {isBn ? 'অনুষ্ঠান সংক্রান্ত যেকোনো তথ্যের জন্য যোগাযোগ করুন' : 'Reach out for reunion queries and details'}
               </span>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* 8. ALUMNI REGISTRATION FORM */}
-      <div id="register" className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24 scroll-mt-24">
-        <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-slate-200/90 shadow-md p-6 sm:p-10 space-y-6">
-          <div className="text-center max-w-lg mx-auto space-y-2">
-            <span className="inline-flex items-center gap-1.5 bg-[#e8f7ee] text-[#004d34] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-              <UserCheck size={14} className="text-[#059669]" />
-              <span>{isBn ? 'অনলাইন সদস্যভুক্তি' : 'JOIN THE NETWORK'}</span>
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              {isBn ? 'প্রাক্তন শিক্ষার্থী রেজিস্ট্রেশন ফর্ম' : 'Alumni Membership Registration'}
-            </h2>
-            <p className="text-xs text-slate-500 font-medium">
-              {isBn
-                ? 'এস ও এস হারম্যান মেইনার স্কুলের অ্যালামনাই ডাটাবেজে আপনার তথ্য যুক্ত করুন এবং কমিউনিটির অংশ থাকুন।'
-                : 'Stay updated with school events, reunions, mentorship requests, and global alumni networking.'}
-            </p>
-          </div>
-
-          {isSubmitted ? (
-            <div
-              id="alumni-success-msg"
-              className="bg-[#e8f7ee] border border-emerald-300 rounded-2xl p-6 text-center space-y-3"
-            >
-              <div className="w-12 h-12 rounded-full bg-[#004d34] text-white flex items-center justify-center mx-auto">
-                <CheckCircle2 size={24} />
-              </div>
-              <h3 className="font-black text-base sm:text-lg text-[#004d34]">
-                {isBn ? 'অভিনন্দন! আপনার অ্যালামনাই নিবন্ধন সফল হয়েছে' : 'Registration Submitted Successfully!'}
-              </h3>
-              <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
-                {isBn
-                  ? `ধন্যবাদ ${regForm.fullName}! আপনার তথ্য সফলভাবে আমাদের কেন্দ্রীয় অ্যালামনাই রেজিস্টারে সংরক্ষিত হয়েছে। খুব শীঘ্রই নির্বাহী কমিটি থেকে ইমেইলের মাধ্যমে কনফার্মেশন পাঠানো হবে।`
-                  : `Thank you ${regForm.fullName}! Your information has been recorded in the central alumni register. You will receive a confirmation email shortly.`}
-              </p>
-              <button
-                type="button"
-                onClick={() => setIsSubmitted(false)}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:underline pt-2 cursor-pointer"
-              >
-                <span>{isBn ? 'আরেকটি নিবন্ধন করুন' : 'Submit Another Profile'}</span>
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleRegisterSubmit} className="space-y-4 pt-2">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    {isBn ? 'পূর্ণ নাম *' : 'Full Name *'}
-                  </label>
-                  <input
-                    id="reg-fullName"
-                    type="text"
-                    required
-                    value={regForm.fullName}
-                    onChange={(e) => setRegForm({ ...regForm, fullName: e.target.value })}
-                    placeholder={isBn ? 'আপনার পূর্ণ নাম' : 'e.g. Abdullah Al Mamun'}
-                    className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    {isBn ? 'ইমেইল ঠিকানা *' : 'Email Address *'}
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={regForm.email}
-                    onChange={(e) => setRegForm({ ...regForm, email: e.target.value })}
-                    placeholder="name@example.com"
-                    className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    {isBn ? 'মোবাইল / হোয়াটসঅ্যাপ নম্বর *' : 'Phone / WhatsApp *'}
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={regForm.phone}
-                    onChange={(e) => setRegForm({ ...regForm, phone: e.target.value })}
-                    placeholder="017XXXXXXXX"
-                    className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    {isBn ? 'এসএসসি পাসের বছর (ব্যাচ) *' : 'SSC Passing Year (Batch) *'}
-                  </label>
-                  <select
-                    value={regForm.batchYear}
-                    onChange={(e) => setRegForm({ ...regForm, batchYear: e.target.value })}
-                    className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer"
-                  >
-                    {Array.from({ length: 40 }, (_, i) => 2026 - i).map((year) => (
-                      <option key={year} value={year}>
-                        {isBn ? `ব্যাচ ${toBanglaNum(year)}` : `Batch ${year}`}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    {isBn ? 'উচ্চশিক্ষা (ডিগ্রি ও বিশ্ববিদ্যালয়)' : 'Higher Education (Degree & Varsity)'}
-                  </label>
-                  <input
-                    type="text"
-                    value={regForm.higherEd}
-                    onChange={(e) => setRegForm({ ...regForm, higherEd: e.target.value })}
-                    placeholder={isBn ? 'যেমন: বিএসসি (কুয়েট) / এমবিবিএস' : 'e.g. B.Sc in CSE (BUET)'}
-                    className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    {isBn ? 'বর্তমান পেশা ও পদবি' : 'Current Profession / Role'}
-                  </label>
-                  <input
-                    type="text"
-                    value={regForm.profession}
-                    onChange={(e) => setRegForm({ ...regForm, profession: e.target.value })}
-                    placeholder={isBn ? 'যেমন: সফটওয়্যার ইঞ্জিনিয়ার / চিকিৎসক' : 'e.g. Software Engineer / Doctor'}
-                    className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    {isBn ? 'প্রতিষ্ঠান / কর্মস্থল' : 'Company / Organization'}
-                  </label>
-                  <input
-                    type="text"
-                    value={regForm.company}
-                    onChange={(e) => setRegForm({ ...regForm, company: e.target.value })}
-                    placeholder={isBn ? 'প্রতিষ্ঠানের নাম' : 'e.g. Google, DMC, Govt. Office'}
-                    className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    {isBn ? 'বর্তমান শহর ও দেশ' : 'Current City & Country'}
-                  </label>
-                  <input
-                    type="text"
-                    value={regForm.location}
-                    onChange={(e) => setRegForm({ ...regForm, location: e.target.value })}
-                    placeholder={isBn ? 'যেমন: ঢাকা, বাংলাদেশ / লন্ডন' : 'e.g. Dhaka, Bangladesh / London'}
-                    className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#004d34]"
-                  />
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <label className="flex items-center gap-2.5 text-xs font-medium text-slate-700 cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    checked={regForm.willingToMentor}
-                    onChange={(e) => setRegForm({ ...regForm, willingToMentor: e.target.checked })}
-                    className="w-4 h-4 rounded text-[#004d34] focus:ring-[#004d34]"
-                  />
-                  <span>
-                    {isBn
-                      ? 'আমি বর্তমান শিক্ষার্থীদের ক্যারিয়ার মেন্টরশিপ ও দিকনির্দেশনা দিতে আগ্রহী'
-                      : 'I am willing to volunteer as a career mentor for current students'}
-                  </span>
-                </label>
-              </div>
-
-              <div className="pt-3">
-                <button
-                  type="submit"
-                  className="w-full bg-[#004d34] hover:bg-[#003826] text-white font-bold text-xs py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition shadow-xs hover:shadow cursor-pointer"
-                >
-                  <Send size={15} />
-                  <span>{isBn ? 'নিবন্ধন সম্পন্ন করুন' : 'Complete Alumni Registration'}</span>
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
+        </ScrollReveal>
       </div>
     </div>
   );

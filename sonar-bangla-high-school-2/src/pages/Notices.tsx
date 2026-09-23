@@ -27,6 +27,13 @@ import {
 } from 'lucide-react';
 import { SCHOOL_INFO } from '../data/schoolData';
 import { useLanguage } from '../contexts/LanguageContext';
+import {
+  ScrollReveal,
+  ScrollScale,
+  ScrollStaggerContainer,
+  ScrollStaggerItem,
+  HoverCard
+} from '../components/ui/MotionComponents';
 
 interface NoticeItem {
   id: string;
@@ -794,7 +801,7 @@ export const Notices: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
+          <ScrollReveal duration={0.6} distance={25} className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <Megaphone size={14} />
@@ -815,23 +822,25 @@ export const Notices: React.FC = () => {
                 ? 'এস ও এস হারম্যান মেইনার স্কুল খুলনার সর্বশেষ বিজ্ঞপ্তি, ছুটির ঘোষণা, পরীক্ষার সময়সূচি ও গুরুত্বপূর্ণ প্রাতিষ্ঠানিক নির্দেশনাবলি।'
                 : 'Stay informed with the latest announcements, official circulars, exam schedules and important updates from SOS Hermann Gmeiner School Khulna.'}
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Floating White Quote Card on the Right (Matching media_1790110070973.png) */}
-          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
-                “
-              </span>
-              <div>
-                <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  {isBn ? 'আজকের মানসম্মত শিক্ষাই আগামীর সম্ভাবনাময় ভবিষ্যৎ' : 'Education today for a brighter tomorrow'}
-                </h4>
-                <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — {isBn ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
-                </p>
+          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 max-w-[340px]">
+            <ScrollScale delay={0.2} className="bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90">
+              <div className="flex items-start gap-3">
+                <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                  “
+                </span>
+                <div>
+                  <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
+                    {isBn ? 'আজকের মানসম্মত শিক্ষাই আগামীর সম্ভাবনাময় ভবিষ্যৎ' : 'Education today for a brighter tomorrow'}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
+                    — {isBn ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollScale>
           </div>
         </div>
       </section>
@@ -839,7 +848,7 @@ export const Notices: React.FC = () => {
       {/* Main Notice List Section */}
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {/* Interactive Filter Pills & Search Bar Card */}
-        <div className="bg-white rounded-2xl p-2.5 sm:p-3 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        <ScrollReveal duration={0.5} distance={15} className="bg-white rounded-2xl p-2.5 sm:p-3 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
           {/* Filter Pills */}
           <div className="flex flex-wrap items-center gap-2">
             {categories.map((cat) => {
@@ -882,8 +891,8 @@ export const Notices: React.FC = () => {
               className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#004d34] focus:ring-1 focus:ring-[#004d34] transition shadow-xs"
             />
           </div>
-        </div>
-        <div className="space-y-3.5">
+        </ScrollReveal>
+        <ScrollStaggerContainer className="space-y-3.5">
           {currentNotices.length > 0 ? (
             currentNotices.map((notice) => {
               const dateClass = getDateBadgeClass(notice.category);
@@ -897,104 +906,105 @@ export const Notices: React.FC = () => {
                 : notice.dateStr;
 
               return (
-                <div
-                  key={notice.id}
-                  className="relative group bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-xs hover:shadow-md transition-all duration-200"
-                >
-                  {/* Top-Right Hanging Green Ribbon for Featured Notice */}
-                  {notice.hasBookmark && (
-                    <div className="absolute top-0 right-6 sm:right-8 w-5 h-7 bg-[#007a4d] text-white flex items-center justify-center rounded-b-sm shadow-xs pointer-events-none">
-                      <Bookmark size={13} className="fill-white" />
-                    </div>
-                  )}
-
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    {/* Left: Date Badge + Main Info */}
-                    <div className="flex items-start gap-4 sm:gap-5 flex-1 min-w-0">
-                      {/* Date Badge */}
-                      <div
-                        className={`w-14 h-16 sm:w-16 sm:h-18 rounded-xl flex flex-col items-center justify-center border text-center shrink-0 ${dateClass}`}
-                      >
-                        <span className="text-xl sm:text-2xl font-black leading-none">
-                          {isBn ? toBanglaNum(notice.day) : notice.day}
-                        </span>
-                        <span className="text-[11px] font-bold uppercase mt-1 leading-none">
-                          {isBn ? (MONTH_MAP_BN[notice.month] || notice.month) : notice.month}
-                        </span>
-                        <span className="text-[10px] text-slate-400 font-medium mt-1 leading-none">
-                          {isBn ? toBanglaNum(notice.year) : notice.year}
-                        </span>
+                <ScrollStaggerItem key={notice.id}>
+                  <div
+                    className="relative group bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-xs hover:shadow-md transition-all duration-200"
+                  >
+                    {/* Top-Right Hanging Green Ribbon for Featured Notice */}
+                    {notice.hasBookmark && (
+                      <div className="absolute top-0 right-6 sm:right-8 w-5 h-7 bg-[#007a4d] text-white flex items-center justify-center rounded-b-sm shadow-xs pointer-events-none">
+                        <Bookmark size={13} className="fill-white" />
                       </div>
+                    )}
 
-                      {/* Content Body */}
-                      <div className="flex-1 min-w-0">
-                        {/* Badges row */}
-                        <div className="flex items-center gap-2 flex-wrap mb-1.5">
-                          <span
-                            className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-md uppercase tracking-wide ${getCategoryBadgeClass(
-                              notice.category
-                            )}`}
-                          >
-                            {noticeCategory}
-                          </span>
-
-                          {notice.isFeatured && (
-                            <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#dcf4e8] text-[#007a4d] border border-[#b8e8d1]">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#007a4d]" />
-                              {isBn ? 'বিশেষ নোটিশ' : 'Featured'}
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Title */}
-                        <h2
-                          onClick={() => setActiveNotice(notice)}
-                          className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-[#004d34] transition-colors cursor-pointer leading-snug line-clamp-1"
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                      {/* Left: Date Badge + Main Info */}
+                      <div className="flex items-start gap-4 sm:gap-5 flex-1 min-w-0">
+                        {/* Date Badge */}
+                        <div
+                          className={`w-14 h-16 sm:w-16 sm:h-18 rounded-xl flex flex-col items-center justify-center border text-center shrink-0 ${dateClass}`}
                         >
-                          {noticeTitle}
-                        </h2>
+                          <span className="text-xl sm:text-2xl font-black leading-none">
+                            {isBn ? toBanglaNum(notice.day) : notice.day}
+                          </span>
+                          <span className="text-[11px] font-bold uppercase mt-1 leading-none">
+                            {isBn ? (MONTH_MAP_BN[notice.month] || notice.month) : notice.month}
+                          </span>
+                          <span className="text-[10px] text-slate-400 font-medium mt-1 leading-none">
+                            {isBn ? toBanglaNum(notice.year) : notice.year}
+                          </span>
+                        </div>
 
-                        {/* Excerpt */}
-                        <p className="text-xs text-slate-500 line-clamp-1 mt-1">
-                          {noticeExcerpt}
-                        </p>
-
-                        {/* Metadata row */}
-                        <div className="flex items-center gap-4 text-[11px] text-slate-500 mt-2 font-medium">
-                          <div className="flex items-center gap-1.5">
-                            <FileText size={12} className="text-slate-400 shrink-0" />
-                            <span>
-                              {isBn ? 'প্রকাশনায়: ' : 'Published by: '}
-                              <strong className="text-slate-700 font-semibold">
-                                {noticePublishedBy}
-                              </strong>
+                        {/* Content Body */}
+                        <div className="flex-1 min-w-0">
+                          {/* Badges row */}
+                          <div className="flex items-center gap-2 flex-wrap mb-1.5">
+                            <span
+                              className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-md uppercase tracking-wide ${getCategoryBadgeClass(
+                                notice.category
+                              )}`}
+                            >
+                              {noticeCategory}
                             </span>
+
+                            {notice.isFeatured && (
+                              <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#dcf4e8] text-[#007a4d] border border-[#b8e8d1]">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#007a4d]" />
+                                {isBn ? 'বিশেষ নোটিশ' : 'Featured'}
+                              </span>
+                            )}
                           </div>
-                          <div className="flex items-center gap-1.5">
-                            <Calendar size={12} className="text-slate-400 shrink-0" />
-                            <span>{noticeDateStr}</span>
+
+                          {/* Title */}
+                          <h2
+                            onClick={() => setActiveNotice(notice)}
+                            className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-[#004d34] transition-colors cursor-pointer leading-snug line-clamp-1"
+                          >
+                            {noticeTitle}
+                          </h2>
+
+                          {/* Excerpt */}
+                          <p className="text-xs text-slate-500 line-clamp-1 mt-1">
+                            {noticeExcerpt}
+                          </p>
+
+                          {/* Metadata row */}
+                          <div className="flex items-center gap-4 text-[11px] text-slate-500 mt-2 font-medium">
+                            <div className="flex items-center gap-1.5">
+                              <FileText size={12} className="text-slate-400 shrink-0" />
+                              <span>
+                                {isBn ? 'প্রকাশনায়: ' : 'Published by: '}
+                                <strong className="text-slate-700 font-semibold">
+                                  {noticePublishedBy}
+                                </strong>
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                              <Calendar size={12} className="text-slate-400 shrink-0" />
+                              <span>{noticeDateStr}</span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    {/* Right: View Details Link */}
-                    <div className="flex items-center justify-end shrink-0 self-stretch sm:self-auto border-t sm:border-t-0 pt-3 sm:pt-0 border-slate-100">
-                      {/* View Details Link */}
-                      <button
-                        type="button"
-                        onClick={() => setActiveNotice(notice)}
-                        className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#006644] hover:text-[#004d34] hover:underline transition-colors cursor-pointer group/link"
-                      >
-                        <span>{isBn ? 'বিস্তারিত দেখুন' : 'View Details'}</span>
-                        <ArrowRight
-                          size={14}
-                          className="transition-transform group-hover/link:translate-x-0.5"
-                        />
-                      </button>
+                      {/* Right: View Details Link */}
+                      <div className="flex items-center justify-end shrink-0 self-stretch sm:self-auto border-t sm:border-t-0 pt-3 sm:pt-0 border-slate-100">
+                        {/* View Details Link */}
+                        <button
+                          type="button"
+                          onClick={() => setActiveNotice(notice)}
+                          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#006644] hover:text-[#004d34] hover:underline transition-colors cursor-pointer group/link"
+                        >
+                          <span>{isBn ? 'বিস্তারিত দেখুন' : 'View Details'}</span>
+                          <ArrowRight
+                            size={14}
+                            className="transition-transform group-hover/link:translate-x-0.5"
+                          />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </ScrollStaggerItem>
               );
             })
           ) : (
@@ -1017,7 +1027,7 @@ export const Notices: React.FC = () => {
               </button>
             </div>
           )}
-        </div>
+        </ScrollStaggerContainer>
 
         {/* Bottom Pagination */}
         {filteredNotices.length > 0 && (

@@ -28,6 +28,13 @@ import {
   CODE_OF_CONDUCT,
   MODAL_DETAILS,
 } from '../data/routineLocalization';
+import {
+  ScrollReveal,
+  ScrollScale,
+  ScrollStaggerContainer,
+  ScrollStaggerItem,
+  HoverCard,
+} from '../components/ui/MotionComponents';
 
 interface RoutineRow {
   period: string;
@@ -1215,145 +1222,154 @@ export const Academic: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
-            {/* Pill Tag Badge */}
-            <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
-              <GraduationCap size={15} />
-              <span>{t.academic.badge}</span>
-            </div>
+          <ScrollReveal duration={0.6} distance={25}>
+            <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
+              {/* Pill Tag Badge */}
+              <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
+                <GraduationCap size={15} />
+                <span>{t.academic.badge}</span>
+              </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              {language === 'bn' ? (
-                <>
-                  একাডেমিক তথ্য ও <br />
-                  ক্লাস রুটিন
-                </>
-              ) : (
-                <>
-                  Academic Policies & <br />
-                  Routine
-                </>
-              )}
-            </h1>
+              {/* Main Headline */}
+              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
+                {language === 'bn' ? (
+                  <>
+                    একাডেমিক তথ্য ও <br />
+                    ক্লাস রুটিন
+                  </>
+                ) : (
+                  <>
+                    Academic Policies & <br />
+                    Routine
+                  </>
+                )}
+              </h1>
 
-            {/* Short Green Accent Line Under Title */}
-            <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
+              {/* Short Green Accent Line Under Title */}
+              <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
 
-            {/* Sub-headline & Description */}
-            <div className="space-y-1">
-              <p className="text-[#059669] font-bold text-sm sm:text-base leading-snug">
-                {language === 'bn' ? 'মানসম্মত পাঠদান, সুশৃঙ্খল পরিবেশ ও আধুনিক সুবিধা।' : 'Structured learning. Disciplined routines. Brighter futures.'}
-              </p>
-              <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-                {t.academic.subtitle}
-              </p>
-            </div>
-          </div>
-
-          {/* Floating White Quote Card on the Right (Common across all pages) */}
-          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
-                “
-              </span>
-              <div>
-                <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  {language === 'bn' ? 'আলোকিত আগামীর জন্য আজকের শিক্ষা' : 'Education today for a brighter tomorrow'}
-                </h4>
-                <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — {language === 'bn' ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
+              {/* Sub-headline & Description */}
+              <div className="space-y-1">
+                <p className="text-[#059669] font-bold text-sm sm:text-base leading-snug">
+                  {language === 'bn' ? 'মানসম্মত পাঠদান, সুশৃঙ্খল পরিবেশ ও আধুনিক সুবিধা।' : 'Structured learning. Disciplined routines. Brighter futures.'}
+                </p>
+                <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
+                  {t.academic.subtitle}
                 </p>
               </div>
             </div>
+          </ScrollReveal>
+
+          {/* Floating White Quote Card on the Right (Common across all pages) */}
+          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16">
+            <ScrollScale delay={0.2}>
+              <div className="bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
+                <div className="flex items-start gap-3">
+                  <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                    “
+                  </span>
+                  <div>
+                    <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
+                      {language === 'bn' ? 'আলোকিত আগামীর জন্য আজকের শিক্ষা' : 'Education today for a brighter tomorrow'}
+                    </h4>
+                    <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
+                      — {language === 'bn' ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </ScrollScale>
           </div>
         </div>
       </div>
 
       {/* 2. Floating Top Navigation Pill Bar (Overlapping Bottom of Hero Banner) */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-7 sm:-mt-8 relative z-20">
-        <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-md p-1.5 sm:p-2 flex items-center justify-between overflow-x-auto gap-2 scrollbar-none">
-          {/* Pill 1: Class Routine */}
-          <button
-            type="button"
-            onClick={() => setActiveTab('routine')}
-            className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition cursor-pointer ${
-              activeTab === 'routine'
-                ? 'bg-[#004d34] text-white shadow-xs'
-                : 'text-slate-700 hover:bg-slate-50 hover:text-[#004d34]'
-            }`}
-          >
-            <Calendar size={15} />
-            <span>{t.academic.tabRoutine}</span>
-          </button>
+        <ScrollReveal duration={0.5} distance={15}>
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-md p-1.5 sm:p-2 flex items-center justify-between overflow-x-auto gap-2 scrollbar-none">
+            {/* Pill 1: Class Routine */}
+            <button
+              type="button"
+              onClick={() => setActiveTab('routine')}
+              className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition cursor-pointer ${
+                activeTab === 'routine'
+                  ? 'bg-[#004d34] text-white shadow-xs'
+                  : 'text-slate-700 hover:bg-slate-50 hover:text-[#004d34]'
+              }`}
+            >
+              <Calendar size={15} />
+              <span>{t.academic.tabRoutine}</span>
+            </button>
 
-          {/* Pill 2: Uniform Guidelines */}
-          <button
-            type="button"
-            onClick={() => {
-              setActiveTab('uniform');
-              const el = document.getElementById('uniform-section');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition cursor-pointer ${
-              activeTab === 'uniform'
-                ? 'bg-[#004d34] text-white shadow-xs'
-                : 'text-slate-700 hover:bg-slate-50 hover:text-[#004d34]'
-            }`}
-          >
-            <Shirt size={15} className={activeTab === 'uniform' ? 'text-white' : 'text-emerald-700'} />
-            <span>{t.academic.tabUniform}</span>
-          </button>
+            {/* Pill 2: Uniform Guidelines */}
+            <button
+              type="button"
+              onClick={() => {
+                setActiveTab('uniform');
+                const el = document.getElementById('uniform-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition cursor-pointer ${
+                activeTab === 'uniform'
+                  ? 'bg-[#004d34] text-white shadow-xs'
+                  : 'text-slate-700 hover:bg-slate-50 hover:text-[#004d34]'
+              }`}
+            >
+              <Shirt size={15} className={activeTab === 'uniform' ? 'text-white' : 'text-emerald-700'} />
+              <span>{t.academic.tabUniform}</span>
+            </button>
 
-          {/* Pill 3: Code of Conduct */}
-          <button
-            type="button"
-            onClick={() => {
-              setActiveTab('conduct');
-              const el = document.getElementById('conduct-section');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition cursor-pointer ${
-              activeTab === 'conduct'
-                ? 'bg-[#004d34] text-white shadow-xs'
-                : 'text-slate-700 hover:bg-slate-50 hover:text-[#004d34]'
-            }`}
-          >
-            <ShieldCheck size={15} className={activeTab === 'conduct' ? 'text-white' : 'text-emerald-700'} />
-            <span>{t.academic.tabConduct}</span>
-          </button>
+            {/* Pill 3: Code of Conduct */}
+            <button
+              type="button"
+              onClick={() => {
+                setActiveTab('conduct');
+                const el = document.getElementById('conduct-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition cursor-pointer ${
+                activeTab === 'conduct'
+                  ? 'bg-[#004d34] text-white shadow-xs'
+                  : 'text-slate-700 hover:bg-slate-50 hover:text-[#004d34]'
+              }`}
+            >
+              <ShieldCheck size={15} className={activeTab === 'conduct' ? 'text-white' : 'text-emerald-700'} />
+              <span>{t.academic.tabConduct}</span>
+            </button>
 
-          {/* Pill 4: Academic Calendar */}
-          <button
-            type="button"
-            onClick={() => {
-              setActiveTab('calendar');
-              setDetailsModal('policy');
-            }}
-            className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition cursor-pointer ${
-              activeTab === 'calendar'
-                ? 'bg-[#004d34] text-white shadow-xs'
-                : 'text-slate-700 hover:bg-slate-50 hover:text-[#004d34]'
-            }`}
-          >
-            <CalendarDays size={15} className={activeTab === 'calendar' ? 'text-white' : 'text-emerald-700'} />
-            <span>{t.academic.tabCalendar}</span>
-          </button>
+            {/* Pill 4: Academic Calendar */}
+            <button
+              type="button"
+              onClick={() => {
+                setActiveTab('calendar');
+                setDetailsModal('policy');
+              }}
+              className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition cursor-pointer ${
+                activeTab === 'calendar'
+                  ? 'bg-[#004d34] text-white shadow-xs'
+                  : 'text-slate-700 hover:bg-slate-50 hover:text-[#004d34]'
+              }`}
+            >
+              <CalendarDays size={15} className={activeTab === 'calendar' ? 'text-white' : 'text-emerald-700'} />
+              <span>{t.academic.tabCalendar}</span>
+            </button>
 
-          {/* Pill 5: Downloads */}
-          <Link
-            to="/downloads"
-            className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition text-slate-700 hover:bg-slate-50 hover:text-[#004d34] cursor-pointer"
-          >
-            <Download size={15} className="text-emerald-700" />
-            <span>{t.nav.downloads}</span>
-          </Link>
-        </div>
+            {/* Pill 5: Downloads */}
+            <Link
+              to="/downloads"
+              className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition text-slate-700 hover:bg-slate-50 hover:text-[#004d34] cursor-pointer"
+            >
+              <Download size={15} className="text-emerald-700" />
+              <span>{t.nav.downloads}</span>
+            </Link>
+          </div>
+        </ScrollReveal>
       </div>
 
       {/* 3. Daily Class Schedule & Routine Card */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-10">
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-5 sm:p-8 space-y-6">
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-5 sm:p-8 space-y-6">
           {/* Header Row: Title & Download Timetable Button */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
@@ -1533,152 +1549,163 @@ export const Academic: React.FC = () => {
             </span>
           </div>
         </div>
+        </ScrollReveal>
       </div>
 
       {/* 4. Uniform Guidelines (Two Cards Side by Side) */}
       <div id="uniform-section" className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ScrollStaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Card 1: Boys' School Uniform */}
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-7 flex flex-col justify-between space-y-4">
-            <div>
-              {/* Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
-                    <Shirt size={18} />
+          <ScrollStaggerItem>
+            <HoverCard className="h-full">
+              <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-7 flex flex-col justify-between space-y-4 h-full">
+                <div>
+                  {/* Header */}
+                  <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
+                        <Shirt size={18} />
+                      </div>
+                      <h3 className="font-extrabold text-base text-slate-900">
+                        {language === 'bn' ? 'ছাত্রদের নির্ধারিত পোশাক (ইউনিফর্ম)' : "Boys' School Uniform"}
+                      </h3>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setDetailsModal('boys')}
+                      className="inline-flex items-center gap-1 text-[11px] font-bold text-[#004d34] hover:text-emerald-800 bg-[#e8f7ee] hover:bg-[#d1fae5] px-2.5 py-1 rounded-lg transition cursor-pointer"
+                    >
+                      <span>{language === 'bn' ? 'বিস্তারিত দেখুন' : 'View Details'}</span>
+                      <ArrowRight size={12} />
+                    </button>
                   </div>
-                  <h3 className="font-extrabold text-base text-slate-900">
-                    {language === 'bn' ? 'ছাত্রদের নির্ধারিত পোশাক (ইউনিফর্ম)' : "Boys' School Uniform"}
-                  </h3>
+
+                  {/* Items List */}
+                  <ul className="space-y-3 pt-4 text-xs text-slate-700 font-medium">
+                    <li className="flex items-center gap-2.5">
+                      <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
+                      <span>{language === 'bn' ? 'সাদা হাফ/ফুল হাতা শার্ট (স্কুল নির্ধারিত মনোগ্রামসহ)' : 'White half/full sleeve shirt (as per school design)'}</span>
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
+                      <span>{language === 'bn' ? 'নেভি ব্লু রঙের প্যান্ট ও কালো বেল্ট' : 'Navy blue formal trousers with black belt'}</span>
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
+                      <span>{language === 'bn' ? 'সাদা মোজা এবং কালো রঙের বাটা শু' : 'White socks and black school shoes'}</span>
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
+                      <span>{language === 'bn' ? 'অফিসিয়াল স্কুল ব্যাজ ও আইডি কার্ড পরিধান আবশ্যক' : 'Official school crest/badge is mandatory'}</span>
+                    </li>
+                  </ul>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => setDetailsModal('boys')}
-                  className="inline-flex items-center gap-1 text-[11px] font-bold text-[#004d34] hover:text-emerald-800 bg-[#e8f7ee] hover:bg-[#d1fae5] px-2.5 py-1 rounded-lg transition cursor-pointer"
-                >
-                  <span>{language === 'bn' ? 'বিস্তারিত দেখুন' : 'View Details'}</span>
-                  <ArrowRight size={12} />
-                </button>
               </div>
-
-              {/* Items List */}
-              <ul className="space-y-3 pt-4 text-xs text-slate-700 font-medium">
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>{language === 'bn' ? 'সাদা হাফ/ফুল হাতা শার্ট (স্কুল নির্ধারিত মনোগ্রামসহ)' : 'White half/full sleeve shirt (as per school design)'}</span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>{language === 'bn' ? 'নেভি ব্লু রঙের প্যান্ট ও কালো বেল্ট' : 'Navy blue formal trousers with black belt'}</span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>{language === 'bn' ? 'সাদা মোজা এবং কালো রঙের বাটা শু' : 'White socks and black school shoes'}</span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>{language === 'bn' ? 'অফিসিয়াল স্কুল ব্যাজ ও আইডি কার্ড পরিধান আবশ্যক' : 'Official school crest/badge is mandatory'}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
+            </HoverCard>
+          </ScrollStaggerItem>
 
           {/* Card 2: Girls' School Uniform */}
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-7 flex flex-col justify-between space-y-4">
-            <div>
-              {/* Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
-                    <Shirt size={18} />
+          <ScrollStaggerItem>
+            <HoverCard className="h-full">
+              <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-7 flex flex-col justify-between space-y-4 h-full">
+                <div>
+                  {/* Header */}
+                  <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
+                        <Shirt size={18} />
+                      </div>
+                      <h3 className="font-extrabold text-base text-slate-900">
+                        {language === 'bn' ? 'ছাত্রীদের নির্ধারিত পোশাক (ইউনিফর্ম)' : "Girls' School Uniform"}
+                      </h3>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setDetailsModal('girls')}
+                      className="inline-flex items-center gap-1 text-[11px] font-bold text-[#004d34] hover:text-emerald-800 bg-[#e8f7ee] hover:bg-[#d1fae5] px-2.5 py-1 rounded-lg transition cursor-pointer"
+                    >
+                      <span>{language === 'bn' ? 'বিস্তারিত দেখুন' : 'View Details'}</span>
+                      <ArrowRight size={12} />
+                    </button>
                   </div>
-                  <h3 className="font-extrabold text-base text-slate-900">
-                    {language === 'bn' ? 'ছাত্রীদের নির্ধারিত পোশাক (ইউনিফর্ম)' : "Girls' School Uniform"}
-                  </h3>
+
+                  {/* Items List */}
+                  <ul className="space-y-3 pt-4 text-xs text-slate-700 font-medium">
+                    <li className="flex items-center gap-2.5">
+                      <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
+                      <span>{language === 'bn' ? 'নেভি ব্লু ফ্রক/কামিজ, সাদা সালোয়ার ও সাদা ওড়না' : 'Navy blue school salwar/frock with white dupatta/hijab'}</span>
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
+                      <span>{language === 'bn' ? 'সাদা স্কার্ফ বা নির্ধারিত হিজাব' : 'White scarf / one-piece shirt (as per school design)'}</span>
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
+                      <span>{language === 'bn' ? 'সাদা মোজা এবং কালো school শু' : 'White socks and black school shoes'}</span>
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
+                      <span>{language === 'bn' ? 'অফিসিয়াল স্কুল ব্যাজ ও আইডি কার্ড পরিধান আবশ্যক' : 'Official school crest/badge is mandatory'}</span>
+                    </li>
+                  </ul>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => setDetailsModal('girls')}
-                  className="inline-flex items-center gap-1 text-[11px] font-bold text-[#004d34] hover:text-emerald-800 bg-[#e8f7ee] hover:bg-[#d1fae5] px-2.5 py-1 rounded-lg transition cursor-pointer"
-                >
-                  <span>{language === 'bn' ? 'বিস্তারিত দেখুন' : 'View Details'}</span>
-                  <ArrowRight size={12} />
-                </button>
               </div>
-
-              {/* Items List */}
-              <ul className="space-y-3 pt-4 text-xs text-slate-700 font-medium">
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>{language === 'bn' ? 'নেভি ব্লু ফ্রক/কামিজ, সাদা সালোয়ার ও সাদা ওড়না' : 'Navy blue school salwar/frock with white dupatta/hijab'}</span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>{language === 'bn' ? 'সাদা স্কার্ফ বা নির্ধারিত হিজাব' : 'White scarf / one-piece shirt (as per school design)'}</span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>{language === 'bn' ? 'সাদা মোজা এবং কালো স্কুল শু' : 'White socks and black school shoes'}</span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[#059669] shrink-0" />
-                  <span>{language === 'bn' ? 'অফিসিয়াল স্কুল ব্যাজ ও আইডি কার্ড পরিধান আবশ্যক' : 'Official school crest/badge is mandatory'}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+            </HoverCard>
+          </ScrollStaggerItem>
+        </ScrollStaggerContainer>
       </div>
 
       {/* 5. Discipline & Code of Conduct Card (Wide Full-Width Card) */}
       <div id="conduct-section" className="container mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-7 space-y-4">
-          {/* Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
-                <ShieldCheck size={18} />
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-7 space-y-4">
+            {/* Header */}
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
+                  <ShieldCheck size={18} />
+                </div>
+                <h3 className="font-extrabold text-base text-slate-900">
+                  {t.academic.rulesTitle}
+                </h3>
               </div>
-              <h3 className="font-extrabold text-base text-slate-900">
-                {t.academic.rulesTitle}
-              </h3>
+
+              <button
+                type="button"
+                onClick={() => setDetailsModal('policy')}
+                className="inline-flex items-center gap-1 text-[11px] font-bold text-[#004d34] hover:text-emerald-800 bg-[#e8f7ee] hover:bg-[#d1fae5] px-2.5 py-1 rounded-lg transition cursor-pointer"
+              >
+                <span>{language === 'bn' ? 'পূর্ণাঙ্গ নীতিমালা দেখুন' : 'View Full Policy'}</span>
+                <ArrowRight size={12} />
+              </button>
             </div>
 
-            <button
-              type="button"
-              onClick={() => setDetailsModal('policy')}
-              className="inline-flex items-center gap-1 text-[11px] font-bold text-[#004d34] hover:text-emerald-800 bg-[#e8f7ee] hover:bg-[#d1fae5] px-2.5 py-1 rounded-lg transition cursor-pointer"
-            >
-              <span>{language === 'bn' ? 'পূর্ণাঙ্গ নীতিমালা দেখুন' : 'View Full Policy'}</span>
-              <ArrowRight size={12} />
-            </button>
-          </div>
+            {/* 2-Column Rules Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 pt-2 text-xs text-slate-700 font-medium">
+              {/* Left Column */}
+              <div className="space-y-3">
+                {(language === 'bn' ? CODE_OF_CONDUCT.bn.left : CODE_OF_CONDUCT.en.left).map((rule, idx) => (
+                  <div key={idx} className="flex items-start gap-2.5">
+                    <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
+                    <span>{rule}</span>
+                  </div>
+                ))}
+              </div>
 
-          {/* 2-Column Rules Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 pt-2 text-xs text-slate-700 font-medium">
-            {/* Left Column */}
-            <div className="space-y-3">
-              {(language === 'bn' ? CODE_OF_CONDUCT.bn.left : CODE_OF_CONDUCT.en.left).map((rule, idx) => (
-                <div key={idx} className="flex items-start gap-2.5">
-                  <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-                  <span>{rule}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Right Column */}
-            <div className="space-y-3">
-              {(language === 'bn' ? CODE_OF_CONDUCT.bn.right : CODE_OF_CONDUCT.en.right).map((rule, idx) => (
-                <div key={idx} className="flex items-start gap-2.5">
-                  <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
-                  <span>{rule}</span>
-                </div>
-              ))}
+              {/* Right Column */}
+              <div className="space-y-3">
+                {(language === 'bn' ? CODE_OF_CONDUCT.bn.right : CODE_OF_CONDUCT.en.right).map((rule, idx) => (
+                  <div key={idx} className="flex items-start gap-2.5">
+                    <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
+                    <span>{rule}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* 6. Modals for Uniform Details and Code of Conduct */}

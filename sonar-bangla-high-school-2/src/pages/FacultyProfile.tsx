@@ -21,6 +21,13 @@ import {
 import { TEACHERS, SCHOOL_INFO, LEADERSHIP_PROFILES, STAFF_PROFILES } from '../data/schoolData';
 import { TEACHER_DETAILS_BN } from '../data/teacherLocalization';
 import { useLanguage } from '../contexts/LanguageContext';
+import {
+  ScrollReveal,
+  ScrollScale,
+  ScrollStaggerContainer,
+  ScrollStaggerItem,
+  HoverCard,
+} from '../components/ui/MotionComponents';
 
 const TEACHER_TRANSLATIONS: Record<string, { nameBn: string; designationBn: string; subjectBn: string }> = {
   '1': { nameBn: 'ইন্দ্রজিৎ কুমার মণ্ডল', designationBn: 'সহকারী শিক্ষক', subjectBn: 'রসায়ন / বিজ্ঞান' },
@@ -152,386 +159,404 @@ export const FacultyProfile: React.FC = () => {
         </div>
 
         {/* 1. Main Hero Profile Card (Matching media_1790113355933.jpg) */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center">
-            {/* Left: Big Portrait Photo */}
-            <div className="md:col-span-4 lg:col-span-3">
-              <div className="aspect-[4/5] rounded-3xl overflow-hidden relative shadow-md bg-slate-100 border border-slate-200/90 group">
-                <img
-                  src={teacher.image}
-                  alt={teacherName}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute bottom-4 left-4 bg-slate-950/85 backdrop-blur-xs text-white text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-md">
-                  {isLeader ? (
-                    <>
-                      <Award size={14} className="text-amber-400" />
-                      <span>{isBn ? 'প্রাতিষ্ঠানিক নেতৃত্ব' : 'School Leadership'}</span>
-                    </>
-                  ) : isStaff ? (
-                    <>
-                      <Briefcase size={14} className="text-emerald-400" />
-                      <span>{isBn ? 'প্রশাসনিক কর্মকর্তা' : 'Administrative Staff'}</span>
-                    </>
-                  ) : (
-                    <>
-                      <GraduationCap size={14} className="text-emerald-400" />
-                      <span>{isBn ? 'শিক্ষকমণ্ডলী' : 'Teaching Faculty'}</span>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Info & Bio Block */}
-            <div className="md:col-span-8 lg:col-span-9 flex flex-col justify-between space-y-4">
-              {/* Header Details & Quote */}
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-                <div>
-                  <span className={`inline-flex items-center gap-1.5 ${isStaff ? 'bg-[#eff6ff] text-[#1d4ed8] border-blue-100' : 'bg-[#e8f7ee] text-[#059669] border-emerald-100/90'} border text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full`}>
-                    {isLeader ? <Award size={13} /> : isStaff ? <Briefcase size={13} /> : <GraduationCap size={13} />}
-                    <span>
-                      {isLeader
-                        ? (teacher.id === 'chairman'
-                            ? (isBn ? 'সভাপতি, গভর্নিং বডি' : 'CHAIRMAN, GOVERNING BODY')
-                            : (isBn ? 'অধ্যক্ষ ও সদস্য সচিব' : 'PRINCIPAL & MEMBER SECRETARY'))
-                        : isStaff
-                        ? (isBn ? 'প্রশাসনিক কর্মকর্তা' : 'ADMINISTRATIVE STAFF')
-                        : (isBn ? 'শিক্ষকমণ্ডলী' : 'TEACHING FACULTY')}
-                    </span>
-                  </span>
-
-                  <h1 className="text-3xl sm:text-4xl font-black text-slate-900 mt-2 tracking-tight">
-                    {teacherName}
-                  </h1>
-
-                  <p className="text-sm sm:text-base font-bold text-[#059669] mt-0.5">
-                    {teacherDesignation} {teacherSubject ? `(${teacherSubject})` : ''}
-                  </p>
-
-                  <p className="text-xs text-slate-500 font-medium">
-                    {isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}
-                  </p>
-                </div>
-
-                {/* Floating Quote Box on Right */}
-                <div className="bg-[#f0faf5] border border-[#d7f1e5] rounded-2xl p-4 max-w-xs shrink-0 shadow-2xs">
-                  <span className="text-2xl text-[#059669] font-serif font-black block leading-none mb-1">
-                    “
-                  </span>
-                  <p className="text-xs text-slate-700 italic font-medium leading-relaxed">
-                    {teacherMottoQuote || (isBn ? 'শিক্ষাই একটি সম্ভাবনাময় ভবিষ্যতের সূচনা করে।' : 'Education is the foundation for a brighter tomorrow.')}
-                  </p>
-                </div>
-              </div>
-
-              {/* Bio Quote */}
-              <div className="border-l-2 border-[#059669] pl-3.5 py-0.5">
-                <p className="text-xs sm:text-sm text-slate-600 italic font-medium leading-relaxed">
-                  "{teacherBioQuote}"
-                </p>
-              </div>
-
-              {/* Stat & Contact Boxes (3 columns) */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                <div className="bg-slate-50/80 border border-slate-100 rounded-2xl p-3.5 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100">
-                    <Users size={18} />
+        <ScrollReveal duration={0.65} distance={25}>
+          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center">
+              {/* Left: Big Portrait Photo */}
+              <div className="md:col-span-4 lg:col-span-3">
+                <div className="aspect-[4/5] rounded-3xl overflow-hidden relative shadow-md bg-slate-100 border border-slate-200/90 group">
+                  <img
+                    src={teacher.image}
+                    alt={teacherName}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute bottom-4 left-4 bg-slate-950/85 backdrop-blur-xs text-white text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-md">
+                    {isLeader ? (
+                      <>
+                        <Award size={14} className="text-amber-400" />
+                        <span>{isBn ? 'প্রাতিষ্ঠানিক নেতৃত্ব' : 'School Leadership'}</span>
+                      </>
+                    ) : isStaff ? (
+                      <>
+                        <Briefcase size={14} className="text-emerald-400" />
+                        <span>{isBn ? 'প্রশাসনিক কর্মকর্তা' : 'Administrative Staff'}</span>
+                      </>
+                    ) : (
+                      <>
+                        <GraduationCap size={14} className="text-emerald-400" />
+                        <span>{isBn ? 'শিক্ষকমণ্ডলী' : 'Teaching Faculty'}</span>
+                      </>
+                    )}
                   </div>
+                </div>
+              </div>
+
+              {/* Right: Info & Bio Block */}
+              <div className="md:col-span-8 lg:col-span-9 flex flex-col justify-between space-y-4">
+                {/* Header Details & Quote */}
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                   <div>
-                    <span className="text-lg font-black text-slate-900 block leading-tight">
-                      {isBn ? toBanglaNum(teacher.experience || '08+') + ' বছর' : (teacher.experience || '08+ Years')}
+                    <span className={`inline-flex items-center gap-1.5 ${isStaff ? 'bg-[#eff6ff] text-[#1d4ed8] border-blue-100' : 'bg-[#e8f7ee] text-[#059669] border-emerald-100/90'} border text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full`}>
+                      {isLeader ? <Award size={13} /> : isStaff ? <Briefcase size={13} /> : <GraduationCap size={13} />}
+                      <span>
+                        {isLeader
+                          ? (teacher.id === 'chairman'
+                              ? (isBn ? 'সভাপতি, গভর্নিং বডি' : 'CHAIRMAN, GOVERNING BODY')
+                              : (isBn ? 'অধ্যক্ষ ও সদস্য সচিব' : 'PRINCIPAL & MEMBER SECRETARY'))
+                          : isStaff
+                          ? (isBn ? 'প্রশাসনিক কর্মকর্তা' : 'ADMINISTRATIVE STAFF')
+                          : (isBn ? 'শিক্ষকমণ্ডলী' : 'TEACHING FACULTY')}
+                      </span>
                     </span>
-                    <p className="text-[11px] text-slate-500 font-medium">
-                      {isBn ? 'কর্ম অভিজ্ঞতা' : 'Years of Experience'}
+
+                    <h1 className="text-3xl sm:text-4xl font-black text-slate-900 mt-2 tracking-tight">
+                      {teacherName}
+                    </h1>
+
+                    <p className="text-sm sm:text-base font-bold text-[#059669] mt-0.5">
+                      {teacherDesignation} {teacherSubject ? `(${teacherSubject})` : ''}
+                    </p>
+
+                    <p className="text-xs text-slate-500 font-medium">
+                      {isBn ? SCHOOL_INFO.nameBn : SCHOOL_INFO.name}
+                    </p>
+                  </div>
+
+                  {/* Floating Quote Box on Right */}
+                  <div className="bg-[#f0faf5] border border-[#d7f1e5] rounded-2xl p-4 max-w-xs shrink-0 shadow-2xs">
+                    <span className="text-2xl text-[#059669] font-serif font-black block leading-none mb-1">
+                      “
+                    </span>
+                    <p className="text-xs text-slate-700 italic font-medium leading-relaxed">
+                      {teacherMottoQuote || (isBn ? 'শিক্ষাই একটি সম্ভাবনাময় ভবিষ্যতের সূচনা করে।' : 'Education is the foundation for a brighter tomorrow.')}
                     </p>
                   </div>
                 </div>
 
-                <div className="bg-slate-50/80 border border-slate-100 rounded-2xl p-3.5 flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-xl ${isStaff ? 'bg-blue-50 text-blue-600 border-blue-100' : 'bg-amber-50 text-amber-600 border-amber-100'} flex items-center justify-center shrink-0 border`}>
-                    {isStaff ? <Briefcase size={18} /> : <Star size={18} />}
-                  </div>
-                  <div className="min-w-0">
-                    <span className="text-xs sm:text-sm font-black text-slate-900 block leading-tight truncate">
-                      {isStaff
-                        ? (isBn ? (detailsBn?.subjectBn || teacher.subject) : teacher.subject)
-                        : (isBn ? toBanglaNum(teacher.studentsMentored || '250+') : (teacher.studentsMentored || '250+'))}
-                    </span>
-                    <p className="text-[11px] text-slate-500 font-medium">
-                      {isStaff
-                        ? (isBn ? 'দাপ্তরিক শাখা / বিভাগ' : 'Department / Division')
-                        : (isBn ? 'দিকনির্দেশনা প্রাপ্ত শিক্ষার্থী' : 'Students Mentored')}
-                    </p>
-                  </div>
+                {/* Bio Quote */}
+                <div className="border-l-2 border-[#059669] pl-3.5 py-0.5">
+                  <p className="text-xs sm:text-sm text-slate-600 italic font-medium leading-relaxed">
+                    "{teacherBioQuote}"
+                  </p>
                 </div>
 
-                <div className="bg-slate-50/80 border border-slate-100 rounded-2xl p-3.5 space-y-1 text-xs">
-                  <div className="flex items-center gap-2">
-                    <Mail size={13} className="text-[#059669] shrink-0" />
-                    <span className="font-bold text-slate-900 truncate">
-                      {teacher.email || 'info@soshgskhulna.edu.bd'}
-                    </span>
+                {/* Stat & Contact Boxes (3 columns) */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                  <div className="bg-slate-50/80 border border-slate-100 rounded-2xl p-3.5 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100">
+                      <Users size={18} />
+                    </div>
+                    <div>
+                      <span className="text-lg font-black text-slate-900 block leading-tight">
+                        {isBn ? toBanglaNum(teacher.experience || '08+') + ' বছর' : (teacher.experience || '08+ Years')}
+                      </span>
+                      <p className="text-[11px] text-slate-500 font-medium">
+                        {isBn ? 'কর্ম অভিজ্ঞতা' : 'Years of Experience'}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Phone size={13} className="text-[#059669] shrink-0" />
-                    <span className="font-semibold text-slate-700">
-                      {isBn ? toBanglaNum(teacher.phone || SCHOOL_INFO.phone) : (teacher.phone || SCHOOL_INFO.phone)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        {/* 2. Detailed Sections Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-          {/* Card 1: Educational Qualifications */}
-          <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between gap-2 mb-5">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100">
-                    <GraduationCap size={18} />
+                  <div className="bg-slate-50/80 border border-slate-100 rounded-2xl p-3.5 flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-xl ${isStaff ? 'bg-blue-50 text-blue-600 border-blue-100' : 'bg-amber-50 text-amber-600 border-amber-100'} flex items-center justify-center shrink-0 border`}>
+                      {isStaff ? <Briefcase size={18} /> : <Star size={18} />}
+                    </div>
+                    <div className="min-w-0">
+                      <span className="text-xs sm:text-sm font-black text-slate-900 block leading-tight truncate">
+                        {isStaff
+                          ? (isBn ? (detailsBn?.subjectBn || teacher.subject) : teacher.subject)
+                          : (isBn ? toBanglaNum(teacher.studentsMentored || '250+') : (teacher.studentsMentored || '250+'))}
+                      </span>
+                      <p className="text-[11px] text-slate-500 font-medium">
+                        {isStaff
+                          ? (isBn ? 'দাপ্তরিক শাখা / বিভাগ' : 'Department / Division')
+                          : (isBn ? 'দিকনির্দেশনা প্রাপ্ত শিক্ষার্থী' : 'Students Mentored')}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900">
-                    {isBn ? 'শিক্ষাগত যোগ্যতা' : 'Educational Qualifications'}
-                  </h3>
-                </div>
-                <span className="bg-slate-100 text-slate-600 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
-                  {isBn
-                    ? `${toBanglaNum(teacherEducation?.length || 3)}টি ডিগ্রি`
-                    : `${teacherEducation?.length || 3} qualifications`}
-                </span>
-              </div>
 
-              {/* Education Timeline */}
-              <div className="space-y-4 relative pl-3 before:absolute before:left-[19px] before:top-3 before:bottom-3 before:w-0.5 before:bg-emerald-200">
-                {(teacherEducation || [
-                  { degree: `Master of Science (M.Sc) in ${teacher.subject}`, institution: 'University of Dhaka', result: 'First Class', year: '2015' },
-                  { degree: `Bachelor of Science (B.Sc Hons) in ${teacher.subject}`, institution: 'University of Dhaka', result: 'First Class', year: '2013' },
-                  { degree: 'Bachelor of Education (B.Ed)', institution: "Govt. Teachers' Training College", result: 'First Class', year: '2017' }
-                ]).map((edu, idx) => (
-                  <div key={idx} className="relative flex items-start gap-4">
-                    <div className="w-3.5 h-3.5 rounded-full bg-[#059669] border-2 border-white shadow-2xs mt-1 shrink-0 z-10" />
-                    <div className="flex-1 bg-slate-50/70 border border-slate-100 rounded-2xl p-3.5 flex items-start justify-between gap-3">
-                      <div>
-                        <h4 className="text-xs sm:text-sm font-bold text-slate-900">
-                          {edu.degree}
-                        </h4>
-                        <p className="text-xs text-slate-500 mt-0.5">
-                          {edu.institution}
-                        </p>
-                        <span className="inline-block text-[11px] font-bold text-[#059669] mt-1">
-                          {isBn ? 'ফলাফল: ' : 'Result: '}{edu.result}
-                        </span>
-                      </div>
-                      <span className="bg-white border border-slate-200 text-slate-600 text-[11px] font-bold px-2.5 py-1 rounded-lg shrink-0 shadow-2xs">
-                        {isBn ? toBanglaNum(edu.year) : edu.year}
+                  <div className="bg-slate-50/80 border border-slate-100 rounded-2xl p-3.5 space-y-1 text-xs">
+                    <div className="flex items-center gap-2">
+                      <Mail size={13} className="text-[#059669] shrink-0" />
+                      <span className="font-bold text-slate-900 truncate">
+                        {teacher.email || 'info@soshgskhulna.edu.bd'}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Phone size={13} className="text-[#059669] shrink-0" />
+                      <span className="font-semibold text-slate-700">
+                        {isBn ? toBanglaNum(teacher.phone || SCHOOL_INFO.phone) : (teacher.phone || SCHOOL_INFO.phone)}
                       </span>
                     </div>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
           </div>
+        </ScrollReveal>
+
+        {/* 2. Detailed Sections Grid */}
+        <ScrollStaggerContainer className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+          {/* Card 1: Educational Qualifications */}
+          <ScrollStaggerItem>
+            <HoverCard className="h-full">
+              <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-5">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100">
+                        <GraduationCap size={18} />
+                      </div>
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                        {isBn ? 'শিক্ষাগত যোগ্যতা' : 'Educational Qualifications'}
+                      </h3>
+                    </div>
+                    <span className="bg-slate-100 text-slate-600 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
+                      {isBn
+                        ? `${toBanglaNum(teacherEducation?.length || 3)}টি ডিগ্রি`
+                        : `${teacherEducation?.length || 3} qualifications`}
+                    </span>
+                  </div>
+
+                  {/* Education Timeline */}
+                  <div className="space-y-4 relative pl-3 before:absolute before:left-[19px] before:top-3 before:bottom-3 before:w-0.5 before:bg-emerald-200">
+                    {(teacherEducation || [
+                      { degree: `Master of Science (M.Sc) in ${teacher.subject}`, institution: 'University of Dhaka', result: 'First Class', year: '2015' },
+                      { degree: `Bachelor of Science (B.Sc Hons) in ${teacher.subject}`, institution: 'University of Dhaka', result: 'First Class', year: '2013' },
+                      { degree: 'Bachelor of Education (B.Ed)', institution: "Govt. Teachers' Training College", result: 'First Class', year: '2017' }
+                    ]).map((edu, idx) => (
+                      <div key={idx} className="relative flex items-start gap-4">
+                        <div className="w-3.5 h-3.5 rounded-full bg-[#059669] border-2 border-white shadow-2xs mt-1 shrink-0 z-10" />
+                        <div className="flex-1 bg-slate-50/70 border border-slate-100 rounded-2xl p-3.5 flex items-start justify-between gap-3">
+                          <div>
+                            <h4 className="text-xs sm:text-sm font-bold text-slate-900">
+                              {edu.degree}
+                            </h4>
+                            <p className="text-xs text-slate-500 mt-0.5">
+                              {edu.institution}
+                            </p>
+                            <span className="inline-block text-[11px] font-bold text-[#059669] mt-1">
+                              {isBn ? 'ফলাফল: ' : 'Result: '}{edu.result}
+                            </span>
+                          </div>
+                          <span className="bg-white border border-slate-200 text-slate-600 text-[11px] font-bold px-2.5 py-1 rounded-lg shrink-0 shadow-2xs">
+                            {isBn ? toBanglaNum(edu.year) : edu.year}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </HoverCard>
+          </ScrollStaggerItem>
 
           {/* Card 2: Professional Training & Certifications */}
-          <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between gap-2 mb-5">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
-                    <Award size={18} />
-                  </div>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900">
-                    {isBn ? 'পেশাগত প্রশিক্ষণ ও সনদ' : 'Professional Training & Certifications'}
-                  </h3>
-                </div>
-                <span className="bg-slate-100 text-slate-600 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
-                  {isBn
-                    ? `${toBanglaNum(teacherCertifications?.length || 4)}টি সনদ`
-                    : `${teacherCertifications?.length || 4} certifications`}
-                </span>
-              </div>
-
-              {/* Certifications List */}
-              <div className="space-y-3">
-                {(teacherCertifications || [
-                  'British Council Certificate in English Language Teaching (CELT)',
-                  'B.Ed, Training in Modern Teaching Methods & Micro-teaching',
-                  'Certified in ICT Integration in Language Education (TQI-SEP)',
-                  'Youth Leadership & Debating Coach Certification'
-                ]).map((cert, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-slate-50/70 border border-slate-100 rounded-2xl p-3.5 flex items-center gap-3"
-                  >
-                    <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
-                      <Award size={15} />
+          <ScrollStaggerItem>
+            <HoverCard className="h-full">
+              <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-5">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
+                        <Award size={18} />
+                      </div>
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                        {isBn ? 'পেশাগত প্রশিক্ষণ ও সনদ' : 'Professional Training & Certifications'}
+                      </h3>
                     </div>
-                    <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-snug">
-                      {cert}
-                    </p>
+                    <span className="bg-slate-100 text-slate-600 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
+                      {isBn
+                        ? `${toBanglaNum(teacherCertifications?.length || 4)}টি সনদ`
+                        : `${teacherCertifications?.length || 4} certifications`}
+                    </span>
                   </div>
-                ))}
+
+                  {/* Certifications List */}
+                  <div className="space-y-3">
+                    {(teacherCertifications || [
+                      'British Council Certificate in English Language Teaching (CELT)',
+                      'B.Ed, Training in Modern Teaching Methods & Micro-teaching',
+                      'Certified in ICT Integration in Language Education (TQI-SEP)',
+                      'Youth Leadership & Debating Coach Certification'
+                    ]).map((cert, idx) => (
+                      <div
+                        key={idx}
+                        className="bg-slate-50/70 border border-slate-100 rounded-2xl p-3.5 flex items-center gap-3"
+                      >
+                        <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
+                          <Award size={15} />
+                        </div>
+                        <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-snug">
+                          {cert}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            </HoverCard>
+          </ScrollStaggerItem>
 
           {/* Card 3: Research & Publications / Staff Core Services */}
-          <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between gap-2 mb-5">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100">
-                    {isStaff ? <Briefcase size={18} /> : <FileText size={18} />}
+          <ScrollStaggerItem>
+            <HoverCard className="h-full">
+              <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-5">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100">
+                        {isStaff ? <Briefcase size={18} /> : <FileText size={18} />}
+                      </div>
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                        {isStaff
+                          ? (isBn ? 'দাপ্তরিক কর্মপরিধি ও সেবাসমূহ' : 'Administrative Scope & Key Services')
+                          : (isBn ? 'গবেষণা ও প্রকাশনা' : 'Research & Publications')}
+                      </h3>
+                    </div>
+                    <span className="bg-slate-100 text-slate-600 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
+                      {isStaff
+                        ? (isBn ? 'প্রাতিষ্ঠানিক সেবা' : 'Core Services')
+                        : (isBn
+                            ? `${toBanglaNum(teacherPublications?.length || 2)}টি প্রকাশনা`
+                            : `${teacherPublications?.length || 2} publications`)}
+                    </span>
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900">
-                    {isStaff
-                      ? (isBn ? 'দাপ্তরিক কর্মপরিধি ও সেবাসমূহ' : 'Administrative Scope & Key Services')
-                      : (isBn ? 'গবেষণা ও প্রকাশনা' : 'Research & Publications')}
-                  </h3>
+
+                  {isStaff ? (
+                    <div className="space-y-3">
+                      {[
+                        {
+                          title: isBn ? 'শিক্ষার্থী ও অভিভাবক সেবা' : 'Student & Guardian Support Desk',
+                          desc: isBn ? 'সকল প্রকার প্রাতিষ্ঠানিক তথ্য, সনদ, প্রত্যয়ন ও সহায়তা প্রদান।' : 'Providing verified academic records, documentation, and inquiry assistance.',
+                          tag: isBn ? 'সক্রিয়' : 'Active'
+                        },
+                        {
+                          title: isBn ? 'ডিজিটাল রেকর্ড ও নথিপত্র ব্যবস্থাপনা' : 'Digital Documentation & Record Governance',
+                          desc: isBn ? 'স্মার্ট অফিস ও নির্ভুল প্রাতিষ্ঠানিক ডেটাবেজ পরিচালনা।' : 'Maintaining secure institutional archives, databases, and compliance records.',
+                          tag: isBn ? 'সার্বক্ষণিক' : 'Ongoing'
+                        },
+                        {
+                          title: isBn ? 'আন্তঃবিভাগীয় ও বোর্ড সমন্বয়' : 'Inter-Departmental & Board Coordination',
+                          desc: isBn ? 'শিক্ষা বোর্ড ও সংশ্লিষ্ট সরকারি দপ্তরের সাথে দাপ্তরিক যোগাযোগ রক্ষা।' : 'Official liaisons with Education Board, SOS authorities, and stakeholders.',
+                          tag: isBn ? 'নিয়মিত' : 'Daily'
+                        }
+                      ].map((service, idx) => (
+                        <div
+                          key={idx}
+                          className="bg-slate-50/70 border border-slate-100 rounded-2xl p-3.5 flex items-start justify-between gap-3"
+                        >
+                          <div>
+                            <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
+                              {service.title}
+                            </h4>
+                            <p className="text-xs text-slate-500 mt-1">
+                              {service.desc}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2 shrink-0">
+                            <span className="bg-purple-50 text-purple-700 border border-purple-100 text-[11px] font-bold px-2 py-0.5 rounded-md">
+                              {service.tag}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {(teacherPublications || [
+                        { title: `Communicative ${teacher.subject} Pedagogical Techniques in Rural and Semi-Urban High Schools`, publisher: 'Educational Research Forum Bangladesh', year: '2020' },
+                        { title: `Fostering Creative Problem Solving and Critical Reading Habits among High School Learners`, publisher: 'Secondary Education Journal', year: '2022' }
+                      ]).map((pub, idx) => (
+                        <div
+                          key={idx}
+                          className="bg-slate-50/70 border border-slate-100 rounded-2xl p-3.5 flex items-start justify-between gap-3"
+                        >
+                          <div>
+                            <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
+                              "{pub.title}"
+                            </h4>
+                            <p className="text-xs text-slate-500 mt-1">
+                              {pub.publisher || pub.journal}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2 shrink-0">
+                            <span className="bg-purple-50 text-purple-700 border border-purple-100 text-[11px] font-bold px-2 py-0.5 rounded-md">
+                              {isBn ? toBanglaNum(pub.year) : pub.year}
+                            </span>
+                            <ExternalLink size={13} className="text-slate-400" />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <span className="bg-slate-100 text-slate-600 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
-                  {isStaff
-                    ? (isBn ? 'প্রাতিষ্ঠানিক সেবা' : 'Core Services')
-                    : (isBn
-                        ? `${toBanglaNum(teacherPublications?.length || 2)}টি প্রকাশনা`
-                        : `${teacherPublications?.length || 2} publications`)}
-                </span>
+
+                <div className="mt-5 pt-4 border-t border-slate-100">
+                  <Link
+                    to="/faculty"
+                    className="text-xs font-bold text-[#004d34] hover:text-emerald-800 transition flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <span>{isBn ? (isStaff ? 'সকল কর্মকর্তা ও শিক্ষক ডিরেক্টরি' : 'সকল প্রকাশনা দেখুন') : (isStaff ? 'View All Faculty & Staff' : 'View All Publications')}</span>
+                    <ArrowRight size={13} />
+                  </Link>
+                </div>
               </div>
-
-              {isStaff ? (
-                <div className="space-y-3">
-                  {[
-                    {
-                      title: isBn ? 'শিক্ষার্থী ও অভিভাবক সেবা' : 'Student & Guardian Support Desk',
-                      desc: isBn ? 'সকল প্রকার প্রাতিষ্ঠানিক তথ্য, সনদ, প্রত্যয়ন ও সহায়তা প্রদান।' : 'Providing verified academic records, documentation, and inquiry assistance.',
-                      tag: isBn ? 'সক্রিয়' : 'Active'
-                    },
-                    {
-                      title: isBn ? 'ডিজিটাল রেকর্ড ও নথিপত্র ব্যবস্থাপনা' : 'Digital Documentation & Record Governance',
-                      desc: isBn ? 'স্মার্ট অফিস ও নির্ভুল প্রাতিষ্ঠানিক ডেটাবেজ পরিচালনা।' : 'Maintaining secure institutional archives, databases, and compliance records.',
-                      tag: isBn ? 'সার্বক্ষণিক' : 'Ongoing'
-                    },
-                    {
-                      title: isBn ? 'আন্তঃবিভাগীয় ও বোর্ড সমন্বয়' : 'Inter-Departmental & Board Coordination',
-                      desc: isBn ? 'শিক্ষা বোর্ড ও সংশ্লিষ্ট সরকারি দপ্তরের সাথে দাপ্তরিক যোগাযোগ রক্ষা।' : 'Official liaisons with Education Board, SOS authorities, and stakeholders.',
-                      tag: isBn ? 'নিয়মিত' : 'Daily'
-                    }
-                  ].map((service, idx) => (
-                    <div
-                      key={idx}
-                      className="bg-slate-50/70 border border-slate-100 rounded-2xl p-3.5 flex items-start justify-between gap-3"
-                    >
-                      <div>
-                        <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
-                          {service.title}
-                        </h4>
-                        <p className="text-xs text-slate-500 mt-1">
-                          {service.desc}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span className="bg-purple-50 text-purple-700 border border-purple-100 text-[11px] font-bold px-2 py-0.5 rounded-md">
-                          {service.tag}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  {(teacherPublications || [
-                    { title: `Communicative ${teacher.subject} Pedagogical Techniques in Rural and Semi-Urban High Schools`, publisher: 'Educational Research Forum Bangladesh', year: '2020' },
-                    { title: `Fostering Creative Problem Solving and Critical Reading Habits among High School Learners`, publisher: 'Secondary Education Journal', year: '2022' }
-                  ]).map((pub, idx) => (
-                    <div
-                      key={idx}
-                      className="bg-slate-50/70 border border-slate-100 rounded-2xl p-3.5 flex items-start justify-between gap-3"
-                    >
-                      <div>
-                        <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
-                          "{pub.title}"
-                        </h4>
-                        <p className="text-xs text-slate-500 mt-1">
-                          {pub.publisher || pub.journal}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span className="bg-purple-50 text-purple-700 border border-purple-100 text-[11px] font-bold px-2 py-0.5 rounded-md">
-                          {isBn ? toBanglaNum(pub.year) : pub.year}
-                        </span>
-                        <ExternalLink size={13} className="text-slate-400" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="mt-5 pt-4 border-t border-slate-100">
-              <Link
-                to="/faculty"
-                className="text-xs font-bold text-[#004d34] hover:text-emerald-800 transition flex items-center gap-1.5 cursor-pointer"
-              >
-                <span>{isBn ? (isStaff ? 'সকল কর্মকর্তা ও শিক্ষক ডিরেক্টরি' : 'সকল প্রকাশনা দেখুন') : (isStaff ? 'View All Faculty & Staff' : 'View All Publications')}</span>
-                <ArrowRight size={13} />
-              </Link>
-            </div>
-          </div>
+            </HoverCard>
+          </ScrollStaggerItem>
 
           {/* Card 4: Courses & Teaching Responsibilities */}
-          <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between gap-2 mb-5">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100">
-                    {isStaff ? <Briefcase size={18} /> : <BookOpen size={18} />}
+          <ScrollStaggerItem>
+            <HoverCard className="h-full">
+              <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-5">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100">
+                        {isStaff ? <Briefcase size={18} /> : <BookOpen size={18} />}
+                      </div>
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                        {isLeader
+                          ? (isBn ? 'প্রাতিষ্ঠানিক দায়িত্ব ও প্রশাসন' : 'Institutional Responsibilities & Governance')
+                          : isStaff
+                          ? (isBn ? 'দাপ্তরিক ও প্রাতিষ্ঠানিক দায়িত্ব' : 'Administrative & Operational Responsibilities')
+                          : (isBn ? 'পাঠদান ও প্রাতিষ্ঠানিক দায়িত্ব' : 'Courses & Teaching Responsibilities')}
+                      </h3>
+                    </div>
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900">
-                    {isLeader
-                      ? (isBn ? 'প্রাতিষ্ঠানিক দায়িত্ব ও প্রশাসন' : 'Institutional Responsibilities & Governance')
-                      : isStaff
-                      ? (isBn ? 'দাপ্তরিক ও প্রাতিষ্ঠানিক দায়িত্ব' : 'Administrative & Operational Responsibilities')
-                      : (isBn ? 'পাঠদান ও প্রাতিষ্ঠানিক দায়িত্ব' : 'Courses & Teaching Responsibilities')}
-                  </h3>
+
+                  <div className="space-y-3">
+                    {(teacherResponsibilities || [
+                      `${teacher.subject}: Core Subject Instruction & Exam Preparation (Classes 8, 9, 10)`,
+                      `Practical Sessions & Remedial Coaching (Classes 9, 10)`,
+                      `Co-Curricular & Student Mentorship Program Facilitation`
+                    ]).map((resp, idx) => (
+                      <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+                        <span className="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0" />
+                        <span>{resp}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Office & Hours Box */}
+                <div className="mt-5 pt-4 border-t border-slate-100 bg-slate-50/70 -mx-6 -mb-6 p-4 px-6 rounded-b-3xl space-y-1.5 text-xs text-slate-600">
+                  <div className="flex items-center gap-2">
+                    <MapPin size={13} className="text-[#059669] shrink-0" />
+                    <span>
+                      <strong>{isBn ? 'অবস্থান:' : 'Location:'}</strong> {teacherOfficeLocation || (isBn ? (isStaff ? 'প্রধান প্রশাসনিক ভবন, নিচতলা' : 'শিক্ষক মিলনায়তন, ২য় তলা, একাডেমিক ভবন') : (isStaff ? 'Main Admin Block, Ground Floor' : "Teachers' Room, 2nd Floor, Academic Building"))}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Clock size={13} className="text-[#059669] shrink-0" />
+                    <span>
+                      <strong>{isBn ? 'অফিস সময়:' : 'Office Hours:'}</strong> {teacherOfficeHours || (isBn ? 'রবিবার - বৃহস্পতিবার: সকাল ৮:০০ - বিকাল ৪:০০' : "Sunday - Thursday: 8:00 AM - 4:00 PM")}
+                    </span>
+                  </div>
                 </div>
               </div>
-
-              <div className="space-y-3">
-                {(teacherResponsibilities || [
-                  `${teacher.subject}: Core Subject Instruction & Exam Preparation (Classes 8, 9, 10)`,
-                  `Practical Sessions & Remedial Coaching (Classes 9, 10)`,
-                  `Co-Curricular & Student Mentorship Program Facilitation`
-                ]).map((resp, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
-                    <span className="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0" />
-                    <span>{resp}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Office & Hours Box */}
-            <div className="mt-5 pt-4 border-t border-slate-100 bg-slate-50/70 -mx-6 -mb-6 p-4 px-6 rounded-b-3xl space-y-1.5 text-xs text-slate-600">
-              <div className="flex items-center gap-2">
-                <MapPin size={13} className="text-[#059669] shrink-0" />
-                <span>
-                  <strong>{isBn ? 'অবস্থান:' : 'Location:'}</strong> {teacherOfficeLocation || (isBn ? (isStaff ? 'প্রধান প্রশাসনিক ভবন, নিচতলা' : 'শিক্ষক মিলনায়তন, ২য় তলা, একাডেমিক ভবন') : (isStaff ? 'Main Admin Block, Ground Floor' : "Teachers' Room, 2nd Floor, Academic Building"))}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock size={13} className="text-[#059669] shrink-0" />
-                <span>
-                  <strong>{isBn ? 'অফিস সময়:' : 'Office Hours:'}</strong> {teacherOfficeHours || (isBn ? 'রবিবার - বৃহস্পতিবার: সকাল ৮:০০ - বিকাল ৪:০০' : "Sunday - Thursday: 8:00 AM - 4:00 PM")}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+            </HoverCard>
+          </ScrollStaggerItem>
+        </ScrollStaggerContainer>
       </div>
     </div>
   );

@@ -19,6 +19,13 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { SCHOOL_INFO } from '../data/schoolData';
+import {
+  ScrollReveal,
+  ScrollScale,
+  ScrollStaggerContainer,
+  ScrollStaggerItem,
+  HoverCard
+} from '../components/ui/MotionComponents';
 
 interface SubjectMark {
   code: string;
@@ -1328,7 +1335,7 @@ export const Result: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
+          <ScrollReveal duration={0.6} distance={25} className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <BarChart3 size={15} />
@@ -1359,30 +1366,32 @@ export const Result: React.FC = () => {
                 ? 'শিক্ষার্থীর রোল ও শ্রেণি নির্বাচন করে ফলাফল অনুসন্ধান ও অফিসিয়াল মার্কশিট সংগ্রহ করুন।'
                 : 'Search results and generate official academic transcripts using student Roll and Class.'}
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Floating White Quote Card on the Right (Common across all pages) */}
-          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
-                “
-              </span>
-              <div>
-                <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  {isBn ? 'আজকের শিক্ষা, আগামীর সম্ভাবনা' : 'Education today for a brighter tomorrow'}
-                </h4>
-                <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — {isBn ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
-                </p>
+          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 max-w-[340px]">
+            <ScrollScale delay={0.2} className="bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90">
+              <div className="flex items-start gap-3">
+                <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                  “
+                </span>
+                <div>
+                  <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
+                    {isBn ? 'আজকের শিক্ষা, আগামীর সম্ভাবনা' : 'Education today for a brighter tomorrow'}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
+                    — {isBn ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollScale>
           </div>
         </div>
       </div>
 
       {/* 2. Search & Tab Filter Card (Overlapping Bottom of Hero Banner) */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-7 sm:-mt-8 relative z-20">
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-md p-6 sm:p-7 space-y-6">
+        <ScrollReveal duration={0.65} distance={30} className="bg-white rounded-3xl border border-slate-200/90 shadow-md p-6 sm:p-7 space-y-6">
           {/* Top Tabs: Institute Result vs Individual Student Result */}
           <div className="flex items-center gap-6 border-b border-slate-100 pb-3">
             {/* Tab 1: Institute Result */}
@@ -1608,11 +1617,12 @@ export const Result: React.FC = () => {
               </div>
             </form>
           )}
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* 3. MAIN RESULTS CONTAINER */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <ScrollReveal duration={0.65} distance={30}>
         {/* VIEW 1: Institute Result Table (Matching media_1790108298733.png) */}
         {activeTab === 'institute' && (
           <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-5 sm:p-8 space-y-6">
@@ -1925,99 +1935,108 @@ export const Result: React.FC = () => {
             </div>
           </div>
         )}
+        </ScrollReveal>
       </div>
 
       {/* 4. Bottom 2 Quick Action Cards (Matching media_1790108298733.png & media_1790108309383.png) */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <ScrollStaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Card 1: Institute Result */}
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-6 flex items-center justify-between gap-4 hover:shadow-xs transition">
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
-                  <Landmark size={20} />
+          <ScrollStaggerItem>
+            <HoverCard className="h-full">
+              <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-6 flex items-center justify-between gap-4 hover:shadow-xs transition h-full">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
+                      <Landmark size={20} />
+                    </div>
+                    <h3 className="font-extrabold text-base text-slate-900">
+                      {isBn
+                        ? (activeTab === 'institute' ? 'প্রাতিষ্ঠানিক ফলাফল' : 'প্রাতিষ্ঠানিক ফলাফল দেখুন')
+                        : (activeTab === 'institute' ? 'Institute Result' : 'View Institute Result')}
+                    </h3>
+                  </div>
+                  <p className="text-xs text-slate-500 font-medium max-w-sm">
+                    {isBn
+                      ? 'শ্রেণিভিত্তিক ফলাফল, বিষয়ভিত্তিক পরিসংখ্যান, পাসের হার ও একাডেমিক অর্জনের বিবরণ দেখুন।'
+                      : 'Check class-wise results, subject statistics, pass rates and academic performance summary.'}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveTab('institute');
+                      window.scrollTo({ top: 380, behavior: 'smooth' });
+                    }}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 transition cursor-pointer"
+                  >
+                    <span>
+                      {isBn
+                        ? (activeTab === 'institute' ? 'প্রাতিষ্ঠানিক ফলাফল দেখুন' : 'প্রাতিষ্ঠানিক ফলাফলে যান')
+                        : (activeTab === 'institute' ? 'View Institute Result' : 'Go to Institute Result')}
+                    </span>
+                    <ArrowRight size={13} />
+                  </button>
                 </div>
-                <h3 className="font-extrabold text-base text-slate-900">
-                  {isBn
-                    ? (activeTab === 'institute' ? 'প্রাতিষ্ঠানিক ফলাফল' : 'প্রাতিষ্ঠানিক ফলাফল দেখুন')
-                    : (activeTab === 'institute' ? 'Institute Result' : 'View Institute Result')}
-                </h3>
-              </div>
-              <p className="text-xs text-slate-500 font-medium max-w-sm">
-                {isBn
-                  ? 'শ্রেণিভিত্তিক ফলাফল, বিষয়ভিত্তিক পরিসংখ্যান, পাসের হার ও একাডেমিক অর্জনের বিবরণ দেখুন।'
-                  : 'Check class-wise results, subject statistics, pass rates and academic performance summary.'}
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setActiveTab('institute');
-                  window.scrollTo({ top: 380, behavior: 'smooth' });
-                }}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 transition cursor-pointer"
-              >
-                <span>
-                  {isBn
-                    ? (activeTab === 'institute' ? 'প্রাতিষ্ঠানিক ফলাফল দেখুন' : 'প্রাতিষ্ঠানিক ফলাফলে যান')
-                    : (activeTab === 'institute' ? 'View Institute Result' : 'Go to Institute Result')}
-                </span>
-                <ArrowRight size={13} />
-              </button>
-            </div>
 
-            {/* Decorative Minimal Bar Chart Graphic */}
-            <div className="hidden sm:flex items-end gap-1.5 h-16 opacity-25 text-emerald-600 shrink-0 pr-4">
-              <div className="w-3 bg-emerald-600 rounded-t h-8" />
-              <div className="w-3 bg-emerald-600 rounded-t h-12" />
-              <div className="w-3 bg-emerald-600 rounded-t h-16" />
-            </div>
-          </div>
+                {/* Decorative Minimal Bar Chart Graphic */}
+                <div className="hidden sm:flex items-end gap-1.5 h-16 opacity-25 text-emerald-600 shrink-0 pr-4">
+                  <div className="w-3 bg-emerald-600 rounded-t h-8" />
+                  <div className="w-3 bg-emerald-600 rounded-t h-12" />
+                  <div className="w-3 bg-emerald-600 rounded-t h-16" />
+                </div>
+              </div>
+            </HoverCard>
+          </ScrollStaggerItem>
 
           {/* Card 2: Individual Student Result / Search Another Student */}
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-6 flex items-center justify-between gap-4 hover:shadow-xs transition">
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
-                  <User size={20} />
+          <ScrollStaggerItem>
+            <HoverCard className="h-full">
+              <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-6 flex items-center justify-between gap-4 hover:shadow-xs transition h-full">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
+                      <User size={20} />
+                    </div>
+                    <h3 className="font-extrabold text-base text-slate-900">
+                      {isBn
+                        ? (activeTab === 'institute' ? 'একক শিক্ষার্থী ফলাফল' : 'অন্য শিক্ষার্থীর ফলাফল অনুসন্ধান')
+                        : (activeTab === 'institute' ? 'Individual Student Result' : 'Search Another Student')}
+                    </h3>
+                  </div>
+                  <p className="text-xs text-slate-500 font-medium max-w-sm">
+                    {isBn
+                      ? (activeTab === 'institute'
+                          ? 'রোল নম্বর দিয়ে শিক্ষার্থীর পূর্ণাঙ্গ মার্কশিট ও একাডেমিক ট্রান্সক্রিপ্ট দেখুন।'
+                          : 'অন্য কোনো শিক্ষার্থীর মার্কশিট দেখতে ভিন্ন রোল নম্বর লিখুন।')
+                      : (activeTab === 'institute'
+                          ? 'Search and view individual student marksheet and academic transcript.'
+                          : "Enter a different roll number to view another student's marksheet.")}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveTab('individual');
+                      window.scrollTo({ top: 380, behavior: 'smooth' });
+                    }}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition cursor-pointer"
+                  >
+                    <span>
+                      {isBn
+                        ? (activeTab === 'institute' ? 'শিক্ষার্থীর ফলাফল দেখুন' : 'আবার অনুসন্ধান করুন')
+                        : (activeTab === 'institute' ? 'View Student Result' : 'Search Again')}
+                    </span>
+                    <ArrowRight size={13} />
+                  </button>
                 </div>
-                <h3 className="font-extrabold text-base text-slate-900">
-                  {isBn
-                    ? (activeTab === 'institute' ? 'একক শিক্ষার্থী ফলাফল' : 'অন্য শিক্ষার্থীর ফলাফল অনুসন্ধান')
-                    : (activeTab === 'institute' ? 'Individual Student Result' : 'Search Another Student')}
-                </h3>
-              </div>
-              <p className="text-xs text-slate-500 font-medium max-w-sm">
-                {isBn
-                  ? (activeTab === 'institute'
-                      ? 'রোল নম্বর দিয়ে শিক্ষার্থীর পূর্ণাঙ্গ মার্কশিট ও একাডেমিক ট্রান্সক্রিপ্ট দেখুন।'
-                      : 'অন্য কোনো শিক্ষার্থীর মার্কশিট দেখতে ভিন্ন রোল নম্বর লিখুন।')
-                  : (activeTab === 'institute'
-                      ? 'Search and view individual student marksheet and academic transcript.'
-                      : "Enter a different roll number to view another student's marksheet.")}
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setActiveTab('individual');
-                  window.scrollTo({ top: 380, behavior: 'smooth' });
-                }}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition cursor-pointer"
-              >
-                <span>
-                  {isBn
-                    ? (activeTab === 'institute' ? 'শিক্ষার্থীর ফলাফল দেখুন' : 'আবার অনুসন্ধান করুন')
-                    : (activeTab === 'institute' ? 'View Student Result' : 'Search Again')}
-                </span>
-                <ArrowRight size={13} />
-              </button>
-            </div>
 
-            {/* Decorative Minimal Document / Magnifying Graphic */}
-            <div className="hidden sm:flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-50 text-blue-400 opacity-50 shrink-0 mr-4">
-              {activeTab === 'institute' ? <FileText size={30} /> : <Search size={30} />}
-            </div>
-          </div>
-        </div>
+                {/* Decorative Minimal Document / Magnifying Graphic */}
+                <div className="hidden sm:flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-50 text-blue-400 opacity-50 shrink-0 mr-4">
+                  {activeTab === 'institute' ? <FileText size={30} /> : <Search size={30} />}
+                </div>
+              </div>
+            </HoverCard>
+          </ScrollStaggerItem>
+        </ScrollStaggerContainer>
       </div>
     </div>
   );

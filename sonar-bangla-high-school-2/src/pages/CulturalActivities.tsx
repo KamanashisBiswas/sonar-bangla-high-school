@@ -13,9 +13,16 @@ import {
   Mic2,
   BookOpen,
   Award,
-  Users
+  Users,
 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import {
+  ScrollReveal,
+  ScrollScale,
+  ScrollStaggerContainer,
+  ScrollStaggerItem,
+  HoverCard
+} from '../components/ui/MotionComponents';
 
 export const CulturalActivities: React.FC = () => {
   const { language, toBanglaNum } = useLanguage();
@@ -246,55 +253,61 @@ export const CulturalActivities: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
-            <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
-              <Sparkles size={14} />
-              <span>{isBn ? 'ঐতিহ্য, শিল্পকলা ও নান্দনিকতা' : 'HERITAGE, ARTS & EXPRESSION'}</span>
+          <ScrollReveal duration={0.6} distance={25}>
+            <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
+              <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
+                <Sparkles size={14} />
+                <span>{isBn ? 'ঐতিহ্য, শিল্পকলা ও নান্দনিকতা' : 'HERITAGE, ARTS & EXPRESSION'}</span>
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
+                {isBn ? (
+                  <>সাংস্কৃতিক <br />কার্যক্রম</>
+                ) : (
+                  <>Cultural <br />Activities</>
+                )}
+              </h1>
+
+              <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
+
+              <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
+                {isBn ? (
+                  <>
+                    কলা ও নান্দনিকতা, দেশপ্রেম, সৃজনশীল প্রকাশ এবং বাঙালি ঐতিহ্যের লালন করা হচ্ছে{' '}
+                    <strong className="text-emerald-800 font-bold">{toBanglaNum(1987)} থেকে।</strong>
+                  </>
+                ) : (
+                  <>
+                    Nurturing artistic talents, patriotic values, creative expressions, and proud celebrations of Bengali national heritage{' '}
+                    <strong className="text-emerald-800 font-bold">since 1987.</strong>
+                  </>
+                )}
+              </p>
             </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              {isBn ? (
-                <>সাংস্কৃতিক <br />কার্যক্রম</>
-              ) : (
-                <>Cultural <br />Activities</>
-              )}
-            </h1>
-
-            <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
-
-            <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              {isBn ? (
-                <>
-                  কলা ও নান্দনিকতা, দেশপ্রেম, সৃজনশীল প্রকাশ এবং বাঙালি ঐতিহ্যের লালন করা হচ্ছে{' '}
-                  <strong className="text-emerald-800 font-bold">{toBanglaNum(1987)} থেকে।</strong>
-                </>
-              ) : (
-                <>
-                  Nurturing artistic talents, patriotic values, creative expressions, and proud celebrations of Bengali national heritage{' '}
-                  <strong className="text-emerald-800 font-bold">since 1987.</strong>
-                </>
-              )}
-            </p>
-          </div>
+          </ScrollReveal>
 
           {/* Floating White Quote Card on Bottom-Right */}
-          <div className="hidden lg:block absolute bottom-16 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
-                “
-              </span>
-              <div>
-                <p className="text-xs text-slate-700 font-medium italic leading-relaxed">
-                  {isBn
-                    ? 'সংস্কৃতি হলো মনন ও আত্মার বিকাশ। আর সৃজনশীলতা হলো বুদ্ধিমত্তার আনন্দময় প্রকাশ।'
-                    : 'Culture is the widening of the mind and of the spirit. Creativity is intelligence having fun.'}
-                </p>
-                <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-[11px] font-bold text-slate-900">{isBn ? 'সাংস্কৃতিক কমিটি' : 'Cultural Committee'}</span>
-                  <span className="text-[10px] text-emerald-700 font-bold">{isBn ? 'শিল্প ও ঐতিহ্য' : 'Arts & Heritage'}</span>
+          <div className="hidden lg:block absolute bottom-16 right-8 xl:right-16 max-w-[340px]">
+            <ScrollScale delay={0.2}>
+              <div className="bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90">
+                <div className="flex items-start gap-3">
+                  <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                    “
+                  </span>
+                  <div>
+                    <p className="text-xs text-slate-700 font-medium italic leading-relaxed">
+                      {isBn
+                        ? 'সংস্কৃতি হলো মনন ও আত্মার বিকাশ। আর সৃজনশীলতা হলো বুদ্ধিমত্তার আনন্দময় প্রকাশ।'
+                        : 'Culture is the widening of the mind and of the spirit. Creativity is intelligence having fun.'}
+                    </p>
+                    <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-slate-900">{isBn ? 'সাংস্কৃতিক কমিটি' : 'Cultural Committee'}</span>
+                      <span className="text-[10px] text-emerald-700 font-bold">{isBn ? 'শিল্প ও ঐতিহ্য' : 'Arts & Heritage'}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ScrollScale>
           </div>
         </div>
       </div>
@@ -302,278 +315,291 @@ export const CulturalActivities: React.FC = () => {
       {/* 2. Co-Curricular & Programs Switcher Pill Navigation Bar */}
       <div className="bg-[#f0faf5] border-b border-emerald-100/60 sticky top-[72px] z-30 shadow-2xs backdrop-blur-md">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
-          <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0 hidden sm:inline-block">
-              {isBn ? 'কার্যক্রম:' : 'Programs:'}
-            </span>
-            <div className="flex items-center gap-2 shrink-0">
-              <Link
-                to="/academic-programs"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
-              >
-                <span>{isBn ? 'একাডেমিক কার্যক্রম' : 'Academic Programs'}</span>
-              </Link>
-              <Link
-                to="/sports-athletics"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
-              >
-                <span>{isBn ? 'খেলাধুলা ও শরীরচর্চা' : 'Sports & Athletics'}</span>
-              </Link>
-              <Link
-                to="/cultural-activities"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-[#004d34] text-white shadow-xs flex items-center gap-1.5 transition"
-              >
-                <Sparkles size={14} />
-                <span>{isBn ? 'সাংস্কৃতিক কার্যক্রম' : 'Cultural Activities'}</span>
-              </Link>
-              <Link
-                to="/clubs-societies"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
-              >
-                <span>{isBn ? 'ক্লাব ও সোসাইটি' : 'Clubs & Societies'}</span>
-              </Link>
+          <ScrollReveal duration={0.5} distance={15}>
+            <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0 hidden sm:inline-block">
+                {isBn ? 'কার্যক্রম:' : 'Programs:'}
+              </span>
+              <div className="flex items-center gap-2 shrink-0">
+                <Link
+                  to="/academic-programs"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
+                >
+                  <span>{isBn ? 'একাডেমিক কার্যক্রম' : 'Academic Programs'}</span>
+                </Link>
+                <Link
+                  to="/sports-athletics"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
+                >
+                  <span>{isBn ? 'খেলাধুলা ও শরীরচর্চা' : 'Sports & Athletics'}</span>
+                </Link>
+                <Link
+                  to="/cultural-activities"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-[#004d34] text-white shadow-xs flex items-center gap-1.5 transition"
+                >
+                  <Sparkles size={14} />
+                  <span>{isBn ? 'সাংস্কৃতিক কার্যক্রম' : 'Cultural Activities'}</span>
+                </Link>
+                <Link
+                  to="/clubs-societies"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
+                >
+                  <span>{isBn ? 'ক্লাব ও সোসাইটি' : 'Clubs & Societies'}</span>
+                </Link>
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
 
       {/* 3. Stat Highlights Bar */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <ScrollStaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {highlights.map((item, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition text-center"
-            >
-              <span className="text-2xl sm:text-3xl font-black text-[#004d34] tracking-tight block">
-                {item.value}
-              </span>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900 mt-1">
-                {item.label}
-              </h4>
-              <p className="text-[11px] text-slate-500 mt-0.5">
-                {item.desc}
-              </p>
-            </div>
+            <ScrollStaggerItem key={idx}>
+              <HoverCard className="h-full">
+                <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition text-center h-full">
+                  <span className="text-2xl sm:text-3xl font-black text-[#004d34] tracking-tight block">
+                    {item.value}
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 mt-1">
+                    {item.label}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    {item.desc}
+                  </p>
+                </div>
+              </HoverCard>
+            </ScrollStaggerItem>
           ))}
-        </div>
+        </ScrollStaggerContainer>
       </div>
 
       {/* 4. Programs Showcase */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-5">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
-              {isBn ? 'মঞ্চ, সংগীত ও চারুকলা' : 'STAGE, MUSIC & FINE ARTS'}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
-              {isBn ? 'সৃজনশীল শাখা ও উৎসবসমূহ' : 'Creative Wings & Festivals'}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              {isBn
-                ? 'প্রতিটি শিশুর অন্তর্নিহিত সুকুমার বৃত্তি ও প্রতিভার স্ফুরণ ঘটাতে প্রস্তুতকৃত উন্মুক্ত ক্ষেত্র।'
-                : 'Providing dynamic platforms for every child to explore and showcase their artistic potential.'}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-xl self-start md:self-auto">
-            {[
-              { id: 'all', label: isBn ? 'সকল কার্যক্রম' : 'All Programs' },
-              { id: 'observance', label: isBn ? 'জাতীয় দিবস' : 'National Days' },
-              { id: 'festival', label: isBn ? 'উৎসব ও মেলা' : 'Festivals' },
-              { id: 'performing', label: isBn ? 'সংগীত ও নাটক' : 'Music & Drama' },
-              { id: 'arts', label: isBn ? 'চারুকলা ও বিতর্ক' : 'Fine Arts' }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveCategory(tab.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
-                  activeCategory === tab.id
-                    ? 'bg-white text-[#004d34] shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {filteredPrograms.map((prog) => (
-            <div
-              key={prog.id}
-              className="bg-white rounded-3xl p-5 border border-slate-200 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100 relative mb-4">
-                  <img
-                    src={prog.image}
-                    alt={prog.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <span className="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                    {prog.badge}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-[10px] font-black uppercase tracking-wider bg-[#e8f7ee] text-[#059669] px-2 py-0.5 rounded-md">
-                    {prog.tag}
-                  </span>
-                </div>
-
-                <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#004d34] transition-colors">
-                  {prog.name}
-                </h3>
-
-                <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                  {prog.description}
-                </p>
-
-                <div className="mt-4 pt-4 border-t border-slate-100 space-y-2">
-                  <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                    {isBn ? 'উল্লেখযোগ্য কার্যক্রমসমূহ:' : 'Featured Activities:'}
-                  </h4>
-                  {prog.events.map((evt, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs text-slate-700">
-                      <CheckCircle2 size={13} className="text-[#059669] shrink-0 mt-0.5" />
-                      <span>{evt}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+        <ScrollReveal duration={0.6} distance={20}>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-5">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
+                {isBn ? 'মঞ্চ, সংগীত ও চারুকলা' : 'STAGE, MUSIC & FINE ARTS'}
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
+                {isBn ? 'সৃজনশীল শাখা ও উৎসবসমূহ' : 'Creative Wings & Festivals'}
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                {isBn
+                  ? 'প্রতিটি শিশুর অন্তর্নিহিত সুকুমার বৃত্তি ও প্রতিভার স্ফুরণ ঘটাতে প্রস্তুতকৃত উন্মুক্ত ক্ষেত্র।'
+                  : 'Providing dynamic platforms for every child to explore and showcase their artistic potential.'}
+              </p>
             </div>
+
+            <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-xl self-start md:self-auto">
+              {[
+                { id: 'all', label: isBn ? 'সকল কার্যক্রম' : 'All Programs' },
+                { id: 'observance', label: isBn ? 'জাতীয় দিবস' : 'National Days' },
+                { id: 'festival', label: isBn ? 'উৎসব ও মেলা' : 'Festivals' },
+                { id: 'performing', label: isBn ? 'সংগীত ও নাটক' : 'Music & Drama' },
+                { id: 'arts', label: isBn ? 'চারুকলা ও বিতর্ক' : 'Fine Arts' }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveCategory(tab.id)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+                    activeCategory === tab.id
+                      ? 'bg-white text-[#004d34] shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <ScrollStaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          {filteredPrograms.map((prog) => (
+            <ScrollStaggerItem key={prog.id}>
+              <HoverCard className="h-full">
+                <div className="bg-white rounded-3xl p-5 border border-slate-200 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group h-full">
+                  <div>
+                    <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100 relative mb-4">
+                      <img
+                        src={prog.image}
+                        alt={prog.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <span className="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                        {prog.badge}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="text-[10px] font-black uppercase tracking-wider bg-[#e8f7ee] text-[#059669] px-2 py-0.5 rounded-md">
+                        {prog.tag}
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#004d34] transition-colors">
+                      {prog.name}
+                    </h3>
+
+                    <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                      {prog.description}
+                    </p>
+
+                    <div className="mt-4 pt-4 border-t border-slate-100 space-y-2">
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                        {isBn ? 'উল্লেখযোগ্য কার্যক্রমসমূহ:' : 'Featured Activities:'}
+                      </h4>
+                      {prog.events.map((evt, i) => (
+                        <div key={i} className="flex items-start gap-2 text-xs text-slate-700">
+                          <CheckCircle2 size={13} className="text-[#059669] shrink-0 mt-0.5" />
+                          <span>{evt}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </HoverCard>
+            </ScrollStaggerItem>
           ))}
-        </div>
+        </ScrollStaggerContainer>
       </div>
 
       {/* 5. Cultural Venues on Campus */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="bg-[#f0faf5] border border-emerald-100/80 rounded-3xl p-8 sm:p-10 lg:p-12">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
-              {isBn ? 'সৃজনশীল চত্বর' : 'CREATIVE SPACES'}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
-              {isBn ? 'শিল্পকলা ও নাট্যচর্চায় নিবেদিত মঞ্চসমূহ' : 'Venues Dedicated to Arts & Performance'}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              {isBn
-                ? 'মঞ্চের আত্মবিশ্বাস অর্জন, নিয়মিত মহড়া ও প্রদর্শনী আয়োজনের জন্য সুনির্মিত আধুনিক সুবিধা।'
-                : 'Purpose-built campus facilities providing stage confidence, rehearsal space, and visual exhibitions.'}
-            </p>
-          </div>
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="bg-[#f0faf5] border border-emerald-100/80 rounded-3xl p-8 sm:p-10 lg:p-12">
+            <div className="max-w-2xl mb-8">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
+                {isBn ? 'সৃজনশীল চত্বর' : 'CREATIVE SPACES'}
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
+                {isBn ? 'শিল্পকলা ও নাট্যচর্চায় নিবেদিত মঞ্চসমূহ' : 'Venues Dedicated to Arts & Performance'}
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                {isBn
+                  ? 'মঞ্চের আত্মবিশ্বাস অর্জন, নিয়মিত মহড়া ও প্রদর্শনী আয়োজনের জন্য সুনির্মিত আধুনিক সুবিধা।'
+                  : 'Purpose-built campus facilities providing stage confidence, rehearsal space, and visual exhibitions.'}
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {venues.map((venue, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-2xl p-6 border border-emerald-100 shadow-2xs hover:shadow-lg transition-all"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-[#e8f7ee] border border-emerald-100 flex items-center justify-center mb-4">
-                  {venue.icon}
-                </div>
-                <h3 className="text-base font-bold text-slate-900">
-                  {venue.title}
-                </h3>
-                <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                  {venue.desc}
-                </p>
-              </div>
-            ))}
+            <ScrollStaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {venues.map((venue, idx) => (
+                <ScrollStaggerItem key={idx}>
+                  <HoverCard className="h-full">
+                    <div className="bg-white rounded-2xl p-6 border border-emerald-100 shadow-2xs hover:shadow-lg transition-all h-full">
+                      <div className="w-12 h-12 rounded-2xl bg-[#e8f7ee] border border-emerald-100 flex items-center justify-center mb-4">
+                        {venue.icon}
+                      </div>
+                      <h3 className="text-base font-bold text-slate-900">
+                        {venue.title}
+                      </h3>
+                      <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                        {venue.desc}
+                      </p>
+                    </div>
+                  </HoverCard>
+                </ScrollStaggerItem>
+              ))}
+            </ScrollStaggerContainer>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* 6. Signature Event Banner: Annual Cultural Week */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="bg-gradient-to-br from-[#004d34] to-emerald-950 text-white rounded-3xl p-8 sm:p-10 lg:p-12 shadow-xl relative overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7 space-y-4">
-              <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                <Music size={14} className="text-emerald-300" />
-                <span>{isBn ? 'সিগনেচার উৎসব' : 'SIGNATURE FESTIVAL'}</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-black leading-tight">
-                {isBn ? 'বার্ষিক সাংস্কৃতিক সপ্তাহ ও পুরস্কার বিতরণী' : 'Annual Cultural Week & Prize Ceremony'}
-              </h2>
-              <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-normal">
-                {isBn
-                  ? 'সপ্তাহব্যাপী জমকালো উৎসব যেখানে বিশিষ্ট সাংস্কৃতিক ব্যক্তিত্বদের উপস্থিতিতে আবৃত্তি, সংগীত, লোকনৃত্য, উপস্থিত বক্তৃতা, কেরাত ও একাঙ্কিক নাটকে শিক্ষার্থীরা অংশ নেয়।'
-                  : 'A week-long celebration where students compete in recitation, vocal music, folk dance, extempore speech, quran recitation, storytelling, and one-act plays under the guidance of renowned cultural personalities.'}
-              </p>
-              <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="border-l-2 border-emerald-400 pl-3">
-                  <span className="text-lg font-black text-white block">
-                    {isBn ? `${toBanglaNum(15)}+টি শিল্পকলা প্রতিযোগিতা` : '15+ Art Categories'}
-                  </span>
-                  <p className="text-[11px] text-emerald-200">
-                    {isBn ? 'জুনিয়র, সিনিয়র ও উন্মুক্ত তিনটি শাখায় প্রতিযোগিতা' : 'Across junior, senior, and open student sections'}
-                  </p>
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="bg-gradient-to-br from-[#004d34] to-emerald-950 text-white rounded-3xl p-8 sm:p-10 lg:p-12 shadow-xl relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-7 space-y-4">
+                <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                  <Music size={14} className="text-emerald-300" />
+                  <span>{isBn ? 'সিগনেচার উৎসব' : 'SIGNATURE FESTIVAL'}</span>
                 </div>
-                <div className="border-l-2 border-emerald-400 pl-3">
-                  <span className="text-lg font-black text-white block">
-                    {isBn ? 'মহতী সমাপনী ও সম্মাননা' : 'Grand Gala & Awards'}
-                  </span>
-                  <p className="text-[11px] text-emerald-200">
-                    {isBn ? 'সেরা কৃতীদের মাঝে বিশেষ ক্রেস্ট ও সনদ বিতরণ' : 'Prestigious school crests and certificates conferred'}
-                  </p>
+                <h2 className="text-3xl sm:text-4xl font-black leading-tight">
+                  {isBn ? 'বার্ষিক সাংস্কৃতিক সপ্তাহ ও পুরস্কার বিতরণী' : 'Annual Cultural Week & Prize Ceremony'}
+                </h2>
+                <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-normal">
+                  {isBn
+                    ? 'সপ্তাহব্যাপী জমকালো উৎসব যেখানে বিশিষ্ট সাংস্কৃতিক ব্যক্তিত্বদের উপস্থিতিতে আবৃত্তি, সংগীত, লোকনৃত্য, উপস্থিত বক্তৃতা, কেরাত ও একাঙ্কিক নাটকে শিক্ষার্থীরা অংশ নেয়।'
+                    : 'A week-long celebration where students compete in recitation, vocal music, folk dance, extempore speech, quran recitation, storytelling, and one-act plays under the guidance of renowned cultural personalities.'}
+                </p>
+                <div className="grid grid-cols-2 gap-4 pt-2">
+                  <div className="border-l-2 border-emerald-400 pl-3">
+                    <span className="text-lg font-black text-white block">
+                      {isBn ? `${toBanglaNum(15)}+টি শিল্পকলা প্রতিযোগিতা` : '15+ Art Categories'}
+                    </span>
+                    <p className="text-[11px] text-emerald-200">
+                      {isBn ? 'জুনিয়র, সিনিয়র ও উন্মুক্ত তিনটি শাখায় প্রতিযোগিতা' : 'Across junior, senior, and open student sections'}
+                    </p>
+                  </div>
+                  <div className="border-l-2 border-emerald-400 pl-3">
+                    <span className="text-lg font-black text-white block">
+                      {isBn ? 'মহতী সমাপনী ও সম্মাননা' : 'Grand Gala & Awards'}
+                    </span>
+                    <p className="text-[11px] text-emerald-200">
+                      {isBn ? 'সেরা কৃতীদের মাঝে বিশেষ ক্রেস্ট ও সনদ বিতরণ' : 'Prestigious school crests and certificates conferred'}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="lg:col-span-5 relative">
-              <div className="rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl border border-white/20">
-                <img
-                  src="/gallery/album_fair.jpg"
-                  alt="Annual Cultural Week"
-                  className="w-full h-full object-cover"
-                />
+              <div className="lg:col-span-5 relative">
+                <div className="rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl border border-white/20">
+                  <img
+                    src="/gallery/album_fair.jpg"
+                    alt="Annual Cultural Week"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* 7. Action CTA Section */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-1.5 text-center md:text-left">
-            <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-              {isBn ? 'আমাদের সাংস্কৃতিক আয়োজন ও স্মৃতি দেখতে চান?' : 'Explore our cultural albums and memories'}
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
-              {isBn
-                ? 'ফটো গ্যালারিতে পহেলা বৈশাখ র‍্যালি, জাতীয় দিবস উদযাপন ও বার্ষিক নাট্যোৎসবের ছবি ও মুহূর্তগুলো দেখুন।'
-                : 'Browse photo moments from our Pohela Boishakh rallies, national day ceremonies, and annual drama productions in the school gallery.'}
-            </p>
-          </div>
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="space-y-1.5 text-center md:text-left">
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900">
+                {isBn ? 'আমাদের সাংস্কৃতিক আয়োজন ও স্মৃতি দেখতে চান?' : 'Explore our cultural albums and memories'}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
+                {isBn
+                  ? 'ফটো গ্যালারিতে পহেলা বৈশাখ র‍্যালি, জাতীয় দিবস উদযাপন ও বার্ষিক নাট্যোৎসবের ছবি ও মুহূর্তগুলো দেখুন।'
+                  : 'Browse photo moments from our Pohela Boishakh rallies, national day ceremonies, and annual drama productions in the school gallery.'}
+              </p>
+            </div>
 
-          <div className="flex items-center gap-3 shrink-0 flex-wrap justify-center">
-            <Link
-              to="/gallery"
-              className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
-            >
-              <ImageIcon size={14} />
-              <span>{isBn ? 'সাংস্কৃতিক গ্যালারি' : 'Cultural Gallery'}</span>
-            </Link>
-            <Link
-              to="/notices"
-              className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
-            >
-              <Calendar size={14} />
-              <span>{isBn ? 'অনুষ্ঠান নোটিশ' : 'Event Notices'}</span>
-            </Link>
-            <Link
-              to="/contact"
-              className="px-5 py-2.5 rounded-xl bg-[#004d34] hover:bg-[#003b28] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xs"
-            >
-              <span>{isBn ? 'সাংস্কৃতিক দপ্তরে যোগাযোগ' : 'Contact Cultural Office'}</span>
-              <ArrowRight size={14} />
-            </Link>
+            <div className="flex items-center gap-3 shrink-0 flex-wrap justify-center">
+              <Link
+                to="/gallery"
+                className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
+              >
+                <ImageIcon size={14} />
+                <span>{isBn ? 'সাংস্কৃতিক গ্যালারি' : 'Cultural Gallery'}</span>
+              </Link>
+              <Link
+                to="/notices"
+                className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
+              >
+                <Calendar size={14} />
+                <span>{isBn ? 'অনুষ্ঠান নোটিশ' : 'Event Notices'}</span>
+              </Link>
+              <Link
+                to="/contact"
+                className="px-5 py-2.5 rounded-xl bg-[#004d34] hover:bg-[#003b28] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xs"
+              >
+                <span>{isBn ? 'সাংস্কৃতিক দপ্তরে যোগাযোগ' : 'Contact Cultural Office'}</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </div>
   );

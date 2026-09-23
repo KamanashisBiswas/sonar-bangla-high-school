@@ -11,9 +11,16 @@ import {
   Flame,
   Calendar,
   Image as ImageIcon,
-  GraduationCap
+  GraduationCap,
 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import {
+  ScrollReveal,
+  ScrollScale,
+  ScrollStaggerContainer,
+  ScrollStaggerItem,
+  HoverCard
+} from '../components/ui/MotionComponents';
 
 export const SportsAthletics: React.FC = () => {
   const { language, toBanglaNum } = useLanguage();
@@ -252,55 +259,61 @@ export const SportsAthletics: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
-            <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
-              <Trophy size={14} />
-              <span>{isBn ? 'শারীরিক সক্ষমতা ও ক্রীড়াসুলভ চেতনা' : 'PHYSICAL FITNESS & SPORTSMANSHIP'}</span>
+          <ScrollReveal duration={0.6} distance={25}>
+            <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
+              <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
+                <Trophy size={14} />
+                <span>{isBn ? 'শারীরিক সক্ষমতা ও ক্রীড়াসুলভ চেতনা' : 'PHYSICAL FITNESS & SPORTSMANSHIP'}</span>
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
+                {isBn ? (
+                  <>খেলাধুলা ও <br />শরীরচর্চা</>
+                ) : (
+                  <>Sports & <br />Athletics</>
+                )}
+              </h1>
+
+              <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
+
+              <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
+                {isBn ? (
+                  <>
+                    আমাদের সুপরিসর সবুজ ক্যাম্পাস মাঠে শারীরিক নিয়মানুবর্তিতা, কৌশলগত দৃঢ়তা ও দলীয় নেতৃত্বের পাঠ দেওয়া হচ্ছে{' '}
+                    <strong className="text-emerald-800 font-bold">{toBanglaNum(1987)} থেকে।</strong>
+                  </>
+                ) : (
+                  <>
+                    Building physical discipline, tactical resilience, and unwavering team leadership on our sprawling green campus grounds{' '}
+                    <strong className="text-emerald-800 font-bold">since 1987.</strong>
+                  </>
+                )}
+              </p>
             </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              {isBn ? (
-                <>খেলাধুলা ও <br />শরীরচর্চা</>
-              ) : (
-                <>Sports & <br />Athletics</>
-              )}
-            </h1>
-
-            <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
-
-            <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              {isBn ? (
-                <>
-                  আমাদের সুপরিসর সবুজ ক্যাম্পাস মাঠে শারীরিক নিয়মানুবর্তিতা, কৌশলগত দৃঢ়তা ও দলীয় নেতৃত্বের পাঠ দেওয়া হচ্ছে{' '}
-                  <strong className="text-emerald-800 font-bold">{toBanglaNum(1987)} থেকে।</strong>
-                </>
-              ) : (
-                <>
-                  Building physical discipline, tactical resilience, and unwavering team leadership on our sprawling green campus grounds{' '}
-                  <strong className="text-emerald-800 font-bold">since 1987.</strong>
-                </>
-              )}
-            </p>
-          </div>
+          </ScrollReveal>
 
           {/* Floating White Quote Card on Bottom-Right */}
-          <div className="hidden lg:block absolute bottom-16 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
-                “
-              </span>
-              <div>
-                <p className="text-xs text-slate-700 font-medium italic leading-relaxed">
-                  {isBn
-                    ? 'চ্যাম্পিয়নরা ততক্ষণ খেলে যতক্ষণ না তারা নিখুঁত হয়। খেলাধুলা শুধু চরিত্র গড়ে না—তা চরিত্র প্রকাশ করে।'
-                    : 'Champions keep playing until they get it right. Sports do not just build character—they reveal it.'}
-                </p>
-                <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-[11px] font-bold text-slate-900">{isBn ? 'শারীরিক শিক্ষা ও ক্রীড়া বিভাগ' : 'Sports & Athletics Dept'}</span>
-                  <span className="text-[10px] text-emerald-700 font-bold">{isBn ? 'সক্রিয় জীবন' : 'Active Life'}</span>
+          <div className="hidden lg:block absolute bottom-16 right-8 xl:right-16 max-w-[340px]">
+            <ScrollScale delay={0.2}>
+              <div className="bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90">
+                <div className="flex items-start gap-3">
+                  <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                    “
+                  </span>
+                  <div>
+                    <p className="text-xs text-slate-700 font-medium italic leading-relaxed">
+                      {isBn
+                        ? 'চ্যাম্পিয়নরা ততক্ষণ খেলে যতক্ষণ না তারা নিখুঁত হয়। খেলাধুলা শুধু চরিত্র গড়ে না—তা চরিত্র প্রকাশ করে।'
+                        : 'Champions keep playing until they get it right. Sports do not just build character—they reveal it.'}
+                    </p>
+                    <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-slate-900">{isBn ? 'শারীরিক শিক্ষা ও ক্রীড়া বিভাগ' : 'Sports & Athletics Dept'}</span>
+                      <span className="text-[10px] text-emerald-700 font-bold">{isBn ? 'সক্রিয় জীবন' : 'Active Life'}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ScrollScale>
           </div>
         </div>
       </div>
@@ -308,285 +321,298 @@ export const SportsAthletics: React.FC = () => {
       {/* 2. Co-Curricular & Programs Switcher Pill Navigation Bar */}
       <div className="bg-[#f0faf5] border-b border-emerald-100/60 sticky top-[72px] z-30 shadow-2xs backdrop-blur-md">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
-          <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0 hidden sm:inline-block">
-              {isBn ? 'কার্যক্রম:' : 'Programs:'}
-            </span>
-            <div className="flex items-center gap-2 shrink-0">
-              <Link
-                to="/academic-programs"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
-              >
-                <span>{isBn ? 'একাডেমিক কার্যক্রম' : 'Academic Programs'}</span>
-              </Link>
-              <Link
-                to="/sports-athletics"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-[#004d34] text-white shadow-xs flex items-center gap-1.5 transition"
-              >
-                <Trophy size={14} />
-                <span>{isBn ? 'খেলাধুলা ও শরীরচর্চা' : 'Sports & Athletics'}</span>
-              </Link>
-              <Link
-                to="/cultural-activities"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
-              >
-                <span>{isBn ? 'সাংস্কৃতিক কার্যক্রম' : 'Cultural Activities'}</span>
-              </Link>
-              <Link
-                to="/clubs-societies"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
-              >
-                <span>{isBn ? 'ক্লাব ও সোসাইটি' : 'Clubs & Societies'}</span>
-              </Link>
+          <ScrollReveal duration={0.5} distance={15}>
+            <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0 hidden sm:inline-block">
+                {isBn ? 'কার্যক্রম:' : 'Programs:'}
+              </span>
+              <div className="flex items-center gap-2 shrink-0">
+                <Link
+                  to="/academic-programs"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
+                >
+                  <span>{isBn ? 'একাডেমিক কার্যক্রম' : 'Academic Programs'}</span>
+                </Link>
+                <Link
+                  to="/sports-athletics"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-[#004d34] text-white shadow-xs flex items-center gap-1.5 transition"
+                >
+                  <Trophy size={14} />
+                  <span>{isBn ? 'খেলাধুলা ও শরীরচর্চা' : 'Sports & Athletics'}</span>
+                </Link>
+                <Link
+                  to="/cultural-activities"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
+                >
+                  <span>{isBn ? 'সাংস্কৃতিক কার্যক্রম' : 'Cultural Activities'}</span>
+                </Link>
+                <Link
+                  to="/clubs-societies"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
+                >
+                  <span>{isBn ? 'ক্লাব ও সোসাইটি' : 'Clubs & Societies'}</span>
+                </Link>
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
 
       {/* 3. Stat Highlights Bar */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <ScrollStaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {highlights.map((item, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition text-center"
-            >
-              <span className="text-2xl sm:text-3xl font-black text-[#004d34] tracking-tight block">
-                {item.value}
-              </span>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900 mt-1">
-                {item.label}
-              </h4>
-              <p className="text-[11px] text-slate-500 mt-0.5">
-                {item.desc}
-              </p>
-            </div>
+            <ScrollStaggerItem key={idx}>
+              <HoverCard className="h-full">
+                <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition text-center h-full">
+                  <span className="text-2xl sm:text-3xl font-black text-[#004d34] tracking-tight block">
+                    {item.value}
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 mt-1">
+                    {item.label}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    {item.desc}
+                  </p>
+                </div>
+              </HoverCard>
+            </ScrollStaggerItem>
           ))}
-        </div>
+        </ScrollStaggerContainer>
       </div>
 
       {/* 4. Sporting Disciplines Showcase */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-5">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
-              {isBn ? 'ট্র্যাক, ফিল্ড ও কোর্ট' : 'TRACK, FIELD & COURTS'}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
-              {isBn ? 'সক্রিয় ক্রীড়া বিভাগসমূহ' : 'Active Sports Disciplines'}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              {isBn
-                ? 'প্রতিটি শিক্ষার্থীর মধ্যে শারীরিক সক্ষমতা, প্রতিযোগিতামূলক মনোভাব ও ক্রীড়াসুলভ আচরণের বিকাশ।'
-                : 'Encouraging physical vitality, competitive spirit, and sportsmanlike conduct in every student.'}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-xl self-start md:self-auto">
-            {[
-              { id: 'all', label: isBn ? 'সকল খেলা' : 'All Sports' },
-              { id: 'outdoor', label: isBn ? 'আউটডোর' : 'Outdoor' },
-              { id: 'track', label: isBn ? 'ট্র্যাক ও ফিল্ড' : 'Track & Field' },
-              { id: 'indoor', label: isBn ? 'ইনডোর গেমস' : 'Indoor Games' }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setSelectedDiscipline(tab.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
-                  selectedDiscipline === tab.id
-                    ? 'bg-white text-[#004d34] shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {filteredSports.map((sport) => (
-            <div
-              key={sport.id}
-              className="bg-white rounded-3xl p-5 border border-slate-200 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100 relative mb-4">
-                  <img
-                    src={sport.image}
-                    alt={sport.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <span className="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                    {sport.badge}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-[10px] font-black uppercase tracking-wider bg-[#e8f7ee] text-[#059669] px-2 py-0.5 rounded-md">
-                    {sport.tag}
-                  </span>
-                </div>
-
-                <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#004d34] transition-colors">
-                  {sport.name}
-                </h3>
-
-                <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                  {sport.description}
-                </p>
-
-                <div className="mt-4 pt-4 border-t border-slate-100 space-y-2">
-                  <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                    {isBn ? 'মূল বৈশিষ্ট্যসমূহ:' : 'Key Features:'}
-                  </h4>
-                  {sport.features.map((feat, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs text-slate-700">
-                      <CheckCircle2 size={13} className="text-[#059669] shrink-0 mt-0.5" />
-                      <span>{feat}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+        <ScrollReveal duration={0.6} distance={20}>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-5">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
+                {isBn ? 'ট্র্যাক, ফিল্ড ও কোর্ট' : 'TRACK, FIELD & COURTS'}
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
+                {isBn ? 'সক্রিয় ক্রীড়া বিভাগসমূহ' : 'Active Sports Disciplines'}
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                {isBn
+                  ? 'প্রতিটি শিক্ষার্থীর মধ্যে শারীরিক সক্ষমতা, প্রতিযোগিতামূলক মনোভাব ও ক্রীড়াসুলভ আচরণের বিকাশ।'
+                  : 'Encouraging physical vitality, competitive spirit, and sportsmanlike conduct in every student.'}
+              </p>
             </div>
+
+            <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-xl self-start md:self-auto">
+              {[
+                { id: 'all', label: isBn ? 'সকল খেলা' : 'All Sports' },
+                { id: 'outdoor', label: isBn ? 'আউটডোর' : 'Outdoor' },
+                { id: 'track', label: isBn ? 'ট্র্যাক ও ফিল্ড' : 'Track & Field' },
+                { id: 'indoor', label: isBn ? 'ইনডোর গেমস' : 'Indoor Games' }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setSelectedDiscipline(tab.id)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+                    selectedDiscipline === tab.id
+                      ? 'bg-white text-[#004d34] shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <ScrollStaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          {filteredSports.map((sport) => (
+            <ScrollStaggerItem key={sport.id}>
+              <HoverCard className="h-full">
+                <div className="bg-white rounded-3xl p-5 border border-slate-200 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group h-full">
+                  <div>
+                    <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100 relative mb-4">
+                      <img
+                        src={sport.image}
+                        alt={sport.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <span className="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                        {sport.badge}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="text-[10px] font-black uppercase tracking-wider bg-[#e8f7ee] text-[#059669] px-2 py-0.5 rounded-md">
+                        {sport.tag}
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#004d34] transition-colors">
+                      {sport.name}
+                    </h3>
+
+                    <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                      {sport.description}
+                    </p>
+
+                    <div className="mt-4 pt-4 border-t border-slate-100 space-y-2">
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                        {isBn ? 'মূল বৈশিষ্ট্যসমূহ:' : 'Key Features:'}
+                      </h4>
+                      {sport.features.map((feat, i) => (
+                        <div key={i} className="flex items-start gap-2 text-xs text-slate-700">
+                          <CheckCircle2 size={13} className="text-[#059669] shrink-0 mt-0.5" />
+                          <span>{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </HoverCard>
+            </ScrollStaggerItem>
           ))}
-        </div>
+        </ScrollStaggerContainer>
       </div>
 
       {/* 5. Inter-House Competition System */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="bg-[#f0faf5] border border-emerald-100/80 rounded-3xl p-8 sm:p-10 lg:p-12">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
-              {isBn ? 'হাউস পদ্ধতি ও ভ্রাতৃত্ববোধ' : 'HOUSE SYSTEM & CAMARADERIE'}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
-              {isBn ? 'চারটি স্কুল হাউস: আজীবন বন্ধুত্বের বন্ধন' : 'Four School Houses: Fostering Lifelong Brotherhood'}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              {isBn
-                ? '১ম থেকে ১০ম শ্রেণি পর্যন্ত প্রতিটি শিক্ষার্থী চারটি ঐতিহ্যবাহী হাউসের অন্তর্ভুক্ত হয়ে ক্রীড়া ও সহশিক্ষা কার্যক্রমে অংশ নেয়।'
-                : 'Every student belongs to one of four historic houses from Class 1 through Class 10, earning points through athletic, academic, and co-curricular tournaments.'}
-            </p>
-          </div>
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="bg-[#f0faf5] border border-emerald-100/80 rounded-3xl p-8 sm:p-10 lg:p-12">
+            <div className="max-w-2xl mb-8">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
+                {isBn ? 'হাউস পদ্ধতি ও ভ্রাতৃত্ববোধ' : 'HOUSE SYSTEM & CAMARADERIE'}
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
+                {isBn ? 'চারটি স্কুল হাউস: আজীবন বন্ধুত্বের বন্ধন' : 'Four School Houses: Fostering Lifelong Brotherhood'}
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                {isBn
+                  ? '১ম থেকে ১০ম শ্রেণি পর্যন্ত প্রতিটি শিক্ষার্থী চারটি ঐতিহ্যবাহী হাউসের অন্তর্ভুক্ত হয়ে ক্রীড়া ও সহশিক্ষা কার্যক্রমে অংশ নেয়।'
+                  : 'Every student belongs to one of four historic houses from Class 1 through Class 10, earning points through athletic, academic, and co-curricular tournaments.'}
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {houses.map((house, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-2xl p-6 border border-emerald-100 shadow-2xs hover:shadow-lg transition-all"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className={`w-9 h-9 rounded-xl ${house.color} text-white flex items-center justify-center shadow-xs`}>
-                    <ShieldCheck size={18} />
-                  </div>
-                  <span className="text-[11px] font-black uppercase text-slate-400">
-                    {house.badge}
-                  </span>
-                </div>
-                <h3 className="text-lg font-bold text-slate-900">
-                  {house.name}
-                </h3>
-                <span className="text-xs font-semibold text-emerald-700 block mt-0.5 italic">
-                  "{house.motto}"
-                </span>
-                <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                  {house.desc}
-                </p>
-              </div>
-            ))}
+            <ScrollStaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {houses.map((house, idx) => (
+                <ScrollStaggerItem key={idx}>
+                  <HoverCard className="h-full">
+                    <div className="bg-white rounded-2xl p-6 border border-emerald-100 shadow-2xs hover:shadow-lg transition-all h-full">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className={`w-9 h-9 rounded-xl ${house.color} text-white flex items-center justify-center shadow-xs`}>
+                          <ShieldCheck size={18} />
+                        </div>
+                        <span className="text-[11px] font-black uppercase text-slate-400">
+                          {house.badge}
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-bold text-slate-900">
+                        {house.name}
+                      </h3>
+                      <span className="text-xs font-semibold text-emerald-700 block mt-0.5 italic">
+                        "{house.motto}"
+                      </span>
+                      <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                        {house.desc}
+                      </p>
+                    </div>
+                  </HoverCard>
+                </ScrollStaggerItem>
+              ))}
+            </ScrollStaggerContainer>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* 6. Annual Sports Meet Highlights */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-3xl p-8 sm:p-10 lg:p-12 shadow-xl relative overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7 space-y-4">
-              <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                <Flame size={14} className="text-amber-400" />
-                <span>{isBn ? 'বার্ষিক সিগনেচার ইভেন্ট' : 'SIGNATURE ANNUAL EVENT'}</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-black leading-tight">
-                {isBn ? 'ঐতিহ্যবাহী বার্ষিক অ্যাথলেটিক্স ও ক্রীড়া প্রতিযোগিতা' : 'The Grand Annual Athletic & Sports Meet'}
-              </h2>
-              <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-normal">
-                {isBn
-                  ? `প্রতি বছর শীতকালে আমাদের সুবিশাল ক্যাম্পাসে আয়োজিত হয় বার্ষিক ক্রীড়া প্রতিযোগিতা, যেখানে অংশ নেয় ${toBanglaNum(1200)}+ শিক্ষার্থী, অভিভাবক, প্রাক্তন ছাত্র এবং গণ্যমান্য ব্যক্তিবর্গ।`
-                  : 'Held each winter on our expansive campus grounds, the Annual Sports Meet draws over 1,200 enthusiastic student participants, respected parents, alumni, and district educational dignitaries.'}
-              </p>
-              <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="border-l-2 border-emerald-400 pl-3">
-                  <span className="text-lg font-black text-white block">
-                    {isBn ? 'মার্চ-পাস্ট ও শপথগ্রহণ' : 'March Past & Oath'}
-                  </span>
-                  <p className="text-[11px] text-emerald-200">
-                    {isBn ? 'জাতীয় পতাকাকে অভিবাদন জানিয়ে সুশৃঙ্খল হাউসভিত্তিক কুচকাওয়াজ' : 'Synchronized house parade saluting the national flag'}
-                  </p>
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-3xl p-8 sm:p-10 lg:p-12 shadow-xl relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-7 space-y-4">
+                <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                  <Flame size={14} className="text-amber-400" />
+                  <span>{isBn ? 'বার্ষিক সিগনেচার ইভেন্ট' : 'SIGNATURE ANNUAL EVENT'}</span>
                 </div>
-                <div className="border-l-2 border-emerald-400 pl-3">
-                  <span className="text-lg font-black text-white block">
-                    {isBn ? `${toBanglaNum(25)}+টি অ্যাথলেটিক্স ইভেন্ট` : '25+ Athletic Events'}
-                  </span>
-                  <p className="text-[11px] text-emerald-200">
-                    {isBn ? 'স্প্রিন্ট, রিলে, হাই জাম্প, চাকতি নিক্ষেপ ও হার্ডল প্রতিযোগিতা' : 'Sprints, relays, high jump, discus, and hurdle challenges'}
-                  </p>
+                <h2 className="text-3xl sm:text-4xl font-black leading-tight">
+                  {isBn ? 'ঐতিহ্যবাহী বার্ষিক অ্যাথলেটিক্স ও ক্রীড়া প্রতিযোগিতা' : 'The Grand Annual Athletic & Sports Meet'}
+                </h2>
+                <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-normal">
+                  {isBn
+                    ? `প্রতি বছর শীতকালে আমাদের সুবিশাল ক্যাম্পাসে আয়োজিত হয় বার্ষিক ক্রীড়া প্রতিযোগিতা, যেখানে অংশ নেয় ${toBanglaNum(1200)}+ শিক্ষার্থী, অভিভাবক, প্রাক্তন ছাত্র এবং গণ্যমান্য ব্যক্তিবর্গ।`
+                    : 'Held each winter on our expansive campus grounds, the Annual Sports Meet draws over 1,200 enthusiastic student participants, respected parents, alumni, and district educational dignitaries.'}
+                </p>
+                <div className="grid grid-cols-2 gap-4 pt-2">
+                  <div className="border-l-2 border-emerald-400 pl-3">
+                    <span className="text-lg font-black text-white block">
+                      {isBn ? 'মার্চ-পাস্ট ও শপথগ্রহণ' : 'March Past & Oath'}
+                    </span>
+                    <p className="text-[11px] text-emerald-200">
+                      {isBn ? 'জাতীয় পতাকাকে অভিবাদন জানিয়ে সুশৃঙ্খল হাউসভিত্তিক কুচকাওয়াজ' : 'Synchronized house parade saluting the national flag'}
+                    </p>
+                  </div>
+                  <div className="border-l-2 border-emerald-400 pl-3">
+                    <span className="text-lg font-black text-white block">
+                      {isBn ? `${toBanglaNum(25)}+টি অ্যাথলেটিক্স ইভেন্ট` : '25+ Athletic Events'}
+                    </span>
+                    <p className="text-[11px] text-emerald-200">
+                      {isBn ? 'স্প্রিন্ট, রিলে, হাই জাম্প, চাকতি নিক্ষেপ ও হার্ডল প্রতিযোগিতা' : 'Sprints, relays, high jump, discus, and hurdle challenges'}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="lg:col-span-5 relative">
-              <div className="rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl border border-white/20">
-                <img
-                  src="/gallery/album_sports.jpg"
-                  alt="Annual Sports Meet"
-                  className="w-full h-full object-cover"
-                />
+              <div className="lg:col-span-5 relative">
+                <div className="rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl border border-white/20">
+                  <img
+                    src="/gallery/album_sports.jpg"
+                    alt="Annual Sports Meet"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* 7. Action CTA Section */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-1.5 text-center md:text-left">
-            <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-              {isBn ? 'আমাদের শিক্ষার্থীদের ক্রীড়া নৈপুণ্য দেখতে চান?' : 'Want to see our athletes and sports day in action?'}
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
-              {isBn
-                ? 'আমাদের ফটো গ্যালারিতে বার্ষিক ক্রীড়ার ছবি দেখুন, নোটিশ বোর্ডে ক্রীড়া সূচি চেক করুন বা সরাসরি যোগাযোগ করুন।'
-                : 'Browse our high-resolution sports photo galleries, check upcoming athletic schedules on the notice board, or get in touch with our physical education faculty.'}
-            </p>
-          </div>
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="space-y-1.5 text-center md:text-left">
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900">
+                {isBn ? 'আমাদের শিক্ষার্থীদের ক্রীড়া নৈপুণ্য দেখতে চান?' : 'Want to see our athletes and sports day in action?'}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
+                {isBn
+                  ? 'আমাদের ফটো গ্যালারিতে বার্ষিক ক্রীড়ার ছবি দেখুন, নোটিশ বোর্ডে ক্রীড়া সূচি চেক করুন বা সরাসরি যোগাযোগ করুন।'
+                  : 'Browse our high-resolution sports photo galleries, check upcoming athletic schedules on the notice board, or get in touch with our physical education faculty.'}
+              </p>
+            </div>
 
-          <div className="flex items-center gap-3 shrink-0 flex-wrap justify-center">
-            <Link
-              to="/gallery"
-              className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
-            >
-              <ImageIcon size={14} />
-              <span>{isBn ? 'ক্রীড়া গ্যালারি' : 'Sports Gallery'}</span>
-            </Link>
-            <Link
-              to="/notices"
-              className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
-            >
-              <Calendar size={14} />
-              <span>{isBn ? 'ক্রীড়া নোটিশ' : 'Sports Notices'}</span>
-            </Link>
-            <Link
-              to="/contact"
-              className="px-5 py-2.5 rounded-xl bg-[#004d34] hover:bg-[#003b28] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xs"
-            >
-              <span>{isBn ? 'ক্রীড়া বিভাগে যোগাযোগ' : 'Contact Sports Dept'}</span>
-              <ArrowRight size={14} />
-            </Link>
+            <div className="flex items-center gap-3 shrink-0 flex-wrap justify-center">
+              <Link
+                to="/gallery"
+                className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
+              >
+                <ImageIcon size={14} />
+                <span>{isBn ? 'ক্রীড়া গ্যালারি' : 'Sports Gallery'}</span>
+              </Link>
+              <Link
+                to="/notices"
+                className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
+              >
+                <Calendar size={14} />
+                <span>{isBn ? 'ক্রীড়া নোটিশ' : 'Sports Notices'}</span>
+              </Link>
+              <Link
+                to="/contact"
+                className="px-5 py-2.5 rounded-xl bg-[#004d34] hover:bg-[#003b28] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xs"
+              >
+                <span>{isBn ? 'ক্রীড়া বিভাগে যোগাযোগ' : 'Contact Sports Dept'}</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </div>
   );

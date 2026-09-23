@@ -29,6 +29,13 @@ import { useLanguage } from '../contexts/LanguageContext';
 import type { Teacher } from '../data/schoolData';
 import { TEACHERS, ADMINISTRATIVE_STAFF, STAFF_PROFILES } from '../data/schoolData';
 import { TEACHER_DETAILS_BN } from '../data/teacherLocalization';
+import {
+  ScrollReveal,
+  ScrollScale,
+  ScrollStaggerContainer,
+  ScrollStaggerItem,
+  HoverCard,
+} from '../components/ui/MotionComponents';
 
 const TEACHER_TRANSLATIONS: Record<string, { nameBn: string; designationBn: string; subjectBn: string }> = {
   '1': { nameBn: 'ইন্দ্রজিৎ কুমার মণ্ডল', designationBn: 'সহকারী শিক্ষক', subjectBn: 'রসায়ন / বিজ্ঞান' },
@@ -240,158 +247,166 @@ export const Faculty: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
-            {/* Pill Tag Badge */}
-            <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
-              <Users size={14} className="text-[#059669]" />
-              <span>{isBn ? 'আমাদের শিক্ষক, আমাদের শক্তি' : 'OUR EDUCATORS, OUR STRENGTH'}</span>
+          <ScrollReveal duration={0.6} distance={25}>
+            <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
+              {/* Pill Tag Badge */}
+              <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
+                <Users size={14} className="text-[#059669]" />
+                <span>{isBn ? 'আমাদের শিক্ষক, আমাদের শক্তি' : 'OUR EDUCATORS, OUR STRENGTH'}</span>
+              </div>
+
+              {/* Main Headline */}
+              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
+                {isBn ? (
+                  <>
+                    শিক্ষক ও স্টাফ <br />
+                    ডিরেক্টরি
+                  </>
+                ) : (
+                  <>
+                    Faculty & Staff <br />
+                    Directory
+                  </>
+                )}
+              </h1>
+
+              {/* Short Green Accent Line Under Title */}
+              <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
+
+              {/* Subtitle */}
+              <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
+                {isBn
+                  ? 'আমাদের দক্ষ, অভিজ্ঞ ও নিবেদিতপ্রাণ শিক্ষক ও কর্মকর্তা-কর্মচারীবৃন্দ যারা শিক্ষার্থীদের সম্ভাবনাময় ভবিষ্যৎ বিনির্মাণে সদা ব্রতী।'
+                  : 'Meet our dedicated and experienced faculty and staff who inspire, guide and support our students towards a brighter future.'}
+              </p>
             </div>
-
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              {isBn ? (
-                <>
-                  শিক্ষক ও স্টাফ <br />
-                  ডিরেক্টরি
-                </>
-              ) : (
-                <>
-                  Faculty & Staff <br />
-                  Directory
-                </>
-              )}
-            </h1>
-
-            {/* Short Green Accent Line Under Title */}
-            <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
-
-            {/* Subtitle */}
-            <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              {isBn
-                ? 'আমাদের দক্ষ, অভিজ্ঞ ও নিবেদিতপ্রাণ শিক্ষক ও কর্মকর্তা-কর্মচারীবৃন্দ যারা শিক্ষার্থীদের সম্ভাবনাময় ভবিষ্যৎ বিনির্মাণে সদা ব্রতী।'
-                : 'Meet our dedicated and experienced faculty and staff who inspire, guide and support our students towards a brighter future.'}
-            </p>
-          </div>
+          </ScrollReveal>
 
           {/* Floating White Quote Card on Bottom-Right */}
-          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
-                “
-              </span>
-              <div>
-                <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  {isBn ? 'আজকের শিক্ষা, আগামীর সম্ভাবনা' : 'Education today for a brighter tomorrow'}
-                </h4>
-                <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — {isBn ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
-                </p>
+          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16">
+            <ScrollScale delay={0.2}>
+              <div className="bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
+                <div className="flex items-start gap-3">
+                  <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                    “
+                  </span>
+                  <div>
+                    <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
+                      {isBn ? 'আজকের শিক্ষা, আগামীর সম্ভাবনা' : 'Education today for a brighter tomorrow'}
+                    </h4>
+                    <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
+                      — {isBn ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
+            </ScrollScale>
           </div>
         </div>
       </div>
 
       {/* 2. Tabs Switcher & Filter Bar Row (Matching media_1790105578493.jpg) */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-10">
-        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
-          {/* Left: Tab Buttons */}
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setActiveTab('teaching')}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs ${
-                activeTab === 'teaching'
-                  ? 'bg-[#004d34] text-white'
-                  : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
-              }`}
-            >
-              <GraduationCap size={16} />
-              <span>{isBn ? 'শিক্ষকমণ্ডলী' : 'Teaching Faculty'}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab('admin')}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs ${
-                activeTab === 'admin'
-                  ? 'bg-[#004d34] text-white'
-                  : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
-              }`}
-            >
-              <Briefcase size={16} />
-              <span>{isBn ? 'প্রশাসনিক ও অফিস স্টাফ' : 'Administrative Staff'}</span>
-            </button>
-          </div>
-
-          {/* Right: Search Input & Dropdown Filters */}
-          <div className="flex flex-wrap items-center gap-2.5">
-            {/* Search Box */}
-            <div className="relative flex-1 sm:w-64">
-              <Search
-                size={14}
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
-              />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={
+        <ScrollReveal duration={0.5} distance={15}>
+          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+            {/* Left: Tab Buttons */}
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setActiveTab('teaching')}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs ${
                   activeTab === 'teaching'
-                    ? (isBn ? 'নাম, বিষয় বা পদবি দিয়ে খুঁজুন...' : 'Search by name, subject or designation...')
-                    : (isBn ? 'কর্মকর্তার নাম বা পদবি দিয়ে খুঁজুন...' : 'Search by staff name or role...')
-                }
-                className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3.5 py-2 text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34] shadow-xs"
-              />
+                    ? 'bg-[#004d34] text-white'
+                    : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
+                }`}
+              >
+                <GraduationCap size={16} />
+                <span>{isBn ? 'শিক্ষকমণ্ডলী' : 'Teaching Faculty'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab('admin')}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs ${
+                  activeTab === 'admin'
+                    ? 'bg-[#004d34] text-white'
+                    : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
+                }`}
+              >
+                <Briefcase size={16} />
+                <span>{isBn ? 'প্রশাসনিক ও অফিস স্টাফ' : 'Administrative Staff'}</span>
+              </button>
             </div>
 
-            {/* Subject & Designation Dropdowns - Relevant for Teaching Faculty */}
-            {activeTab === 'teaching' && (
-              <>
-                <select
-                  value={selectedSubject}
-                  onChange={(e) => setSelectedSubject(e.target.value)}
-                  className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-xs"
-                >
-                  <option value="All">{isBn ? 'সকল বিষয়' : 'All Subjects'}</option>
-                  {subjectList
-                    .filter((s) => s !== 'All')
-                    .map((subj) => (
-                      <option key={subj} value={subj}>
-                        {isBn ? (SUBJECT_CAT_BN[subj] || subj) : subj}
-                      </option>
-                    ))}
-                </select>
+            {/* Right: Search Input & Dropdown Filters */}
+            <div className="flex flex-wrap items-center gap-2.5">
+              {/* Search Box */}
+              <div className="relative flex-1 sm:w-64">
+                <Search
+                  size={14}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={
+                    activeTab === 'teaching'
+                      ? (isBn ? 'নাম, বিষয় বা পদবি দিয়ে খুঁজুন...' : 'Search by name, subject or designation...')
+                      : (isBn ? 'কর্মকর্তার নাম বা পদবি দিয়ে খুঁজুন...' : 'Search by staff name or role...')
+                  }
+                  className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3.5 py-2 text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34] shadow-xs"
+                />
+              </div>
 
-                <select
-                  value={selectedDesignation}
-                  onChange={(e) => setSelectedDesignation(e.target.value)}
-                  className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-xs"
-                >
-                  <option value="All">{isBn ? 'সকল পদবি' : 'All Designations'}</option>
-                  {designationList
-                    .filter((d) => d !== 'All')
-                    .map((desig) => (
-                      <option key={desig} value={desig}>
-                        {isBn ? (DESIGNATION_BN[desig] || desig) : desig}
-                      </option>
-                    ))}
-                </select>
-              </>
-            )}
+              {/* Subject & Designation Dropdowns - Relevant for Teaching Faculty */}
+              {activeTab === 'teaching' && (
+                <>
+                  <select
+                    value={selectedSubject}
+                    onChange={(e) => setSelectedSubject(e.target.value)}
+                    className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-xs"
+                  >
+                    <option value="All">{isBn ? 'সকল বিষয়' : 'All Subjects'}</option>
+                    {subjectList
+                      .filter((s) => s !== 'All')
+                      .map((subj) => (
+                        <option key={subj} value={subj}>
+                          {isBn ? (SUBJECT_CAT_BN[subj] || subj) : subj}
+                        </option>
+                      ))}
+                  </select>
 
-            {/* Reset Button */}
-            <button
-              type="button"
-              onClick={handleReset}
-              className="flex items-center gap-1.5 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer shadow-xs"
-              title={isBn ? 'ফিল্টার রিসেট' : 'Reset Filters'}
-            >
-              <RotateCcw size={13} />
-              <span>{isBn ? 'রিসেট' : 'Reset'}</span>
-            </button>
+                  <select
+                    value={selectedDesignation}
+                    onChange={(e) => setSelectedDesignation(e.target.value)}
+                    className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-xs"
+                  >
+                    <option value="All">{isBn ? 'সকল পদবি' : 'All Designations'}</option>
+                    {designationList
+                      .filter((d) => d !== 'All')
+                      .map((desig) => (
+                        <option key={desig} value={desig}>
+                          {isBn ? (DESIGNATION_BN[desig] || desig) : desig}
+                        </option>
+                      ))}
+                  </select>
+                </>
+              )}
+
+              {/* Reset Button */}
+              <button
+                type="button"
+                onClick={handleReset}
+                className="flex items-center gap-1.5 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer shadow-xs"
+                title={isBn ? 'ফিল্টার রিসেট' : 'Reset Filters'}
+              >
+                <RotateCcw size={13} />
+                <span>{isBn ? 'রিসেট' : 'Reset'}</span>
+              </button>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* 3. Teaching Faculty Section (Matching media_1790105578493.jpg) */}
@@ -399,96 +414,101 @@ export const Faculty: React.FC = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-10">
           <section className="space-y-6">
             {/* Header Row */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
-                  <GraduationCap size={20} />
-                </div>
+            <ScrollReveal duration={0.6} distance={20}>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                    {isBn ? 'শিক্ষকমণ্ডলী' : 'Teaching Faculty'}
-                  </h2>
-                  <span className="bg-[#e8f7ee] text-[#004d34] border border-emerald-100 text-xs font-bold px-3 py-0.5 rounded-full">
-                    {isBn ? `${toBanglaNum(filteredTeachers.length)} জন শিক্ষক` : `${filteredTeachers.length} Members`}
-                  </span>
+                  <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
+                    <GraduationCap size={20} />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                      {isBn ? 'শিক্ষকমণ্ডলী' : 'Teaching Faculty'}
+                    </h2>
+                    <span className="bg-[#e8f7ee] text-[#004d34] border border-emerald-100 text-xs font-bold px-3 py-0.5 rounded-full">
+                      {isBn ? `${toBanglaNum(filteredTeachers.length)} জন শিক্ষক` : `${filteredTeachers.length} Members`}
+                    </span>
+                  </div>
                 </div>
+                <p className="text-xs text-slate-500 font-medium">
+                  {isBn ? 'সুন্দর ও দক্ষ ভবিষ্যৎ প্রজন্ম গড়ায় নিবেদিত —' : 'Dedicated to creating a better learning tomorrow —'}
+                </p>
               </div>
-              <p className="text-xs text-slate-500 font-medium">
-                {isBn ? 'সুন্দর ও দক্ষ ভবিষ্যৎ প্রজন্ম গড়ায় নিবেদিত —' : 'Dedicated to creating a better learning tomorrow —'}
-              </p>
-            </div>
+            </ScrollReveal>
 
             {/* 4 Cards Grid for Teaching Faculty */}
             {filteredTeachers.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              <ScrollStaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {filteredTeachers.map((teacher) => {
                   const teacherName = isBn ? (TEACHER_TRANSLATIONS[teacher.id]?.nameBn || teacher.name) : teacher.name;
                   const teacherDesig = isBn ? (TEACHER_TRANSLATIONS[teacher.id]?.designationBn || teacher.designation) : teacher.designation;
                   const teacherSubj = isBn ? (TEACHER_TRANSLATIONS[teacher.id]?.subjectBn || teacher.subject) : teacher.subject;
                   return (
-                    <div
-                      key={teacher.id}
-                      onClick={() => {
-                        setSelectedTeacher(teacher);
-                        setModalTab('professional');
-                      }}
-                      className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group cursor-pointer"
-                    >
-                      <div>
-                        {/* Photo & Identity Row */}
-                        <div className="flex items-start gap-3.5 mb-3">
-                          <div className="w-16 h-18 sm:w-18 sm:h-20 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-2xs">
-                            <img
-                              src={teacher.image}
-                              alt={teacherName}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              onError={(e) => {
-                                (e.target as HTMLImageElement).src =
-                                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&fit=crop&q=80';
-                              }}
-                            />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h3 className="font-extrabold text-slate-900 text-sm leading-snug group-hover:text-[#004d34] transition">
-                              {teacherName}
-                            </h3>
-                            <p className="text-xs text-slate-500 font-semibold mt-0.5">
-                              {teacherDesig}
-                            </p>
-
-                            {/* Subject Badge */}
-                            <div className="mt-2">
-                              {getSubjectBadge(teacher.subjectCategory, teacherSubj)}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Qualifications */}
-                        <div className="pt-2.5 border-t border-slate-100 text-[11px] text-slate-600 font-normal">
-                          <strong className="text-slate-800 font-bold">{isBn ? 'শিক্ষাগত যোগ্যতা: ' : 'Qualifications: '}</strong>
-                          <span>{isBn ? (TEACHER_DETAILS_BN[teacher.id]?.qualificationsBn || teacher.qualifications) : teacher.qualifications}</span>
-                        </div>
-                      </div>
-
-                      {/* View Profile Link */}
-                      <div className="pt-3 mt-3 border-t border-slate-100">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
+                    <ScrollStaggerItem key={teacher.id}>
+                      <HoverCard className="h-full">
+                        <div
+                          onClick={() => {
                             setSelectedTeacher(teacher);
                             setModalTab('professional');
                           }}
-                          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 transition cursor-pointer"
+                          className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group cursor-pointer h-full"
                         >
-                          <span>{isBn ? 'বিস্তারিত' : 'View'}</span>
-                          <ArrowRight size={13} />
-                        </button>
-                      </div>
-                    </div>
+                          <div>
+                            {/* Photo & Identity Row */}
+                            <div className="flex items-start gap-3.5 mb-3">
+                              <div className="w-16 h-18 sm:w-18 sm:h-20 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-2xs">
+                                <img
+                                  src={teacher.image}
+                                  alt={teacherName}
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).src =
+                                      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&fit=crop&q=80';
+                                  }}
+                                />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-extrabold text-slate-900 text-sm leading-snug group-hover:text-[#004d34] transition">
+                                  {teacherName}
+                                </h3>
+                                <p className="text-xs text-slate-500 font-semibold mt-0.5">
+                                  {teacherDesig}
+                                </p>
+
+                                {/* Subject Badge */}
+                                <div className="mt-2">
+                                  {getSubjectBadge(teacher.subjectCategory, teacherSubj)}
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Qualifications */}
+                            <div className="pt-2.5 border-t border-slate-100 text-[11px] text-slate-600 font-normal">
+                              <strong className="text-slate-800 font-bold">{isBn ? 'শিক্ষাগত যোগ্যতা: ' : 'Qualifications: '}</strong>
+                              <span>{isBn ? (TEACHER_DETAILS_BN[teacher.id]?.qualificationsBn || teacher.qualifications) : teacher.qualifications}</span>
+                            </div>
+                          </div>
+
+                          {/* View Profile Link */}
+                          <div className="pt-3 mt-3 border-t border-slate-100">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedTeacher(teacher);
+                                setModalTab('professional');
+                              }}
+                              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 transition cursor-pointer"
+                            >
+                              <span>{isBn ? 'বিস্তারিত' : 'View'}</span>
+                              <ArrowRight size={13} />
+                            </button>
+                          </div>
+                        </div>
+                      </HoverCard>
+                    </ScrollStaggerItem>
                   );
                 })}
-              </div>
+              </ScrollStaggerContainer>
             ) : (
               <div className="bg-white rounded-3xl p-8 text-center border border-slate-200">
                 <p className="text-slate-500 text-sm">
@@ -512,28 +532,30 @@ export const Faculty: React.FC = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-10">
           <section className="space-y-6">
             {/* Header Row */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
-                  <Briefcase size={20} />
-                </div>
+            <ScrollReveal duration={0.6} distance={20}>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                    {isBn ? 'প্রশাসনিক ও অফিস স্টাফ' : 'Administrative Staff'}
-                  </h2>
-                  <span className="bg-[#e8f7ee] text-[#004d34] border border-emerald-100 text-xs font-bold px-3 py-0.5 rounded-full">
-                    {isBn ? `${toBanglaNum(filteredStaff.length)} জন কর্মকর্তা-কর্মচারী` : `${filteredStaff.length} Members`}
-                  </span>
+                  <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
+                    <Briefcase size={20} />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                      {isBn ? 'প্রশাসনিক ও অফিস স্টাফ' : 'Administrative Staff'}
+                    </h2>
+                    <span className="bg-[#e8f7ee] text-[#004d34] border border-emerald-100 text-xs font-bold px-3 py-0.5 rounded-full">
+                      {isBn ? `${toBanglaNum(filteredStaff.length)} জন কর্মকর্তা-কর্মচারী` : `${filteredStaff.length} Members`}
+                    </span>
+                  </div>
                 </div>
+                <p className="text-xs text-slate-500 font-medium">
+                  {isBn ? 'সুশৃঙ্খল ও আন্তরিক প্রাতিষ্ঠানিক পরিবেশ পরিচালনায় নিবেদিত —' : 'Supporting a well-managed and nurturing school environment —'}
+                </p>
               </div>
-              <p className="text-xs text-slate-500 font-medium">
-                {isBn ? 'সুশৃঙ্খল ও আন্তরিক প্রাতিষ্ঠানিক পরিবেশ পরিচালনায় নিবেদিত —' : 'Supporting a well-managed and nurturing school environment —'}
-              </p>
-            </div>
+            </ScrollReveal>
 
             {/* 4 Cards Grid for Administrative Staff */}
             {filteredStaff.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              <ScrollStaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {filteredStaff.map((staff) => {
                   const staffName = isBn ? (STAFF_TRANSLATIONS[staff.id]?.nameBn || staff.name) : staff.name;
                   const staffRole = isBn ? (STAFF_TRANSLATIONS[staff.id]?.roleBn || staff.role) : staff.role;
@@ -547,70 +569,73 @@ export const Faculty: React.FC = () => {
                   } as Teacher);
 
                   return (
-                    <div
-                      key={staff.id}
-                      onClick={() => {
-                        setSelectedTeacher(staffProfile);
-                        setModalTab('professional');
-                      }}
-                      className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group cursor-pointer"
-                    >
-                      <div>
-                        {/* Photo & Role */}
-                        <div className="flex items-start gap-3.5 mb-3">
-                          <div className="w-16 h-18 sm:w-18 sm:h-20 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-2xs">
-                            <img
-                              src={staff.image}
-                              alt={staffName}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              onError={(e) => {
-                                (e.target as HTMLImageElement).src =
-                                  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&fit=crop&q=80';
-                              }}
-                            />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h3 className="font-extrabold text-slate-900 text-sm leading-snug group-hover:text-[#004d34] transition">
-                              {staffName}
-                            </h3>
-                            <p className="text-xs text-[#059669] font-bold mt-1">
-                              {staffRole}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Contact Info */}
-                        <div className="pt-2.5 border-t border-slate-100 space-y-1 text-[11px] text-slate-600 font-normal">
-                          <div className="flex items-center gap-1.5 truncate">
-                            <Mail size={12} className="text-slate-400 shrink-0" />
-                            <span className="truncate">{staff.email}</span>
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            <Phone size={12} className="text-slate-400 shrink-0" />
-                            <span>{isBn ? toBanglaNum(staff.phone) : staff.phone}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* View Profile Link */}
-                      <div className="pt-3 mt-3 border-t border-slate-100">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
+                    <ScrollStaggerItem key={staff.id}>
+                      <HoverCard className="h-full">
+                        <div
+                          onClick={() => {
                             setSelectedTeacher(staffProfile);
                             setModalTab('professional');
                           }}
-                          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 transition cursor-pointer"
+                          className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group cursor-pointer h-full"
                         >
-                          <span>{isBn ? 'বিস্তারিত' : 'View'}</span>
-                          <ArrowRight size={13} />
-                        </button>
-                      </div>
-                    </div>
+                          <div>
+                            {/* Photo & Role */}
+                            <div className="flex items-start gap-3.5 mb-3">
+                              <div className="w-16 h-18 sm:w-18 sm:h-20 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-2xs">
+                                <img
+                                  src={staff.image}
+                                  alt={staffName}
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).src =
+                                      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&fit=crop&q=80';
+                                  }}
+                                />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-extrabold text-slate-900 text-sm leading-snug group-hover:text-[#004d34] transition">
+                                  {staffName}
+                                </h3>
+                                <p className="text-xs text-[#059669] font-bold mt-1">
+                                  {staffRole}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Contact Info */}
+                            <div className="pt-2.5 border-t border-slate-100 space-y-1 text-[11px] text-slate-600 font-normal">
+                              <div className="flex items-center gap-1.5 truncate">
+                                <Mail size={12} className="text-slate-400 shrink-0" />
+                                <span className="truncate">{staff.email}</span>
+                              </div>
+                              <div className="flex items-center gap-1.5">
+                                <Phone size={12} className="text-slate-400 shrink-0" />
+                                <span>{isBn ? toBanglaNum(staff.phone) : staff.phone}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* View Profile Link */}
+                          <div className="pt-3 mt-3 border-t border-slate-100">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedTeacher(staffProfile);
+                                setModalTab('professional');
+                              }}
+                              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#004d34] hover:text-emerald-800 transition cursor-pointer"
+                            >
+                              <span>{isBn ? 'বিস্তারিত' : 'View'}</span>
+                              <ArrowRight size={13} />
+                            </button>
+                          </div>
+                        </div>
+                      </HoverCard>
+                    </ScrollStaggerItem>
                   );
                 })}
-              </div>
+              </ScrollStaggerContainer>
             ) : (
               <div className="bg-white rounded-3xl p-8 text-center border border-slate-200">
                 <p className="text-slate-500 text-sm">
@@ -631,31 +656,33 @@ export const Faculty: React.FC = () => {
 
       {/* 5. Together for a Brighter Future (Matching media_1790105578493.jpg) */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
-        <section className="bg-[#e8f7ee] border border-emerald-100/90 rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xs">
-          <div className="flex items-center gap-4 text-center sm:text-left">
-            <div className="w-12 h-12 rounded-2xl bg-white text-[#004d34] flex items-center justify-center shrink-0 shadow-2xs">
-              <Users size={24} />
+        <ScrollReveal duration={0.65} distance={30}>
+          <section className="bg-[#e8f7ee] border border-emerald-100/90 rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xs">
+            <div className="flex items-center gap-4 text-center sm:text-left">
+              <div className="w-12 h-12 rounded-2xl bg-white text-[#004d34] flex items-center justify-center shrink-0 shadow-2xs">
+                <Users size={24} />
+              </div>
+              <div>
+                <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
+                  {isBn ? 'সমৃদ্ধ আগামীর জন্য আমরা ঐক্যবদ্ধ' : 'Together for a Brighter Future'}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 font-normal mt-0.5">
+                  {isBn
+                    ? 'আমাদের শিক্ষক ও স্টাফ ঐক্যবদ্ধভাবে প্রতিটি শিক্ষার্থীকে আত্মবিশ্বাসী, মানবিক ও দক্ষ হিসেবে গড়ে তোলে।'
+                    : 'Our faculty and staff work hand in hand to nurture confident, compassionate and capable individuals.'}
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
-                {isBn ? 'সমৃদ্ধ আগামীর জন্য আমরা ঐক্যবদ্ধ' : 'Together for a Brighter Future'}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 font-normal mt-0.5">
-                {isBn
-                  ? 'আমাদের শিক্ষক ও স্টাফ ঐক্যবদ্ধভাবে প্রতিটি শিক্ষার্থীকে আত্মবিশ্বাসী, মানবিক ও দক্ষ হিসেবে গড়ে তোলে।'
-                  : 'Our faculty and staff work hand in hand to nurture confident, compassionate and capable individuals.'}
-              </p>
-            </div>
-          </div>
 
-          <a
-            href="mailto:soshgskhu@sos-bangladesh.org"
-            className="inline-flex items-center gap-2 bg-[#004d34] hover:bg-[#003826] text-white px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-xs hover:shadow whitespace-nowrap cursor-pointer shrink-0"
-          >
-            <span>{isBn ? 'যোগ দিন আমাদের টিমে' : 'Join Our Team'}</span>
-            <ArrowRight size={14} />
-          </a>
-        </section>
+            <a
+              href="mailto:soshgskhu@sos-bangladesh.org"
+              className="inline-flex items-center gap-2 bg-[#004d34] hover:bg-[#003826] text-white px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-xs hover:shadow whitespace-nowrap cursor-pointer shrink-0"
+            >
+              <span>{isBn ? 'যোগ দিন আমাদের টিমে' : 'Join Our Team'}</span>
+              <ArrowRight size={14} />
+            </a>
+          </section>
+        </ScrollReveal>
       </div>
 
       {/* 6. Faculty & Staff Quick View Modal */}

@@ -38,9 +38,12 @@ const ScrollToTop: React.FC = () => {
   return null;
 };
 
+import { ScrollProgressBar } from './components/ui/MotionComponents';
+
 export const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col font-sans bg-slate-50 text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
+      <ScrollProgressBar />
       <ScrollToTop />
       
       {/* Top Utility Contact Bar */}

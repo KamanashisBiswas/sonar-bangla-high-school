@@ -24,6 +24,13 @@ import {
 } from 'lucide-react';
 
 import { useLanguage } from '../contexts/LanguageContext';
+import {
+  ScrollReveal,
+  ScrollScale,
+  ScrollStaggerContainer,
+  ScrollStaggerItem,
+  HoverCard
+} from '../components/ui/MotionComponents';
 
 interface DownloadItem {
   id: string;
@@ -430,7 +437,7 @@ export const Downloads: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
+          <ScrollReveal duration={0.6} distance={25} className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
             {/* Tag Pill Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <Download size={14} />
@@ -451,23 +458,25 @@ export const Downloads: React.FC = () => {
                 ? 'গুরুত্বপূর্ণ প্রাতিষ্ঠানিক নির্দেশিকা, ভর্তি ফরম, সিলেবাস, ক্লাস রুটিন, ছুটির তালিকা এবং একাডেমিক নথিপত্র এক ক্লিকে ডাউনলোড করুন।'
                 : 'Access and download important academic resources, forms, routines, syllabi, calendars and more.'}
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Floating White Quote Card on the Right (Matching media_1790110070973.png) */}
-          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
-                “
-              </span>
-              <div>
-                <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  {isBn ? 'আজকের শিক্ষা, আলোকিত আগামীর প্রত্যয়' : 'Education today for a brighter tomorrow'}
-                </h4>
-                <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  {isBn ? '— এস ও এস হারম্যান মেইনার কলেজ' : '— SOS Hermann Gmeiner School'}
-                </p>
+          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 max-w-[340px]">
+            <ScrollScale delay={0.2} className="bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90">
+              <div className="flex items-start gap-3">
+                <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                  “
+                </span>
+                <div>
+                  <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
+                    {isBn ? 'আজকের শিক্ষা, আলোকিত আগামীর প্রত্যয়' : 'Education today for a brighter tomorrow'}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
+                    {isBn ? '— এস ও এস হারম্যান মেইনার কলেজ' : '— SOS Hermann Gmeiner School'}
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollScale>
           </div>
         </div>
       </section>
@@ -475,7 +484,7 @@ export const Downloads: React.FC = () => {
       {/* Main Content Area */}
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 mt-6 space-y-5">
         {/* Category Filter Pills (Exact replica of media_1790109113156.jpg) */}
-        <div className="flex flex-wrap items-center gap-2.5">
+        <ScrollReveal duration={0.5} distance={15} className="flex flex-wrap items-center gap-2.5">
           {filterPills.map((pill) => {
             const Icon = pill.icon;
             const isActive = selectedFilter === pill.id;
@@ -501,9 +510,9 @@ export const Downloads: React.FC = () => {
               </button>
             );
           })}
-        </div>
+        </ScrollReveal>
         {/* Search, Sort & View Controls Card (Exact match of reference) */}
-        <div className="bg-white rounded-2xl p-2.5 sm:p-3 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        <ScrollReveal duration={0.5} distance={15} className="bg-white rounded-2xl p-2.5 sm:p-3 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
           {/* Left: Search input with green icon box */}
           <div className="flex items-center flex-1 max-w-xl bg-slate-50 border border-slate-200 rounded-xl overflow-hidden focus-within:border-[#004d34] focus-within:ring-1 focus-within:ring-[#004d34] transition">
             <div className="bg-[#004d34] text-white p-2.5 sm:p-3 flex items-center justify-center shrink-0">
@@ -572,11 +581,11 @@ export const Downloads: React.FC = () => {
               </button>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* View Mode: List View (Table matching media_1790109113156.jpg) */}
         {viewMode === 'list' ? (
-          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-xs overflow-hidden">
+          <ScrollReveal duration={0.6} distance={25} className="bg-white rounded-3xl border border-slate-200/80 shadow-xs overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
@@ -736,58 +745,61 @@ export const Downloads: React.FC = () => {
                 </tbody>
               </table>
             </div>
-          </div>
+          </ScrollReveal>
         ) : (
           /* Grid View Mode */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <ScrollStaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredAndSortedItems.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center border shrink-0 ${item.iconColor.bg} ${item.iconColor.border} ${item.iconColor.text}`}
-                    >
-                      <FileText size={22} />
+              <ScrollStaggerItem key={item.id}>
+                <HoverCard className="h-full">
+                  <div
+                    className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group h-full"
+                  >
+                    <div>
+                      <div className="flex items-start justify-between gap-3 mb-3">
+                        <div
+                          className={`w-12 h-12 rounded-xl flex items-center justify-center border shrink-0 ${item.iconColor.bg} ${item.iconColor.border} ${item.iconColor.text}`}
+                        >
+                          <FileText size={22} />
+                        </div>
+                        <span
+                          className={`text-xs font-semibold px-3 py-1 rounded-full ${item.categoryBadge.bg} ${item.categoryBadge.text}`}
+                        >
+                          {item.category}
+                        </span>
+                      </div>
+
+                      <h3
+                        onClick={() => setActiveItem(item)}
+                        className="font-bold text-slate-900 group-hover:text-[#004d34] transition-colors leading-snug cursor-pointer mb-1 line-clamp-1"
+                      >
+                        {item.title}
+                      </h3>
+                      <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-4">
+                        {item.subtitle}
+                      </p>
                     </div>
-                    <span
-                      className={`text-xs font-semibold px-3 py-1 rounded-full ${item.categoryBadge.bg} ${item.categoryBadge.text}`}
-                    >
-                      {item.category}
-                    </span>
+
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                      <div className="text-[11px] text-slate-500">
+                        <p className="font-semibold text-slate-700">{item.size}</p>
+                        <p className="text-slate-400">{toBanglaNum(item.date)}</p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => handleDownload(item)}
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold text-[#007a4d] bg-[#e8f7ee] hover:bg-[#d5f0e1] border border-[#c1e8d4] transition-all cursor-pointer"
+                      >
+                        <Download size={13} />
+                        <span>{isBn ? 'ডাউনলোড' : 'Download'}</span>
+                      </button>
+                    </div>
                   </div>
-
-                  <h3
-                    onClick={() => setActiveItem(item)}
-                    className="font-bold text-slate-900 group-hover:text-[#004d34] transition-colors leading-snug cursor-pointer mb-1 line-clamp-1"
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-4">
-                    {item.subtitle}
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <div className="text-[11px] text-slate-500">
-                    <p className="font-semibold text-slate-700">{item.size}</p>
-                    <p className="text-slate-400">{toBanglaNum(item.date)}</p>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => handleDownload(item)}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold text-[#007a4d] bg-[#e8f7ee] hover:bg-[#d5f0e1] border border-[#c1e8d4] transition-all cursor-pointer"
-                  >
-                    <Download size={13} />
-                    <span>{isBn ? 'ডাউনলোড' : 'Download'}</span>
-                  </button>
-                </div>
-              </div>
+                </HoverCard>
+              </ScrollStaggerItem>
             ))}
-          </div>
+          </ScrollStaggerContainer>
         )}
       </main>
 

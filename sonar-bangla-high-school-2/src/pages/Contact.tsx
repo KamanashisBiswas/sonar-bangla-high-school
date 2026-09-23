@@ -18,6 +18,13 @@ import {
 } from 'lucide-react';
 
 import { useLanguage } from '../contexts/LanguageContext';
+import {
+  ScrollReveal,
+  ScrollScale,
+  ScrollStaggerContainer,
+  ScrollStaggerItem,
+  HoverCard
+} from '../components/ui/MotionComponents';
 
 export const Contact: React.FC = () => {
   const { language, toBanglaNum } = useLanguage();
@@ -121,7 +128,7 @@ export const Contact: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
+          <ScrollReveal duration={0.6} distance={25} className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <MapPin size={14} />
@@ -142,23 +149,25 @@ export const Contact: React.FC = () => {
                 ? 'আমরা সবসময় আপনার সেবায় প্রস্তুত। যেকোনো জিজ্ঞাসা, পরামর্শ বা তথ্যের জন্য সরাসরি আমাদের সাথে যোগাযোগ করুন।'
                 : 'We are here to help you. Reach out for any inquiries, suggestions, or general information.'}
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Floating White Quote Card on the Right (Matching media_1790110070973.png) */}
-          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
-                “
-              </span>
-              <div>
-                <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  {isBn ? 'আজকের শিক্ষা, আলোকিত আগামীর প্রত্যয়' : 'Education today for a brighter tomorrow'}
-                </h4>
-                <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  {isBn ? '— এস ও এস হারম্যান মেইনার কলেজ' : '— SOS Hermann Gmeiner School'}
-                </p>
+          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 max-w-[340px]">
+            <ScrollScale delay={0.2} className="bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90">
+              <div className="flex items-start gap-3">
+                <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                  “
+                </span>
+                <div>
+                  <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
+                    {isBn ? 'আজকের শিক্ষা, আলোকিত আগামীর প্রত্যয়' : 'Education today for a brighter tomorrow'}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
+                    {isBn ? '— এস ও এস হারম্যান মেইনার কলেজ' : '— SOS Hermann Gmeiner School'}
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollScale>
           </div>
         </div>
       </section>
@@ -167,211 +176,231 @@ export const Contact: React.FC = () => {
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
           {/* Left Column (5 Info Cards) - 4 cols */}
-          <div className="lg:col-span-4 space-y-3.5">
+          <ScrollStaggerContainer className="lg:col-span-4 space-y-3.5">
             {/* 1. Our Location Card */}
-            <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-4.5 shadow-xs hover:shadow-md transition flex items-center justify-between gap-3 group">
-              <div className="flex items-start gap-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-100">
-                  <MapPin size={20} />
+            <ScrollStaggerItem>
+              <HoverCard>
+                <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-4.5 shadow-xs hover:shadow-md transition flex items-center justify-between gap-3 group">
+                  <div className="flex items-start gap-3.5">
+                    <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-100">
+                      <MapPin size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 text-sm leading-snug">
+                        {isBn ? 'আমাদের অবস্থান' : 'Our Location'}
+                      </h3>
+                      <p className="text-xs text-slate-500 mt-0.5 leading-snug">
+                        {isBn ? 'গল্লামারী, খুলনা - ৯২০৮' : 'Gollamari, Khulna - 9208'}
+                      </p>
+                      <p className="text-xs text-slate-400">{isBn ? 'বাংলাদেশ' : 'Bangladesh'}</p>
+                    </div>
+                  </div>
+                  <ChevronRight
+                    size={16}
+                    className="text-slate-300 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition shrink-0"
+                  />
                 </div>
-                <div>
-                  <h3 className="font-bold text-slate-900 text-sm leading-snug">
-                    {isBn ? 'আমাদের অবস্থান' : 'Our Location'}
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-0.5 leading-snug">
-                    {isBn ? 'গল্লামারী, খুলনা - ৯২০৮' : 'Gollamari, Khulna - 9208'}
-                  </p>
-                  <p className="text-xs text-slate-400">{isBn ? 'বাংলাদেশ' : 'Bangladesh'}</p>
-                </div>
-              </div>
-              <ChevronRight
-                size={16}
-                className="text-slate-300 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition shrink-0"
-              />
-            </div>
+              </HoverCard>
+            </ScrollStaggerItem>
 
             {/* 2. Call Us Card */}
-            <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-4.5 shadow-xs hover:shadow-md transition flex items-center justify-between gap-3 group">
-              <div className="flex items-start gap-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-100">
-                  <Phone size={20} />
+            <ScrollStaggerItem>
+              <HoverCard>
+                <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-4.5 shadow-xs hover:shadow-md transition flex items-center justify-between gap-3 group">
+                  <div className="flex items-start gap-3.5">
+                    <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-100">
+                      <Phone size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 text-sm leading-snug">
+                        {isBn ? 'ফোন করুন' : 'Call Us'}
+                      </h3>
+                      <p className="text-xs font-bold text-slate-800 mt-0.5 leading-snug">
+                        {isBn ? '০২৪-৭৭৭২৬৭৭৫' : '024-77726775'}
+                      </p>
+                      <p className="text-[11px] text-slate-400 font-medium">
+                        {isBn ? 'ইআইআইএন: ১১৭১৮৮' : 'EIIN: 117188'}
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight
+                    size={16}
+                    className="text-slate-300 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition shrink-0"
+                  />
                 </div>
-                <div>
-                  <h3 className="font-bold text-slate-900 text-sm leading-snug">
-                    {isBn ? 'ফোন করুন' : 'Call Us'}
-                  </h3>
-                  <p className="text-xs font-bold text-slate-800 mt-0.5 leading-snug">
-                    {isBn ? '০২৪-৭৭৭২৬৭৭৫' : '024-77726775'}
-                  </p>
-                  <p className="text-[11px] text-slate-400 font-medium">
-                    {isBn ? 'ইআইআইএন: ১১৭১৮৮' : 'EIIN: 117188'}
-                  </p>
-                </div>
-              </div>
-              <ChevronRight
-                size={16}
-                className="text-slate-300 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition shrink-0"
-              />
-            </div>
+              </HoverCard>
+            </ScrollStaggerItem>
 
             {/* 3. Email Us Card */}
-            <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-4.5 shadow-xs hover:shadow-md transition flex items-center justify-between gap-3 group">
-              <div className="flex items-start gap-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100">
-                  <Mail size={20} />
+            <ScrollStaggerItem>
+              <HoverCard>
+                <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-4.5 shadow-xs hover:shadow-md transition flex items-center justify-between gap-3 group">
+                  <div className="flex items-start gap-3.5">
+                    <div className="w-11 h-11 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100">
+                      <Mail size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 text-sm leading-snug">
+                        {isBn ? 'ইমেইল করুন' : 'Email Us'}
+                      </h3>
+                      <p className="text-xs font-bold text-slate-800 mt-0.5 leading-snug break-all">
+                        soshgskhu@sos-bangladesh.org
+                      </p>
+                      <p className="text-[11px] text-slate-400 mt-0.5">
+                        {isBn ? 'আমরা সাধারণত ২৪ ঘণ্টার মধ্যে উত্তর দিয়ে থাকি' : 'We usually respond within 24 hours'}
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight
+                    size={16}
+                    className="text-slate-300 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition shrink-0"
+                  />
                 </div>
-                <div>
-                  <h3 className="font-bold text-slate-900 text-sm leading-snug">
-                    {isBn ? 'ইমেইল করুন' : 'Email Us'}
-                  </h3>
-                  <p className="text-xs font-bold text-slate-800 mt-0.5 leading-snug break-all">
-                    soshgskhu@sos-bangladesh.org
-                  </p>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
-                    {isBn ? 'আমরা সাধারণত ২৪ ঘণ্টার মধ্যে উত্তর দিয়ে থাকি' : 'We usually respond within 24 hours'}
-                  </p>
-                </div>
-              </div>
-              <ChevronRight
-                size={16}
-                className="text-slate-300 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition shrink-0"
-              />
-            </div>
+              </HoverCard>
+            </ScrollStaggerItem>
 
             {/* 4. Office Hours Card */}
-            <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-4.5 shadow-xs hover:shadow-md transition flex items-start gap-3.5">
-              <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100">
-                <Clock size={20} />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-900 text-sm leading-snug">
-                  {isBn ? 'অফিস সময়সূচি' : 'Office Hours'}
-                </h3>
-                <p className="text-xs text-slate-600 mt-0.5 leading-snug">
-                  {isBn ? 'রবিবার - বৃহস্পতিবার: সকাল ৯:০০ - বিকাল ৪:০০' : 'Sunday - Thursday: 9:00 AM - 4:00 PM'}
-                </p>
-                <p className="text-xs font-bold text-red-500 mt-1">
-                  {isBn ? 'শুক্রবার: সাপ্তাহিক ছুটি' : 'Friday: Closed'}
-                </p>
-              </div>
-            </div>
-
-            {/* 5. Find Us on Map Card */}
-            <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs space-y-3">
-              <div className="flex items-center gap-2">
-                <MapPin size={15} className="text-emerald-700" />
-                <h3 className="font-bold text-slate-900 text-xs uppercase tracking-wider">
-                  {isBn ? 'মানচিত্রে খুঁজুন' : 'Find Us on Map'}
-                </h3>
-              </div>
-
-              {/* Graphic Map Preview with Pin & Google Maps Link */}
-              <div className="relative rounded-xl overflow-hidden border border-slate-200 h-44 bg-slate-100">
-                {/* Stylized Map Vector Background */}
-                <svg
-                  className="w-full h-full object-cover"
-                  viewBox="0 0 400 220"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect width="400" height="220" fill="#E8F0F3" />
-                  {/* Rivers / Water */}
-                  <path
-                    d="M-20 60 Q 80 80, 160 50 T 320 70 T 420 40"
-                    stroke="#C7E2F1"
-                    strokeWidth="18"
-                    fill="none"
-                  />
-                  <path
-                    d="M160 50 Q 200 120, 240 180 T 260 230"
-                    stroke="#C7E2F1"
-                    strokeWidth="12"
-                    fill="none"
-                  />
-                  {/* Roads / Grid */}
-                  <path d="M0 110 H400" stroke="#FFFFFF" strokeWidth="6" />
-                  <path d="M0 160 H400" stroke="#FFFFFF" strokeWidth="4" />
-                  <path d="M0 40 H400" stroke="#FFFFFF" strokeWidth="4" />
-                  <path d="M120 0 V220" stroke="#FFFFFF" strokeWidth="5" />
-                  <path d="M260 0 V220" stroke="#FED7AA" strokeWidth="6" />
-                  <path d="M340 0 V220" stroke="#FFFFFF" strokeWidth="4" />
-                  <path
-                    d="M40 0 L 360 220"
-                    stroke="#FFFFFF"
-                    strokeWidth="3"
-                    strokeDasharray="4 4"
-                  />
-                  {/* Green park patches */}
-                  <rect x="20" y="120" width="70" height="60" rx="6" fill="#DCFCE7" />
-                  <rect x="280" y="20" width="90" height="50" rx="8" fill="#DCFCE7" />
-                  <rect x="280" y="130" width="100" height="70" rx="8" fill="#DCFCE7" />
-                  {/* Text landmark */}
-                  <text
-                    x="35"
-                    y="150"
-                    fill="#64748B"
-                    fontSize="11"
-                    fontFamily="sans-serif"
-                    fontWeight="bold"
-                  >
-                    GOLLAMARI
-                  </text>
-                  <text
-                    x="35"
-                    y="164"
-                    fill="#94A3B8"
-                    fontSize="9"
-                    fontFamily="sans-serif"
-                  >
-                    গল্লামারী
-                  </text>
-                  <text
-                    x="150"
-                    y="130"
-                    fill="#1E293B"
-                    fontSize="14"
-                    fontFamily="sans-serif"
-                    fontWeight="900"
-                  >
-                    Khulna
-                  </text>
-                  <text
-                    x="150"
-                    y="145"
-                    fill="#64748B"
-                    fontSize="11"
-                    fontFamily="sans-serif"
-                  >
-                    খুলনা
-                  </text>
-                </svg>
-
-                {/* Animated Red Pin Indicator */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full flex flex-col items-center pointer-events-none">
-                  <div className="bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-md shadow-md border border-slate-200 text-[10px] font-bold text-slate-800 whitespace-nowrap mb-1">
-                    {isBn ? 'এস ও এস হারম্যান মেইনার কলেজ খুলনা' : 'SOS Hermann Gmeiner School Khulna'}
+            <ScrollStaggerItem>
+              <HoverCard>
+                <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-4.5 shadow-xs hover:shadow-md transition flex items-start gap-3.5">
+                  <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100">
+                    <Clock size={20} />
                   </div>
-                  <div className="w-5 h-5 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg ring-4 ring-red-400/40 animate-bounce">
-                    <div className="w-1.5 h-1.5 rounded-full bg-white" />
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-sm leading-snug">
+                      {isBn ? 'অফিস সময়সূচি' : 'Office Hours'}
+                    </h3>
+                    <p className="text-xs text-slate-600 mt-0.5 leading-snug">
+                      {isBn ? 'রবিবার - বৃহস্পতিবার: সকাল ৯:০০ - বিকাল ৪:০০' : 'Sunday - Thursday: 9:00 AM - 4:00 PM'}
+                    </p>
+                    <p className="text-xs font-bold text-red-500 mt-1">
+                      {isBn ? 'শুক্রবার: সাপ্তাহিক ছুটি' : 'Friday: Closed'}
+                    </p>
                   </div>
                 </div>
+              </HoverCard>
+            </ScrollStaggerItem>
 
-                {/* Open in Google Maps Button */}
-                <a
-                  href="https://maps.google.com/?q=SOS+Hermann+Gmeiner+School+Khulna,+Gollamari,+Khulna"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute bottom-2.5 right-2.5 bg-[#007a4d] hover:bg-[#004d34] text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition active:scale-95"
-                >
-                  <ExternalLink size={12} />
-                  <span>{isBn ? 'গুগল ম্যাপে দেখুন' : 'Open in Google Maps'}</span>
-                </a>
-              </div>
-            </div>
-          </div>
+            {/* 5. Find Us on Map Card */}
+            <ScrollStaggerItem>
+              <HoverCard>
+                <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs space-y-3">
+                  <div className="flex items-center gap-2">
+                    <MapPin size={15} className="text-emerald-700" />
+                    <h3 className="font-bold text-slate-900 text-xs uppercase tracking-wider">
+                      {isBn ? 'মানচিত্রে খুঁজুন' : 'Find Us on Map'}
+                    </h3>
+                  </div>
+
+                  {/* Graphic Map Preview with Pin & Google Maps Link */}
+                  <div className="relative rounded-xl overflow-hidden border border-slate-200 h-44 bg-slate-100">
+                    {/* Stylized Map Vector Background */}
+                    <svg
+                      className="w-full h-full object-cover"
+                      viewBox="0 0 400 220"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect width="400" height="220" fill="#E8F0F3" />
+                      {/* Rivers / Water */}
+                      <path
+                        d="M-20 60 Q 80 80, 160 50 T 320 70 T 420 40"
+                        stroke="#C7E2F1"
+                        strokeWidth="18"
+                        fill="none"
+                      />
+                      <path
+                        d="M160 50 Q 200 120, 240 180 T 260 230"
+                        stroke="#C7E2F1"
+                        strokeWidth="12"
+                        fill="none"
+                      />
+                      {/* Roads / Grid */}
+                      <path d="M0 110 H400" stroke="#FFFFFF" strokeWidth="6" />
+                      <path d="M0 160 H400" stroke="#FFFFFF" strokeWidth="4" />
+                      <path d="M0 40 H400" stroke="#FFFFFF" strokeWidth="4" />
+                      <path d="M120 0 V220" stroke="#FFFFFF" strokeWidth="5" />
+                      <path d="M260 0 V220" stroke="#FED7AA" strokeWidth="6" />
+                      <path d="M340 0 V220" stroke="#FFFFFF" strokeWidth="4" />
+                      <path
+                        d="M40 0 L 360 220"
+                        stroke="#FFFFFF"
+                        strokeWidth="3"
+                        strokeDasharray="4 4"
+                      />
+                      {/* Green park patches */}
+                      <rect x="20" y="120" width="70" height="60" rx="6" fill="#DCFCE7" />
+                      <rect x="280" y="20" width="90" height="50" rx="8" fill="#DCFCE7" />
+                      <rect x="280" y="130" width="100" height="70" rx="8" fill="#DCFCE7" />
+                      {/* Text landmark */}
+                      <text
+                        x="35"
+                        y="150"
+                        fill="#64748B"
+                        fontSize="11"
+                        fontFamily="sans-serif"
+                        fontWeight="bold"
+                      >
+                        GOLLAMARI
+                      </text>
+                      <text
+                        x="35"
+                        y="164"
+                        fill="#94A3B8"
+                        fontSize="9"
+                        fontFamily="sans-serif"
+                      >
+                        গল্লামারী
+                      </text>
+                      <text
+                        x="150"
+                        y="130"
+                        fill="#1E293B"
+                        fontSize="14"
+                        fontFamily="sans-serif"
+                        fontWeight="900"
+                      >
+                        Khulna
+                      </text>
+                      <text
+                        x="150"
+                        y="145"
+                        fill="#64748B"
+                        fontSize="11"
+                        fontFamily="sans-serif"
+                      >
+                        খুলনা
+                      </text>
+                    </svg>
+
+                    {/* Animated Red Pin Indicator */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full flex flex-col items-center pointer-events-none">
+                      <div className="bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-md shadow-md border border-slate-200 text-[10px] font-bold text-slate-800 whitespace-nowrap mb-1">
+                        {isBn ? 'এস ও এস হারম্যান মেইনার কলেজ খুলনা' : 'SOS Hermann Gmeiner School Khulna'}
+                      </div>
+                      <div className="w-5 h-5 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg ring-4 ring-red-400/40 animate-bounce">
+                        <div className="w-1.5 h-1.5 rounded-full bg-white" />
+                      </div>
+                    </div>
+
+                    {/* Open in Google Maps Button */}
+                    <a
+                      href="https://maps.google.com/?q=SOS+Hermann+Gmeiner+School+Khulna,+Gollamari,+Khulna"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute bottom-2.5 right-2.5 bg-[#007a4d] hover:bg-[#004d34] text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition active:scale-95"
+                    >
+                      <ExternalLink size={12} />
+                      <span>{isBn ? 'গুগল ম্যাপে দেখুন' : 'Open in Google Maps'}</span>
+                    </a>
+                  </div>
+                </div>
+              </HoverCard>
+            </ScrollStaggerItem>
+          </ScrollStaggerContainer>
 
           {/* Right Column: Send us a Message Form - 8 cols */}
-          <div className="lg:col-span-8">
+          <ScrollReveal duration={0.65} distance={30} className="lg:col-span-8">
             <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-xs space-y-6">
               {/* Card Header with Green Speech Icon */}
               <div className="flex items-center gap-3.5">
@@ -548,7 +577,7 @@ export const Contact: React.FC = () => {
                 </button>
               </form>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </main>
 

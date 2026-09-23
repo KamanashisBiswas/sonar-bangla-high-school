@@ -30,6 +30,13 @@ import {
 } from 'lucide-react';
 
 import { useLanguage } from '../contexts/LanguageContext';
+import {
+  ScrollReveal,
+  ScrollScale,
+  ScrollStaggerContainer,
+  ScrollStaggerItem,
+  HoverCard
+} from '../components/ui/MotionComponents';
 
 interface PhotoAlbum {
   id: string;
@@ -459,7 +466,7 @@ export const Gallery: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl lg:max-w-2xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
+          <ScrollReveal duration={0.6} distance={25} className="max-w-xl lg:max-w-2xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
             {/* Tag Pill Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <Camera size={14} />
@@ -484,23 +491,25 @@ export const Gallery: React.FC = () => {
                 ? 'আমাদের বার্ষিক ক্রীড়া প্রতিযোগিতা, জয়ন্তী উদযাপন, সাংস্কৃতিক অনুষ্ঠান এবং প্রাত্যহিক ক্যাম্পাস জীবনের বর্ণাঢ্য চিত্রমালা।'
                 : 'Explore photo albums of our sports victories, jubilee celebrations, academic milestones, and campus life.'}
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Floating White Quote Card on the Right (Matching media_1790110070973.png) */}
-          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
-                “
-              </span>
-              <div>
-                <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  {isBn ? 'আজকের শিক্ষা, আলোকিত আগামীর প্রত্যয়' : 'Education today for a brighter tomorrow'}
-                </h4>
-                <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  {isBn ? '— এস ও এস হারম্যান মেইনার কলেজ' : '— SOS Hermann Gmeiner School'}
-                </p>
+          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 max-w-[340px]">
+            <ScrollScale delay={0.2} className="bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90">
+              <div className="flex items-start gap-3">
+                <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                  “
+                </span>
+                <div>
+                  <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
+                    {isBn ? 'আজকের শিক্ষা, আলোকিত আগামীর প্রত্যয়' : 'Education today for a brighter tomorrow'}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
+                    {isBn ? '— এস ও এস হারম্যান মেইনার কলেজ' : '— SOS Hermann Gmeiner School'}
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollScale>
           </div>
         </div>
       </section>
@@ -508,7 +517,7 @@ export const Gallery: React.FC = () => {
       {/* Main Content Area */}
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 mt-6 space-y-6">
         {/* Category Filter Pills (Exact replica of media_1790109401328.jpg) */}
-        <div className="flex flex-wrap items-center gap-2.5">
+        <ScrollReveal duration={0.5} distance={15} className="flex flex-wrap items-center gap-2.5">
           {categoryFilters.map((pill) => {
             const Icon = pill.icon;
             const isActive = selectedCategory === pill.id;
@@ -534,9 +543,9 @@ export const Gallery: React.FC = () => {
               </button>
             );
           })}
-        </div>
+        </ScrollReveal>
         {/* Search, Sort & View Controls Bar (Exact match of reference) */}
-        <div className="bg-white rounded-2xl p-2.5 sm:p-3 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        <ScrollReveal duration={0.5} distance={15} className="bg-white rounded-2xl p-2.5 sm:p-3 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
           {/* Left: Search input with green icon box */}
           <div className="flex items-center flex-1 max-w-xl bg-slate-50 border border-slate-200 rounded-xl overflow-hidden focus-within:border-[#004d34] focus-within:ring-1 focus-within:ring-[#004d34] transition">
             <div className="bg-[#004d34] text-white p-2.5 sm:p-3 flex items-center justify-center shrink-0">
@@ -605,120 +614,123 @@ export const Gallery: React.FC = () => {
               </button>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* View Mode: Grid View (Matching 4-column layout of media_1790109401328.jpg) */}
         {viewMode === 'grid' ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          <ScrollStaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {filteredAndSortedAlbums.length > 0 ? (
               filteredAndSortedAlbums.map((album) => (
-                <div
-                  key={album.id}
-                  className="bg-white rounded-2xl border border-slate-200/80 p-3.5 sm:p-4 shadow-xs hover:shadow-md hover:border-emerald-200 transition-all duration-300 flex flex-col justify-between group"
-                >
-                  {/* Photo Container with Overlays */}
-                  <div className="relative rounded-xl overflow-hidden aspect-[4/3] bg-slate-100 cursor-pointer">
-                    <img
-                      src={album.thumbnail}
-                      alt={album.title}
-                      onClick={() => {
-                        setActiveAlbum(album);
-                        setActivePhotoIndex(0);
-                      }}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = '/campus_main.png';
-                      }}
-                    />
+                <ScrollStaggerItem key={album.id}>
+                  <HoverCard className="h-full">
+                    <div
+                      className="bg-white rounded-2xl border border-slate-200/80 p-3.5 sm:p-4 shadow-xs hover:shadow-md hover:border-emerald-200 transition-all duration-300 flex flex-col justify-between group h-full"
+                    >
+                      {/* Photo Container with Overlays */}
+                      <div className="relative rounded-xl overflow-hidden aspect-[4/3] bg-slate-100 cursor-pointer">
+                        <img
+                          src={album.thumbnail}
+                          alt={album.title}
+                          onClick={() => {
+                            setActiveAlbum(album);
+                            setActivePhotoIndex(0);
+                          }}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = '/campus_main.png';
+                          }}
+                        />
 
-                    {/* Translucent Frosted Glass Camera Badge (Bottom-Left) */}
-                    <div className="absolute bottom-2.5 left-2.5 bg-black/60 backdrop-blur-xs text-white px-2.5 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 pointer-events-none shadow-xs">
-                      <Camera size={12} className="text-white" />
-                      <span>{toBanglaNum(album.photosCount)} {isBn ? 'টি ছবি' : 'Photos'}</span>
-                    </div>
+                        {/* Translucent Frosted Glass Camera Badge (Bottom-Left) */}
+                        <div className="absolute bottom-2.5 left-2.5 bg-black/60 backdrop-blur-xs text-white px-2.5 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1.5 pointer-events-none shadow-xs">
+                          <Camera size={12} className="text-white" />
+                          <span>{toBanglaNum(album.photosCount)} {isBn ? 'টি ছবি' : 'Photos'}</span>
+                        </div>
 
-                    {/* Floating Top-Right 3-Dots Button */}
-                    <div className="absolute top-2.5 right-2.5">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setOpenMenuId(openMenuId === album.id ? null : album.id);
-                        }}
-                        className="w-7 h-7 rounded-full bg-white/95 backdrop-blur-xs text-slate-700 hover:text-slate-950 flex items-center justify-center shadow-xs transition cursor-pointer"
-                        title={isBn ? 'অপশন' : 'Options'}
-                      >
-                        <MoreVertical size={13} />
-                      </button>
-
-                      {/* Dropdown Menu */}
-                      {openMenuId === album.id && (
-                        <div
-                          className="absolute right-0 top-full mt-1 w-40 bg-white rounded-2xl shadow-xl border border-slate-200 py-1.5 z-30 animate-in fade-in zoom-in-95 duration-100"
-                          onClick={(e) => e.stopPropagation()}
-                        >
+                        {/* Floating Top-Right 3-Dots Button */}
+                        <div className="absolute top-2.5 right-2.5">
                           <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setOpenMenuId(openMenuId === album.id ? null : album.id);
+                            }}
+                            className="w-7 h-7 rounded-full bg-white/95 backdrop-blur-xs text-slate-700 hover:text-slate-950 flex items-center justify-center shadow-xs transition cursor-pointer"
+                            title={isBn ? 'অপশন' : 'Options'}
+                          >
+                            <MoreVertical size={13} />
+                          </button>
+
+                          {/* Dropdown Menu */}
+                          {openMenuId === album.id && (
+                            <div
+                              className="absolute right-0 top-full mt-1 w-40 bg-white rounded-2xl shadow-xl border border-slate-200 py-1.5 z-30 animate-in fade-in zoom-in-95 duration-100"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <button
+                                onClick={() => {
+                                  setActiveAlbum(album);
+                                  setActivePhotoIndex(0);
+                                  setOpenMenuId(null);
+                                }}
+                                className="w-full px-3 py-1.5 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+                              >
+                                <Eye size={13} className="text-slate-500" />
+                                <span>{isBn ? 'অ্যালবাম দেখুন' : 'View Album'}</span>
+                              </button>
+                              <button
+                                onClick={() => handleShare(album)}
+                                className="w-full px-3 py-1.5 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+                              >
+                                <Share2 size={13} className="text-slate-500" />
+                                <span>
+                                  {copiedId === album.id
+                                    ? (isBn ? 'কপি হয়েছে!' : 'Copied!')
+                                    : (isBn ? 'শেয়ার লিংক কপি' : 'Share Link')}
+                                </span>
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Title & Metadata Row */}
+                      <div className="pt-3">
+                        <h3
+                          onClick={() => {
+                            setActiveAlbum(album);
+                            setActivePhotoIndex(0);
+                          }}
+                          className="text-sm font-bold text-slate-900 group-hover:text-[#004d34] transition-colors line-clamp-1 leading-snug cursor-pointer"
+                          title={album.title}
+                        >
+                          {album.title}
+                        </h3>
+
+                        {/* Date and Arrow Button Row */}
+                        <div className="flex items-center justify-between mt-2 pt-1 border-t border-slate-50">
+                          <div className="flex items-center gap-1.5 text-emerald-800 text-xs font-bold">
+                            <Calendar size={13} className="text-emerald-700" />
+                            <span>{album.date}</span>
+                          </div>
+
+                          {/* Circular Light-Green Arrow Button */}
+                          <button
+                            type="button"
                             onClick={() => {
                               setActiveAlbum(album);
                               setActivePhotoIndex(0);
-                              setOpenMenuId(null);
                             }}
-                            className="w-full px-3 py-1.5 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+                            className="w-8 h-8 rounded-full bg-[#e8f7ee] text-[#007a4d] group-hover:bg-[#004d34] group-hover:text-white flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xs active:scale-95"
+                            title="View Album"
                           >
-                            <Eye size={13} className="text-slate-500" />
-                            <span>{isBn ? 'অ্যালবাম দেখুন' : 'View Album'}</span>
-                          </button>
-                          <button
-                            onClick={() => handleShare(album)}
-                            className="w-full px-3 py-1.5 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                          >
-                            <Share2 size={13} className="text-slate-500" />
-                            <span>
-                              {copiedId === album.id
-                                ? (isBn ? 'কপি হয়েছে!' : 'Copied!')
-                                : (isBn ? 'শেয়ার লিংক কপি' : 'Share Link')}
-                            </span>
+                            <ArrowRight size={14} />
                           </button>
                         </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Title & Metadata Row */}
-                  <div className="pt-3">
-                    <h3
-                      onClick={() => {
-                        setActiveAlbum(album);
-                        setActivePhotoIndex(0);
-                      }}
-                      className="text-sm font-bold text-slate-900 group-hover:text-[#004d34] transition-colors line-clamp-1 leading-snug cursor-pointer"
-                      title={album.title}
-                    >
-                      {album.title}
-                    </h3>
-
-                    {/* Date and Arrow Button Row */}
-                    <div className="flex items-center justify-between mt-2 pt-1 border-t border-slate-50">
-                      <div className="flex items-center gap-1.5 text-emerald-800 text-xs font-bold">
-                        <Calendar size={13} className="text-emerald-700" />
-                        <span>{album.date}</span>
                       </div>
-
-                      {/* Circular Light-Green Arrow Button */}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setActiveAlbum(album);
-                          setActivePhotoIndex(0);
-                        }}
-                        className="w-8 h-8 rounded-full bg-[#e8f7ee] text-[#007a4d] group-hover:bg-[#004d34] group-hover:text-white flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xs active:scale-95"
-                        title="View Album"
-                      >
-                        <ArrowRight size={14} />
-                      </button>
                     </div>
-                  </div>
-                </div>
+                  </HoverCard>
+                </ScrollStaggerItem>
               ))
             ) : (
               <div className="col-span-full bg-white rounded-3xl border border-slate-200 p-12 text-center">
@@ -742,10 +754,10 @@ export const Gallery: React.FC = () => {
                 </button>
               </div>
             )}
-          </div>
+          </ScrollStaggerContainer>
         ) : (
           /* View Mode: List View */
-          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-xs divide-y divide-slate-100 overflow-hidden">
+          <ScrollReveal duration={0.6} distance={25} className="bg-white rounded-3xl border border-slate-200/80 shadow-xs divide-y divide-slate-100 overflow-hidden">
             {filteredAndSortedAlbums.map((album) => (
               <div
                 key={album.id}
@@ -801,7 +813,7 @@ export const Gallery: React.FC = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </ScrollReveal>
         )}
       </main>
 

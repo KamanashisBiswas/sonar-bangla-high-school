@@ -15,9 +15,16 @@ import {
   Image as ImageIcon,
   HeartHandshake,
   BookOpen,
-  ChevronRight
+  ChevronRight,
 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import {
+  ScrollReveal,
+  ScrollScale,
+  ScrollStaggerContainer,
+  ScrollStaggerItem,
+  HoverCard
+} from '../components/ui/MotionComponents';
 
 export const ClubsSocieties: React.FC = () => {
   const { language, toBanglaNum } = useLanguage();
@@ -278,55 +285,61 @@ export const ClubsSocieties: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
-            <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
-              <Users size={14} />
-              <span>{isBn ? 'সহশিক্ষা পরিষদ ও ক্লাবসমূহ' : 'CO-CURRICULAR COUNCILS & CLUBS'}</span>
+          <ScrollReveal duration={0.6} distance={25}>
+            <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
+              <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
+                <Users size={14} />
+                <span>{isBn ? 'সহশিক্ষা পরিষদ ও ক্লাবসমূহ' : 'CO-CURRICULAR COUNCILS & CLUBS'}</span>
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
+                {isBn ? (
+                  <>ক্লাব ও <br />সোসাইটি</>
+                ) : (
+                  <>Clubs & <br />Societies</>
+                )}
+              </h1>
+
+              <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
+
+              <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
+                {isBn ? (
+                  <>
+                    একবিংশ শতাব্দীর নেতৃত্ব, বৈজ্ঞানিক উদ্ভাবন, বাগ্মিতা ও মানবিক সেবায় শিক্ষার্থীদের দক্ষ করে তোলা হচ্ছে{' '}
+                    <strong className="text-emerald-800 font-bold">{toBanglaNum(1987)} থেকে।</strong>
+                  </>
+                ) : (
+                  <>
+                    Empowering students with 21st-century leadership, scientific innovation, communicative eloquence, and compassionate humanitarian service{' '}
+                    <strong className="text-emerald-800 font-bold">since 1987.</strong>
+                  </>
+                )}
+              </p>
             </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              {isBn ? (
-                <>ক্লাব ও <br />সোসাইটি</>
-              ) : (
-                <>Clubs & <br />Societies</>
-              )}
-            </h1>
-
-            <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
-
-            <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              {isBn ? (
-                <>
-                  একবিংশ শতাব্দীর নেতৃত্ব, বৈজ্ঞানিক উদ্ভাবন, বাগ্মিতা ও মানবিক সেবায় শিক্ষার্থীদের দক্ষ করে তোলা হচ্ছে{' '}
-                  <strong className="text-emerald-800 font-bold">{toBanglaNum(1987)} থেকে।</strong>
-                </>
-              ) : (
-                <>
-                  Empowering students with 21st-century leadership, scientific innovation, communicative eloquence, and compassionate humanitarian service{' '}
-                  <strong className="text-emerald-800 font-bold">since 1987.</strong>
-                </>
-              )}
-            </p>
-          </div>
+          </ScrollReveal>
 
           {/* Floating White Quote Card on Bottom-Right */}
-          <div className="hidden lg:block absolute bottom-16 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
-                “
-              </span>
-              <div>
-                <p className="text-xs text-slate-700 font-medium italic leading-relaxed">
-                  {isBn
-                    ? 'নেতৃত্ব কোনো পদবির বিষয় নয়; এটি সহযোগিতার মাধ্যমে প্রভাব, প্রেরণা ও ইতিবাচক পরিবর্তনের নাম।'
-                    : 'Leadership is not about a title; it is about impact, influence, and inspiration through collaboration.'}
-                </p>
-                <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-[11px] font-bold text-slate-900">{isBn ? 'স্টুডেন্ট কাউন্সিল বোর্ড' : 'Student Council Board'}</span>
-                  <span className="text-[10px] text-emerald-700 font-bold">{isBn ? 'নেতৃত্ব কেন্দ্র' : 'Leadership Hub'}</span>
+          <div className="hidden lg:block absolute bottom-16 right-8 xl:right-16 max-w-[340px]">
+            <ScrollScale delay={0.2}>
+              <div className="bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90">
+                <div className="flex items-start gap-3">
+                  <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                    “
+                  </span>
+                  <div>
+                    <p className="text-xs text-slate-700 font-medium italic leading-relaxed">
+                      {isBn
+                        ? 'নেতৃত্ব কোনো পদবির বিষয় নয়; এটি সহযোগিতার মাধ্যমে প্রভাব, প্রেরণা ও ইতিবাচক পরিবর্তনের নাম।'
+                        : 'Leadership is not about a title; it is about impact, influence, and inspiration through collaboration.'}
+                    </p>
+                    <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-slate-900">{isBn ? 'স্টুডেন্ট কাউন্সিল বোর্ড' : 'Student Council Board'}</span>
+                      <span className="text-[10px] text-emerald-700 font-bold">{isBn ? 'নেতৃত্ব কেন্দ্র' : 'Leadership Hub'}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ScrollScale>
           </div>
         </div>
       </div>
@@ -334,284 +347,297 @@ export const ClubsSocieties: React.FC = () => {
       {/* 2. Co-Curricular & Programs Switcher Pill Navigation Bar */}
       <div className="bg-[#f0faf5] border-b border-emerald-100/60 sticky top-[72px] z-30 shadow-2xs backdrop-blur-md">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
-          <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0 hidden sm:inline-block">
-              {isBn ? 'কার্যক্রম:' : 'Programs:'}
-            </span>
-            <div className="flex items-center gap-2 shrink-0">
-              <Link
-                to="/academic-programs"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
-              >
-                <span>{isBn ? 'একাডেমিক কার্যক্রম' : 'Academic Programs'}</span>
-              </Link>
-              <Link
-                to="/sports-athletics"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
-              >
-                <span>{isBn ? 'খেলাধুলা ও শরীরচর্চা' : 'Sports & Athletics'}</span>
-              </Link>
-              <Link
-                to="/cultural-activities"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
-              >
-                <span>{isBn ? 'সাংস্কৃতিক কার্যক্রম' : 'Cultural Activities'}</span>
-              </Link>
-              <Link
-                to="/clubs-societies"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-[#004d34] text-white shadow-xs flex items-center gap-1.5 transition"
-              >
-                <Users size={14} />
-                <span>{isBn ? 'ক্লাব ও সোসাইটি' : 'Clubs & Societies'}</span>
-              </Link>
+          <ScrollReveal duration={0.5} distance={15}>
+            <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0 hidden sm:inline-block">
+                {isBn ? 'কার্যক্রম:' : 'Programs:'}
+              </span>
+              <div className="flex items-center gap-2 shrink-0">
+                <Link
+                  to="/academic-programs"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
+                >
+                  <span>{isBn ? 'একাডেমিক কার্যক্রম' : 'Academic Programs'}</span>
+                </Link>
+                <Link
+                  to="/sports-athletics"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
+                >
+                  <span>{isBn ? 'খেলাধুলা ও শরীরচর্চা' : 'Sports & Athletics'}</span>
+                </Link>
+                <Link
+                  to="/cultural-activities"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-1.5"
+                >
+                  <span>{isBn ? 'সাংস্কৃতিক কার্যক্রম' : 'Cultural Activities'}</span>
+                </Link>
+                <Link
+                  to="/clubs-societies"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-[#004d34] text-white shadow-xs flex items-center gap-1.5 transition"
+                >
+                  <Users size={14} />
+                  <span>{isBn ? 'ক্লাব ও সোসাইটি' : 'Clubs & Societies'}</span>
+                </Link>
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
 
       {/* 3. Stat Highlights Bar */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <ScrollStaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {highlights.map((item, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition text-center"
-            >
-              <span className="text-2xl sm:text-3xl font-black text-[#004d34] tracking-tight block">
-                {item.value}
-              </span>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900 mt-1">
-                {item.label}
-              </h4>
-              <p className="text-[11px] text-slate-500 mt-0.5">
-                {item.desc}
-              </p>
-            </div>
+            <ScrollStaggerItem key={idx}>
+              <HoverCard className="h-full">
+                <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition text-center h-full">
+                  <span className="text-2xl sm:text-3xl font-black text-[#004d34] tracking-tight block">
+                    {item.value}
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 mt-1">
+                    {item.label}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    {item.desc}
+                  </p>
+                </div>
+              </HoverCard>
+            </ScrollStaggerItem>
           ))}
-        </div>
+        </ScrollStaggerContainer>
       </div>
 
       {/* 4. Active Clubs Showcase */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-5">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
-              {isBn ? 'শিক্ষার্থী পরিষদ ও চ্যাপ্টার' : 'STUDENT COUNCILS & CHAPTERS'}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
-              {isBn ? 'আমাদের সক্রিয় ক্লাব ও সোসাইটিসমূহ' : 'Featured Clubs & Societies'}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              {isBn
-                ? 'শ্রেণিকক্ষের আনুষ্ঠানিক পাঠের বাইরে শিক্ষার্থীদের নিজস্ব শখ ও প্রতিভার বিকাশ ঘটাতে অনন্য সুযোগ।'
-                : 'Providing vibrant spaces where students pursue their unique passions outside formal class lectures.'}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-xl self-start md:self-auto">
-            {[
-              { id: 'all', label: isBn ? 'সকল ক্লাব' : 'All Clubs' },
-              { id: 'stem', label: isBn ? 'স্টেম ও রোবোটিক্স' : 'STEM & Robotics' },
-              { id: 'literary', label: isBn ? 'বিতর্ক ও সাহিত্য' : 'Debate & Arts' },
-              { id: 'service', label: isBn ? 'স্কাউট ও সমাজসেবা' : 'Scouts & Service' }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setSelectedClubCategory(tab.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
-                  selectedClubCategory === tab.id
-                    ? 'bg-white text-[#004d34] shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {filteredClubs.map((club) => (
-            <div
-              key={club.id}
-              className="bg-white rounded-3xl p-5 border border-slate-200 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100 relative mb-4">
-                  <img
-                    src={club.image}
-                    alt={club.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <span className="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                    {club.badge}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-[10px] font-black uppercase tracking-wider bg-[#e8f7ee] text-[#059669] px-2 py-0.5 rounded-md">
-                    {club.tag}
-                  </span>
-                </div>
-
-                <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#004d34] transition-colors">
-                  {club.name}
-                </h3>
-
-                <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                  {club.description}
-                </p>
-
-                <div className="mt-4 pt-4 border-t border-slate-100 space-y-2">
-                  <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                    {isBn ? 'মূল কার্যক্রমসমূহ:' : 'Core Activities:'}
-                  </h4>
-                  {club.activities.map((act, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs text-slate-700">
-                      <CheckCircle2 size={13} className="text-[#059669] shrink-0 mt-0.5" />
-                      <span>{act}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
-                <span className="font-semibold">{isBn ? 'মডারেটর শিক্ষক:' : 'Faculty Moderator:'}</span>
-                <span className="font-bold text-emerald-800">{club.moderator}</span>
-              </div>
+        <ScrollReveal duration={0.6} distance={20}>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-5">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
+                {isBn ? 'শিক্ষার্থী পরিষদ ও চ্যাপ্টার' : 'STUDENT COUNCILS & CHAPTERS'}
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
+                {isBn ? 'আমাদের সক্রিয় ক্লাব ও সোসাইটিসমূহ' : 'Featured Clubs & Societies'}
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                {isBn
+                  ? 'শ্রেণিকক্ষের আনুষ্ঠানিক পাঠের বাইরে শিক্ষার্থীদের নিজস্ব শখ ও প্রতিভার বিকাশ ঘটাতে অনন্য সুযোগ।'
+                  : 'Providing vibrant spaces where students pursue their unique passions outside formal class lectures.'}
+              </p>
             </div>
+
+            <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-xl self-start md:self-auto">
+              {[
+                { id: 'all', label: isBn ? 'সকল ক্লাব' : 'All Clubs' },
+                { id: 'stem', label: isBn ? 'স্টেম ও রোবোটিক্স' : 'STEM & Robotics' },
+                { id: 'literary', label: isBn ? 'বিতর্ক ও সাহিত্য' : 'Debate & Arts' },
+                { id: 'service', label: isBn ? 'স্কাউট ও সমাজসেবা' : 'Scouts & Service' }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setSelectedClubCategory(tab.id)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+                    selectedClubCategory === tab.id
+                      ? 'bg-white text-[#004d34] shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <ScrollStaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          {filteredClubs.map((club) => (
+            <ScrollStaggerItem key={club.id}>
+              <HoverCard className="h-full">
+                <div className="bg-white rounded-3xl p-5 border border-slate-200 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group h-full">
+                  <div>
+                    <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100 relative mb-4">
+                      <img
+                        src={club.image}
+                        alt={club.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <span className="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                        {club.badge}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="text-[10px] font-black uppercase tracking-wider bg-[#e8f7ee] text-[#059669] px-2 py-0.5 rounded-md">
+                        {club.tag}
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#004d34] transition-colors">
+                      {club.name}
+                    </h3>
+
+                    <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                      {club.description}
+                    </p>
+
+                    <div className="mt-4 pt-4 border-t border-slate-100 space-y-2">
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                        {isBn ? 'মূল কার্যক্রমসমূহ:' : 'Core Activities:'}
+                      </h4>
+                      {club.activities.map((act, i) => (
+                        <div key={i} className="flex items-start gap-2 text-xs text-slate-700">
+                          <CheckCircle2 size={13} className="text-[#059669] shrink-0 mt-0.5" />
+                          <span>{act}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                    <span className="font-semibold">{isBn ? 'মডারেটর শিক্ষক:' : 'Faculty Moderator:'}</span>
+                    <span className="font-bold text-emerald-800">{club.moderator}</span>
+                  </div>
+                </div>
+              </HoverCard>
+            </ScrollStaggerItem>
           ))}
-        </div>
+        </ScrollStaggerContainer>
       </div>
 
       {/* 5. How to Join & Leadership Flow */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="bg-[#f0faf5] border border-emerald-100/80 rounded-3xl p-8 sm:p-10 lg:p-12">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
-              {isBn ? 'শিক্ষার্থী সম্পৃক্ততার রূপরেখা' : 'STUDENT ENGAGEMENT ROADMAP'}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
-              {isBn ? 'যেভাবে শিক্ষার্থীরা ক্লাবে যোগ দেয় ও নেতৃত্ব শেখে' : 'How Students Join & Grow in Clubs'}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              {isBn
-                ? 'নির্বাহী নেতৃত্ব, দলীয় মেলবন্ধন ও প্রজেক্ট ব্যবস্থাপনার দক্ষতা বিকাশের সুনির্দিষ্ট চার ধাপ।'
-                : 'A transparent four-stage path designed to nurture executive leadership, teamwork, and project ownership.'}
-            </p>
-          </div>
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="bg-[#f0faf5] border border-emerald-100/80 rounded-3xl p-8 sm:p-10 lg:p-12">
+            <div className="max-w-2xl mb-8">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#059669]">
+                {isBn ? 'শিক্ষার্থী সম্পৃক্ততার রূপরেখা' : 'STUDENT ENGAGEMENT ROADMAP'}
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
+                {isBn ? 'যেভাবে শিক্ষার্থীরা ক্লাবে যোগ দেয় ও নেতৃত্ব শেখে' : 'How Students Join & Grow in Clubs'}
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                {isBn
+                  ? 'নির্বাহী নেতৃত্ব, দলীয় মেলবন্ধন ও প্রজেক্ট ব্যবস্থাপনার দক্ষতা বিকাশের সুনির্দিষ্ট চার ধাপ।'
+                  : 'A transparent four-stage path designed to nurture executive leadership, teamwork, and project ownership.'}
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {steps.map((st, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-2xl p-6 border border-emerald-100 shadow-2xs hover:shadow-lg transition-all relative flex flex-col justify-between"
-              >
-                <div>
-                  <span className="text-3xl font-black text-emerald-300 block mb-2 font-mono">
-                    {st.number}
-                  </span>
-                  <h3 className="text-base font-bold text-slate-900 mb-2">
-                    {st.title}
-                  </h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    {st.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
+            <ScrollStaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {steps.map((st, idx) => (
+                <ScrollStaggerItem key={idx}>
+                  <HoverCard className="h-full">
+                    <div className="bg-white rounded-2xl p-6 border border-emerald-100 shadow-2xs hover:shadow-lg transition-all relative flex flex-col justify-between h-full">
+                      <div>
+                        <span className="text-3xl font-black text-emerald-300 block mb-2 font-mono">
+                          {st.number}
+                        </span>
+                        <h3 className="text-base font-bold text-slate-900 mb-2">
+                          {st.title}
+                        </h3>
+                        <p className="text-xs text-slate-600 leading-relaxed">
+                          {st.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </HoverCard>
+                </ScrollStaggerItem>
+              ))}
+            </ScrollStaggerContainer>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* 6. Signature Annual Club Expo Banner */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="bg-gradient-to-br from-emerald-900 to-[#004d34] text-white rounded-3xl p-8 sm:p-10 lg:p-12 shadow-xl relative overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7 space-y-4">
-              <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                <Sparkles size={14} className="text-emerald-300" />
-                <span>{isBn ? 'সিগনেচার বার্ষিক প্রদর্শনী' : 'SIGNATURE ANNUAL EXPO'}</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-black leading-tight">
-                {isBn ? 'বার্ষিক বিজ্ঞান মেলা ও আইসিটি উদ্ভাবন প্রদর্শনী' : 'Annual Science Fair & ICT Innovation Expo'}
-              </h2>
-              <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-normal">
-                {isBn
-                  ? 'বিজ্ঞান ও আইসিটি ক্লাব কর্তৃক প্রতি বছর আয়োজিত এ মেলায় শিক্ষার্থীরা নবায়নযোগ্য শক্তি, রোবোটিক্স, কৃত্রিম বুদ্ধিমত্তা ও জনস্বাস্থ্য বিষয়ক উদ্ভাবনী মডেল প্রদর্শন করে।'
-                  : 'Organized each year by the Science & ICT Club, presenting innovative student working models across renewable energy, robotics, AI automation, public sanitation, and healthcare inventions.'}
-              </p>
-              <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="border-l-2 border-emerald-400 pl-3">
-                  <span className="text-lg font-black text-white block">
-                    {isBn ? `${toBanglaNum(50)}+টি প্রজেক্ট প্রদর্শনী` : '50+ Project Exhibits'}
-                  </span>
-                  <p className="text-[11px] text-emerald-200">
-                    {isBn ? 'জুনিয়র ও সিনিয়র বিভাগের বিজ্ঞানীদের বাস্তব প্রদর্শনী' : 'Junior & Senior section scientific demonstrations'}
-                  </p>
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="bg-gradient-to-br from-emerald-900 to-[#004d34] text-white rounded-3xl p-8 sm:p-10 lg:p-12 shadow-xl relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-7 space-y-4">
+                <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                  <Sparkles size={14} className="text-emerald-300" />
+                  <span>{isBn ? 'সিগনেচার বার্ষিক প্রদর্শনী' : 'SIGNATURE ANNUAL EXPO'}</span>
                 </div>
-                <div className="border-l-2 border-emerald-400 pl-3">
-                  <span className="text-lg font-black text-white block">
-                    {isBn ? 'বিশেষজ্ঞ বিচারক ও পুরস্কার' : 'Expert Jury & Awards'}
-                  </span>
-                  <p className="text-[11px] text-emerald-200">
-                    {isBn ? 'বিশ্ববিদ্যালয় শিক্ষক ও প্রকৌশলীদের দ্বারা মূল্যায়ন' : 'Judged by university professors and industry engineers'}
-                  </p>
+                <h2 className="text-3xl sm:text-4xl font-black leading-tight">
+                  {isBn ? 'বার্ষিক বিজ্ঞান মেলা ও আইসিটি উদ্ভাবন প্রদর্শনী' : 'Annual Science Fair & ICT Innovation Expo'}
+                </h2>
+                <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-normal">
+                  {isBn
+                    ? 'বিজ্ঞান ও আইসিটি ক্লাব কর্তৃক প্রতি বছর আয়োজিত এ মেলায় শিক্ষার্থীরা নবায়নযোগ্য শক্তি, রোবোটিক্স, কৃত্রিম বুদ্ধিমত্তা ও জনস্বাস্থ্য বিষয়ক উদ্ভাবনী মডেল প্রদর্শন করে।'
+                    : 'Organized each year by the Science & ICT Club, presenting innovative student working models across renewable energy, robotics, AI automation, public sanitation, and healthcare inventions.'}
+                </p>
+                <div className="grid grid-cols-2 gap-4 pt-2">
+                  <div className="border-l-2 border-emerald-400 pl-3">
+                    <span className="text-lg font-black text-white block">
+                      {isBn ? `${toBanglaNum(50)}+টি প্রজেক্ট প্রদর্শনী` : '50+ Project Exhibits'}
+                    </span>
+                    <p className="text-[11px] text-emerald-200">
+                      {isBn ? 'জুনিয়র ও সিনিয়র বিভাগের বিজ্ঞানীদের বাস্তব প্রদর্শনী' : 'Junior & Senior section scientific demonstrations'}
+                    </p>
+                  </div>
+                  <div className="border-l-2 border-emerald-400 pl-3">
+                    <span className="text-lg font-black text-white block">
+                      {isBn ? 'বিশেষজ্ঞ বিচারক ও পুরস্কার' : 'Expert Jury & Awards'}
+                    </span>
+                    <p className="text-[11px] text-emerald-200">
+                      {isBn ? 'বিশ্ববিদ্যালয় শিক্ষক ও প্রকৌশলীদের দ্বারা মূল্যায়ন' : 'Judged by university professors and industry engineers'}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="lg:col-span-5 relative">
-              <div className="rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl border border-white/20">
-                <img
-                  src="/gallery/album_science.jpg"
-                  alt="Science Fair Expo"
-                  className="w-full h-full object-cover"
-                />
+              <div className="lg:col-span-5 relative">
+                <div className="rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl border border-white/20">
+                  <img
+                    src="/gallery/album_science.jpg"
+                    alt="Science Fair Expo"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* 7. Action CTA Section */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-1.5 text-center md:text-left">
-            <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-              {isBn ? 'আমাদের ক্লাব কার্যক্রম দেখতে চান?' : 'Want to see our clubs in action?'}
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
-              {isBn
-                ? 'বিজ্ঞান মেলা, স্কাউট ক্যাম্পোরি, বিতর্ক উৎসব ও বৃক্ষরোপণ অভিযানের স্থিরচিত্র দেখুন আমাদের ফটো গ্যালারিতে।'
-                : 'Browse photo moments from science fairs, scout camporees, debate tournaments, and tree plantation drives in our photo gallery.'}
-            </p>
-          </div>
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="space-y-1.5 text-center md:text-left">
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900">
+                {isBn ? 'আমাদের ক্লাব কার্যক্রম দেখতে চান?' : 'Want to see our clubs in action?'}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
+                {isBn
+                  ? 'বিজ্ঞান মেলা, স্কাউট ক্যাম্পোরি, বিতর্ক উৎসব ও বৃক্ষরোপণ অভিযানের স্থিরচিত্র দেখুন আমাদের ফটো গ্যালারিতে।'
+                  : 'Browse photo moments from science fairs, scout camporees, debate tournaments, and tree plantation drives in our photo gallery.'}
+              </p>
+            </div>
 
-          <div className="flex items-center gap-3 shrink-0 flex-wrap justify-center">
-            <Link
-              to="/gallery"
-              className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
-            >
-              <ImageIcon size={14} />
-              <span>{isBn ? 'ক্লাব গ্যালারি' : 'Clubs Gallery'}</span>
-            </Link>
-            <Link
-              to="/notices"
-              className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
-            >
-              <Calendar size={14} />
-              <span>{isBn ? 'ক্লাব নোটিশ' : 'Club Circulars'}</span>
-            </Link>
-            <Link
-              to="/contact"
-              className="px-5 py-2.5 rounded-xl bg-[#004d34] hover:bg-[#003b28] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xs"
-            >
-              <span>{isBn ? 'ক্লাব ইন-চার্জের সাথে যোগাযোগ' : 'Contact Club In-Charge'}</span>
-              <ArrowRight size={14} />
-            </Link>
+            <div className="flex items-center gap-3 shrink-0 flex-wrap justify-center">
+              <Link
+                to="/gallery"
+                className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
+              >
+                <ImageIcon size={14} />
+                <span>{isBn ? 'ক্লাব গ্যালারি' : 'Clubs Gallery'}</span>
+              </Link>
+              <Link
+                to="/notices"
+                className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
+              >
+                <Calendar size={14} />
+                <span>{isBn ? 'ক্লাব নোটিশ' : 'Club Circulars'}</span>
+              </Link>
+              <Link
+                to="/contact"
+                className="px-5 py-2.5 rounded-xl bg-[#004d34] hover:bg-[#003b28] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xs"
+              >
+                <span>{isBn ? 'ক্লাব ইন-চার্জের সাথে যোগাযোগ' : 'Contact Club In-Charge'}</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </div>
   );

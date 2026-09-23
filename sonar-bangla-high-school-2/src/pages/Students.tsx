@@ -30,6 +30,10 @@ import {
   formatGroup,
   formatSection,
 } from '../data/studentLocalization';
+import {
+  ScrollReveal,
+  ScrollScale,
+} from '../components/ui/MotionComponents';
 
 export interface StudentRecord {
   roll: string;
@@ -1444,466 +1448,478 @@ export const Students: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
-            {/* Pill Tag Badge */}
-            <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
-              <GraduationCap size={15} />
-              <span>{language === 'bn' ? 'শিক্ষার্থী ডিরেক্টরি' : 'STUDENT DIRECTORY'}</span>
+          <ScrollReveal duration={0.6} distance={25}>
+            <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
+              {/* Pill Tag Badge */}
+              <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
+                <GraduationCap size={15} />
+                <span>{language === 'bn' ? 'শিক্ষার্থী ডিরেক্টরি' : 'STUDENT DIRECTORY'}</span>
+              </div>
+
+              {/* Main Headline */}
+              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
+                {language === 'bn' ? (
+                  <>
+                    শিক্ষার্থী ডাটাবেস ও <br />
+                    ডিরেক্টরি
+                  </>
+                ) : (
+                  <>
+                    Student Database & <br />
+                    Directory
+                  </>
+                )}
+              </h1>
+
+              {/* Short Green Accent Line Under Title */}
+              <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
+
+              {/* Subtitle */}
+              <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
+                {t.studentsPage.subtitle}
+              </p>
             </div>
-
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.08]">
-              {language === 'bn' ? (
-                <>
-                  শিক্ষার্থী ডাটাবেস ও <br />
-                  ডিরেক্টরি
-                </>
-              ) : (
-                <>
-                  Student Database & <br />
-                  Directory
-                </>
-              )}
-            </h1>
-
-            {/* Short Green Accent Line Under Title */}
-            <div className="w-12 h-1 bg-[#059669] rounded-full mt-3 mb-2" />
-
-            {/* Subtitle */}
-            <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
-              {t.studentsPage.subtitle}
-            </p>
-          </div>
+          </ScrollReveal>
 
           {/* Floating White Quote Card on Bottom-Right */}
-          <div className="hidden lg:block absolute bottom-16 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
-                “
-              </span>
-              <div>
-                <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  {language === 'bn' ? 'আলোকিত আগামীর জন্য আজকের শিক্ষা' : 'Education today for a brighter tomorrow'}
-                </h4>
-                <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — {language === 'bn' ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
-                </p>
+          <div className="hidden lg:block absolute bottom-16 right-8 xl:right-16">
+            <ScrollScale delay={0.2}>
+              <div className="bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
+                <div className="flex items-start gap-3">
+                  <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                    “
+                  </span>
+                  <div>
+                    <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
+                      {language === 'bn' ? 'আলোকিত আগামীর জন্য আজকের শিক্ষা' : 'Education today for a brighter tomorrow'}
+                    </h4>
+                    <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
+                      — {language === 'bn' ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
+            </ScrollScale>
           </div>
         </div>
       </div>
 
       {/* 2. Floating 4-Stat Bar (Overlapping Bottom of Hero Banner) */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-10 sm:-mt-12 relative z-20">
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-md p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
-          {/* Stat 1: Total Students */}
-          <div className="flex items-center gap-4 pt-2 sm:pt-0 sm:pl-2 first:pl-0">
-            <div className="w-13 h-13 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
-              <Users size={22} />
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-none">
-                {toBanglaNum('1,240')}
+        <ScrollReveal duration={0.6} distance={20}>
+          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-md p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
+            {/* Stat 1: Total Students */}
+            <div className="flex items-center gap-4 pt-2 sm:pt-0 sm:pl-2 first:pl-0">
+              <div className="w-13 h-13 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
+                <Users size={22} />
               </div>
-              <div className="text-xs font-bold text-slate-600 mt-1">{t.studentsPage.totalStudents}</div>
-              <div className="text-[11px] font-bold text-emerald-600 mt-0.5">{language === 'bn' ? '+১২% চলতি বছর' : '+12% this year'}</div>
+              <div>
+                <div className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-none">
+                  {toBanglaNum('1,240')}
+                </div>
+                <div className="text-xs font-bold text-slate-600 mt-1">{t.studentsPage.totalStudents}</div>
+                <div className="text-[11px] font-bold text-emerald-600 mt-0.5">{language === 'bn' ? '+১২% চলতি বছর' : '+12% this year'}</div>
+              </div>
             </div>
-          </div>
 
-          {/* Stat 2: Classes */}
-          <div className="flex items-center gap-4 pt-4 sm:pt-0 sm:pl-6">
-            <div className="w-13 h-13 rounded-full bg-[#eff6ff] text-[#2563eb] flex items-center justify-center shrink-0">
-              <GraduationCap size={22} />
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-none">
-                {toBanglaNum('12')}
+            {/* Stat 2: Classes */}
+            <div className="flex items-center gap-4 pt-4 sm:pt-0 sm:pl-6">
+              <div className="w-13 h-13 rounded-full bg-[#eff6ff] text-[#2563eb] flex items-center justify-center shrink-0">
+                <GraduationCap size={22} />
               </div>
-              <div className="text-xs font-bold text-slate-600 mt-1">{language === 'bn' ? 'মোট শ্রেণি' : 'Classes'}</div>
-              <div className="text-[11px] font-medium text-slate-400 mt-0.5">{language === 'bn' ? 'প্রেপ ১ থেকে ১০ম শ্রেণি' : 'Pred 1 to Class 10'}</div>
+              <div>
+                <div className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-none">
+                  {toBanglaNum('12')}
+                </div>
+                <div className="text-xs font-bold text-slate-600 mt-1">{language === 'bn' ? 'মোট শ্রেণি' : 'Classes'}</div>
+                <div className="text-[11px] font-medium text-slate-400 mt-0.5">{language === 'bn' ? 'প্রেপ ১ থেকে ১০ম শ্রেণি' : 'Pred 1 to Class 10'}</div>
+              </div>
             </div>
-          </div>
 
-          {/* Stat 3: Student Groups */}
-          <div className="flex items-center gap-4 pt-4 sm:pt-0 sm:pl-6">
-            <div className="w-13 h-13 rounded-full bg-[#e0f2fe] text-[#0284c7] flex items-center justify-center shrink-0">
-              <Users size={22} />
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-none">
-                {toBanglaNum('25')}
+            {/* Stat 3: Student Groups */}
+            <div className="flex items-center gap-4 pt-4 sm:pt-0 sm:pl-6">
+              <div className="w-13 h-13 rounded-full bg-[#e0f2fe] text-[#0284c7] flex items-center justify-center shrink-0">
+                <Users size={22} />
               </div>
-              <div className="text-xs font-bold text-slate-600 mt-1">{language === 'bn' ? 'গ্রুপ ও শাখা' : 'Student Groups'}</div>
-              <div className="text-[11px] font-medium text-slate-400 mt-0.5">{language === 'bn' ? 'বিজ্ঞান, মানবিক ও ব্যবসায়' : 'Academic & Co-curricular'}</div>
+              <div>
+                <div className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-none">
+                  {toBanglaNum('25')}
+                </div>
+                <div className="text-xs font-bold text-slate-600 mt-1">{language === 'bn' ? 'গ্রুপ ও শাখা' : 'Student Groups'}</div>
+                <div className="text-[11px] font-medium text-slate-400 mt-0.5">{language === 'bn' ? 'বিজ্ঞান, মানবিক ও ব্যবসায়' : 'Academic & Co-curricular'}</div>
+              </div>
             </div>
-          </div>
 
-          {/* Stat 4: Student Support */}
-          <div className="flex items-center gap-4 pt-4 sm:pt-0 sm:pl-6">
-            <div className="w-13 h-13 rounded-full bg-[#fef3c7] text-[#d97706] flex items-center justify-center shrink-0">
-              <Award size={22} />
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-none">
-                {toBanglaNum('100%')}
+            {/* Stat 4: Student Support */}
+            <div className="flex items-center gap-4 pt-4 sm:pt-0 sm:pl-6">
+              <div className="w-13 h-13 rounded-full bg-[#fef3c7] text-[#d97706] flex items-center justify-center shrink-0">
+                <Award size={22} />
               </div>
-              <div className="text-xs font-bold text-slate-600 mt-1">{language === 'bn' ? 'শিক্ষার্থী সহায়তা' : 'Student Support'}</div>
-              <div className="text-[11px] font-medium text-slate-400 mt-0.5">{language === 'bn' ? 'উন্নত আগামীর প্রত্যয়ে' : 'For a brighter future'}</div>
+              <div>
+                <div className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-none">
+                  {toBanglaNum('100%')}
+                </div>
+                <div className="text-xs font-bold text-slate-600 mt-1">{language === 'bn' ? 'শিক্ষার্থী সহায়তা' : 'Student Support'}</div>
+                <div className="text-[11px] font-medium text-slate-400 mt-0.5">{language === 'bn' ? 'উন্নত আগামীর প্রত্যয়ে' : 'For a brighter future'}</div>
+              </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* 3. Students Data Table & Directory Container */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-10">
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-5 sm:p-8 space-y-6">
-          {/* Header Row: Title */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
-                <Users size={20} />
+        <ScrollReveal duration={0.65} distance={30}>
+          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-5 sm:p-8 space-y-6">
+            {/* Header Row: Title */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
+                  <Users size={20} />
+                </div>
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                    {t.studentsPage.title}
+                  </h2>
+                  <p className="text-xs text-slate-500 font-medium">
+                    {t.studentsPage.subtitle}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                  {t.studentsPage.title}
-                </h2>
-                <p className="text-xs text-slate-500 font-medium">
-                  {t.studentsPage.subtitle}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Filter Controls Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 pt-2">
-            {/* Class Dropdown */}
-            <div className="lg:col-span-2 relative">
-              <select
-                value={selectedClass}
-                onChange={(e) => handleClassChange(e.target.value)}
-                className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
-              >
-                <option value="All Classes">{t.studentsPage.tabAll}</option>
-                <option value="Pred 1">{language === 'bn' ? 'প্রেপ ১' : 'Pred 1'}</option>
-                <option value="Pred 2">{language === 'bn' ? 'প্রেপ ২' : 'Pred 2'}</option>
-                <option value="Class 1">{language === 'bn' ? '১ম শ্রেণি' : 'Class 1'}</option>
-                <option value="Class 2">{language === 'bn' ? '২য় শ্রেণি' : 'Class 2'}</option>
-                <option value="Class 3">{language === 'bn' ? '৩য় শ্রেণি' : 'Class 3'}</option>
-                <option value="Class 4">{language === 'bn' ? '৪র্থ শ্রেণি' : 'Class 4'}</option>
-                <option value="Class 5">{language === 'bn' ? '৫ম শ্রেণি' : 'Class 5'}</option>
-                <option value="Class 6">{language === 'bn' ? '৬ষ্ঠ শ্রেণি' : 'Class 6'}</option>
-                <option value="Class 7">{language === 'bn' ? '৭ম শ্রেণি' : 'Class 7'}</option>
-                <option value="Class 8">{language === 'bn' ? '৮ম শ্রেণি' : 'Class 8'}</option>
-                <option value="Class 9">{language === 'bn' ? '৯ম শ্রেণি' : 'Class 9'}</option>
-                <option value="Class 10">{language === 'bn' ? '১০ম শ্রেণি' : 'Class 10'}</option>
-              </select>
-              <ChevronDown
-                size={14}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
-              />
             </div>
 
-            {/* Group Dropdown */}
-            <div className="lg:col-span-2 relative">
-              <select
-                value={selectedGroup}
-                onChange={(e) => handleGroupChange(e.target.value)}
-                className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
-              >
-                <option value="All Groups">{language === 'bn' ? 'সকল গ্রুপ' : 'All Groups'}</option>
-                <option value="Science">{language === 'bn' ? 'বিজ্ঞান' : 'Science'}</option>
-                <option value="Business Studies">{language === 'bn' ? 'ব্যবসায় শিক্ষা' : 'Business Studies'}</option>
-                <option value="Humanities">{language === 'bn' ? 'মানবিক' : 'Humanities'}</option>
-                <option value="General">{language === 'bn' ? 'সাধারণ' : 'General'}</option>
-              </select>
-              <ChevronDown
-                size={14}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
-              />
-            </div>
-
-            {/* Section Dropdown */}
-            <div className="lg:col-span-2 relative">
-              <select
-                value={selectedSection}
-                onChange={(e) => handleSectionChange(e.target.value)}
-                className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
-              >
-                <option value="All Sections">{language === 'bn' ? 'সকল শাখা' : 'All Sections'}</option>
-                <option value="Section A">{language === 'bn' ? 'শাখা এ (A)' : 'Section A'}</option>
-                <option value="Section B">{language === 'bn' ? 'শাখা বি (B)' : 'Section B'}</option>
-                <option value="Section C">{language === 'bn' ? 'শাখা সি (C)' : 'Section C'}</option>
-              </select>
-              <ChevronDown
-                size={14}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
-              />
-            </div>
-
-            {/* Search Input Box */}
-            <div className="lg:col-span-6 relative">
-              <Search
-                size={15}
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
-              />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => handleSearchChange(e.target.value)}
-                placeholder={t.studentsPage.searchPlaceholder}
-                className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-8 py-2.5 text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34] shadow-2xs"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => handleSearchChange('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+            {/* Filter Controls Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 pt-2">
+              {/* Class Dropdown */}
+              <div className="lg:col-span-2 relative">
+                <select
+                  value={selectedClass}
+                  onChange={(e) => handleClassChange(e.target.value)}
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
                 >
-                  <X size={13} />
-                </button>
-              )}
-            </div>
-          </div>
+                  <option value="All Classes">{t.studentsPage.tabAll}</option>
+                  <option value="Pred 1">{language === 'bn' ? 'প্রেপ ১' : 'Pred 1'}</option>
+                  <option value="Pred 2">{language === 'bn' ? 'প্রেপ ২' : 'Pred 2'}</option>
+                  <option value="Class 1">{language === 'bn' ? '১ম শ্রেণি' : 'Class 1'}</option>
+                  <option value="Class 2">{language === 'bn' ? '২য় শ্রেণি' : 'Class 2'}</option>
+                  <option value="Class 3">{language === 'bn' ? '৩য় শ্রেণি' : 'Class 3'}</option>
+                  <option value="Class 4">{language === 'bn' ? '৪র্থ শ্রেণি' : 'Class 4'}</option>
+                  <option value="Class 5">{language === 'bn' ? '৫ম শ্রেণি' : 'Class 5'}</option>
+                  <option value="Class 6">{language === 'bn' ? '৬ষ্ঠ শ্রেণি' : 'Class 6'}</option>
+                  <option value="Class 7">{language === 'bn' ? '৭ম শ্রেণি' : 'Class 7'}</option>
+                  <option value="Class 8">{language === 'bn' ? '৮ম শ্রেণি' : 'Class 8'}</option>
+                  <option value="Class 9">{language === 'bn' ? '৯ম শ্রেণি' : 'Class 9'}</option>
+                  <option value="Class 10">{language === 'bn' ? '১০ম শ্রেণি' : 'Class 10'}</option>
+                </select>
+                <ChevronDown
+                  size={14}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                />
+              </div>
 
-          {/* Active Filter Pills Bar (When filters are modified) */}
-          {(selectedClass !== 'All Classes' || selectedGroup !== 'All Groups' || selectedSection !== 'All Sections' || searchQuery) && (
-            <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
-              <span className="text-slate-400 font-medium text-[11px]">{isBn ? 'সক্রিয় ফিল্টার:' : 'Active Filters:'}</span>
-              {selectedClass !== 'All Classes' && (
-                <span className="inline-flex items-center gap-1 bg-emerald-50 text-[#004d34] border border-emerald-100 font-bold px-2.5 py-0.5 rounded-lg text-[11px]">
-                  <span>{isBn ? `শ্রেণি: ${formatClassLevel(selectedClass, true)}` : `Class: ${formatClassLevel(selectedClass, false)}`}</span>
-                  <button type="button" onClick={() => handleClassChange('All Classes')} className="hover:text-emerald-900 cursor-pointer">
-                    <X size={11} />
+              {/* Group Dropdown */}
+              <div className="lg:col-span-2 relative">
+                <select
+                  value={selectedGroup}
+                  onChange={(e) => handleGroupChange(e.target.value)}
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
+                >
+                  <option value="All Groups">{language === 'bn' ? 'সকল গ্রুপ' : 'All Groups'}</option>
+                  <option value="Science">{language === 'bn' ? 'বিজ্ঞান' : 'Science'}</option>
+                  <option value="Business Studies">{language === 'bn' ? 'ব্যবসায় শিক্ষা' : 'Business Studies'}</option>
+                  <option value="Humanities">{language === 'bn' ? 'মানবিক' : 'Humanities'}</option>
+                  <option value="General">{language === 'bn' ? 'সাধারণ' : 'General'}</option>
+                </select>
+                <ChevronDown
+                  size={14}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                />
+              </div>
+
+              {/* Section Dropdown */}
+              <div className="lg:col-span-2 relative">
+                <select
+                  value={selectedSection}
+                  onChange={(e) => handleSectionChange(e.target.value)}
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-[#004d34] cursor-pointer shadow-2xs"
+                >
+                  <option value="All Sections">{language === 'bn' ? 'সকল শাখা' : 'All Sections'}</option>
+                  <option value="Section A">{language === 'bn' ? 'শাখা এ (A)' : 'Section A'}</option>
+                  <option value="Section B">{language === 'bn' ? 'শাখা বি (B)' : 'Section B'}</option>
+                  <option value="Section C">{language === 'bn' ? 'শাখা সি (C)' : 'Section C'}</option>
+                </select>
+                <ChevronDown
+                  size={14}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                />
+              </div>
+
+              {/* Search Input Box */}
+              <div className="lg:col-span-6 relative">
+                <Search
+                  size={15}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  placeholder={t.studentsPage.searchPlaceholder}
+                  className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-8 py-2.5 text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004d34] shadow-2xs"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => handleSearchChange('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  >
+                    <X size={13} />
                   </button>
-                </span>
-              )}
-              {selectedGroup !== 'All Groups' && (
-                <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-700 border border-blue-100 font-bold px-2.5 py-0.5 rounded-lg text-[11px]">
-                  <span>{isBn ? `গ্রুপ: ${formatGroup(selectedGroup, true)}` : `Group: ${selectedGroup}`}</span>
-                  <button type="button" onClick={() => handleGroupChange('All Groups')} className="hover:text-blue-900 cursor-pointer">
-                    <X size={11} />
-                  </button>
-                </span>
-              )}
-              {selectedSection !== 'All Sections' && (
-                <span className="inline-flex items-center gap-1 bg-purple-50 text-purple-700 border border-purple-100 font-bold px-2.5 py-0.5 rounded-lg text-[11px]">
-                  <span>{isBn ? `শাখা: ${formatSection(selectedSection, true, true)}` : selectedSection}</span>
-                  <button type="button" onClick={() => handleSectionChange('All Sections')} className="hover:text-purple-900 cursor-pointer">
-                    <X size={11} />
-                  </button>
-                </span>
-              )}
-              {searchQuery && (
-                <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-800 border border-amber-100 font-bold px-2.5 py-0.5 rounded-lg text-[11px]">
-                  <span>"{searchQuery}"</span>
-                  <button type="button" onClick={() => handleSearchChange('')} className="hover:text-amber-950 cursor-pointer">
-                    <X size={11} />
-                  </button>
-                </span>
-              )}
-              <button
-                type="button"
-                onClick={handleResetFilters}
-                className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-500 hover:text-slate-800 underline ml-2 cursor-pointer"
-              >
-                <RotateCcw size={10} />
-                <span>{isBn ? 'সব ফিল্টার রিসেট' : 'Reset all'}</span>
-              </button>
-            </div>
-          )}
-
-          {/* Table Container */}
-          <div className="overflow-x-auto rounded-2xl border border-slate-100">
-            <table className="w-full text-left text-xs border-collapse">
-              {/* Table Header */}
-              <thead>
-                <tr className="bg-[#f4f9f6] text-slate-700 font-bold uppercase tracking-wider text-[11px]">
-                  <th className="py-3.5 px-4 sm:px-6">{t.studentsPage.rollCol}</th>
-                  <th className="py-3.5 px-4 sm:px-6">{t.studentsPage.nameCol}</th>
-                  <th className="py-3.5 px-4 sm:px-6">{t.studentsPage.classCol}</th>
-                  <th className="py-3.5 px-4 sm:px-6">{t.studentsPage.groupCol}</th>
-                  <th className="py-3.5 px-4 sm:px-6">{isBn ? 'শিক্ষার্থী আইডি' : 'STUDENT ID'}</th>
-                  <th className="py-3.5 px-4 sm:px-6 text-center">{isBn ? 'আইডি কার্ড' : t.studentsPage.actionCol}</th>
-                </tr>
-              </thead>
-
-              {/* Table Body */}
-              <tbody className="divide-y divide-slate-100 bg-white">
-                {paginatedStudents.length > 0 ? (
-                  paginatedStudents.map((student) => (
-                    <tr
-                      key={student.roll + student.studentId}
-                      className="hover:bg-slate-50/70 transition-colors group"
-                    >
-                      {/* Roll Column */}
-                      <td className="py-3.5 px-4 sm:px-6 font-extrabold text-[#059669]">
-                        {isBn ? toBanglaNum(student.roll) : student.roll}
-                      </td>
-
-                      {/* Student Info Column: Avatar + Name + Sub ID */}
-                      <td className="py-3.5 px-4 sm:px-6">
-                        <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-full overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-2xs">
-                            <img
-                              src={student.avatar}
-                              alt={student.name}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                              onError={(e) => {
-                                (e.target as HTMLImageElement).src = student.fallbackAvatar;
-                              }}
-                            />
-                          </div>
-                          <div>
-                            <div className="font-extrabold text-slate-900 group-hover:text-[#004d34] transition-colors leading-tight">
-                              {getStudentName(student.name, isBn)}
-                            </div>
-                            <div className="text-[10.5px] text-slate-400 font-medium mt-0.5">
-                              {isBn
-                                ? `আইডি: ${toBanglaNum(student.subId.replace('ID: ', ''))}`
-                                : student.subId}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-
-                      {/* Class Column */}
-                      <td className="py-3.5 px-4 sm:px-6">
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#e8f7ee] text-[#059669] border border-emerald-100">
-                          {formatClassLevel(student.classLevel, isBn)}
-                        </span>
-                      </td>
-
-                      {/* Group Column */}
-                      <td className="py-3.5 px-4 sm:px-6">
-                        {renderGroupBadge(student.group)}
-                      </td>
-
-                      {/* Student ID Column */}
-                      <td className="py-3.5 px-4 sm:px-6 font-semibold text-slate-600">
-                        {isBn ? toBanglaNum(student.studentId) : student.studentId}
-                      </td>
-
-                      {/* Action Buttons Column */}
-                      <td className="py-3.5 px-4 sm:px-6">
-                        <div className="flex items-center justify-center">
-                          {/* Eye / View Profile */}
-                          <button
-                            type="button"
-                            title={isBn ? 'প্রোফাইল ও আইডি কার্ড দেখুন' : 'View Profile'}
-                            onClick={() => setViewingStudent(student)}
-                            className="w-7 h-7 rounded-full bg-slate-50 hover:bg-emerald-50 text-slate-500 hover:text-[#004d34] border border-slate-200/80 flex items-center justify-center transition cursor-pointer"
-                          >
-                            <Eye size={13} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={6} className="py-12 text-center text-slate-400">
-                      <p className="text-slate-500 font-medium">
-                        {isBn
-                          ? 'নির্বাচিত ফিল্টারে কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি।'
-                          : 'No student records found matching the selected filters.'}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={handleResetFilters}
-                        className="mt-2 text-xs font-bold text-[#004d34] hover:underline cursor-pointer"
-                      >
-                        {isBn ? 'ফিল্টার রিসেট করুন' : 'Reset filters'}
-                      </button>
-                    </td>
-                  </tr>
                 )}
-              </tbody>
-            </table>
-          </div>
+              </div>
+            </div>
 
-          {/* Table Footer: Pagination & Count (Exact match to media_1790106007535.jpg) */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-slate-100 text-xs">
-            <span className="text-slate-500 font-medium">
-              {isBn
-                ? `${toBanglaNum(filteredStudents.length)} জন শিক্ষার্থীর মধ্যে ${toBanglaNum(filteredStudents.length === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1)}-${toBanglaNum(Math.min(currentPage * ITEMS_PER_PAGE, filteredStudents.length))} দেখানো হচ্ছে`
-                : `Showing ${filteredStudents.length === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1}-${Math.min(currentPage * ITEMS_PER_PAGE, filteredStudents.length)} of ${filteredStudents.length} students`}
-            </span>
-
-            {/* Pagination Controls */}
-            {totalPages > 1 && (
-              <div className="flex items-center gap-1 self-center sm:self-auto select-none">
-                {/* Prev Button */}
-                <button
-                  type="button"
-                  disabled={currentPage === 1}
-                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                  className="w-8 h-8 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition cursor-pointer"
-                >
-                  <ChevronLeft size={14} />
-                </button>
-
-                {/* Page numbers */}
-                {Array.from({ length: totalPages }).map((_, i) => {
-                  const pageNum = i + 1;
-                  return (
-                    <button
-                      key={pageNum}
-                      type="button"
-                      onClick={() => setCurrentPage(pageNum)}
-                      className={`w-8 h-8 rounded-xl font-bold flex items-center justify-center transition cursor-pointer ${
-                        currentPage === pageNum
-                          ? 'bg-[#004d34] text-white'
-                          : 'text-slate-700 hover:bg-slate-50'
-                      }`}
-                    >
-                      {isBn ? toBanglaNum(pageNum) : pageNum}
+            {/* Active Filter Pills Bar (When filters are modified) */}
+            {(selectedClass !== 'All Classes' || selectedGroup !== 'All Groups' || selectedSection !== 'All Sections' || searchQuery) && (
+              <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                <span className="text-slate-400 font-medium text-[11px]">{isBn ? 'সক্রিয় ফিল্টার:' : 'Active Filters:'}</span>
+                {selectedClass !== 'All Classes' && (
+                  <span className="inline-flex items-center gap-1 bg-emerald-50 text-[#004d34] border border-emerald-100 font-bold px-2.5 py-0.5 rounded-lg text-[11px]">
+                    <span>{isBn ? `শ্রেণি: ${formatClassLevel(selectedClass, true)}` : `Class: ${formatClassLevel(selectedClass, false)}`}</span>
+                    <button type="button" onClick={() => handleClassChange('All Classes')} className="hover:text-emerald-900 cursor-pointer">
+                      <X size={11} />
                     </button>
-                  );
-                })}
-
-                {/* Next Button */}
+                  </span>
+                )}
+                {selectedGroup !== 'All Groups' && (
+                  <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-700 border border-blue-100 font-bold px-2.5 py-0.5 rounded-lg text-[11px]">
+                    <span>{isBn ? `গ্রুপ: ${formatGroup(selectedGroup, true)}` : `Group: ${selectedGroup}`}</span>
+                    <button type="button" onClick={() => handleGroupChange('All Groups')} className="hover:text-blue-900 cursor-pointer">
+                      <X size={11} />
+                    </button>
+                  </span>
+                )}
+                {selectedSection !== 'All Sections' && (
+                  <span className="inline-flex items-center gap-1 bg-purple-50 text-purple-700 border border-purple-100 font-bold px-2.5 py-0.5 rounded-lg text-[11px]">
+                    <span>{isBn ? `শাখা: ${formatSection(selectedSection, true, true)}` : selectedSection}</span>
+                    <button type="button" onClick={() => handleSectionChange('All Sections')} className="hover:text-purple-900 cursor-pointer">
+                      <X size={11} />
+                    </button>
+                  </span>
+                )}
+                {searchQuery && (
+                  <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-800 border border-amber-100 font-bold px-2.5 py-0.5 rounded-lg text-[11px]">
+                    <span>"{searchQuery}"</span>
+                    <button type="button" onClick={() => handleSearchChange('')} className="hover:text-amber-950 cursor-pointer">
+                      <X size={11} />
+                    </button>
+                  </span>
+                )}
                 <button
                   type="button"
-                  disabled={currentPage === totalPages}
-                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                  className="w-8 h-8 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition cursor-pointer"
+                  onClick={handleResetFilters}
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-500 hover:text-slate-800 underline ml-2 cursor-pointer"
                 >
-                  <ChevronRight size={14} />
+                  <RotateCcw size={10} />
+                  <span>{isBn ? 'সব ফিল্টার রিসেট' : 'Reset all'}</span>
                 </button>
               </div>
             )}
+
+            {/* Table Container */}
+            <div className="overflow-x-auto rounded-2xl border border-slate-100">
+              <table className="w-full text-left text-xs border-collapse">
+                {/* Table Header */}
+                <thead>
+                  <tr className="bg-[#f4f9f6] text-slate-700 font-bold uppercase tracking-wider text-[11px]">
+                    <th className="py-3.5 px-4 sm:px-6">{t.studentsPage.rollCol}</th>
+                    <th className="py-3.5 px-4 sm:px-6">{t.studentsPage.nameCol}</th>
+                    <th className="py-3.5 px-4 sm:px-6">{t.studentsPage.classCol}</th>
+                    <th className="py-3.5 px-4 sm:px-6">{t.studentsPage.groupCol}</th>
+                    <th className="py-3.5 px-4 sm:px-6">{isBn ? 'শিক্ষার্থী আইডি' : 'STUDENT ID'}</th>
+                    <th className="py-3.5 px-4 sm:px-6 text-center">{isBn ? 'আইডি কার্ড' : t.studentsPage.actionCol}</th>
+                  </tr>
+                </thead>
+
+                {/* Table Body */}
+                <tbody className="divide-y divide-slate-100 bg-white">
+                  {paginatedStudents.length > 0 ? (
+                    paginatedStudents.map((student) => (
+                      <tr
+                        key={student.roll + student.studentId}
+                        className="hover:bg-slate-50/70 transition-colors group"
+                      >
+                        {/* Roll Column */}
+                        <td className="py-3.5 px-4 sm:px-6 font-extrabold text-[#059669]">
+                          {isBn ? toBanglaNum(student.roll) : student.roll}
+                        </td>
+
+                        {/* Student Info Column: Avatar + Name + Sub ID */}
+                        <td className="py-3.5 px-4 sm:px-6">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-full overflow-hidden bg-slate-100 border border-slate-200 shrink-0 shadow-2xs">
+                              <img
+                                src={student.avatar}
+                                alt={student.name}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = student.fallbackAvatar;
+                                }}
+                              />
+                            </div>
+                            <div>
+                              <div className="font-extrabold text-slate-900 group-hover:text-[#004d34] transition-colors leading-tight">
+                                {getStudentName(student.name, isBn)}
+                              </div>
+                              <div className="text-[10.5px] text-slate-400 font-medium mt-0.5">
+                                {isBn
+                                  ? `আইডি: ${toBanglaNum(student.subId.replace('ID: ', ''))}`
+                                  : student.subId}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+
+                        {/* Class Column */}
+                        <td className="py-3.5 px-4 sm:px-6">
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#e8f7ee] text-[#059669] border border-emerald-100">
+                            {formatClassLevel(student.classLevel, isBn)}
+                          </span>
+                        </td>
+
+                        {/* Group Column */}
+                        <td className="py-3.5 px-4 sm:px-6">
+                          {renderGroupBadge(student.group)}
+                        </td>
+
+                        {/* Student ID Column */}
+                        <td className="py-3.5 px-4 sm:px-6 font-semibold text-slate-600">
+                          {isBn ? toBanglaNum(student.studentId) : student.studentId}
+                        </td>
+
+                        {/* Action Buttons Column */}
+                        <td className="py-3.5 px-4 sm:px-6">
+                          <div className="flex items-center justify-center">
+                            {/* Eye / View Profile */}
+                            <button
+                              type="button"
+                              title={isBn ? 'প্রোফাইল ও আইডি কার্ড দেখুন' : 'View Profile'}
+                              onClick={() => setViewingStudent(student)}
+                              className="w-7 h-7 rounded-full bg-slate-50 hover:bg-emerald-50 text-slate-500 hover:text-[#004d34] border border-slate-200/80 flex items-center justify-center transition cursor-pointer"
+                            >
+                              <Eye size={13} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={6} className="py-12 text-center text-slate-400">
+                        <p className="text-slate-500 font-medium">
+                          {isBn
+                            ? 'নির্বাচিত ফিল্টারে কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি।'
+                            : 'No student records found matching the selected filters.'}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={handleResetFilters}
+                          className="mt-2 text-xs font-bold text-[#004d34] hover:underline cursor-pointer"
+                        >
+                          {isBn ? 'ফিল্টার রিসেট করুন' : 'Reset filters'}
+                        </button>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Table Footer: Pagination & Count (Exact match to media_1790106007535.jpg) */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-slate-100 text-xs">
+              <span className="text-slate-500 font-medium">
+                {isBn
+                  ? `${toBanglaNum(filteredStudents.length)} জন শিক্ষার্থীর মধ্যে ${toBanglaNum(filteredStudents.length === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1)}-${toBanglaNum(Math.min(currentPage * ITEMS_PER_PAGE, filteredStudents.length))} দেখানো হচ্ছে`
+                  : `Showing ${filteredStudents.length === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1}-${Math.min(currentPage * ITEMS_PER_PAGE, filteredStudents.length)} of ${filteredStudents.length} students`}
+              </span>
+
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="flex items-center gap-1 self-center sm:self-auto select-none">
+                  {/* Prev Button */}
+                  <button
+                    type="button"
+                    disabled={currentPage === 1}
+                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                    className="w-8 h-8 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition cursor-pointer"
+                  >
+                    <ChevronLeft size={14} />
+                  </button>
+
+                  {/* Page numbers */}
+                  {Array.from({ length: totalPages }).map((_, i) => {
+                    const pageNum = i + 1;
+                    return (
+                      <button
+                        key={pageNum}
+                        type="button"
+                        onClick={() => setCurrentPage(pageNum)}
+                        className={`w-8 h-8 rounded-xl font-bold flex items-center justify-center transition cursor-pointer ${
+                          currentPage === pageNum
+                            ? 'bg-[#004d34] text-white'
+                            : 'text-slate-700 hover:bg-slate-50'
+                        }`}
+                      >
+                        {isBn ? toBanglaNum(pageNum) : pageNum}
+                      </button>
+                    );
+                  })}
+
+                  {/* Next Button */}
+                  <button
+                    type="button"
+                    disabled={currentPage === totalPages}
+                    onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                    className="w-8 h-8 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition cursor-pointer"
+                  >
+                    <ChevronRight size={14} />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* 4. Together for a Brighter Future Callout Banner (Matching media_1790106007535.jpg) */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
-        <section className="bg-[#e8f7ee] border border-emerald-100/90 rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xs">
-          <div className="flex items-center gap-4 text-center sm:text-left">
-            <div className="w-13 h-13 rounded-full bg-[#d1fae5] text-[#059669] flex items-center justify-center shrink-0 shadow-2xs">
-              <Users size={24} />
+        <ScrollReveal duration={0.65} distance={30}>
+          <section className="bg-[#e8f7ee] border border-emerald-100/90 rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xs">
+            <div className="flex items-center gap-4 text-center sm:text-left">
+              <div className="w-13 h-13 rounded-full bg-[#d1fae5] text-[#059669] flex items-center justify-center shrink-0 shadow-2xs">
+                <Users size={24} />
+              </div>
+              <div>
+                <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
+                  {isBn ? 'উন্নত আগামীর জন্য আমরা একসাথে' : 'Together for a Brighter Future'}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 font-normal mt-0.5">
+                  {isBn
+                    ? 'শিক্ষার্থীরাই আমাদের স্কুলের প্রাণ। প্রতিটি শিক্ষার্থীর জন্য একটি নিরাপদ, সহায়ক এবং অনুপ্রেরণাদায়ক শিক্ষার পরিবেশ প্রদানে আমরা নিবেদিতপ্রাণ।'
+                    : 'Our students are the heart of our school. We are committed to providing a safe, supportive and inspiring environment for every learner.'}
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
-                {isBn ? 'উন্নত আগামীর জন্য আমরা একসাথে' : 'Together for a Brighter Future'}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 font-normal mt-0.5">
-                {isBn
-                  ? 'শিক্ষার্থীরাই আমাদের স্কুলের প্রাণ। প্রতিটি শিক্ষার্থীর জন্য একটি নিরাপদ, সহায়ক এবং অনুপ্রেরণাদায়ক শিক্ষার পরিবেশ প্রদানে আমরা নিবেদিতপ্রাণ।'
-                  : 'Our students are the heart of our school. We are committed to providing a safe, supportive and inspiring environment for every learner.'}
-              </p>
-            </div>
-          </div>
 
-          <Link
-            to="/admission"
-            className="inline-flex items-center gap-2 bg-[#004d34] hover:bg-[#003826] text-white px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-xs hover:shadow whitespace-nowrap cursor-pointer shrink-0"
-          >
-            <span>{isBn ? 'ভর্তি নির্দেশিকা ও তথ্য' : 'Empower Our Students'}</span>
-            <ArrowRight size={14} />
-          </Link>
-        </section>
+            <Link
+              to="/admission"
+              className="inline-flex items-center gap-2 bg-[#004d34] hover:bg-[#003826] text-white px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-xs hover:shadow whitespace-nowrap cursor-pointer shrink-0"
+            >
+              <span>{isBn ? 'ভর্তি নির্দেশিকা ও তথ্য' : 'Empower Our Students'}</span>
+              <ArrowRight size={14} />
+            </Link>
+          </section>
+        </ScrollReveal>
       </div>
 
       {/* 5. View Student Details Modal (Matching reference image media_1790114800234.jpg) */}

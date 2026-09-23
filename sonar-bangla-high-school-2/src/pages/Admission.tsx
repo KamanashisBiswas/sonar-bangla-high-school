@@ -22,6 +22,13 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { SCHOOL_INFO } from '../data/schoolData';
+import {
+  ScrollReveal,
+  ScrollScale,
+  ScrollStaggerContainer,
+  ScrollStaggerItem,
+  HoverCard
+} from '../components/ui/MotionComponents';
 
 export const Admission: React.FC = () => {
   const { language, t, toBanglaNum } = useLanguage();
@@ -119,7 +126,7 @@ export const Admission: React.FC = () => {
           </div>
 
           {/* Left Narrative Block */}
-          <div className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
+          <ScrollReveal duration={0.6} distance={25} className="max-w-xl space-y-3 pt-12 sm:pt-16 lg:pt-20">
             {/* Pill Tag Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8f7ee] text-[#059669] border border-emerald-100/90 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-2xs">
               <GraduationCap size={15} />
@@ -148,30 +155,32 @@ export const Admission: React.FC = () => {
             <p className="text-slate-600 text-xs sm:text-[14px] leading-relaxed font-normal max-w-lg">
               {t.admission.subtitle}
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Floating White Quote Card on the Right */}
-          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90 max-w-[340px]">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
-                “
-              </span>
-              <div>
-                <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
-                  {language === 'bn' ? 'আলোকিত আগামীর জন্য আজকের শিক্ষা' : 'Education today for a brighter tomorrow'}
-                </h4>
-                <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
-                  — {language === 'bn' ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
-                </p>
+          <div className="hidden lg:block absolute bottom-12 right-8 xl:right-16 max-w-[340px]">
+            <ScrollScale delay={0.2} className="bg-white/95 backdrop-blur-xs p-5 rounded-2xl shadow-xl border border-slate-200/90">
+              <div className="flex items-start gap-3">
+                <span className="text-3xl font-serif text-[#059669] leading-none select-none font-bold">
+                  “
+                </span>
+                <div>
+                  <h4 className="font-black text-slate-900 text-sm sm:text-[15px] leading-snug">
+                    {language === 'bn' ? 'আলোকিত আগামীর জন্য আজকের শিক্ষা' : 'Education today for a brighter tomorrow'}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 font-semibold mt-1.5">
+                    — {language === 'bn' ? 'এস ও এস হারম্যান মেইনার স্কুল' : 'SOS Hermann Gmeiner School'}
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollScale>
           </div>
         </div>
       </div>
 
       {/* 2. Important Instructions & Guidelines Card */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-10">
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-7 space-y-5">
+        <ScrollReveal duration={0.65} distance={30} className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-7 space-y-5">
           {/* Header Row */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3.5">
@@ -201,33 +210,33 @@ export const Admission: React.FC = () => {
           </div>
 
           {/* 4 Instruction Columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pt-2 text-xs text-slate-700 font-medium leading-relaxed">
-            <div className="flex items-start gap-2.5">
+          <ScrollStaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pt-2 text-xs text-slate-700 font-medium leading-relaxed">
+            <ScrollStaggerItem className="flex items-start gap-2.5">
               <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
               <span>{t.admission.rule1}</span>
-            </div>
+            </ScrollStaggerItem>
 
-            <div className="flex items-start gap-2.5">
+            <ScrollStaggerItem className="flex items-start gap-2.5">
               <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
               <span>{t.admission.rule3}</span>
-            </div>
+            </ScrollStaggerItem>
 
-            <div className="flex items-start gap-2.5">
+            <ScrollStaggerItem className="flex items-start gap-2.5">
               <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
               <span>{t.admission.rule2}</span>
-            </div>
+            </ScrollStaggerItem>
 
-            <div className="flex items-start gap-2.5">
+            <ScrollStaggerItem className="flex items-start gap-2.5">
               <CheckCircle2 size={16} className="text-[#059669] shrink-0 mt-0.5" />
               <span>{t.admission.rule4}</span>
-            </div>
-          </div>
-        </div>
+            </ScrollStaggerItem>
+          </ScrollStaggerContainer>
+        </ScrollReveal>
       </div>
 
       {/* 3. Fill in Admission Application Form Card */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-8 space-y-6">
+        <ScrollReveal duration={0.65} distance={30} className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-8 space-y-6">
           {/* Header Row */}
           <div className="flex items-center gap-3.5 pb-2">
             <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#004d34] flex items-center justify-center shrink-0 border border-emerald-100">
@@ -532,68 +541,84 @@ export const Admission: React.FC = () => {
               </div>
             </form>
           )}
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* 4. Bottom 4 Feature Cards */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-5 flex items-center gap-4 hover:shadow-xs transition">
-            <div className="w-12 h-12 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
-              <ShieldCheck size={22} />
-            </div>
-            <div>
-              <h4 className="text-sm font-black text-slate-900 leading-tight">
-                {language === 'bn' ? 'নিরাপদ ও সুরক্ষিত' : 'Secure & Reliable'}
-              </h4>
-              <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                {language === 'bn' ? 'আপনার সকল তথ্য শতভাগ সুরক্ষিত।' : 'Your information is safe and protected.'}
-              </p>
-            </div>
-          </div>
+        <ScrollStaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          <ScrollStaggerItem>
+            <HoverCard className="h-full">
+              <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-5 flex items-center gap-4 hover:shadow-xs transition h-full">
+                <div className="w-12 h-12 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
+                  <ShieldCheck size={22} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-black text-slate-900 leading-tight">
+                    {language === 'bn' ? 'নিরাপদ ও সুরক্ষিত' : 'Secure & Reliable'}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                    {language === 'bn' ? 'আপনার সকল তথ্য শতভাগ সুরক্ষিত।' : 'Your information is safe and protected.'}
+                  </p>
+                </div>
+              </div>
+            </HoverCard>
+          </ScrollStaggerItem>
 
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-5 flex items-center gap-4 hover:shadow-xs transition">
-            <div className="w-12 h-12 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
-              <Clock size={22} />
-            </div>
-            <div>
-              <h4 className="text-sm font-black text-slate-900 leading-tight">
-                {language === 'bn' ? 'সময় সাশ্রয়ী' : 'Save Time'}
-              </h4>
-              <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                {language === 'bn' ? 'ঘরে বসেই সহজে আবেদন সম্পন্ন করুন।' : 'Apply online from the comfort of your home.'}
-              </p>
-            </div>
-          </div>
+          <ScrollStaggerItem>
+            <HoverCard className="h-full">
+              <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-5 flex items-center gap-4 hover:shadow-xs transition h-full">
+                <div className="w-12 h-12 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
+                  <Clock size={22} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-black text-slate-900 leading-tight">
+                    {language === 'bn' ? 'সময় সাশ্রয়ী' : 'Save Time'}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                    {language === 'bn' ? 'ঘরে বসেই সহজে আবেদন সম্পন্ন করুন।' : 'Apply online from the comfort of your home.'}
+                  </p>
+                </div>
+              </div>
+            </HoverCard>
+          </ScrollStaggerItem>
 
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-5 flex items-center gap-4 hover:shadow-xs transition">
-            <div className="w-12 h-12 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
-              <FileText size={22} />
-            </div>
-            <div>
-              <h4 className="text-sm font-black text-slate-900 leading-tight">
-                {language === 'bn' ? 'সহজ প্রক্রিয়া' : 'Easy Process'}
-              </h4>
-              <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                {language === 'bn' ? 'কয়েকটি সহজ ধাপে আবেদনপত্র দাখিল করুন।' : 'Simple steps to complete your application.'}
-              </p>
-            </div>
-          </div>
+          <ScrollStaggerItem>
+            <HoverCard className="h-full">
+              <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-5 flex items-center gap-4 hover:shadow-xs transition h-full">
+                <div className="w-12 h-12 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
+                  <FileText size={22} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-black text-slate-900 leading-tight">
+                    {language === 'bn' ? 'সহজ প্রক্রিয়া' : 'Easy Process'}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                    {language === 'bn' ? 'কয়েকটি সহজ ধাপে আবেদনপত্র দাখিল করুন।' : 'Simple steps to complete your application.'}
+                  </p>
+                </div>
+              </div>
+            </HoverCard>
+          </ScrollStaggerItem>
 
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-5 flex items-center gap-4 hover:shadow-xs transition">
-            <div className="w-12 h-12 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
-              <Headphones size={22} />
-            </div>
-            <div>
-              <h4 className="text-sm font-black text-slate-900 leading-tight">
-                {language === 'bn' ? 'সহায়তা ও হেল্পলাইন' : 'Help & Support'}
-              </h4>
-              <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                {language === 'bn' ? 'যেকোনো প্রয়োজনে আমাদের সাপোর্ট টিম পাশে রয়েছে।' : "We're here to assist you at every step."}
-              </p>
-            </div>
-          </div>
-        </div>
+          <ScrollStaggerItem>
+            <HoverCard className="h-full">
+              <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-5 flex items-center gap-4 hover:shadow-xs transition h-full">
+                <div className="w-12 h-12 rounded-full bg-[#e8f7ee] text-[#059669] flex items-center justify-center shrink-0">
+                  <Headphones size={22} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-black text-slate-900 leading-tight">
+                    {language === 'bn' ? 'সহায়তা ও হেল্পলাইন' : 'Help & Support'}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                    {language === 'bn' ? 'যেকোনো প্রয়োজনে আমাদের সাপোর্ট টিম পাশে রয়েছে।' : "We're here to assist you at every step."}
+                  </p>
+                </div>
+              </div>
+            </HoverCard>
+          </ScrollStaggerItem>
+        </ScrollStaggerContainer>
       </div>
 
       {/* 5. Detailed Guidelines Modal */}
